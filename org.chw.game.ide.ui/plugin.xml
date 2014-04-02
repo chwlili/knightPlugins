@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+              class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+              default="true"
+              extensions="proto,map"
+              icon="icons/protoFileIcon.png"
+              id="org.chw.game.ide.Proto"
+              name="Proto Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="org.chw.game.ide.Proto.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.chw.game.ide.Proto.validate">
+         <activeWhen>
+            <reference
+                    definitionId="org.chw.game.ide.Proto.Editor.opened">
+            </reference>
+         </activeWhen>
+      	</handler>
+      	<!-- copy qualified name -->
+        <handler
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
+            <activeWhen>
+				<reference definitionId="org.chw.game.ide.Proto.Editor.opened" />
+            </activeWhen>
+        </handler>
+        <handler
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
+            <activeWhen>
+            	<and>
+            		<reference definitionId="org.chw.game.ide.Proto.XtextEditor.opened" />
+	                <iterate>
+						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+					</iterate>
+				</and>
+            </activeWhen>
+        </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="org.chw.game.ide.Proto.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="org.chw.game.ide.Proto" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+        <definition id="org.chw.game.ide.Proto.XtextEditor.opened">
+            <and>
+                <reference definitionId="isXtextEditorActive"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="org.chw.game.ide.Proto" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.chw.game.ide.Proto"
+            name="Proto">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+        </page>
+        <page
+            category="org.chw.game.ide.Proto"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.chw.game.ide.Proto.coloring"
+            name="着色">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+        </page>
+        <page
+            category="org.chw.game.ide.Proto"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.chw.game.ide.Proto.templates"
+            name="模板">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+        </page>
+    </extension>
+    <!--
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.chw.game.ide.Proto"
+            name="Proto">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.chw.game.ide.ui.ProtoNature"/>
+        </page>
+    </extension>
+    -->
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="org.chw.game.ide.ui.keyword_Proto"
+            label="Proto"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="org.chw.game.ide.Proto.validate"
+            name="Validate">
+      </command>
+      <!-- copy qualified name -->
+      <command
+            id="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+            categoryId="org.eclipse.ui.category.edit"
+            description="Copy the qualified name for the selected element"
+            name="Copy Qualified Name">
+      </command>
+      <command
+            id="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName"
+            categoryId="org.eclipse.ui.category.edit"
+            description="Copy the qualified name for the selected element"
+            name="Copy Qualified Name">
+      </command>
+    </extension>
+    	<!--
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+             <command
+                 commandId="org.chw.game.ide.Proto.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="org.chw.game.ide.Proto.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+         -->
+         <!-- copy qualified name -->
+    	<!--
+         <menuContribution locationURI="popup:#TextEditorContext?after=copy">
+         	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
+         		style="push" tooltip="Copy Qualified Name">
+            	<visibleWhen checkEnabled="false">
+                	<reference definitionId="org.chw.game.ide.Proto.Editor.opened" />
+            	</visibleWhen>
+         	</command>  
+         </menuContribution>
+         <menuContribution locationURI="menu:edit?after=copy">
+         	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+            	style="push" tooltip="Copy Qualified Name">
+            	<visibleWhen checkEnabled="false">
+                	<reference definitionId="org.chw.game.ide.Proto.Editor.opened" />
+            	</visibleWhen>
+         	</command>  
+         </menuContribution>
+         <menuContribution locationURI="popup:org.eclipse.xtext.ui.outline?after=additions">
+			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName" 
+				style="push" tooltip="Copy Qualified Name">
+         		<visibleWhen checkEnabled="false">
+	            	<and>
+	            		<reference definitionId="org.chw.game.ide.Proto.XtextEditor.opened" />
+						<iterate>
+							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+						</iterate>
+					</and>
+				</visibleWhen>
+			</command>
+         </menuContribution>
+    </extension>
+         -->
+    <extension
+          point="org.eclipse.ui.menus">
+       <menuContribution
+             locationURI="popup:#TextEditorContext?endof=group.find">
+          <command
+                commandId="org.eclipse.xtext.ui.editor.FindReferences"
+                label="查找引用">
+             <visibleWhen
+                   checkEnabled="false">
+                <reference
+                      definitionId="org.chw.game.ide.Proto.Editor.opened">
+                </reference>
+             </visibleWhen>
+          </command>
+       </menuContribution>
+    </extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="org.chw.game.ide.Proto.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="proto">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="proto">
+        </resourceServiceProvider>
+    </extension>
+
+
+	<!-- marker definitions for org.chw.game.ide.Proto -->
+	<extension
+	        id="proto.check.fast"
+	        name="Proto Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="proto.check.normal"
+	        name="Proto Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="proto.check.expensive"
+	        name="Proto Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
+
+   <extension
+         point="org.eclipse.xtext.builder.participant">
+      <participant
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+      </participant>
+   </extension>
+   <!--
+   <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            category="org.chw.game.ide.Proto"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.chw.game.ide.Proto.compiler.preferencePage"
+            name="Compiler">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            category="org.chw.game.ide.Proto"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.chw.game.ide.Proto.compiler.propertyPage"
+            name="Compiler">
+            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.chw.game.ide.ui.ProtoNature"/>
+        </page>
+    </extension>
+    -->
+
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="org.chw.game.ide.Proto.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command
+         commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+         label="快速大纲(&amp;Q)"
+         style="push"
+         tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="org.chw.game.ide.Proto.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+    <!-- quickfix marker resolution generator for org.chw.game.ide.Proto -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.chw.game.ide.ui.proto.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.chw.game.ide.ui.proto.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.chw.game.ide.ui.proto.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="org.chw.game.ide.Proto.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command
+               commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               label="重命名"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="org.chw.game.ide.Proto.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <!--
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="org.chw.game.ide.Proto"
+	        class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.chw.game.ide.Proto.refactoring"
+	        name="重构">
+	        <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
+	    </page>
+	</extension>
+	-->
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.chw.game.ide.Proto.compare.contentViewers"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="proto">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.chw.game.ide.Proto.compare.contentMergeViewers"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="proto" label="Proto Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.chw.game.ide.Proto.editors.documentProviders"
+            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="proto">
+    </provider>
+  </extension>
+  <extension
+        point="org.eclipse.ui.newWizards">
+     <category
+           id="org.chw.game.ide.ui.proto"
+           name="Proto">
+     </category>
+     <wizard
+           category="org.chw.game.ide.ui.proto"
+           class="org.chw.game.ide.ui.wizard.NewProjectWizard"
+           icon="icons/protoProjectIcon.png"
+           id="org.chw.game.ide.ui.newProtoProject"
+           name="Proto 库项目"
+           project="true">
+     </wizard>
+     <wizard
+           category="org.chw.game.ide.ui.proto"
+           class="org.chw.game.ide.ui.wizard.NewFileWizard"
+           icon="icons/protoFileIcon.png"
+           id="org.chw.game.ide.ui.newProtoFile"
+           name="Proto 文件"
+           project="false">
+     </wizard>
+  </extension>
+  
+     <extension
+        id="ProtoBuilder"
+        name="Proto构建器"
+        point="org.eclipse.core.resources.builders">
+     <builder
+           hasNature="true">
+        <run
+              class="org.eclipse.xtext.ui.shared.internal.ExecutableExtensionFactory">
+             <parameter name="guicekey" value="org.eclipse.core.resources.IncrementalProjectBuilder"/>
+        </run>
+     </builder>
+  </extension>
+  
+  
+  <extension
+        id="ProtoNature"
+        name="Proto特性"
+        point="org.eclipse.core.resources.natures">
+     <runtime>
+        <run
+              class="org.chw.game.ide.ui.ProtoNature">
+        </run>
+     </runtime>
+     <builder
+           id="org.chw.game.ide.ui.ProtoBuilder">
+     </builder>
+  </extension>
+  <extension
+        point="org.eclipse.ui.ide.projectNatureImages">
+     <image
+           icon="icons/ProtoProjectIcon.png"
+           id="org.chw.game.ide.ui.image1"
+           natureId="org.chw.game.ide.ui.ProtoNature">
+     </image>
+  </extension>
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension
+           targetID="com.adobe.flexbuilder.editors.mxml.ui.perspectives.development">
+        <newWizardShortcut
+              id="org.chw.game.ide.ui.newProtoProject">
+        </newWizardShortcut>
+        <newWizardShortcut
+              id="org.chw.game.ide.ui.newProtoFile">
+        </newWizardShortcut>
+     </perspectiveExtension>
+  </extension>
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension
+           targetID="com.adobe.flexbuilder.debug.ui.perspectives.debug">
+        <viewShortcut
+              id="org.chw.game.ide.ui.viewShortcut2">
+        </viewShortcut>
+        <viewShortcut
+              id="org.chw.game.ide.ui.newProtoFile">
+        </viewShortcut>
+     </perspectiveExtension>
+  </extension>
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension
+           targetID="com.adobe.flash.profiler.ui.ProfilingPerspective">
+        <viewShortcut
+              id="org.chw.game.ide.ui.newProtoProject">
+        </viewShortcut>
+        <viewShortcut
+              id="org.chw.game.ide.ui.newProtoFile">
+        </viewShortcut>
+     </perspectiveExtension>
+  </extension>
+  <extension
+        point="org.eclipse.ui.popupMenus">
+     <objectContribution
+           adaptable="true"
+           id="org.chw.game.ide.ui.overrideXtextMenuItem"
+           objectClass="org.eclipse.core.resources.IResource">
+        <action
+              class="org.chw.game.ide.ui.wizard.OpenExplorer"
+              enablesFor="1"
+              icon="icons/folder.gif"
+              id="org.chw.game.ide.ui.action1"
+              label="资源管理器"
+              menubarPath="com.adobe.flex.menu.flashcatalyst"
+              overrideActionId="org.eclipse.xtext.builder.action.AddXtextNatureAction">
+        </action>
+     </objectContribution>
+  </extension>
+
+</plugin>
