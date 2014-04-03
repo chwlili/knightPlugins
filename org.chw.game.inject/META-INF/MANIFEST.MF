@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.chw.game.inject
 Bundle-SymbolicName: org.chw.game.inject;singleton:=true
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: org.chw.game.inject.Activator
 Require-Bundle: com.adobe.flash.compiler,
  com.adobe.flexbuilder.codemodel,

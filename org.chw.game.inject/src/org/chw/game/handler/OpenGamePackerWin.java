@@ -2,15 +2,19 @@ package org.chw.game.handler;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.chw.game.inject.Activator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -42,7 +46,7 @@ public class OpenGamePackerWin extends AbstractHandler
 		}
 		else
 		{
-			File jar = new File(getJarDir().getPath() + File.separatorChar + "MyGamePacker_" + Activator.getDefault().getBundle().getVersion().toString() + ".exe");
+			File jar = new File(getJarDir().getPath() + File.separatorChar + "MyGamePacker_" + Activator.getDefault().getBundle().getVersion().toString() + ".jar");
 
 			if (!jar.exists())
 			{
@@ -52,23 +56,23 @@ public class OpenGamePackerWin extends AbstractHandler
 					File[] jarFiles = jarDir.listFiles();
 					for (File jarFile : jarFiles)
 					{
-						if (jarFile.getName().startsWith("MyGamePacker_") && jarFile.getName().endsWith(".exe"))
+						if (jarFile.getName().startsWith("MyGamePacker_") && jarFile.getName().endsWith(".jar"))
 						{
 							jarFile.delete();
 						}
 					}
 				}
 
-				writeFile(jar, getClass().getResourceAsStream("/jars/GamePacker.exe"));
+				writeFile(jar, getClass().getResourceAsStream("/jars/GamePacker.jar"));
 			}
-
+			
 			try
 			{
-				Runtime.getRuntime().exec(jar.getPath());
+				Runtime.getRuntime().exec("cmd /c java -jar " + jar.getPath());
 			}
 			catch (Exception e)
 			{
-				Activator.writeError(e);
+				MessageDialog.openError(Display.getCurrent().getActiveShell(), "无法启动jar", "启动jar文件失败("+jar.getPath()+")");
 			}
 		}
 

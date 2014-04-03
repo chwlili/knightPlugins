@@ -8,7 +8,7 @@ import org.chw.game.ide.proto.ProtoPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 
-public class ProtoValidator extends AbstractProtoValidator
+public class ProtoValidator extends org.eclipse.xtext.validation.AbstractDeclarativeValidator
 {
 
 	public static final String Message_Field_Index_Conflict = "message_field_index_conflict";

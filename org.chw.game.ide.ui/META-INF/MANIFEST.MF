@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.chw.game.ide.ui
 Bundle-Vendor: chw
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-SymbolicName: org.chw.game.ide.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.chw.game.ide;bundle-version="2.0.0";visibility:=reexport,

@@ -8,7 +8,7 @@ var grammarURI = "classpath:/org/chw/game/ide/Proto.xtext"
 var fileExtensions = "proto"
 var projectName = "org.chw.game.ide"
 var runtimeProject = "../${projectName}"
-var generateXtendStub = true
+var generateXtendStub = false
 
 Workflow {
     bean = StandaloneSetup {
@@ -34,7 +34,7 @@ Workflow {
     component = Generator {
     	pathRtProject = runtimeProject
     	pathUiProject = "${runtimeProject}.ui"
-    	pathTestProject = "${runtimeProject}.tests"
+    	//pathTestProject = "${runtimeProject}.tests"
     	projectNameRt = projectName
     	projectNameUi = "${projectName}.ui"
     	language = auto-inject {
@@ -70,10 +70,10 @@ Workflow {
     		}
     
     		// Xtend-based API for validation
-    		fragment = validation.ValidatorFragment auto-inject {
+    		//fragment = validation.ValidatorFragment auto-inject {
     		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
     		//    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-    		}
+    		//}
     
     		// old scoping and exporting API
     		// fragment = scoping.ImportURIScopingFragment auto-inject {}
@@ -85,7 +85,7 @@ Workflow {
     		fragment = builder.BuilderIntegrationFragment auto-inject {}
     
     		// generator API
-    		fragment = generator.GeneratorFragment auto-inject {}
+    		//fragment = generator.GeneratorFragment auto-inject {}
     
     		// formatter API
     		fragment = formatting.FormatterFragment auto-inject {}

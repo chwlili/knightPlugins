@@ -1,4 +1,8 @@
 /**
+ * <copyright>
+ * </copyright>
+ *
+
  */
 package org.chw.game.ide.proto.impl;
 
@@ -30,7 +34,7 @@ public class ProtoFactoryImpl extends EFactoryImpl implements ProtoFactory
   {
     try
     {
-      ProtoFactory theProtoFactory = (ProtoFactory)EPackage.Registry.INSTANCE.getEFactory(ProtoPackage.eNS_URI);
+      ProtoFactory theProtoFactory = (ProtoFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.chw.org/game/ide/Proto"); 
       if (theProtoFactory != null)
       {
         return theProtoFactory;

@@ -224,60 +224,6 @@
     </extension>
 
 
-	<!-- marker definitions for org.chw.game.ide.Proto -->
-	<extension
-	        id="proto.check.fast"
-	        name="Proto Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.fast"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="proto.check.normal"
-	        name="Proto Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.normal"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="proto.check.expensive"
-	        name="Proto Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.expensive"/>
-	    <persistent value="true"/>
-	</extension>
-
-   <extension
-         point="org.eclipse.xtext.builder.participant">
-      <participant
-            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
-      </participant>
-   </extension>
-   <extension
-            point="org.eclipse.ui.preferencePages">
-        <page
-            category="org.chw.game.ide.Proto"
-            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.chw.game.ide.Proto.compiler.preferencePage"
-            name="Compiler">
-            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
-        </page>
-    </extension>
-    <extension
-            point="org.eclipse.ui.propertyPages">
-        <page
-            category="org.chw.game.ide.Proto"
-            class="org.chw.game.ide.ui.ProtoExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.chw.game.ide.Proto.compiler.propertyPage"
-            name="Compiler">
-            <keywordReference id="org.chw.game.ide.ui.keyword_Proto"/>
-            <enabledWhen>
-	            <adapt type="org.eclipse.core.resources.IProject"/>
-			</enabledWhen>
-	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
-        </page>
-    </extension>
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
