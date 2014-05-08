@@ -3,14 +3,22 @@
 */
 package org.chw.game.ide.services;
 
-import com.google.inject.Singleton;
-import com.google.inject.Inject;
-
 import java.util.List;
 
-import org.eclipse.xtext.*;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 
 @Singleton
@@ -1331,7 +1339,9 @@ public class ProtoGrammarAccess extends AbstractGrammarElementFinder {
 
 	//terminal FIELD_TYPE:
 	//
-	//	"int32" | "sint32" | "uint32" | "int64" | "sint64" | "uint64" | "float" | "double" | "string" | "bool" | "bytes";
+	//	"int32" | "sint32" | "uint32" | "int64" | "sint64" | "uint64" | "float" | "double" | "string" | "bool" | "bytes" |
+	//
+	//	"fixed32" | "fixed64" | "sfixed32" | "sfixed64";
 	public TerminalRule getFIELD_TYPERule() {
 		return (tFIELD_TYPE != null) ? tFIELD_TYPE : (tFIELD_TYPE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FIELD_TYPE"));
 	} 

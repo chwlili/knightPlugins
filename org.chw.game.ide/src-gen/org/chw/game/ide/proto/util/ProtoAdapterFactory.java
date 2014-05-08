@@ -6,13 +6,26 @@
  */
 package org.chw.game.ide.proto.util;
 
-import org.chw.game.ide.proto.*;
-
+import org.chw.game.ide.proto.Comment_ALL;
+import org.chw.game.ide.proto.Element;
+import org.chw.game.ide.proto.EnumField;
+import org.chw.game.ide.proto.EnumFieldOpt;
+import org.chw.game.ide.proto.EnumType;
+import org.chw.game.ide.proto.ImportInfo;
+import org.chw.game.ide.proto.Map;
+import org.chw.game.ide.proto.MapField;
+import org.chw.game.ide.proto.MapRef;
+import org.chw.game.ide.proto.MessageComplexField;
+import org.chw.game.ide.proto.MessageField;
+import org.chw.game.ide.proto.MessageSimpleField;
+import org.chw.game.ide.proto.MessageType;
+import org.chw.game.ide.proto.Model;
+import org.chw.game.ide.proto.OptionInfo;
+import org.chw.game.ide.proto.ProtoPackage;
+import org.chw.game.ide.proto.Type;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

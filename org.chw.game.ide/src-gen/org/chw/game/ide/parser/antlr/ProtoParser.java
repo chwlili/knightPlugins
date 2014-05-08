@@ -3,10 +3,10 @@
 */
 package org.chw.game.ide.parser.antlr;
 
-import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.chw.game.ide.services.ProtoGrammarAccess;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+
+import com.google.inject.Inject;
 
 public class ProtoParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	

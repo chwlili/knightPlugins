@@ -1,7 +1,7 @@
 package org.chw.game.ide.serializer;
 
-import com.google.inject.Inject;
 import java.util.List;
+
 import org.chw.game.ide.services.ProtoGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.IGrammarAccess;
@@ -12,6 +12,8 @@ import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
+
+import com.google.inject.Inject;
 
 @SuppressWarnings("all")
 public class ProtoSyntacticSequencer extends AbstractSyntacticSequencer {

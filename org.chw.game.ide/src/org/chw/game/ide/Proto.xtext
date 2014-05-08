@@ -60,7 +60,7 @@ terminal ENUM	 	: 'enum';
 terminal MAP_KIND  : 'map';
 terminal DEFAULT_KIND : 'default';
 terminal FIELD_ATTR	: 'optional' | 'repeated' | 'required';
-terminal FIELD_TYPE	:'int32' | 'sint32' | 'uint32' | 'int64' | 'sint64' | 'uint64' | 'float' | 'double' | 'string' | 'bool' | 'bytes';
+terminal FIELD_TYPE	:'int32' | 'sint32' | 'uint32' | 'int64' | 'sint64' | 'uint64' | 'float' | 'double' | 'string' | 'bool' | 'bytes' | 'fixed32' | 'fixed64' | 'sfixed32' | 'sfixed64';
 terminal IDENTITY		: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 terminal COMMENT_ML	: '/*' -> '*/';

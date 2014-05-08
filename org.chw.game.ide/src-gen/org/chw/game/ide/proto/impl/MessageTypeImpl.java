@@ -12,14 +12,10 @@ import org.chw.game.ide.proto.MessageField;
 import org.chw.game.ide.proto.MessageType;
 import org.chw.game.ide.proto.ProtoPackage;
 import org.chw.game.ide.proto.Type;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 

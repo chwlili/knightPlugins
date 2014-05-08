@@ -1562,7 +1562,7 @@ RULE_DEFAULT_KIND : 'default';
 
 RULE_FIELD_ATTR : ('optional'|'repeated'|'required');
 
-RULE_FIELD_TYPE : ('int32'|'sint32'|'uint32'|'int64'|'sint64'|'uint64'|'float'|'double'|'string'|'bool'|'bytes');
+RULE_FIELD_TYPE : ('int32'|'sint32'|'uint32'|'int64'|'sint64'|'uint64'|'float'|'double'|'string'|'bool'|'bytes'|'fixed32'|'fixed64'|'sfixed32'|'sfixed64');
 
 RULE_IDENTITY : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 

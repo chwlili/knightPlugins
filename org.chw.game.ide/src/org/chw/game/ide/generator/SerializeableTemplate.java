@@ -1,12 +1,59 @@
 package org.chw.game.ide.generator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class SerializeableTemplate
 {
-	public static String getContent(String packName,String typeName)
+	public static String getContent(String packName, String typeName)
 	{
-		StringBuilder stream=new StringBuilder();
-		
-		stream.append("package "+packName+"\n");
+		StringBuilder stream = new StringBuilder();
+
+		BufferedReader reader = null;
+		try
+		{
+			reader = new BufferedReader(new InputStreamReader(SerializeableTemplate.class.getResourceAsStream("/as/SerializeableData.as"), "utf8"));
+			while (true)
+			{
+				String line = reader.readLine();
+				if (line != null)
+				{
+					stream.append(line+"\n");
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (reader != null)
+			{
+				try
+				{
+					reader.close();
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return stream.toString().replaceAll("\\$packName\\$", packName).replaceAll("\\$typeName\\$", typeName);
+	}
+
+	public static String getContent_old(String packName, String typeName)
+	{
+		StringBuilder stream = new StringBuilder();
+
+		stream.append("package " + packName + "\n");
 		stream.append("{\n");
 		stream.append("\timport flash.display.BitmapData;\n");
 		stream.append("\timport flash.geom.Rectangle;\n");
@@ -15,7 +62,7 @@ public class SerializeableTemplate
 		stream.append("\timport flash.utils.IDataInput;\n");
 		stream.append("\timport flash.utils.IDataOutput;\n");
 		stream.append("\t\n");
-		stream.append("\tpublic class "+typeName+"\n");
+		stream.append("\tpublic class " + typeName + "\n");
 		stream.append("\t{\n");
 		stream.append("\t\t//\n");
 		stream.append("\t\tprivate const VARINT:int=0;\n");
@@ -263,23 +310,30 @@ public class SerializeableTemplate
 		stream.append("\t\t\t\t\t{\n");
 		stream.append("\t\t\t\t\t\tresult |= (tmp&0x7F)<<21;\n");
 		stream.append("\t\t\t\t\t\t\n");
-		stream.append("\t\t\t\t\t\tif((tmp=readRawByteFrom(input))>=0)\n");
-		stream.append("\t\t\t\t\t\t{\n");
-		stream.append("\t\t\t\t\t\t\tresult |= tmp<<28;\n");
-		stream.append("\t\t\t\t\t\t}\n");
-		stream.append("\t\t\t\t\t\telse\n");
-		stream.append("\t\t\t\t\t\t{\n");
-		stream.append("\t\t\t\t\t\t\tresult |= (tmp&0xfF)<<28;\n");
-		stream.append("\t\t\t\t\t\t\t\n");
-		stream.append("\t\t\t\t\t\t\tfor(var i:int=0;i<5;i++)\n");
-		stream.append("\t\t\t\t\t\t\t{\n");
-		stream.append("\t\t\t\t\t\t\t\tif(readRawByteFrom(input)>=0)\n");
-		stream.append("\t\t\t\t\t\t\t\t{\n");
-		stream.append("\t\t\t\t\t\t\t\t\treturn result;\n");
-		stream.append("\t\t\t\t\t\t\t\t}\n");
-		stream.append("\t\t\t\t\t\t\t}\n");
-		stream.append("\t\t\t\t\t\t\tthrow new Error(\"读取Varint32时遇到无效的Varint！\");\n");
-		stream.append("\t\t\t\t\t\t}\n");
+
+		stream.append("\t\t\t\t\t\ttmp=readRawByteFrom(input)\n");
+		stream.append("\t\t\t\t\t\tresult |= (tmp&0xF)<<28;\n");
+		stream.append("\t\t\t\t\t\t\n");
+
+		/*
+		 * stream.append("\t\t\t\t\t\tif((tmp=readRawByteFrom(input))>=0)\n");
+		 * stream.append("\t\t\t\t\t\t{\n");
+		 * stream.append("\t\t\t\t\t\t\tresult |= tmp<<28;\n");
+		 * stream.append("\t\t\t\t\t\t}\n");
+		 * stream.append("\t\t\t\t\t\telse\n");
+		 * stream.append("\t\t\t\t\t\t{\n");
+		 * stream.append("\t\t\t\t\t\t\tresult |= (tmp&0xfF)<<28;\n");
+		 * stream.append("\t\t\t\t\t\t\t\n");
+		 * stream.append("\t\t\t\t\t\t\tfor(var i:int=0;i<5;i++)\n");
+		 * stream.append("\t\t\t\t\t\t\t{\n");
+		 * stream.append("\t\t\t\t\t\t\t\tif(readRawByteFrom(input)>=0)\n");
+		 * stream.append("\t\t\t\t\t\t\t\t{\n");
+		 * stream.append("\t\t\t\t\t\t\t\t\treturn result;\n");
+		 * stream.append("\t\t\t\t\t\t\t\t}\n");
+		 * stream.append("\t\t\t\t\t\t\t}\n"); stream.append(
+		 * "\t\t\t\t\t\t\tthrow new Error(\"读取Varint32时遇到无效的Varint！\");\n");
+		 * stream.append("\t\t\t\t\t\t}\n");
+		 */
 		stream.append("\t\t\t\t\t}\n");
 		stream.append("\t\t\t\t}\n");
 		stream.append("\t\t\t}\n");
@@ -288,10 +342,10 @@ public class SerializeableTemplate
 		stream.append("\t\t\n");
 
 		stream.append("\t\t/**\n");
-		stream.append("\t\t * 读取一个64位的Varint\n"); 
+		stream.append("\t\t * 读取一个64位的Varint\n");
 		stream.append("\t\t * @return\n");
 		stream.append("\t\t *\n");
-		stream.append("\t\t */\n");     
+		stream.append("\t\t */\n");
 		stream.append("\t\tpublic function readRawVarint64From(input:IDataInput):String\n");
 		stream.append("\t\t{\n");
 		stream.append("\t\t\tvar cache1:uint=0;\n");
@@ -367,24 +421,32 @@ public class SerializeableTemplate
 		stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
 		stream.append("\t\t\t}\n");
 		stream.append("\t\t\t\n");
+
+		// new
+		stream.append("//xxx\n");
 		stream.append("\t\t\tbyte = input.readByte();\n");
-		stream.append("\t\t\tcache2 |= (byte & 0x7F) << 24;\n");
-		stream.append("\t\t\tif(byte>=0)\n");
-		stream.append("\t\t\t{\n");
-		stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
-		stream.append("\t\t\t}\n");
+		stream.append("\t\t\tcache2 |= (byte & 0xFF) << 24;\n");
+		stream.append("\t\t\treturn cache2.toString(16)+part1;\n");
 		stream.append("\t\t\t\n");
-		stream.append("\t\t\tbyte = input.readByte();\n");
-		stream.append("\t\t\tcache2 |= (byte & 0x7F) << 31;\n");
-		stream.append("\t\t\tif(byte>=0)\n");
-		stream.append("\t\t\t{\n");
-		stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
-		stream.append("\t\t\t}\n");
-		stream.append("\t\t\t\n");
-		stream.append("\t\t\treturn \"\";\n");
+
+		// old
+		/*
+		 * stream.append("//yyy\n");
+		 * stream.append("\t\t\tbyte = input.readByte();\n");
+		 * stream.append("\t\t\tcache2 |= (byte & 0x7F) << 24;\n");
+		 * stream.append("\t\t\tif(byte>=0)\n"); stream.append("\t\t\t{\n");
+		 * stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
+		 * stream.append("\t\t\t}\n"); stream.append("\t\t\t\n");
+		 * stream.append("\t\t\tbyte = input.readByte();\n");
+		 * stream.append("\t\t\tcache2 |= (byte & 0x7F) << 31;\n");
+		 * stream.append("\t\t\tif(byte>=0)\n"); stream.append("\t\t\t{\n");
+		 * stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
+		 * stream.append("\t\t\t}\n"); stream.append("\t\t\t\n");
+		 * stream.append("\t\t\treturn \"\";\n");
+		 */
+
 		stream.append("\t\t}\n");
-        
-        
+
 		stream.append("\t\t/**\n");
 		stream.append("\t\t * 读取一个64位的Varint \n");
 		stream.append("\t\t * @return \n");
@@ -1166,7 +1228,7 @@ public class SerializeableTemplate
 		stream.append("\t\t}\n");
 		stream.append("\t}\n");
 		stream.append("}\n");
-		
+
 		return stream.toString();
 	}
 }
