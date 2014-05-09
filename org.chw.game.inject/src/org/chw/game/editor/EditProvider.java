@@ -92,7 +92,14 @@ public class EditProvider
 		initEditStrategy(tableViewer);
 
 		// 选择-标签提供器
-		column1.setLabelProvider(new ColumnLabelProvider());
+		column1.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				return "";
+			}
+		});
 
 		// 名称-标签提供器
 		column2.setLabelProvider(new ColumnLabelProvider()
@@ -257,7 +264,14 @@ public class EditProvider
 		initEditStrategy(tableViewer);
 
 		// 选择-标签提供器
-		column1.setLabelProvider(new ColumnLabelProvider());
+		column1.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				return "";
+			}
+		});
 
 		// 名称-标签提供器
 		column2.setLabelProvider(new ColumnLabelProvider()
@@ -374,7 +388,14 @@ public class EditProvider
 		initEditStrategy(tableViewer);
 
 		// 选择-标签提供器
-		column1.setLabelProvider(new ColumnLabelProvider());
+		column1.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				return "";
+			}
+		});
 
 		// 名称-标签提供器
 		column2.setLabelProvider(new ColumnLabelProvider()
@@ -445,7 +466,14 @@ public class EditProvider
 		initEditStrategy(tableViewer);
 
 		// 选择-标签提供器
-		column1.setLabelProvider(new ColumnLabelProvider());
+		column1.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				return "";
+			}
+		});
 
 		// 名称-标签提供器
 		column2.setLabelProvider(new ColumnLabelProvider()

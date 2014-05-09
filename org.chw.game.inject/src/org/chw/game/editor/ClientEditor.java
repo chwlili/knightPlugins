@@ -123,6 +123,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 		TableViewerColumn loginCheckCol = new TableViewerColumn(auth_viewer, SWT.NONE);
 		loginCheckCol.getColumn().setWidth(30);
+		loginCheckCol.getColumn().setResizable(false);
 
 		TableViewerColumn loginNameCol = new TableViewerColumn(auth_viewer, SWT.NONE);
 		loginNameCol.getColumn().setWidth(456);
@@ -165,6 +166,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 		TableViewerColumn verCheckCol = new TableViewerColumn(version_viewer, SWT.NONE);
 		verCheckCol.getColumn().setWidth(30);
+		verCheckCol.getColumn().setResizable(false);
 
 		TableViewerColumn verNameCol = new TableViewerColumn(version_viewer, SWT.NONE);
 		verNameCol.getColumn().setWidth(100);
@@ -209,6 +211,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 		TableViewerColumn logCheckCol = new TableViewerColumn(log_viewer, SWT.NONE);
 		logCheckCol.getColumn().setWidth(30);
+		logCheckCol.getColumn().setResizable(false);
 
 		TableViewerColumn logNameCol = new TableViewerColumn(log_viewer, SWT.NONE);
 		logNameCol.getColumn().setWidth(100);
@@ -245,6 +248,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 		TableViewerColumn serverCheckCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverCheckCol.getColumn().setWidth(30);
+		serverCheckCol.getColumn().setResizable(false);
 
 		TableViewerColumn serverNameCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverNameCol.getColumn().setWidth(100);
@@ -441,8 +445,13 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		}
 
 		version_viewer.refresh();
+		packColumns(version_viewer.getTable());
+		
 		log_viewer.refresh();
+		packColumns(log_viewer.getTable());
+		
 		auth_viewer.refresh();
+		packColumns(auth_viewer.getTable());
 	}
 
 	/**
@@ -482,6 +491,15 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		}
 
 		server_viewer.refresh();
+		packColumns(server_viewer.getTable());
+	}
+	
+	private void packColumns(Table table)
+	{
+		for(int i=1;i<table.getColumnCount();i++)
+		{
+			table.getColumn(i).pack();
+		}
 	}
 
 	private boolean dirty = false;
