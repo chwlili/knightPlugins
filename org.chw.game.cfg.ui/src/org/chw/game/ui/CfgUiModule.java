@@ -49,4 +49,10 @@ public class CfgUiModule extends org.chw.game.ui.AbstractCfgUiModule
 	{
 		return CfgFolder.class;
 	}
+
+	@Override
+	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback()
+	{
+		return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
+	}
 }

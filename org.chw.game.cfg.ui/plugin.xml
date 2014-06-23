@@ -392,5 +392,68 @@
             extensions="xml2">
     </provider>
   </extension>
+  <extension
+        point="org.eclipse.ui.newWizards">
+     <category
+           id="org.chw.game.cfg.ui.xml2"
+           name="XML2 项目">
+     </category>
+     <wizard
+           category="org.chw.game.cfg.ui.xml2"
+           class="org.chw.game.ui.wizard.NewProjectWizard"
+           icon="icons/typeIcon.gif"
+           id="org.chw.game.cfg.ui.wizard.newProject"
+           name="XML2 库项目"
+           project="true">
+     </wizard>
+     <wizard
+           category="org.chw.game.cfg.ui.xml2"
+           class="org.chw.game.ui.wizard.NewFileWizard"
+           icon="icons/fieldIcon.gif"
+           id="org.chw.game.cfg.ui.wizard.newFile"
+           name="XML2 文件"
+           project="false">
+     </wizard>
+  </extension>
+  <extension
+        id="Xml2Nature"
+        name="xml2特性"
+        point="org.eclipse.core.resources.natures">
+     <runtime>
+        <run
+              class="org.chw.game.ui.CfgNature">
+        </run>
+     </runtime>
+     <builder
+           id="org.chw.game.cfg.ui.CfgBuilder">
+     </builder>
+  </extension>
+  <extension
+        id="Xml2Builder"
+        name="Xml2构建器"
+        point="org.eclipse.core.resources.builders">
+     <builder
+           hasNature="true">
+        <run
+              class="org.eclipse.xtext.ui.shared.internal.ExecutableExtensionFactory">
+           <parameter
+                 name="guicekey"
+                 value="org.eclipse.core.resources.IncrementalProjectBuilder">
+           </parameter>
+        </run>
+     </builder>
+  </extension>
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension
+           targetID="com.adobe.flexbuilder.editors.mxml.ui.perspectives.development">
+        <newWizardShortcut
+              id="org.chw.game.cfg.ui.wizard.newProject">
+        </newWizardShortcut>
+        <newWizardShortcut
+              id="org.chw.game.cfg.ui.wizard.newFile">
+        </newWizardShortcut>
+     </perspectiveExtension>
+  </extension>
 
 </plugin>
