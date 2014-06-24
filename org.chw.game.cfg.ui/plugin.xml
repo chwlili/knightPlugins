@@ -434,7 +434,8 @@
         point="org.eclipse.core.resources.builders">
      <builder
            hasNature="true">
-        <run>
+        <run
+              class="org.chw.game.ui.MyBuilder">
            <parameter
                  name="guicekey"
                  value="org.eclipse.core.resources.IncrementalProjectBuilder">
