@@ -421,11 +421,11 @@
         point="org.eclipse.core.resources.natures">
      <runtime>
         <run
-              class="org.chw.game.ui.CfgNature">
+              class="org.chw.game.ui.Xml2Nature">
         </run>
      </runtime>
      <builder
-           id="org.chw.game.cfg.ui.CfgBuilder">
+           id="org.chw.game.cfg.ui.Xml2Builder">
      </builder>
   </extension>
   <extension
@@ -434,8 +434,7 @@
         point="org.eclipse.core.resources.builders">
      <builder
            hasNature="true">
-        <run
-              class="org.eclipse.xtext.ui.shared.internal.ExecutableExtensionFactory">
+        <run>
            <parameter
                  name="guicekey"
                  value="org.eclipse.core.resources.IncrementalProjectBuilder">

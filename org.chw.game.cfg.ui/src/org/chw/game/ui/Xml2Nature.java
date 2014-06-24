@@ -4,7 +4,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
-public class CfgNature implements IProjectNature
+public class Xml2Nature implements IProjectNature
 {
 	public static final String NATURE_ID = "org.chw.game.cfg.ui.Xml2Nature";
 	

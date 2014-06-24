@@ -21,5 +21,6 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.chw.game.ui.internal,
  org.chw.game.ui.quickfix,
- org.chw.game.ui.contentassist.antlr
+ org.chw.game.ui.contentassist.antlr,
+ org.chw.game.ui.contentassist
 Bundle-Activator: org.chw.game.ui.internal.CfgActivator

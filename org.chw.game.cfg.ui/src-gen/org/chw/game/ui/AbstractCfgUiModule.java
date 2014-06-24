@@ -103,6 +103,11 @@ public abstract class AbstractCfgUiModule extends DefaultUiModule {
 		return org.chw.game.ui.quickfix.CfgQuickfixProvider.class;
 	}
 
+	// contributed by org.eclipse.xtext.ui.generator.contentAssist.ContentAssistFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
+		return org.chw.game.ui.contentassist.CfgProposalProvider.class;
+	}
+
 	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext.Factory> bindContentAssistContext$Factory() {
 		return org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.class;

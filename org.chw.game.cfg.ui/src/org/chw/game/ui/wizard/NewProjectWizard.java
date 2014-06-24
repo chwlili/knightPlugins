@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import org.chw.game.ui.CfgNature;
+import org.chw.game.ui.Xml2Nature;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -74,13 +74,14 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						IProjectDescription desc = ResourcesPlugin.getWorkspace().newProjectDescription(name);
 						
 						//desc.setNatureIds(new String[] { XtextProjectHelper.NATURE_ID });
-						desc.setNatureIds(new String[]{CfgNature.NATURE_ID,"com.adobe.flexbuilder.project.aslibnature","com.adobe.flexbuilder.project.actionscriptnature"});
+						desc.setNatureIds(new String[]{Xml2Nature.NATURE_ID,"com.adobe.flexbuilder.project.aslibnature","com.adobe.flexbuilder.project.actionscriptnature"});
 						
 						ICommand cmd=desc.newCommand();
-						//cmd.setBuilderName(XtextProjectHelper.BUILDER_ID);
-						cmd.setBuilderName(CfgNature.BUILD_ID);
+						cmd.setBuilderName(Xml2Nature.BUILD_ID);//cmd.setBuilderName(XtextProjectHelper.BUILDER_ID);
+						
 						ICommand cmd1=desc.newCommand();
 						cmd1.setBuilderName("com.adobe.flexbuilder.project.flexbuilder");
+						
 						desc.setBuildSpec(new ICommand[]{cmd,cmd1});
 						
 						if (path != null)

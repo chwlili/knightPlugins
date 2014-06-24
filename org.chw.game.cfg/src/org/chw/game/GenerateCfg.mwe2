@@ -8,7 +8,7 @@ var grammarURI = "classpath:/org/chw/game/Cfg.xtext"
 var fileExtensions = "xml2"
 var projectName = "org.chw.game.cfg"
 var runtimeProject = "../${projectName}"
-var generateXtendStub = false
+var generateXtendStub = true
 
 Workflow {
     bean = StandaloneSetup {
@@ -81,7 +81,7 @@ Workflow {
     		fragment = builder.BuilderIntegrationFragment auto-inject {}
     
     		// generator API
-    		//fragment = generator.GeneratorFragment auto-inject {}
+    		fragment = generator.GeneratorFragment auto-inject {}
     
     		// formatter API
     		fragment = formatting.FormatterFragment auto-inject {}
@@ -97,7 +97,7 @@ Workflow {
     		fragment = quickfix.QuickfixProviderFragment auto-inject {}
     
     		// content assist API
-    		//fragment = contentAssist.ContentAssistFragment auto-inject {}
+    		fragment = contentAssist.ContentAssistFragment auto-inject {}
     
     		// generates a more lightweight Antlr parser and lexer tailored for content assist
     		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
