@@ -19,8 +19,7 @@ Require-Bundle: org.chw.game.cfg;visibility:=reexport,
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.chw.game.ui.quickfix,
- org.chw.game.ui.contentassist,
- org.chw.game.ui.contentassist.antlr,
- org.chw.game.ui.internal
+Export-Package: org.chw.game.ui.internal,
+ org.chw.game.ui.quickfix,
+ org.chw.game.ui.contentassist.antlr
 Bundle-Activator: org.chw.game.ui.internal.CfgActivator

@@ -36,10 +36,6 @@ public class NewProjectWizardPage extends WizardPage
 	private Button sourceSelector;
 	private Label sourceLabel;
 	private Label destLabel;
-
-	private Label outputLabel;
-	private Text outputInput;
-	private Button outputSelector;
 	
 	private Label cfgLabel;
 	private Text cfgInput;

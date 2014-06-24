@@ -224,29 +224,6 @@
     </extension>
 
 
-	<!-- marker definitions for org.chw.game.Cfg -->
-	<extension
-	        id="cfg.check.fast"
-	        name="Cfg Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.fast"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="cfg.check.normal"
-	        name="Cfg Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.normal"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="cfg.check.expensive"
-	        name="Cfg Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.expensive"/>
-	    <persistent value="true"/>
-	</extension>
-
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
