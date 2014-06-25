@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import org.chw.game.ui.Xml2Nature;
+import org.chw.game.builder.Xml2Nature;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;

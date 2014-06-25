@@ -421,7 +421,7 @@
         point="org.eclipse.core.resources.natures">
      <runtime>
         <run
-              class="org.chw.game.ui.Xml2Nature">
+              class="org.chw.game.builder.Xml2Nature">
         </run>
      </runtime>
      <builder
@@ -435,7 +435,7 @@
      <builder
            hasNature="true">
         <run
-              class="org.chw.game.ui.MyBuilder">
+              class="org.chw.game.builder.Xml2Builder">
            <parameter
                  name="guicekey"
                  value="org.eclipse.core.resources.IncrementalProjectBuilder">

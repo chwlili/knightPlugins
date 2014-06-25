@@ -1,4 +1,4 @@
-package org.chw.game.ui;
+package org.chw.game.builder;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
