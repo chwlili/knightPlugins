@@ -77,10 +77,10 @@ ruleXML2 returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_0_0()); 
 	    }
 		lv_types_0_0=ruleType		{
 	        if ($current==null) {
@@ -95,7 +95,26 @@ ruleXML2 returns [EObject current=null]
 	    }
 
 )
-)*
+)
+    |(
+(
+		lv_otherComm_1_0=RULE_COMMENT
+		{
+			newLeafNode(lv_otherComm_1_0, grammarAccess.getXML2Access().getOtherCommCOMMENTTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getXML2Rule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"otherComm",
+        		lv_otherComm_1_0, 
+        		"COMMENT");
+	    }
+
+)
+))*
 ;
 
 
@@ -126,7 +145,7 @@ ruleType returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTypeRule());
 	        }
-       		addWithLastConsumed(
+       		setWithLastConsumed(
        			$current, 
        			"comm",
         		lv_comm_0_0, 
@@ -134,7 +153,7 @@ ruleType returns [EObject current=null]
 	    }
 
 )
-)*(
+)(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTypeAccess().getInputInputParserRuleCall_1_0()); 
@@ -192,10 +211,10 @@ ruleType returns [EObject current=null]
     { 
     newLeafNode(this_C_BRACE_L_4, grammarAccess.getTypeAccess().getC_BRACE_LTerminalRuleCall_4()); 
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeAccess().getFieldsFieldParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getTypeAccess().getFieldsFieldParserRuleCall_5_0_0()); 
 	    }
 		lv_fields_5_0=ruleField		{
 	        if ($current==null) {
@@ -210,9 +229,28 @@ ruleType returns [EObject current=null]
 	    }
 
 )
-)*this_C_BRACE_R_6=RULE_C_BRACE_R
+)
+    |(
+(
+		lv_otherComm_6_0=RULE_COMMENT
+		{
+			newLeafNode(lv_otherComm_6_0, grammarAccess.getTypeAccess().getOtherCommCOMMENTTerminalRuleCall_5_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"otherComm",
+        		lv_otherComm_6_0, 
+        		"COMMENT");
+	    }
+
+)
+))*this_C_BRACE_R_7=RULE_C_BRACE_R
     { 
-    newLeafNode(this_C_BRACE_R_6, grammarAccess.getTypeAccess().getC_BRACE_RTerminalRuleCall_6()); 
+    newLeafNode(this_C_BRACE_R_7, grammarAccess.getTypeAccess().getC_BRACE_RTerminalRuleCall_6()); 
     }
 )
 ;
@@ -356,7 +394,7 @@ ruleField returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getFieldRule());
 	        }
-       		addWithLastConsumed(
+       		setWithLastConsumed(
        			$current, 
        			"comm",
         		lv_comm_0_0, 
@@ -364,7 +402,7 @@ ruleField returns [EObject current=null]
 	    }
 
 )
-)*(
+)(
 (
 (
 		{ 
@@ -819,7 +857,9 @@ RULE_NAME : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 RULE_STRING : '"' ~(('\r'|'\n'|'"'))* '"';
 
-RULE_COMMENT : ('/*' ( options {greedy=false;} : . )*'*/'|'//' ~(('\r'|'\n'))*);
+fragment RULE_COMMENT_END : '*/';
+
+RULE_COMMENT : ('/*' ( options {greedy=false;} : . )*RULE_COMMENT_END|'//' ~(('\r'|'\n'))*);
 
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 

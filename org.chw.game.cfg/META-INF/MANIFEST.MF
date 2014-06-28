@@ -30,4 +30,5 @@ Export-Package: org.chw.game,
  org.chw.game.parser.antlr.internal,
  org.chw.game.scoping,
  org.chw.game.formatting,
- org.chw.game.generator
+ org.chw.game.generator,
+ org.chw.game.validation

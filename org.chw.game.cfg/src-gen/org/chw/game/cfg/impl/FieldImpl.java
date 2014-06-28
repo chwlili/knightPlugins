@@ -1,12 +1,6 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg.impl;
-
-import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
@@ -14,16 +8,12 @@ import org.chw.game.cfg.Field;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,14 +34,24 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
 public class FieldImpl extends MinimalEObjectImpl.Container implements Field
 {
   /**
-   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute list.
+   * The default value of the '{@link #getComm() <em>Comm</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getComm()
    * @generated
    * @ordered
    */
-  protected EList<String> comm;
+  protected static final String COMM_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getComm()
+   * @generated
+   * @ordered
+   */
+  protected String comm = COMM_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -129,13 +129,22 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getComm()
+  public String getComm()
   {
-    if (comm == null)
-    {
-      comm = new EDataTypeEList<String>(String.class, this, CfgPackage.FIELD__COMM);
-    }
     return comm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setComm(String newComm)
+  {
+    String oldComm = comm;
+    comm = newComm;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__COMM, oldComm, comm));
   }
 
   /**
@@ -275,15 +284,13 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case CfgPackage.FIELD__COMM:
-        getComm().clear();
-        getComm().addAll((Collection<? extends String>)newValue);
+        setComm((String)newValue);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((EObject)newValue);
@@ -309,7 +316,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     switch (featureID)
     {
       case CfgPackage.FIELD__COMM:
-        getComm().clear();
+        setComm(COMM_EDEFAULT);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((EObject)null);
@@ -335,7 +342,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     switch (featureID)
     {
       case CfgPackage.FIELD__COMM:
-        return comm != null && !comm.isEmpty();
+        return COMM_EDEFAULT == null ? comm != null : !COMM_EDEFAULT.equals(comm);
       case CfgPackage.FIELD__TYPE:
         return type != null;
       case CfgPackage.FIELD__FIELD_NAME:

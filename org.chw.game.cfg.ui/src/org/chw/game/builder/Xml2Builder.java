@@ -1,11 +1,16 @@
 package org.chw.game.builder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
+import org.chw.game.cfg.XML2;
 import org.chw.game.ui.internal.CfgActivator;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -65,10 +70,53 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		return null;
 	}
 
-	private void fullBuild()
+	private void fullBuild() throws CoreException
 	{
-		URI uri=URI.createPlatformResourceURI(getProject().findMember("cfg-proto/at.xml2").getFullPath().toString());
+		String cfgDir=getProject().getPersistentProperty(Xml2Nature.CFG_DIR);
+		String xmlDir=getProject().getPersistentProperty(Xml2Nature.XML_DIR);
 		
+		final ArrayList<IFile> cfgFiles=new ArrayList<IFile>();
+		final ArrayList<IFile> xmlFiles=new ArrayList<IFile>();
+		
+		IFolder cfgFolder=(IFolder) getProject().findMember(cfgDir);
+		cfgFolder.accept(new IResourceVisitor()
+		{
+			@Override
+			public boolean visit(IResource resource) throws CoreException
+			{
+				if(resource instanceof IFile)
+				{
+					IFile file=(IFile)resource;
+					if(file.getName().endsWith(".xml2"))
+					{
+						cfgFiles.add(file);
+					}
+					return false;
+				}
+				return true;
+			}
+		});
+		
+		IFolder xmlFolder=(IFolder) getProject().findMember(xmlDir);
+		xmlFolder.accept(new IResourceVisitor()
+		{
+			@Override
+			public boolean visit(IResource resource) throws CoreException
+			{
+				if(resource instanceof IFile)
+				{
+					IFile file=(IFile)resource;
+					if(file.getName().endsWith(".xml2"))
+					{
+						xmlFiles.add(file);
+					}
+					return false;
+				}
+				return true;
+			}
+		});
+		
+		URI uri=URI.createPlatformResourceURI(getProject().findMember("cfg-proto/at.xml2").getFullPath().toString(),true);
 		IFile file=(IFile) getProject().findMember("cfg-proto/at.xml2");
 		
 		Resource res=factory.createResource(uri);
@@ -82,8 +130,12 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		}
 		
 		EList<EObject> list=res.getContents();
-		Object obj=res.getAllContents();
 		
+		XML2 xml2=(XML2)list.get(0);
+		if(xml2!=null)
+		{
+			System.out.println(xml2.getTypes());
+		}
 	}
 	
 	private void incrementalBuild()

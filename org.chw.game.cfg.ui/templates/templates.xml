@@ -1,25 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个单值字段" enabled="true" name="单值字段">//${comm}&#13;
-${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;
-&#13;
-</template><template autoinsert="true" context="org.chw.game.Cfg.Type" deleted="false" description="插入一个类型定义" enabled="true" name="类型定义">/**&#13;
- * ${comment}&#13;
- */&#13;
-type ${name}&#13;
-{&#13;
-	${cursor}&#13;
-}&#13;
-</template><template autoinsert="true" context="org.chw.game.Cfg.Type" deleted="false" description="插入一个起始类型" enabled="true" name="类型定义(起始)">/**&#13;
- * ${comment}&#13;
- */&#13;
-[input(file="${filePath}",node="${xpath}")]&#13;
-type ${name}&#13;
-{&#13;
-	${cursor}&#13;
-}&#13;
-</template><template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值字段" enabled="true" name="列表字段">//${comm}&#13;
-List&lt;${type:CrossReference(Field.type)}&gt; ${name} = "${xpath}";&#13;
-&#13;
-</template><template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值可索引字段" enabled="true" name="字典字段">//${comm}&#13;
-Hash&lt;${type:CrossReference(Field.type)}&gt;(${params}) ${name} = "${xpath}" ;&#13;
-&#13;
-</template></templates>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<templates>
+	<template autoinsert="true" context="org.chw.game.Cfg.Type" deleted="false" description="插入一个类型定义" enabled="true" name="类型定义" id="type">/**&#13; * ${comment}&#13; */&#13;type ${name}&#13;{&#13;	${cursor}&#13;}&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Type"	deleted="false" description="插入一个起始类型" enabled="true" name="类型定义(起始)"	id="main">/**&#13; * ${comment}&#13; */&#13;[input(file="${filePath}",node="${xpath}")]&#13;type ${name}&#13;{&#13;	${cursor}&#13;}&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个单值字段" enabled="true" name="单值字段" id="singleField">//${comm}&#13;${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值字段" enabled="true" name="列表字段" id="listField">//${comm}&#13;List&lt;${type:CrossReference(Field.type)}&gt; ${name} = "${xpath}" ;&#13;&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值可索引字段" enabled="true" name="字典字段" id="hashField">//${comm}&#13;Hash&lt;${type:CrossReference(Field.type)}&gt;(${params}) ${name} = "${xpath}" ;&#13;&#13;</template>
+</templates>

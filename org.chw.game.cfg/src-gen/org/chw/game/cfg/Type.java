@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg;
 
@@ -23,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.chw.game.cfg.Type#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getFields <em>Fields</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Type#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,20 +30,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Type extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Comm</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Comm</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Comm</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Comm</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Comm</em>' attribute list.
+   * @return the value of the '<em>Comm</em>' attribute.
+   * @see #setComm(String)
    * @see org.chw.game.cfg.CfgPackage#getType_Comm()
-   * @model unique="false"
+   * @model
    * @generated
    */
-  EList<String> getComm();
+  String getComm();
+
+  /**
+   * Sets the value of the '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Comm</em>' attribute.
+   * @see #getComm()
+   * @generated
+   */
+  void setComm(String value);
 
   /**
    * Returns the value of the '<em><b>Input</b></em>' containment reference.
@@ -141,5 +148,21 @@ public interface Type extends EObject
    * @generated
    */
   EList<Field> getFields();
+
+  /**
+   * Returns the value of the '<em><b>Other Comm</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Other Comm</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Other Comm</em>' attribute list.
+   * @see org.chw.game.cfg.CfgPackage#getType_OtherComm()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getOtherComm();
 
 } // Type

@@ -79,7 +79,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comm+=COMMENT* (type=NativeType | type=ListType | type=HashType) fieldName=NAME nodePath=STRING)
+	 *     (comm=COMMENT (type=NativeType | type=ListType | type=HashType) fieldName=NAME nodePath=STRING)
 	 */
 	protected void sequence_Field(EObject context, Field semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -138,7 +138,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comm+=COMMENT* input=Input? prefix=C_TYPE name=NAME fields+=Field*)
+	 *     (comm=COMMENT input=Input? prefix=C_TYPE name=NAME (fields+=Field | otherComm+=COMMENT)*)
 	 */
 	protected void sequence_Type(EObject context, Type semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -147,7 +147,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     types+=Type*
+	 *     (types+=Type | otherComm+=COMMENT)*
 	 */
 	protected void sequence_XML2(EObject context, XML2 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg.impl;
 
@@ -34,7 +30,7 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     try
     {
-      CfgFactory theCfgFactory = (CfgFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.chw.org/game/Cfg"); 
+      CfgFactory theCfgFactory = (CfgFactory)EPackage.Registry.INSTANCE.getEFactory(CfgPackage.eNS_URI);
       if (theCfgFactory != null)
       {
         return theCfgFactory;

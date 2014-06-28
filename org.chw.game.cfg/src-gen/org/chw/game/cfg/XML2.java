@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg;
 
@@ -19,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.chw.game.cfg.XML2#getTypes <em>Types</em>}</li>
+ *   <li>{@link org.chw.game.cfg.XML2#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,5 +40,21 @@ public interface XML2 extends EObject
    * @generated
    */
   EList<Type> getTypes();
+
+  /**
+   * Returns the value of the '<em><b>Other Comm</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Other Comm</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Other Comm</em>' attribute list.
+   * @see org.chw.game.cfg.CfgPackage#getXML2_OtherComm()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getOtherComm();
 
 } // XML2

@@ -31,12 +31,25 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setLinewrap().before(grammarAccess.getFieldRule());
 		c.setLinewrap(2).after(grammarAccess.getFieldRule());
 
+		c.setLinewrap().before(grammarAccess.getCOMMENTRule());
 		c.setLinewrap().after(grammarAccess.getCOMMENTRule());
-
+		c.setLinewrap().after(grammarAccess.getInputRule());
+		
 		c.setLinewrap().before(grammarAccess.getC_BRACE_LRule());
 		c.setLinewrap().before(grammarAccess.getC_BRACE_RRule());
 
 		c.setIndentationIncrement().after(grammarAccess.getC_BRACE_LRule());
 		c.setIndentationDecrement().before(grammarAccess.getC_BRACE_RRule());
+
+		c.setNoSpace().before(grammarAccess.getC_ANGLE_LRule());
+		c.setNoSpace().after(grammarAccess.getC_ANGLE_LRule());
+		c.setNoSpace().before(grammarAccess.getC_ANGLE_RRule());
+		
+		c.setNoSpace().before(grammarAccess.getC_INPUTRule());
+		c.setNoSpace().after(grammarAccess.getC_INPUTRule());
+		c.setNoSpace().before(grammarAccess.getC_BRACKET_RRule());
+		c.setNoSpace().before(grammarAccess.getC_PAREN_LRule());
+		c.setNoSpace().after(grammarAccess.getC_PAREN_LRule());
+		c.setNoSpace().before(grammarAccess.getC_PAREN_RRule());
 	}
 }

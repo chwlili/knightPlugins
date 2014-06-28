@@ -1,12 +1,6 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -32,20 +26,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Field extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Comm</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Comm</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Comm</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Comm</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Comm</em>' attribute list.
+   * @return the value of the '<em>Comm</em>' attribute.
+   * @see #setComm(String)
    * @see org.chw.game.cfg.CfgPackage#getField_Comm()
-   * @model unique="false"
+   * @model
    * @generated
    */
-  EList<String> getComm();
+  String getComm();
+
+  /**
+   * Sets the value of the '{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Comm</em>' attribute.
+   * @see #getComm()
+   * @generated
+   */
+  void setComm(String value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' containment reference.

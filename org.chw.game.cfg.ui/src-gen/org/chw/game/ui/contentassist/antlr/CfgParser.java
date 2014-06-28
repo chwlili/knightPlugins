@@ -37,6 +37,8 @@ public class CfgParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getXML2Access().getAlternatives(), "rule__XML2__Alternatives");
+					put(grammarAccess.getTypeAccess().getAlternatives_5(), "rule__Type__Alternatives_5");
 					put(grammarAccess.getFieldAccess().getTypeAlternatives_1_0(), "rule__Field__TypeAlternatives_1_0");
 					put(grammarAccess.getTypeNameAccess().getAlternatives(), "rule__TypeName__Alternatives");
 					put(grammarAccess.getTypeAccess().getGroup(), "rule__Type__Group__0");
@@ -47,12 +49,14 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHashTypeAccess().getGroup(), "rule__HashType__Group__0");
 					put(grammarAccess.getHashTypeAccess().getGroup_4(), "rule__HashType__Group_4__0");
 					put(grammarAccess.getHashTypeAccess().getGroup_4_2(), "rule__HashType__Group_4_2__0");
-					put(grammarAccess.getXML2Access().getTypesAssignment(), "rule__XML2__TypesAssignment");
+					put(grammarAccess.getXML2Access().getTypesAssignment_0(), "rule__XML2__TypesAssignment_0");
+					put(grammarAccess.getXML2Access().getOtherCommAssignment_1(), "rule__XML2__OtherCommAssignment_1");
 					put(grammarAccess.getTypeAccess().getCommAssignment_0(), "rule__Type__CommAssignment_0");
 					put(grammarAccess.getTypeAccess().getInputAssignment_1(), "rule__Type__InputAssignment_1");
 					put(grammarAccess.getTypeAccess().getPrefixAssignment_2(), "rule__Type__PrefixAssignment_2");
 					put(grammarAccess.getTypeAccess().getNameAssignment_3(), "rule__Type__NameAssignment_3");
-					put(grammarAccess.getTypeAccess().getFieldsAssignment_5(), "rule__Type__FieldsAssignment_5");
+					put(grammarAccess.getTypeAccess().getFieldsAssignment_5_0(), "rule__Type__FieldsAssignment_5_0");
+					put(grammarAccess.getTypeAccess().getOtherCommAssignment_5_1(), "rule__Type__OtherCommAssignment_5_1");
 					put(grammarAccess.getInputAccess().getPrefixAssignment_1(), "rule__Input__PrefixAssignment_1");
 					put(grammarAccess.getInputAccess().getFilePathAssignment_5(), "rule__Input__FilePathAssignment_5");
 					put(grammarAccess.getInputAccess().getNodePathAssignment_6_3(), "rule__Input__NodePathAssignment_6_3");

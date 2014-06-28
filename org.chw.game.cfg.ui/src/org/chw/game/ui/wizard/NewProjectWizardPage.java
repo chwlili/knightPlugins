@@ -47,8 +47,8 @@ public class NewProjectWizardPage extends WizardPage
 	public NewProjectWizardPage()
 	{
 		super("wizardPage"); //$NON-NLS-1$
-		setTitle("Config库项目");
-		setDescription("建立一个config 库项目");
+		setTitle("Xml2As 库项目");
+		setDescription("建立一个Xml2As 库项目");
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class NewProjectWizardPage extends WizardPage
 
 		cfgInput = new Text(group, SWT.BORDER);
 		cfgInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cfgInput.setText("cfg-xml");
+		cfgInput.setText("cfg");
 
 		cfgSelector = new Button(group, SWT.NONE);
 		cfgSelector.setText("    浏览...    ");
@@ -188,7 +188,7 @@ public class NewProjectWizardPage extends WizardPage
 
 		sourceInput = new Text(group, SWT.BORDER);
 		sourceInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		sourceInput.setText("cfg-proto");
+		sourceInput.setText("xml ");
 
 		sourceSelector = new Button(group, SWT.NONE);
 		sourceSelector.setText("    浏览...    ");

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg.impl;
 
@@ -40,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getFields <em>Fields</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,14 +45,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TypeImpl extends MinimalEObjectImpl.Container implements Type
 {
   /**
-   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute list.
+   * The default value of the '{@link #getComm() <em>Comm</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getComm()
    * @generated
    * @ordered
    */
-  protected EList<String> comm;
+  protected static final String COMM_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getComm()
+   * @generated
+   * @ordered
+   */
+  protected String comm = COMM_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
@@ -118,6 +125,16 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   protected EList<Field> fields;
 
   /**
+   * The cached value of the '{@link #getOtherComm() <em>Other Comm</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOtherComm()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> otherComm;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -143,13 +160,22 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getComm()
+  public String getComm()
   {
-    if (comm == null)
-    {
-      comm = new EDataTypeEList<String>(String.class, this, CfgPackage.TYPE__COMM);
-    }
     return comm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setComm(String newComm)
+  {
+    String oldComm = comm;
+    comm = newComm;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__COMM, oldComm, comm));
   }
 
   /**
@@ -265,6 +291,20 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getOtherComm()
+  {
+    if (otherComm == null)
+    {
+      otherComm = new EDataTypeEList<String>(String.class, this, CfgPackage.TYPE__OTHER_COMM);
+    }
+    return otherComm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -298,6 +338,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return getName();
       case CfgPackage.TYPE__FIELDS:
         return getFields();
+      case CfgPackage.TYPE__OTHER_COMM:
+        return getOtherComm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -314,8 +356,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case CfgPackage.TYPE__COMM:
-        getComm().clear();
-        getComm().addAll((Collection<? extends String>)newValue);
+        setComm((String)newValue);
         return;
       case CfgPackage.TYPE__INPUT:
         setInput((Input)newValue);
@@ -329,6 +370,10 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
       case CfgPackage.TYPE__FIELDS:
         getFields().clear();
         getFields().addAll((Collection<? extends Field>)newValue);
+        return;
+      case CfgPackage.TYPE__OTHER_COMM:
+        getOtherComm().clear();
+        getOtherComm().addAll((Collection<? extends String>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -345,7 +390,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case CfgPackage.TYPE__COMM:
-        getComm().clear();
+        setComm(COMM_EDEFAULT);
         return;
       case CfgPackage.TYPE__INPUT:
         setInput((Input)null);
@@ -358,6 +403,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return;
       case CfgPackage.TYPE__FIELDS:
         getFields().clear();
+        return;
+      case CfgPackage.TYPE__OTHER_COMM:
+        getOtherComm().clear();
         return;
     }
     super.eUnset(featureID);
@@ -374,7 +422,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case CfgPackage.TYPE__COMM:
-        return comm != null && !comm.isEmpty();
+        return COMM_EDEFAULT == null ? comm != null : !COMM_EDEFAULT.equals(comm);
       case CfgPackage.TYPE__INPUT:
         return input != null;
       case CfgPackage.TYPE__PREFIX:
@@ -383,6 +431,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case CfgPackage.TYPE__FIELDS:
         return fields != null && !fields.isEmpty();
+      case CfgPackage.TYPE__OTHER_COMM:
+        return otherComm != null && !otherComm.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -404,6 +454,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     result.append(prefix);
     result.append(", name: ");
     result.append(name);
+    result.append(", otherComm: ");
+    result.append(otherComm);
     result.append(')');
     return result.toString();
   }

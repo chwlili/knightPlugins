@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg;
 
@@ -80,13 +76,22 @@ public interface CfgPackage extends EPackage
   int XML2__TYPES = 0;
 
   /**
+   * The feature id for the '<em><b>Other Comm</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int XML2__OTHER_COMM = 1;
+
+  /**
    * The number of structural features of the '<em>XML2</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2_FEATURE_COUNT = 1;
+  int XML2_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.TypeImpl <em>Type</em>}' class.
@@ -99,7 +104,7 @@ public interface CfgPackage extends EPackage
   int TYPE = 1;
 
   /**
-   * The feature id for the '<em><b>Comm</b></em>' attribute list.
+   * The feature id for the '<em><b>Comm</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -144,13 +149,22 @@ public interface CfgPackage extends EPackage
   int TYPE__FIELDS = 4;
 
   /**
+   * The feature id for the '<em><b>Other Comm</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE__OTHER_COMM = 5;
+
+  /**
    * The number of structural features of the '<em>Type</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE_FEATURE_COUNT = 5;
+  int TYPE_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.InputImpl <em>Input</em>}' class.
@@ -209,7 +223,7 @@ public interface CfgPackage extends EPackage
   int FIELD = 3;
 
   /**
-   * The feature id for the '<em><b>Comm</b></em>' attribute list.
+   * The feature id for the '<em><b>Comm</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -369,6 +383,17 @@ public interface CfgPackage extends EPackage
   EReference getXML2_Types();
 
   /**
+   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.XML2#getOtherComm <em>Other Comm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Other Comm</em>'.
+   * @see org.chw.game.cfg.XML2#getOtherComm()
+   * @see #getXML2()
+   * @generated
+   */
+  EAttribute getXML2_OtherComm();
+
+  /**
    * Returns the meta object for class '{@link org.chw.game.cfg.Type <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -379,10 +404,10 @@ public interface CfgPackage extends EPackage
   EClass getType();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Comm</em>'.
+   * @return the meta object for the attribute '<em>Comm</em>'.
    * @see org.chw.game.cfg.Type#getComm()
    * @see #getType()
    * @generated
@@ -432,6 +457,17 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EReference getType_Fields();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.Type#getOtherComm <em>Other Comm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Other Comm</em>'.
+   * @see org.chw.game.cfg.Type#getOtherComm()
+   * @see #getType()
+   * @generated
+   */
+  EAttribute getType_OtherComm();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.Input <em>Input</em>}'.
@@ -487,10 +523,10 @@ public interface CfgPackage extends EPackage
   EClass getField();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Comm</em>'.
+   * @return the meta object for the attribute '<em>Comm</em>'.
    * @see org.chw.game.cfg.Field#getComm()
    * @see #getField()
    * @generated
@@ -646,6 +682,14 @@ public interface CfgPackage extends EPackage
     EReference XML2__TYPES = eINSTANCE.getXML2_Types();
 
     /**
+     * The meta object literal for the '<em><b>Other Comm</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute XML2__OTHER_COMM = eINSTANCE.getXML2_OtherComm();
+
+    /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.TypeImpl <em>Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -656,7 +700,7 @@ public interface CfgPackage extends EPackage
     EClass TYPE = eINSTANCE.getType();
 
     /**
-     * The meta object literal for the '<em><b>Comm</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Comm</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -694,6 +738,14 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EReference TYPE__FIELDS = eINSTANCE.getType_Fields();
+
+    /**
+     * The meta object literal for the '<em><b>Other Comm</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TYPE__OTHER_COMM = eINSTANCE.getType_OtherComm();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.InputImpl <em>Input</em>}' class.
@@ -740,7 +792,7 @@ public interface CfgPackage extends EPackage
     EClass FIELD = eINSTANCE.getField();
 
     /**
-     * The meta object literal for the '<em><b>Comm</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Comm</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

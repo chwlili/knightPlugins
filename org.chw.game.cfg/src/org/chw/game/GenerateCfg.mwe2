@@ -8,7 +8,7 @@ var grammarURI = "classpath:/org/chw/game/Cfg.xtext"
 var fileExtensions = "xml2"
 var projectName = "org.chw.game.cfg"
 var runtimeProject = "../${projectName}"
-var generateXtendStub = true
+var generateXtendStub = false
 
 Workflow {
     bean = StandaloneSetup {
@@ -66,10 +66,10 @@ Workflow {
     		}
     
     		// Xtend-based API for validation
-    		//fragment = validation.ValidatorFragment auto-inject {
+    		fragment = validation.ValidatorFragment auto-inject {
     		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
     		//    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-    		//}
+    		}
     
     		// old scoping and exporting API
     		// fragment = scoping.ImportURIScopingFragment auto-inject {}

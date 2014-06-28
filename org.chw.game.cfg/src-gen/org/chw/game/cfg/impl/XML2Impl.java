@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package org.chw.game.cfg.impl;
 
@@ -21,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -32,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getTypes <em>Types</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,6 +46,16 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * @ordered
    */
   protected EList<Type> types;
+
+  /**
+   * The cached value of the '{@link #getOtherComm() <em>Other Comm</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOtherComm()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> otherComm;
 
   /**
    * <!-- begin-user-doc -->
@@ -89,6 +97,20 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getOtherComm()
+  {
+    if (otherComm == null)
+    {
+      otherComm = new EDataTypeEList<String>(String.class, this, CfgPackage.XML2__OTHER_COMM);
+    }
+    return otherComm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -112,6 +134,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
     {
       case CfgPackage.XML2__TYPES:
         return getTypes();
+      case CfgPackage.XML2__OTHER_COMM:
+        return getOtherComm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -131,6 +155,10 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
         getTypes().clear();
         getTypes().addAll((Collection<? extends Type>)newValue);
         return;
+      case CfgPackage.XML2__OTHER_COMM:
+        getOtherComm().clear();
+        getOtherComm().addAll((Collection<? extends String>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -148,6 +176,9 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         return;
+      case CfgPackage.XML2__OTHER_COMM:
+        getOtherComm().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -164,8 +195,27 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
     {
       case CfgPackage.XML2__TYPES:
         return types != null && !types.isEmpty();
+      case CfgPackage.XML2__OTHER_COMM:
+        return otherComm != null && !otherComm.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (otherComm: ");
+    result.append(otherComm);
+    result.append(')');
+    return result.toString();
   }
 
 } //XML2Impl
