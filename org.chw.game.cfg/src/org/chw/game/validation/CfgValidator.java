@@ -7,6 +7,7 @@ import org.chw.game.cfg.Field;
 import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -137,14 +138,14 @@ public class CfgValidator extends AbstractCfgValidator
 						fieldNameTable.add(typeField.getFieldName());
 					}
 					
-					EList<String> params=type.getParams();
+					EList<Param> params=type.getParams();
 					if(params!=null && params.size()>0)
 					{
 						for(int i=0;i<params.size();i++)
 						{
-							if(!fieldNameTable.contains(params.get(i)))
+							if(!fieldNameTable.contains(params.get(i).getParamName()))
 							{
-								error(fieldType.getName()+" 没有定义名为 "+params.get(i)+" 的字段",type,CfgPackage.Literals.HASH_TYPE__PARAMS,i);
+								error(fieldType.getName()+" 没有定义名为 "+params.get(i).getParamName()+" 的字段",type,CfgPackage.Literals.HASH_TYPE__PARAMS,i);
 							}
 						}
 					}
@@ -156,7 +157,7 @@ public class CfgValidator extends AbstractCfgValidator
 					HashSet<String> errorNames=new HashSet<String>();
 					for(int i=0;i<type.getParams().size();i++)
 					{
-						String name=type.getParams().get(i);
+						String name=type.getParams().get(i).getParamName();
 						if(names.contains(name))
 						{
 							errorNames.add(name);

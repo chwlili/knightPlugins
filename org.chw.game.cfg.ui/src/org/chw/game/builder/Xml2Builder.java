@@ -116,25 +116,27 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			}
 		});
 		
-		URI uri=URI.createPlatformResourceURI(getProject().findMember("cfg-proto/at.xml2").getFullPath().toString(),true);
-		IFile file=(IFile) getProject().findMember("cfg-proto/at.xml2");
 		
-		Resource res=factory.createResource(uri);
-		try
+		for(IFile cfgFile:cfgFiles)
 		{
-			res.load(file.getContents() , null);
-		}
-		catch (IOException | CoreException e)
-		{
-			e.printStackTrace();
-		}
-		
-		EList<EObject> list=res.getContents();
-		
-		XML2 xml2=(XML2)list.get(0);
-		if(xml2!=null)
-		{
-			System.out.println(xml2.getTypes());
+			URI emfURI=URI.createPlatformResourceURI(cfgFile.getFullPath().toString(),true);
+			Resource emfFile=factory.createResource(emfURI);
+			try
+			{
+				emfFile.load(cfgFile.getContents() , null);
+			}
+			catch (IOException | CoreException e)
+			{
+				e.printStackTrace();
+			}
+			
+			EList<EObject> list=emfFile.getContents();
+			
+			XML2 xml2=(XML2)list.get(0);
+			if(xml2!=null)
+			{
+				System.out.println(xml2.getTypes());
+			}
 		}
 	}
 	

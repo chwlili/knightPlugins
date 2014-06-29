@@ -86,6 +86,15 @@ public interface CfgFactory extends EFactory
   HashType createHashType();
 
   /**
+   * Returns a new object of class '<em>Param</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Param</em>'.
+   * @generated
+   */
+  Param createParam();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

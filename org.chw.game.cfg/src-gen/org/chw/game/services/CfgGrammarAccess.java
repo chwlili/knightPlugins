@@ -326,19 +326,19 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final RuleCall cC_PAREN_LTerminalRuleCall_4_0 = (RuleCall)cGroup_4.eContents().get(0);
 		private final Assignment cParamsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cParamsNAMETerminalRuleCall_4_1_0 = (RuleCall)cParamsAssignment_4_1.eContents().get(0);
+		private final RuleCall cParamsParamParserRuleCall_4_1_0 = (RuleCall)cParamsAssignment_4_1.eContents().get(0);
 		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
 		private final RuleCall cC_COMMATerminalRuleCall_4_2_0 = (RuleCall)cGroup_4_2.eContents().get(0);
 		private final Assignment cParamsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cParamsNAMETerminalRuleCall_4_2_1_0 = (RuleCall)cParamsAssignment_4_2_1.eContents().get(0);
+		private final RuleCall cParamsParamParserRuleCall_4_2_1_0 = (RuleCall)cParamsAssignment_4_2_1.eContents().get(0);
 		private final RuleCall cC_PAREN_RTerminalRuleCall_4_3 = (RuleCall)cGroup_4.eContents().get(3);
 		
 		//HashType:
 		//
-		//	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=NAME (C_COMMA params+=NAME)* C_PAREN_R)?;
+		//	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?;
 		public ParserRule getRule() { return rule; }
 
-		//C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=NAME (C_COMMA params+=NAME)* C_PAREN_R)?
+		//C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?
 		public Group getGroup() { return cGroup; }
 
 		//C_HASH
@@ -356,32 +356,49 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_ANGLE_R
 		public RuleCall getC_ANGLE_RTerminalRuleCall_3() { return cC_ANGLE_RTerminalRuleCall_3; }
 
-		//(C_PAREN_L params+=NAME (C_COMMA params+=NAME)* C_PAREN_R)?
+		//(C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//C_PAREN_L
 		public RuleCall getC_PAREN_LTerminalRuleCall_4_0() { return cC_PAREN_LTerminalRuleCall_4_0; }
 
-		//params+=NAME
+		//params+=Param
 		public Assignment getParamsAssignment_4_1() { return cParamsAssignment_4_1; }
 
-		//NAME
-		public RuleCall getParamsNAMETerminalRuleCall_4_1_0() { return cParamsNAMETerminalRuleCall_4_1_0; }
+		//Param
+		public RuleCall getParamsParamParserRuleCall_4_1_0() { return cParamsParamParserRuleCall_4_1_0; }
 
-		//(C_COMMA params+=NAME)*
+		//(C_COMMA params+=Param)*
 		public Group getGroup_4_2() { return cGroup_4_2; }
 
 		//C_COMMA
 		public RuleCall getC_COMMATerminalRuleCall_4_2_0() { return cC_COMMATerminalRuleCall_4_2_0; }
 
-		//params+=NAME
+		//params+=Param
 		public Assignment getParamsAssignment_4_2_1() { return cParamsAssignment_4_2_1; }
 
-		//NAME
-		public RuleCall getParamsNAMETerminalRuleCall_4_2_1_0() { return cParamsNAMETerminalRuleCall_4_2_1_0; }
+		//Param
+		public RuleCall getParamsParamParserRuleCall_4_2_1_0() { return cParamsParamParserRuleCall_4_2_1_0; }
 
 		//C_PAREN_R
 		public RuleCall getC_PAREN_RTerminalRuleCall_4_3() { return cC_PAREN_RTerminalRuleCall_4_3; }
+	}
+
+	public class ParamElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Param");
+		private final Assignment cParamNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cParamNameNAMETerminalRuleCall_0 = (RuleCall)cParamNameAssignment.eContents().get(0);
+		
+		//Param:
+		//
+		//	paramName=NAME;
+		public ParserRule getRule() { return rule; }
+
+		//paramName=NAME
+		public Assignment getParamNameAssignment() { return cParamNameAssignment; }
+
+		//NAME
+		public RuleCall getParamNameNAMETerminalRuleCall_0() { return cParamNameNAMETerminalRuleCall_0; }
 	}
 
 	public class TypeNameElements extends AbstractParserRuleElementFinder {
@@ -453,6 +470,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private NativeTypeElements pNativeType;
 	private ListTypeElements pListType;
 	private HashTypeElements pHashType;
+	private ParamElements pParam;
 	private TypeNameElements pTypeName;
 	private TerminalRule tC_BRACKET_L;
 	private TerminalRule tC_BRACKET_R;
@@ -582,13 +600,24 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//HashType:
 	//
-	//	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=NAME (C_COMMA params+=NAME)* C_PAREN_R)?;
+	//	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?;
 	public HashTypeElements getHashTypeAccess() {
 		return (pHashType != null) ? pHashType : (pHashType = new HashTypeElements());
 	}
 	
 	public ParserRule getHashTypeRule() {
 		return getHashTypeAccess().getRule();
+	}
+
+	//Param:
+	//
+	//	paramName=NAME;
+	public ParamElements getParamAccess() {
+		return (pParam != null) ? pParam : (pParam = new ParamElements());
+	}
+	
+	public ParserRule getParamRule() {
+		return getParamAccess().getRule();
 	}
 
 	//TypeName:

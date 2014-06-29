@@ -343,7 +343,7 @@ public interface CfgPackage extends EPackage
   int HASH_TYPE__TYPE = 0;
 
   /**
-   * The feature id for the '<em><b>Params</b></em>' attribute list.
+   * The feature id for the '<em><b>Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -359,6 +359,34 @@ public interface CfgPackage extends EPackage
    * @ordered
    */
   int HASH_TYPE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.ParamImpl <em>Param</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.ParamImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getParam()
+   * @generated
+   */
+  int PARAM = 7;
+
+  /**
+   * The feature id for the '<em><b>Param Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAM__PARAM_NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Param</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAM_FEATURE_COUNT = 1;
 
 
   /**
@@ -630,15 +658,36 @@ public interface CfgPackage extends EPackage
   EAttribute getHashType_Type();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.HashType#getParams <em>Params</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.HashType#getParams <em>Params</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Params</em>'.
+   * @return the meta object for the containment reference list '<em>Params</em>'.
    * @see org.chw.game.cfg.HashType#getParams()
    * @see #getHashType()
    * @generated
    */
-  EAttribute getHashType_Params();
+  EReference getHashType_Params();
+
+  /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.Param <em>Param</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Param</em>'.
+   * @see org.chw.game.cfg.Param
+   * @generated
+   */
+  EClass getParam();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Param#getParamName <em>Param Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Param Name</em>'.
+   * @see org.chw.game.cfg.Param#getParamName()
+   * @see #getParam()
+   * @generated
+   */
+  EAttribute getParam_ParamName();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -878,12 +927,30 @@ public interface CfgPackage extends EPackage
     EAttribute HASH_TYPE__TYPE = eINSTANCE.getHashType_Type();
 
     /**
-     * The meta object literal for the '<em><b>Params</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HASH_TYPE__PARAMS = eINSTANCE.getHashType_Params();
+    EReference HASH_TYPE__PARAMS = eINSTANCE.getHashType_Params();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.ParamImpl <em>Param</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.ParamImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getParam()
+     * @generated
+     */
+    EClass PARAM = eINSTANCE.getParam();
+
+    /**
+     * The meta object literal for the '<em><b>Param Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARAM__PARAM_NAME = eINSTANCE.getParam_ParamName();
 
   }
 

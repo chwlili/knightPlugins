@@ -9,6 +9,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -74,6 +75,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * @generated
    */
   private EClass hashTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass paramEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -393,9 +401,29 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getHashType_Params()
+  public EReference getHashType_Params()
   {
-    return (EAttribute)hashTypeEClass.getEStructuralFeatures().get(1);
+    return (EReference)hashTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParam()
+  {
+    return paramEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getParam_ParamName()
+  {
+    return (EAttribute)paramEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -459,7 +487,10 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     hashTypeEClass = createEClass(HASH_TYPE);
     createEAttribute(hashTypeEClass, HASH_TYPE__TYPE);
-    createEAttribute(hashTypeEClass, HASH_TYPE__PARAMS);
+    createEReference(hashTypeEClass, HASH_TYPE__PARAMS);
+
+    paramEClass = createEClass(PARAM);
+    createEAttribute(paramEClass, PARAM__PARAM_NAME);
   }
 
   /**
@@ -524,7 +555,10 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     initEClass(hashTypeEClass, HashType.class, "HashType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHashType_Type(), ecorePackage.getEString(), "type", null, 0, 1, HashType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHashType_Params(), ecorePackage.getEString(), "params", null, 0, -1, HashType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHashType_Params(), this.getParam(), null, "params", null, 0, -1, HashType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(paramEClass, Param.class, "Param", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParam_ParamName(), ecorePackage.getEString(), "paramName", null, 0, 1, Param.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

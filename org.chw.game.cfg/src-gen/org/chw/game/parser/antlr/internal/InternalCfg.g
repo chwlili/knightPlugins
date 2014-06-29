@@ -644,19 +644,19 @@ this_C_ANGLE_L_1=RULE_C_ANGLE_L
     }
 (
 (
-		lv_params_5_0=RULE_NAME
-		{
-			newLeafNode(lv_params_5_0, grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_1_0()); 
+	    }
+		lv_params_5_0=ruleParam		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getHashTypeRule());
+	            $current = createModelElementForParent(grammarAccess.getHashTypeRule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
        			"params",
         		lv_params_5_0, 
-        		"NAME");
+        		"Param");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -666,19 +666,19 @@ this_C_ANGLE_L_1=RULE_C_ANGLE_L
     }
 (
 (
-		lv_params_7_0=RULE_NAME
-		{
-			newLeafNode(lv_params_7_0, grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_2_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_2_1_0()); 
+	    }
+		lv_params_7_0=ruleParam		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getHashTypeRule());
+	            $current = createModelElementForParent(grammarAccess.getHashTypeRule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
        			"params",
         		lv_params_7_0, 
-        		"NAME");
+        		"Param");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -687,6 +687,45 @@ this_C_ANGLE_L_1=RULE_C_ANGLE_L
     newLeafNode(this_C_PAREN_R_8, grammarAccess.getHashTypeAccess().getC_PAREN_RTerminalRuleCall_4_3()); 
     }
 )?)
+;
+
+
+
+
+
+// Entry rule entryRuleParam
+entryRuleParam returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getParamRule()); }
+	 iv_ruleParam=ruleParam 
+	 { $current=$iv_ruleParam.current; } 
+	 EOF 
+;
+
+// Rule Param
+ruleParam returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_paramName_0_0=RULE_NAME
+		{
+			newLeafNode(lv_paramName_0_0, grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getParamRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"paramName",
+        		lv_paramName_0_0, 
+        		"NAME");
+	    }
+
+)
+)
 ;
 
 

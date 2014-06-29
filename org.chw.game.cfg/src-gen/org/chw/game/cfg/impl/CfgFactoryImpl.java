@@ -71,6 +71,7 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.NATIVE_TYPE: return createNativeType();
       case CfgPackage.LIST_TYPE: return createListType();
       case CfgPackage.HASH_TYPE: return createHashType();
+      case CfgPackage.PARAM: return createParam();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -151,6 +152,17 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     HashTypeImpl hashType = new HashTypeImpl();
     return hashType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Param createParam()
+  {
+    ParamImpl param = new ParamImpl();
+    return param;
   }
 
   /**

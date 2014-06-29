@@ -8,6 +8,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.chw.game.services.CfgGrammarAccess;
@@ -61,6 +62,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else break;
+			case CfgPackage.PARAM:
+				if(context == grammarAccess.getParamRule()) {
+					sequence_Param(context, (Param) semanticObject); 
+					return; 
+				}
+				else break;
 			case CfgPackage.TYPE:
 				if(context == grammarAccess.getTypeRule()) {
 					sequence_Type(context, (Type) semanticObject); 
@@ -88,7 +95,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (type=TypeName (params+=NAME params+=NAME*)?)
+	 *     (type=TypeName (params+=Param params+=Param*)?)
 	 */
 	protected void sequence_HashType(EObject context, HashType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -132,6 +139,22 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getNativeTypeAccess().getTypeTypeNameParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     paramName=NAME
+	 */
+	protected void sequence_Param(EObject context, Param semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PARAM__PARAM_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PARAM__PARAM_NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0(), semanticObject.getParamName());
 		feeder.finish();
 	}
 	

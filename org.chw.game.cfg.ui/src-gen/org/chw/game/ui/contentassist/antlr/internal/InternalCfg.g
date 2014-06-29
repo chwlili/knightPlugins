@@ -252,6 +252,34 @@ finally {
 
 
 
+// Entry rule entryRuleParam
+entryRuleParam 
+:
+{ before(grammarAccess.getParamRule()); }
+	 ruleParam
+{ after(grammarAccess.getParamRule()); } 
+	 EOF 
+;
+
+// Rule Param
+ruleParam
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getParamAccess().getParamNameAssignment()); }
+(rule__Param__ParamNameAssignment)
+{ after(grammarAccess.getParamAccess().getParamNameAssignment()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleTypeName
 entryRuleTypeName 
 :
@@ -1978,8 +2006,8 @@ rule__HashType__ParamsAssignment_4_1
     }
 :
 (
-{ before(grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_1_0()); }
-	RULE_NAME{ after(grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_1_0()); }
+{ before(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_1_0()); }
+	ruleParam{ after(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_1_0()); }
 )
 
 ;
@@ -1993,8 +2021,23 @@ rule__HashType__ParamsAssignment_4_2_1
     }
 :
 (
-{ before(grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_2_1_0()); }
-	RULE_NAME{ after(grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_2_1_0()); }
+{ before(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_2_1_0()); }
+	ruleParam{ after(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_2_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Param__ParamNameAssignment
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0()); }
+	RULE_NAME{ after(grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0()); }
 )
 
 ;

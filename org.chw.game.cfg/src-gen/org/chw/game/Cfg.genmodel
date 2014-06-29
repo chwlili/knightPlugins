@@ -38,7 +38,10 @@
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//HashType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//HashType/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//HashType/params"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//HashType/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//Param">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Param/paramName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

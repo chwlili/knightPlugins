@@ -23,7 +23,10 @@ ListType:
 	C_LIST C_ANGLE_L type=TypeName C_ANGLE_R;
 
 HashType:
-	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=NAME (C_COMMA params+=NAME)* C_PAREN_R)?;
+	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?;
+
+Param:
+	paramName=NAME;
 
 TypeName:
 	C_INPUT | C_FILE | C_NODE | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_HASH | NAME;

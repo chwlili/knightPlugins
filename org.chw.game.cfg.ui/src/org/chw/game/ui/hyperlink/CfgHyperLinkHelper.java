@@ -5,6 +5,7 @@ import org.chw.game.cfg.Field;
 import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.ecore.EObject;
@@ -73,13 +74,13 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 			ListType field = (ListType) emfNode;
 			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.LIST_TYPE__TYPE))
 			{
-				if(offset<leaf.getOffset() || leaf.getOffset()+leaf.getLength()<offset)
+				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() <= offset)
 				{
 					return;
 				}
-				
+
 				emfNode = leaf.getSemanticElement();
-				
+
 				String type = field.getType();
 				if (type.equals("boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
 				{
@@ -101,18 +102,18 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 				break;
 			}
 		}
-		else if(emfNode instanceof HashType)
+		else if (emfNode instanceof HashType)
 		{
 			HashType field = (HashType) emfNode;
 			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.HASH_TYPE__TYPE))
 			{
-				if(offset<leaf.getOffset() || leaf.getOffset()+leaf.getLength()<offset)
+				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() <= offset)
 				{
 					break;
 				}
-				
+
 				emfNode = leaf.getSemanticElement();
-				
+
 				String type = field.getType();
 				if (type.equals("boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
 				{
@@ -133,64 +134,39 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 				}
 				break;
 			}
-
-			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.HASH_TYPE__PARAMS))
+		}
+		else if(emfNode instanceof Param)
+		{
+			Param param=(Param)emfNode;
+			for (INode leaf : NodeModelUtils.findNodesForFeature(param, CfgPackage.Literals.PARAM__PARAM_NAME))
 			{
-				if(offset<leaf.getOffset() || leaf.getOffset()+leaf.getLength()<offset)
+				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() < offset)
 				{
 					continue;
 				}
 
-				String type = field.getType();
-				
-				emfNode = leaf.getSemanticElement();
+				HashType type = (HashType) NodeModelUtils.findActualNodeFor(param).getParent().getSemanticElement();
+				String typeName=type.getType();
 				
 				XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
 				for (Type def : model.getTypes())
 				{
-					if (def.getName().equals(type))
+					if (def.getName().equals(typeName))
 					{
-						for(Field linkField:def.getFields())
+						for(Field field:def.getFields())
 						{
-							if(leaf.getText().equals(linkField.getFieldName()))
+							if(field.getFieldName().equals(param.getParamName()))
 							{
-								emfNode = linkField;
+								emfNode = field;
 								break;
 							}
 						}
-						break;
 					}
 				}
+				
 				createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
 				break;
 			}
 		}
-
-		// ImportInfo include=(ImportInfo)node;
-		// for(INode uri:NodeModelUtils.findNodesForFeature(include,
-		// ProtoPackage.Literals.IMPORT_INFO__IMPORT_URI))
-		// {
-		// if(offset>uri.getTotalOffset() && offset<uri.getTotalEndOffset())
-		// {
-		// EObject to=include;
-		//
-		// String path=include.getImportURI();
-		// path=resource.getURI().trimSegments(3)+"/"+path.substring(1,path.length()-1);
-		//
-		// Resource
-		// res=resource.getResourceSet().getResource(URI.createURI(path), true);
-		// if(res!=null)
-		// {
-		// TreeIterator<EObject> a=res.getAllContents();
-		// if(a.hasNext())
-		// {
-		// to=a.next();
-		// }
-		// }
-		// createHyperlinksTo(resource, new
-		// Region(uri.getOffset()+1,uri.getLength()-2), to, acceptor);
-		// }
-		// break;
-		// }
 	}
 }

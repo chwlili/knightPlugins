@@ -110,6 +110,11 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createHashTypeAdapter();
       }
       @Override
+      public Adapter caseParam(Param object)
+      {
+        return createParamAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -232,6 +237,21 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHashTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.Param <em>Param</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.Param
+   * @generated
+   */
+  public Adapter createParamAdapter()
   {
     return null;
   }

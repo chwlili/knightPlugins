@@ -448,11 +448,11 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                 if ( (LA3_0==RULE_COMMENT) ) {
                     int LA3_2 = input.LA(2);
 
-                    if ( ((LA3_2>=RULE_C_TYPE && LA3_2<=RULE_NAME)||LA3_2==RULE_C_INPUT||LA3_2==RULE_C_FILE||LA3_2==RULE_C_NODE||LA3_2==RULE_C_LIST||(LA3_2>=RULE_C_HASH && LA3_2<=RULE_C_STRING)) ) {
-                        alt3=1;
-                    }
-                    else if ( (LA3_2==RULE_COMMENT||LA3_2==RULE_C_BRACE_R) ) {
+                    if ( (LA3_2==RULE_COMMENT||LA3_2==RULE_C_BRACE_R) ) {
                         alt3=2;
+                    }
+                    else if ( ((LA3_2>=RULE_C_TYPE && LA3_2<=RULE_NAME)||LA3_2==RULE_C_INPUT||LA3_2==RULE_C_FILE||LA3_2==RULE_C_NODE||LA3_2==RULE_C_LIST||(LA3_2>=RULE_C_HASH && LA3_2<=RULE_C_STRING)) ) {
+                        alt3=1;
                     }
 
 
@@ -888,11 +888,11 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                 {
                 int LA5_2 = input.LA(2);
 
-                if ( (LA5_2==RULE_NAME) ) {
-                    alt5=1;
-                }
-                else if ( (LA5_2==RULE_C_ANGLE_L) ) {
+                if ( (LA5_2==RULE_C_ANGLE_L) ) {
                     alt5=2;
+                }
+                else if ( (LA5_2==RULE_NAME) ) {
+                    alt5=1;
                 }
                 else {
                     NoViableAltException nvae =
@@ -906,11 +906,11 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                 {
                 int LA5_3 = input.LA(2);
 
-                if ( (LA5_3==RULE_C_ANGLE_L) ) {
-                    alt5=3;
-                }
-                else if ( (LA5_3==RULE_NAME) ) {
+                if ( (LA5_3==RULE_NAME) ) {
                     alt5=1;
+                }
+                else if ( (LA5_3==RULE_C_ANGLE_L) ) {
+                    alt5=3;
                 }
                 else {
                     NoViableAltException nvae =
@@ -1363,7 +1363,7 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHashType"
-    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:607:1: ruleHashType returns [EObject current=null] : (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? ) ;
+    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:607:1: ruleHashType returns [EObject current=null] : (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? ) ;
     public final EObject ruleHashType() throws RecognitionException {
         EObject current = null;
 
@@ -1371,21 +1371,23 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
         Token this_C_ANGLE_L_1=null;
         Token this_C_ANGLE_R_3=null;
         Token this_C_PAREN_L_4=null;
-        Token lv_params_5_0=null;
         Token this_C_COMMA_6=null;
-        Token lv_params_7_0=null;
         Token this_C_PAREN_R_8=null;
         AntlrDatatypeRuleToken lv_type_2_0 = null;
+
+        EObject lv_params_5_0 = null;
+
+        EObject lv_params_7_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:610:28: ( (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? ) )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:1: (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:610:28: ( (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? ) )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:1: (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? )
             {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:1: (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:2: this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )?
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:1: (this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )? )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:611:2: this_C_HASH_0= RULE_C_HASH this_C_ANGLE_L_1= RULE_C_ANGLE_L ( (lv_type_2_0= ruleTypeName ) ) this_C_ANGLE_R_3= RULE_C_ANGLE_R (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )?
             {
             this_C_HASH_0=(Token)match(input,RULE_C_HASH,FOLLOW_RULE_C_HASH_in_ruleHashType1139); 
              
@@ -1430,7 +1432,7 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
              
                 newLeafNode(this_C_ANGLE_R_3, grammarAccess.getHashTypeAccess().getC_ANGLE_RTerminalRuleCall_3()); 
                 
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:641:1: (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )?
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:641:1: (this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1439,31 +1441,36 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:641:2: this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= RULE_NAME ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:641:2: this_C_PAREN_L_4= RULE_C_PAREN_L ( (lv_params_5_0= ruleParam ) ) (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )* this_C_PAREN_R_8= RULE_C_PAREN_R
                     {
                     this_C_PAREN_L_4=(Token)match(input,RULE_C_PAREN_L,FOLLOW_RULE_C_PAREN_L_in_ruleHashType1191); 
                      
                         newLeafNode(this_C_PAREN_L_4, grammarAccess.getHashTypeAccess().getC_PAREN_LTerminalRuleCall_4_0()); 
                         
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:645:1: ( (lv_params_5_0= RULE_NAME ) )
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:646:1: (lv_params_5_0= RULE_NAME )
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:645:1: ( (lv_params_5_0= ruleParam ) )
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:646:1: (lv_params_5_0= ruleParam )
                     {
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:646:1: (lv_params_5_0= RULE_NAME )
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:647:3: lv_params_5_0= RULE_NAME
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:646:1: (lv_params_5_0= ruleParam )
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:647:3: lv_params_5_0= ruleParam
                     {
-                    lv_params_5_0=(Token)match(input,RULE_NAME,FOLLOW_RULE_NAME_in_ruleHashType1207); 
+                     
+                    	        newCompositeNode(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_1_0()); 
+                    	    
+                    pushFollow(FOLLOW_ruleParam_in_ruleHashType1211);
+                    lv_params_5_0=ruleParam();
 
-                    			newLeafNode(lv_params_5_0, grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_1_0()); 
-                    		
+                    state._fsp--;
+
 
                     	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getHashTypeRule());
+                    	            current = createModelElementForParent(grammarAccess.getHashTypeRule());
                     	        }
-                           		addWithLastConsumed(
+                           		add(
                            			current, 
                            			"params",
                             		lv_params_5_0, 
-                            		"NAME");
+                            		"Param");
+                    	        afterParserOrEnumRuleCall();
                     	    
 
                     }
@@ -1471,7 +1478,7 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:663:2: (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) ) )*
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:663:2: (this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) ) )*
                     loop7:
                     do {
                         int alt7=2;
@@ -1484,31 +1491,36 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:663:3: this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= RULE_NAME ) )
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:663:3: this_C_COMMA_6= RULE_C_COMMA ( (lv_params_7_0= ruleParam ) )
                     	    {
-                    	    this_C_COMMA_6=(Token)match(input,RULE_C_COMMA,FOLLOW_RULE_C_COMMA_in_ruleHashType1224); 
+                    	    this_C_COMMA_6=(Token)match(input,RULE_C_COMMA,FOLLOW_RULE_C_COMMA_in_ruleHashType1223); 
                     	     
                     	        newLeafNode(this_C_COMMA_6, grammarAccess.getHashTypeAccess().getC_COMMATerminalRuleCall_4_2_0()); 
                     	        
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:667:1: ( (lv_params_7_0= RULE_NAME ) )
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:668:1: (lv_params_7_0= RULE_NAME )
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:667:1: ( (lv_params_7_0= ruleParam ) )
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:668:1: (lv_params_7_0= ruleParam )
                     	    {
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:668:1: (lv_params_7_0= RULE_NAME )
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:669:3: lv_params_7_0= RULE_NAME
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:668:1: (lv_params_7_0= ruleParam )
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:669:3: lv_params_7_0= ruleParam
                     	    {
-                    	    lv_params_7_0=(Token)match(input,RULE_NAME,FOLLOW_RULE_NAME_in_ruleHashType1240); 
+                    	     
+                    	    	        newCompositeNode(grammarAccess.getHashTypeAccess().getParamsParamParserRuleCall_4_2_1_0()); 
+                    	    	    
+                    	    pushFollow(FOLLOW_ruleParam_in_ruleHashType1243);
+                    	    lv_params_7_0=ruleParam();
 
-                    	    			newLeafNode(lv_params_7_0, grammarAccess.getHashTypeAccess().getParamsNAMETerminalRuleCall_4_2_1_0()); 
-                    	    		
+                    	    state._fsp--;
+
 
                     	    	        if (current==null) {
-                    	    	            current = createModelElement(grammarAccess.getHashTypeRule());
+                    	    	            current = createModelElementForParent(grammarAccess.getHashTypeRule());
                     	    	        }
-                    	           		addWithLastConsumed(
+                    	           		add(
                     	           			current, 
                     	           			"params",
                     	            		lv_params_7_0, 
-                    	            		"NAME");
+                    	            		"Param");
+                    	    	        afterParserOrEnumRuleCall();
                     	    	    
 
                     	    }
@@ -1525,7 +1537,7 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    this_C_PAREN_R_8=(Token)match(input,RULE_C_PAREN_R,FOLLOW_RULE_C_PAREN_R_in_ruleHashType1258); 
+                    this_C_PAREN_R_8=(Token)match(input,RULE_C_PAREN_R,FOLLOW_RULE_C_PAREN_R_in_ruleHashType1256); 
                      
                         newLeafNode(this_C_PAREN_R_8, grammarAccess.getHashTypeAccess().getC_PAREN_RTerminalRuleCall_4_3()); 
                         
@@ -1555,8 +1567,100 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleHashType"
 
 
+    // $ANTLR start "entryRuleParam"
+    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:697:1: entryRuleParam returns [EObject current=null] : iv_ruleParam= ruleParam EOF ;
+    public final EObject entryRuleParam() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleParam = null;
+
+
+        try {
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:698:2: (iv_ruleParam= ruleParam EOF )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:699:2: iv_ruleParam= ruleParam EOF
+            {
+             newCompositeNode(grammarAccess.getParamRule()); 
+            pushFollow(FOLLOW_ruleParam_in_entryRuleParam1293);
+            iv_ruleParam=ruleParam();
+
+            state._fsp--;
+
+             current =iv_ruleParam; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleParam1303); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleParam"
+
+
+    // $ANTLR start "ruleParam"
+    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:706:1: ruleParam returns [EObject current=null] : ( (lv_paramName_0_0= RULE_NAME ) ) ;
+    public final EObject ruleParam() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_paramName_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:709:28: ( ( (lv_paramName_0_0= RULE_NAME ) ) )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:710:1: ( (lv_paramName_0_0= RULE_NAME ) )
+            {
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:710:1: ( (lv_paramName_0_0= RULE_NAME ) )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:711:1: (lv_paramName_0_0= RULE_NAME )
+            {
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:711:1: (lv_paramName_0_0= RULE_NAME )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:712:3: lv_paramName_0_0= RULE_NAME
+            {
+            lv_paramName_0_0=(Token)match(input,RULE_NAME,FOLLOW_RULE_NAME_in_ruleParam1344); 
+
+            			newLeafNode(lv_paramName_0_0, grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getParamRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"paramName",
+                    		lv_paramName_0_0, 
+                    		"NAME");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleParam"
+
+
     // $ANTLR start "entryRuleTypeName"
-    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:697:1: entryRuleTypeName returns [String current=null] : iv_ruleTypeName= ruleTypeName EOF ;
+    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:736:1: entryRuleTypeName returns [String current=null] : iv_ruleTypeName= ruleTypeName EOF ;
     public final String entryRuleTypeName() throws RecognitionException {
         String current = null;
 
@@ -1564,17 +1668,17 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:698:2: (iv_ruleTypeName= ruleTypeName EOF )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:699:2: iv_ruleTypeName= ruleTypeName EOF
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:737:2: (iv_ruleTypeName= ruleTypeName EOF )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:738:2: iv_ruleTypeName= ruleTypeName EOF
             {
              newCompositeNode(grammarAccess.getTypeNameRule()); 
-            pushFollow(FOLLOW_ruleTypeName_in_entryRuleTypeName1296);
+            pushFollow(FOLLOW_ruleTypeName_in_entryRuleTypeName1385);
             iv_ruleTypeName=ruleTypeName();
 
             state._fsp--;
 
              current =iv_ruleTypeName.getText(); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTypeName1307); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTypeName1396); 
 
             }
 
@@ -1592,7 +1696,7 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeName"
-    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:706:1: ruleTypeName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME ) ;
+    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:745:1: ruleTypeName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME ) ;
     public final AntlrDatatypeRuleToken ruleTypeName() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -1612,10 +1716,10 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:709:28: ( (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME ) )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:710:1: (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:748:28: ( (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME ) )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:749:1: (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME )
             {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:710:1: (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:749:1: (this_C_INPUT_0= RULE_C_INPUT | this_C_FILE_1= RULE_C_FILE | this_C_NODE_2= RULE_C_NODE | this_C_TYPE_3= RULE_C_TYPE | this_C_INT_4= RULE_C_INT | this_C_UINT_5= RULE_C_UINT | this_C_BOOL_6= RULE_C_BOOL | this_C_NUMBER_7= RULE_C_NUMBER | this_C_STRING_8= RULE_C_STRING | this_C_LIST_9= RULE_C_LIST | this_C_HASH_10= RULE_C_HASH | this_NAME_11= RULE_NAME )
             int alt9=12;
             switch ( input.LA(1) ) {
             case RULE_C_INPUT:
@@ -1687,9 +1791,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
 
             switch (alt9) {
                 case 1 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:710:6: this_C_INPUT_0= RULE_C_INPUT
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:749:6: this_C_INPUT_0= RULE_C_INPUT
                     {
-                    this_C_INPUT_0=(Token)match(input,RULE_C_INPUT,FOLLOW_RULE_C_INPUT_in_ruleTypeName1347); 
+                    this_C_INPUT_0=(Token)match(input,RULE_C_INPUT,FOLLOW_RULE_C_INPUT_in_ruleTypeName1436); 
 
                     		current.merge(this_C_INPUT_0);
                         
@@ -1700,9 +1804,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:718:10: this_C_FILE_1= RULE_C_FILE
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:757:10: this_C_FILE_1= RULE_C_FILE
                     {
-                    this_C_FILE_1=(Token)match(input,RULE_C_FILE,FOLLOW_RULE_C_FILE_in_ruleTypeName1373); 
+                    this_C_FILE_1=(Token)match(input,RULE_C_FILE,FOLLOW_RULE_C_FILE_in_ruleTypeName1462); 
 
                     		current.merge(this_C_FILE_1);
                         
@@ -1713,9 +1817,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:726:10: this_C_NODE_2= RULE_C_NODE
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:765:10: this_C_NODE_2= RULE_C_NODE
                     {
-                    this_C_NODE_2=(Token)match(input,RULE_C_NODE,FOLLOW_RULE_C_NODE_in_ruleTypeName1399); 
+                    this_C_NODE_2=(Token)match(input,RULE_C_NODE,FOLLOW_RULE_C_NODE_in_ruleTypeName1488); 
 
                     		current.merge(this_C_NODE_2);
                         
@@ -1726,9 +1830,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:734:10: this_C_TYPE_3= RULE_C_TYPE
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:773:10: this_C_TYPE_3= RULE_C_TYPE
                     {
-                    this_C_TYPE_3=(Token)match(input,RULE_C_TYPE,FOLLOW_RULE_C_TYPE_in_ruleTypeName1425); 
+                    this_C_TYPE_3=(Token)match(input,RULE_C_TYPE,FOLLOW_RULE_C_TYPE_in_ruleTypeName1514); 
 
                     		current.merge(this_C_TYPE_3);
                         
@@ -1739,9 +1843,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:742:10: this_C_INT_4= RULE_C_INT
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:781:10: this_C_INT_4= RULE_C_INT
                     {
-                    this_C_INT_4=(Token)match(input,RULE_C_INT,FOLLOW_RULE_C_INT_in_ruleTypeName1451); 
+                    this_C_INT_4=(Token)match(input,RULE_C_INT,FOLLOW_RULE_C_INT_in_ruleTypeName1540); 
 
                     		current.merge(this_C_INT_4);
                         
@@ -1752,9 +1856,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:750:10: this_C_UINT_5= RULE_C_UINT
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:789:10: this_C_UINT_5= RULE_C_UINT
                     {
-                    this_C_UINT_5=(Token)match(input,RULE_C_UINT,FOLLOW_RULE_C_UINT_in_ruleTypeName1477); 
+                    this_C_UINT_5=(Token)match(input,RULE_C_UINT,FOLLOW_RULE_C_UINT_in_ruleTypeName1566); 
 
                     		current.merge(this_C_UINT_5);
                         
@@ -1765,9 +1869,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:758:10: this_C_BOOL_6= RULE_C_BOOL
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:797:10: this_C_BOOL_6= RULE_C_BOOL
                     {
-                    this_C_BOOL_6=(Token)match(input,RULE_C_BOOL,FOLLOW_RULE_C_BOOL_in_ruleTypeName1503); 
+                    this_C_BOOL_6=(Token)match(input,RULE_C_BOOL,FOLLOW_RULE_C_BOOL_in_ruleTypeName1592); 
 
                     		current.merge(this_C_BOOL_6);
                         
@@ -1778,9 +1882,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:766:10: this_C_NUMBER_7= RULE_C_NUMBER
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:805:10: this_C_NUMBER_7= RULE_C_NUMBER
                     {
-                    this_C_NUMBER_7=(Token)match(input,RULE_C_NUMBER,FOLLOW_RULE_C_NUMBER_in_ruleTypeName1529); 
+                    this_C_NUMBER_7=(Token)match(input,RULE_C_NUMBER,FOLLOW_RULE_C_NUMBER_in_ruleTypeName1618); 
 
                     		current.merge(this_C_NUMBER_7);
                         
@@ -1791,9 +1895,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:774:10: this_C_STRING_8= RULE_C_STRING
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:813:10: this_C_STRING_8= RULE_C_STRING
                     {
-                    this_C_STRING_8=(Token)match(input,RULE_C_STRING,FOLLOW_RULE_C_STRING_in_ruleTypeName1555); 
+                    this_C_STRING_8=(Token)match(input,RULE_C_STRING,FOLLOW_RULE_C_STRING_in_ruleTypeName1644); 
 
                     		current.merge(this_C_STRING_8);
                         
@@ -1804,9 +1908,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:782:10: this_C_LIST_9= RULE_C_LIST
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:821:10: this_C_LIST_9= RULE_C_LIST
                     {
-                    this_C_LIST_9=(Token)match(input,RULE_C_LIST,FOLLOW_RULE_C_LIST_in_ruleTypeName1581); 
+                    this_C_LIST_9=(Token)match(input,RULE_C_LIST,FOLLOW_RULE_C_LIST_in_ruleTypeName1670); 
 
                     		current.merge(this_C_LIST_9);
                         
@@ -1817,9 +1921,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:790:10: this_C_HASH_10= RULE_C_HASH
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:829:10: this_C_HASH_10= RULE_C_HASH
                     {
-                    this_C_HASH_10=(Token)match(input,RULE_C_HASH,FOLLOW_RULE_C_HASH_in_ruleTypeName1607); 
+                    this_C_HASH_10=(Token)match(input,RULE_C_HASH,FOLLOW_RULE_C_HASH_in_ruleTypeName1696); 
 
                     		current.merge(this_C_HASH_10);
                         
@@ -1830,9 +1934,9 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:798:10: this_NAME_11= RULE_NAME
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:837:10: this_NAME_11= RULE_NAME
                     {
-                    this_NAME_11=(Token)match(input,RULE_NAME,FOLLOW_RULE_NAME_in_ruleTypeName1633); 
+                    this_NAME_11=(Token)match(input,RULE_NAME,FOLLOW_RULE_NAME_in_ruleTypeName1722); 
 
                     		current.merge(this_NAME_11);
                         
@@ -1920,23 +2024,26 @@ public class InternalCfgParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleTypeName_in_ruleHashType1169 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_RULE_C_ANGLE_R_in_ruleHashType1180 = new BitSet(new long[]{0x0000000000000802L});
     public static final BitSet FOLLOW_RULE_C_PAREN_L_in_ruleHashType1191 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_NAME_in_ruleHashType1207 = new BitSet(new long[]{0x0000000000028000L});
-    public static final BitSet FOLLOW_RULE_C_COMMA_in_ruleHashType1224 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_NAME_in_ruleHashType1240 = new BitSet(new long[]{0x0000000000028000L});
-    public static final BitSet FOLLOW_RULE_C_PAREN_R_in_ruleHashType1258 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTypeName_in_entryRuleTypeName1296 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTypeName1307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_INPUT_in_ruleTypeName1347 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_FILE_in_ruleTypeName1373 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_NODE_in_ruleTypeName1399 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_TYPE_in_ruleTypeName1425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_INT_in_ruleTypeName1451 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_UINT_in_ruleTypeName1477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_BOOL_in_ruleTypeName1503 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_NUMBER_in_ruleTypeName1529 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_STRING_in_ruleTypeName1555 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_LIST_in_ruleTypeName1581 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_C_HASH_in_ruleTypeName1607 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_NAME_in_ruleTypeName1633 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParam_in_ruleHashType1211 = new BitSet(new long[]{0x0000000000028000L});
+    public static final BitSet FOLLOW_RULE_C_COMMA_in_ruleHashType1223 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ruleParam_in_ruleHashType1243 = new BitSet(new long[]{0x0000000000028000L});
+    public static final BitSet FOLLOW_RULE_C_PAREN_R_in_ruleHashType1256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParam_in_entryRuleParam1293 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleParam1303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_NAME_in_ruleParam1344 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTypeName_in_entryRuleTypeName1385 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTypeName1396 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_INPUT_in_ruleTypeName1436 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_FILE_in_ruleTypeName1462 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_NODE_in_ruleTypeName1488 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_TYPE_in_ruleTypeName1514 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_INT_in_ruleTypeName1540 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_UINT_in_ruleTypeName1566 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_BOOL_in_ruleTypeName1592 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_NUMBER_in_ruleTypeName1618 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_STRING_in_ruleTypeName1644 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_LIST_in_ruleTypeName1670 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_C_HASH_in_ruleTypeName1696 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_NAME_in_ruleTypeName1722 = new BitSet(new long[]{0x0000000000000002L});
 
 }

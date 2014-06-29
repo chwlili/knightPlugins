@@ -69,6 +69,7 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHashTypeAccess().getTypeAssignment_2(), "rule__HashType__TypeAssignment_2");
 					put(grammarAccess.getHashTypeAccess().getParamsAssignment_4_1(), "rule__HashType__ParamsAssignment_4_1");
 					put(grammarAccess.getHashTypeAccess().getParamsAssignment_4_2_1(), "rule__HashType__ParamsAssignment_4_2_1");
+					put(grammarAccess.getParamAccess().getParamNameAssignment(), "rule__Param__ParamNameAssignment");
 				}
 			};
 		}

@@ -18,15 +18,15 @@ public class CfgLoationInFileProvider extends DefaultLocationInFileProvider
 		{
 			result=CfgPackage.Literals.FIELD__FIELD_NAME;
 		}
-		if(obj instanceof NativeType)
+		else if(obj instanceof NativeType)
 		{
 			result=CfgPackage.Literals.NATIVE_TYPE__TYPE;
 		}
-		if(obj instanceof ListType)
+		else if(obj instanceof ListType)
 		{
 			result=CfgPackage.Literals.LIST_TYPE__TYPE;
 		}
-		if(obj instanceof HashType)
+		else if(obj instanceof HashType)
 		{
 			result=CfgPackage.Literals.HASH_TYPE__TYPE;
 		}
