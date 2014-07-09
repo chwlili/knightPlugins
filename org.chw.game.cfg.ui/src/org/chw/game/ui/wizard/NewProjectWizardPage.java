@@ -28,11 +28,11 @@ public class NewProjectWizardPage extends WizardPage
 
 	private String curstomPath = ""; //$NON-NLS-1$
 	private Label codeLabel;
-	private Text codeInput;
-	private Text destInput;
+	private Text srcInput;
+	private Text binInput;
 	private Composite composite;
 	private Composite composite_1;
-	private Text sourceInput;
+	private Text xmlInput;
 	private Button sourceSelector;
 	private Label sourceLabel;
 	private Label destLabel;
@@ -186,9 +186,9 @@ public class NewProjectWizardPage extends WizardPage
 		sourceLabel = new Label(group, SWT.NONE);
 		sourceLabel.setText("协议文件夹：");
 
-		sourceInput = new Text(group, SWT.BORDER);
-		sourceInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		sourceInput.setText("xml ");
+		xmlInput = new Text(group, SWT.BORDER);
+		xmlInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		xmlInput.setText("xml");
 
 		sourceSelector = new Button(group, SWT.NONE);
 		sourceSelector.setText("    浏览...    ");
@@ -201,7 +201,7 @@ public class NewProjectWizardPage extends WizardPage
 				String path = selectDialog.open();
 				if (path != null && !path.isEmpty())
 				{
-					sourceInput.setText(path);
+					xmlInput.setText(path);
 				}
 			}
 		});
@@ -218,9 +218,9 @@ public class NewProjectWizardPage extends WizardPage
 		codeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		codeLabel.setText("主源文件夹：");
 
-		codeInput = new Text(group2, SWT.BORDER);
-		codeInput.setText("src");
-		codeInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		srcInput = new Text(group2, SWT.BORDER);
+		srcInput.setText("src");
+		srcInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button codeSelector = new Button(group2, SWT.NONE);
 		codeSelector.setText("    浏览...    ");
@@ -233,7 +233,7 @@ public class NewProjectWizardPage extends WizardPage
 				String path = selectDialog.open();
 				if (path != null && !path.isEmpty())
 				{
-					codeInput.setText(path);
+					srcInput.setText(path);
 				}
 			}
 		});
@@ -242,9 +242,9 @@ public class NewProjectWizardPage extends WizardPage
 		destLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		destLabel.setText("输出文件夹：");
 
-		destInput = new Text(group2, SWT.BORDER);
-		destInput.setText("bin");
-		destInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		binInput = new Text(group2, SWT.BORDER);
+		binInput.setText("bin");
+		binInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button destSelector = new Button(group2, SWT.NONE);
 		destSelector.setText("    浏览...    ");
@@ -257,7 +257,7 @@ public class NewProjectWizardPage extends WizardPage
 				String path = selectDialog.open();
 				if (path != null && !path.isEmpty())
 				{
-					destInput.setText(path);
+					binInput.setText(path);
 				}
 			}
 		});
@@ -295,7 +295,7 @@ public class NewProjectWizardPage extends WizardPage
 	 */
 	public String getCfgXmlPath()
 	{
-		return cfgInput.getText();
+		return xmlInput.getText();
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class NewProjectWizardPage extends WizardPage
 	 */
 	public String getCfgProtoPath()
 	{
-		return sourceInput.getText();
+		return cfgInput.getText();
 	}
 	
 	/**
@@ -313,7 +313,7 @@ public class NewProjectWizardPage extends WizardPage
 	 */
 	public String getAsSrcPth()
 	{
-		return codeInput.getText();
+		return srcInput.getText();
 	}
 	
 	/**
@@ -322,7 +322,7 @@ public class NewProjectWizardPage extends WizardPage
 	 */
 	public String getAsBinPath()
 	{
-		return destInput.getText();
+		return binInput.getText();
 	}
 
 	/**

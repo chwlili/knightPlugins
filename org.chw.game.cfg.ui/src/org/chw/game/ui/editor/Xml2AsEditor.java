@@ -39,13 +39,20 @@ public class Xml2AsEditor extends XtextEditor
 			}
 		};
 		
-		TextOperationAction action=new TextOperationAction(boundle, "", this, ISourceViewer.FORMAT);
+		TextOperationAction action;
+		
+		action=new TextOperationAction(boundle, "", this, ISourceViewer.FORMAT);
 		action.setText("∏Ò ΩªØ");
 		action.setActionDefinitionId("org.eclipse.xtext.ui.FormatAction");
-		
 		setAction("chw_formatAction", action);
+		
+		action=new TextOperationAction(boundle, "", this, ISourceViewer.FORMAT);
+		action.setText("≤‚ ‘");
+		action.setActionDefinitionId("org.eclipse.xtext.ui.FormatAction");
+		setAction("chw_testAction", action);
+		
 	}
-
+	
 	@Override
 	protected void editorContextMenuAboutToShow(IMenuManager menu)
 	{
@@ -71,5 +78,6 @@ public class Xml2AsEditor extends XtextEditor
 		addAction(menu, "innerEdit", ITextEditorActionConstants.CONTENT_ASSIST);
 		addAction(menu, "innerEdit", ITextEditorActionConstants.SHIFT_RIGHT);
 		addAction(menu, "innerEdit", ITextEditorActionConstants.SHIFT_LEFT);
+		addAction(menu, "innerEdit", "chw_testAction");
 	}
 }

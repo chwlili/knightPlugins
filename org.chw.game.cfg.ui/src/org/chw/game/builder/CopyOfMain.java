@@ -1,3 +1,5 @@
+package org.chw.game.builder;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class Main
+public class CopyOfMain
 {
 
 	public static void main(String[] args)
