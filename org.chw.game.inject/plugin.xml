@@ -296,11 +296,18 @@
       <editor
             class="org.chw.game.editor.ClientEditor"
             default="true"
-            filenames="client.xml,server.xml"
+            filenames="client.xml"
             icon="icons/config.png"
             id="org.chw.game.editor.clientEditor"
-            matchingStrategy="org.chw.game.editor.EditorMatching"
-            name="游戏启动配置编辑器">
+            name="client.xml编辑器">
+      </editor>
+      <editor
+            class="org.chw.game.editor.ServerEditor"
+            default="true"
+            filenames="server.xml"
+            icon="icons/config.png"
+            id="org.chw.game.editor.serverEditor"
+            name="server.xml编辑器">
       </editor>
    </extension>
 

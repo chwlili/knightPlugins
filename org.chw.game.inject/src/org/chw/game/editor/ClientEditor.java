@@ -52,21 +52,13 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 	private Table auth_table;
 	private CheckboxTableViewer auth_viewer;
 
-	private Table server_table;
-	private Composite server_group;
-
-	private ServerReader serverXmlReader;
-	private CheckboxTableViewer server_viewer;
-
 	protected void createPages()
 	{
 		createAuthPage();
 		createVerPage();
 		createLogPage();
-		createServerPage();
 
 		refreshClientXML();
-		refreshServerXML();
 
 		initListener();
 	}
@@ -229,51 +221,6 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 	}
 
 	/**
-	 * 创建服务页
-	 */
-	private void createServerPage()
-	{
-		GridLayout boxLayout = new GridLayout(2, false);
-		boxLayout.marginWidth = 20;
-		boxLayout.marginHeight = 20;
-
-		server_group = new Composite(getContainer(), SWT.NONE);
-		server_group.setLayout(boxLayout);
-
-		server_viewer = CheckboxTableViewer.newCheckList(server_group, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
-		server_table = server_viewer.getTable();
-		server_table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		server_table.setLinesVisible(true);
-		server_table.setHeaderVisible(true);
-
-		TableViewerColumn serverCheckCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverCheckCol.getColumn().setWidth(30);
-		serverCheckCol.getColumn().setResizable(false);
-
-		TableViewerColumn serverNameCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverNameCol.getColumn().setWidth(100);
-		serverNameCol.getColumn().setText("\u540D\u79F0");
-
-		TableViewerColumn serverHostCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverHostCol.getColumn().setWidth(219);
-		serverHostCol.getColumn().setText("\u57DF\u540D");
-
-		TableViewerColumn serverPortCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverPortCol.getColumn().setWidth(69);
-		serverPortCol.getColumn().setText("\u7AEF\u53E3");
-
-		TableViewerColumn serverWorldCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverWorldCol.getColumn().setWidth(100);
-		serverWorldCol.getColumn().setText("\u4E16\u754CID");
-
-		DragStrategy.initDragStrategy(this, server_viewer, new ServerNode(true, "???", "???", "???", "???"));
-		EditProvider.initServerViewer(this, server_viewer, serverCheckCol, serverNameCol, serverHostCol, serverPortCol, serverWorldCol);
-
-		addPage(server_group);
-		setPageText(getPageCount() - 1, "  游戏服务  ");
-	}
-
-	/**
 	 * 初始化监视器
 	 */
 	private void initListener()
@@ -359,20 +306,6 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 				setDirty(true);
 			}
 		});
-
-		// ------------------------------------------------------------------------------
-
-		server_viewer.addCheckStateListener(new ICheckStateListener()
-		{
-			public void checkStateChanged(CheckStateChangedEvent event)
-			{
-				ServerNode node = (ServerNode) event.getElement();
-				node.select = event.getChecked();
-				server_viewer.refresh();
-				server_viewer.setChecked(node, node.select);
-				setDirty(true);
-			}
-		});
 	}
 
 	@Override
@@ -453,46 +386,6 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		auth_viewer.refresh();
 		packColumns(auth_viewer.getTable());
 	}
-
-	/**
-	 * 刷新server.xml
-	 */
-	private void refreshServerXML()
-	{
-		serverXmlReader = new ServerReader();
-		try
-		{
-			IFile file = ((FileEditorInput) getEditorInput()).getFile();
-			IFolder folder = (IFolder) file.getParent();
-
-			serverXmlReader.open(folder.getFile("server.xml"));
-		}
-		catch (ParserConfigurationException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SAXException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch (CoreException e)
-		{
-			e.printStackTrace();
-		}
-		server_viewer.setInput(serverXmlReader.serverList);
-
-		for (ServerNode node : serverXmlReader.serverList)
-		{
-			server_viewer.setChecked(node, node.select);
-		}
-
-		server_viewer.refresh();
-		packColumns(server_viewer.getTable());
-	}
 	
 	private void packColumns(Table table)
 	{
@@ -506,7 +399,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 	public void setDirty(boolean value)
 	{
-		dirty = clientXmlReader.isChanged() || serverXmlReader.isChanged();
+		dirty = clientXmlReader.isChanged();
 		firePropertyChange(PROP_DIRTY);
 	}
 
@@ -522,7 +415,6 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		try
 		{
 			clientXmlReader.save();
-			serverXmlReader.save();
 			setDirty(false);
 		}
 		catch (UnsupportedEncodingException e)

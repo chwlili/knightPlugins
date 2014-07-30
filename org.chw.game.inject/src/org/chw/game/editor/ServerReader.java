@@ -45,7 +45,7 @@ public class ServerReader
 		sb.append("<config>\r\n");
 		for (ServerNode node : serverList)
 		{
-			sb.append(String.format("\t<%s name=\"%s\" host=\"%s\" port=\"%s\" world=\"%s\"/>\r\n", node.select ? "server" : "serverBack", node.name, node.path, node.port, node.world));
+			sb.append(String.format("\t<%s id=\"%s\" name=\"%s\" host=\"%s\" port=\"%s\" world=\"%s\"/>\r\n", node.select ? "server" : "serverBack", node.id, node.name, node.path, node.port, node.world));
 		}
 		sb.append("</config>");
 
@@ -57,9 +57,9 @@ public class ServerReader
 		String content = getContentString();
 		byte[] bytes = content.getBytes(file.getCharset());
 		ByteArrayInputStream input = new ByteArrayInputStream(bytes);
-		
+
 		file.refreshLocal(0, null);
-		if(file.exists())
+		if (file.exists())
 		{
 			file.setContents(input, 0, null);
 		}
@@ -100,10 +100,17 @@ public class ServerReader
 					{
 						if (qName.equals("server") || qName.equals("serverBack"))
 						{
+							String serverID = "";
 							String serverName = "";
 							String serverHost = "";
 							String serverPort = "";
 							String serverWorld = "";
+
+							String idValue = attributes.getValue("id");
+							if (idValue != null && idValue.isEmpty() == false)
+							{
+								serverID = idValue;
+							}
 
 							String nameValue = attributes.getValue("name");
 							if (nameValue != null && nameValue.isEmpty() == false)
@@ -129,7 +136,7 @@ public class ServerReader
 								serverWorld = worldValue;
 							}
 
-							serverList.add(new ServerNode(qName.equals("server"), serverName, serverHost, serverPort, serverWorld));
+							serverList.add(new ServerNode(qName.equals("server"), serverID, serverName, serverHost, serverPort, serverWorld));
 						}
 					}
 					else

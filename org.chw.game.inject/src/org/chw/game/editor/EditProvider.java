@@ -457,20 +457,34 @@ public class EditProvider
 	 * @param column3
 	 * @param column4
 	 */
-	public static void initServerViewer(final BaseEditor editor, final CheckboxTableViewer tableViewer, TableViewerColumn column1, TableViewerColumn column2, TableViewerColumn column3, TableViewerColumn column4, TableViewerColumn column5)
+	public static void initServerViewer(final BaseEditor editor, final CheckboxTableViewer tableViewer, TableViewerColumn column0, TableViewerColumn column1, TableViewerColumn column2, TableViewerColumn column3, TableViewerColumn column4, TableViewerColumn column5)
 	{
 		// 内容提供器
 		initContentProvider(tableViewer);
 
 		// 双击编辑单元格
 		initEditStrategy(tableViewer);
-
+		
 		// 选择-标签提供器
+		column0.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				return "";
+			}
+		});
+
+		// ID-标签提供器
 		column1.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
 			{
+				if (element instanceof ServerNode)
+				{
+					return ((ServerNode) element).id;
+				}
 				return "";
 			}
 		});
@@ -531,6 +545,40 @@ public class EditProvider
 			}
 		});
 
+		// ID-编辑提供器
+		column1.setEditingSupport(new EditingSupport(column1.getViewer())
+		{
+			@Override
+			protected boolean canEdit(Object element)
+			{
+				return true;
+			}
+
+			@Override
+			protected Object getValue(Object element)
+			{
+				return ((ServerNode) element).id;
+			}
+
+			@Override
+			protected void setValue(Object element, Object value)
+			{
+				ServerNode node = (ServerNode) element;
+				if (!node.id.equals(value.toString()))
+				{
+					node.id = value.toString();
+					tableViewer.refresh();
+					editor.setDirty(true);
+				}
+			}
+
+			@Override
+			protected CellEditor getCellEditor(Object element)
+			{
+				return new TextCellEditor(tableViewer.getTable());
+			}
+		});
+		
 		// 名称-编辑提供器
 		column2.setEditingSupport(new EditingSupport(column2.getViewer())
 		{

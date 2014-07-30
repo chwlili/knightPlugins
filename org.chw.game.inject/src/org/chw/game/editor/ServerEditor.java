@@ -55,6 +55,11 @@ public class ServerEditor extends EditorPart implements BaseEditor
 
 		TableViewerColumn serverCheckCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverCheckCol.getColumn().setWidth(30);
+		serverCheckCol.getColumn().setResizable(false);
+
+		TableViewerColumn serverIdCol = new TableViewerColumn(server_viewer, SWT.NONE);
+		serverIdCol.getColumn().setWidth(100);
+		serverIdCol.getColumn().setText("ID");
 
 		TableViewerColumn serverNameCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverNameCol.getColumn().setWidth(100);
@@ -72,11 +77,11 @@ public class ServerEditor extends EditorPart implements BaseEditor
 		serverWorldCol.getColumn().setWidth(100);
 		serverWorldCol.getColumn().setText("\u4E16\u754CID");
 
-		DragStrategy.initDragStrategy(this, server_viewer, new ServerNode(true, "???", "???", "???", "???"));
-		EditProvider.initServerViewer(this, server_viewer, serverCheckCol, serverNameCol, serverHostCol, serverPortCol, serverWorldCol);
+		DragStrategy.initDragStrategy(this, server_viewer, new ServerNode(true, "0", "???", "???", "???", "???"));
+		EditProvider.initServerViewer(this, server_viewer, serverCheckCol, serverIdCol, serverNameCol, serverHostCol, serverPortCol, serverWorldCol);
 
 		refresh_server();
-		
+
 		server_viewer.addCheckStateListener(new ICheckStateListener()
 		{
 			public void checkStateChanged(CheckStateChangedEvent event)
@@ -135,6 +140,8 @@ public class ServerEditor extends EditorPart implements BaseEditor
 		}
 
 		server_viewer.refresh();
+
+		packColumns(server_viewer.getTable());
 	}
 
 	private boolean dirty = false;
@@ -169,15 +176,23 @@ public class ServerEditor extends EditorPart implements BaseEditor
 		}
 	}
 
+	private void packColumns(Table table)
+	{
+		for (int i = 1; i < table.getColumnCount(); i++)
+		{
+			table.getColumn(i).pack();
+		}
+	}
+
 	@Override
 	public void doSaveAs()
 	{
-		//System.out.println("xx");
+		// System.out.println("xx");
 	}
 
 	@Override
 	public boolean isSaveAsAllowed()
 	{
-		return true;
+		return false;
 	}
 }
