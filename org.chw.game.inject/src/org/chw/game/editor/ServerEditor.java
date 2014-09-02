@@ -22,6 +22,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.xml.sax.SAXException;
+import org.eclipse.swt.widgets.TableColumn;
 
 public class ServerEditor extends EditorPart implements BaseEditor
 {
@@ -57,17 +58,18 @@ public class ServerEditor extends EditorPart implements BaseEditor
 		serverCheckCol.getColumn().setWidth(30);
 		serverCheckCol.getColumn().setResizable(false);
 
-		TableViewerColumn serverIdCol = new TableViewerColumn(server_viewer, SWT.NONE);
-		serverIdCol.getColumn().setWidth(100);
-		serverIdCol.getColumn().setText("ID");
-
 		TableViewerColumn serverNameCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverNameCol.getColumn().setWidth(100);
 		serverNameCol.getColumn().setText("\u540D\u79F0");
 
+		TableViewerColumn serverIdCol = new TableViewerColumn(server_viewer, SWT.NONE);
+		TableColumn tableColumn = serverIdCol.getColumn();
+		tableColumn.setText("\u767B\u5F55\u57DF\u540D");
+		serverIdCol.getColumn().setWidth(100);
+
 		TableViewerColumn serverHostCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverHostCol.getColumn().setWidth(219);
-		serverHostCol.getColumn().setText("\u57DF\u540D");
+		serverHostCol.getColumn().setText("\u670D\u52A1\u5668\u57DF\u540D");
 
 		TableViewerColumn serverPortCol = new TableViewerColumn(server_viewer, SWT.NONE);
 		serverPortCol.getColumn().setWidth(69);
@@ -78,7 +80,7 @@ public class ServerEditor extends EditorPart implements BaseEditor
 		serverWorldCol.getColumn().setText("\u4E16\u754CID");
 
 		DragStrategy.initDragStrategy(this, server_viewer, new ServerNode(true, "0", "???", "???", "???", "???"));
-		EditProvider.initServerViewer(this, server_viewer, serverCheckCol, serverIdCol, serverNameCol, serverHostCol, serverPortCol, serverWorldCol);
+		EditProvider.initServerViewer(this, server_viewer, serverCheckCol, serverNameCol, serverIdCol, serverHostCol, serverPortCol, serverWorldCol);
 
 		refresh_server();
 
@@ -88,8 +90,16 @@ public class ServerEditor extends EditorPart implements BaseEditor
 			{
 				ServerNode node = (ServerNode) event.getElement();
 				node.select = event.getChecked();
+
+				for (ServerNode curr : server_reader.serverList)
+				{
+					curr.select = false;
+					server_viewer.setChecked(curr, false);
+				}
+
+				node.select = true;
+				server_viewer.setChecked(node, true);
 				server_viewer.refresh();
-				server_viewer.setChecked(node, node.select);
 				setDirty(true);
 			}
 		});

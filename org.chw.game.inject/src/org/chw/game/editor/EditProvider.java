@@ -452,45 +452,31 @@ public class EditProvider
 	 * 初始化服务表
 	 * 
 	 * @param tableViewer
-	 * @param column1
-	 * @param column2
-	 * @param column3
-	 * @param column4
+	 * @param id
+	 * @param name
+	 * @param host
+	 * @param port
 	 */
-	public static void initServerViewer(final BaseEditor editor, final CheckboxTableViewer tableViewer, TableViewerColumn column0, TableViewerColumn column1, TableViewerColumn column2, TableViewerColumn column3, TableViewerColumn column4, TableViewerColumn column5)
+	public static void initServerViewer(final BaseEditor editor, final CheckboxTableViewer tableViewer, TableViewerColumn check, TableViewerColumn name, TableViewerColumn id, TableViewerColumn host, TableViewerColumn port, TableViewerColumn world)
 	{
 		// 内容提供器
 		initContentProvider(tableViewer);
 
 		// 双击编辑单元格
 		initEditStrategy(tableViewer);
-		
-		// 选择-标签提供器
-		column0.setLabelProvider(new ColumnLabelProvider()
-		{
-			@Override
-			public String getText(Object element)
-			{
-				return "";
-			}
-		});
 
-		// ID-标签提供器
-		column1.setLabelProvider(new ColumnLabelProvider()
+		// 选择-标签提供器
+		check.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
 			{
-				if (element instanceof ServerNode)
-				{
-					return ((ServerNode) element).id;
-				}
 				return "";
 			}
 		});
 
 		// 名称-标签提供器
-		column2.setLabelProvider(new ColumnLabelProvider()
+		name.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
@@ -503,8 +489,23 @@ public class EditProvider
 			}
 		});
 
+		// ID-标签提供器
+		id.setLabelProvider(new ColumnLabelProvider()
+		{
+			@Override
+			public String getText(Object element)
+			{
+				if (element instanceof ServerNode)
+				{
+					ServerNode node = (ServerNode) element;
+					return "s" + (node.id.isEmpty() ? "0" : node.id) + ".app1101079868.qqopenapp.com";
+				}
+				return "";
+			}
+		});
+
 		// 域名-标签提供器
-		column3.setLabelProvider(new ColumnLabelProvider()
+		host.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
@@ -518,7 +519,7 @@ public class EditProvider
 		});
 
 		// 端口-标签提供器
-		column4.setLabelProvider(new ColumnLabelProvider()
+		port.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
@@ -532,7 +533,7 @@ public class EditProvider
 		});
 
 		// 世界ID-标签提供器
-		column5.setLabelProvider(new ColumnLabelProvider()
+		world.setLabelProvider(new ColumnLabelProvider()
 		{
 			@Override
 			public String getText(Object element)
@@ -545,42 +546,8 @@ public class EditProvider
 			}
 		});
 
-		// ID-编辑提供器
-		column1.setEditingSupport(new EditingSupport(column1.getViewer())
-		{
-			@Override
-			protected boolean canEdit(Object element)
-			{
-				return true;
-			}
-
-			@Override
-			protected Object getValue(Object element)
-			{
-				return ((ServerNode) element).id;
-			}
-
-			@Override
-			protected void setValue(Object element, Object value)
-			{
-				ServerNode node = (ServerNode) element;
-				if (!node.id.equals(value.toString()))
-				{
-					node.id = value.toString();
-					tableViewer.refresh();
-					editor.setDirty(true);
-				}
-			}
-
-			@Override
-			protected CellEditor getCellEditor(Object element)
-			{
-				return new TextCellEditor(tableViewer.getTable());
-			}
-		});
-		
 		// 名称-编辑提供器
-		column2.setEditingSupport(new EditingSupport(column2.getViewer())
+		name.setEditingSupport(new EditingSupport(name.getViewer())
 		{
 			@Override
 			protected boolean canEdit(Object element)
@@ -613,8 +580,42 @@ public class EditProvider
 			}
 		});
 
+		// ID-编辑提供器
+		id.setEditingSupport(new EditingSupport(id.getViewer())
+		{
+			@Override
+			protected boolean canEdit(Object element)
+			{
+				return true;
+			}
+
+			@Override
+			protected Object getValue(Object element)
+			{
+				return ((ServerNode) element).id;
+			}
+
+			@Override
+			protected void setValue(Object element, Object value)
+			{
+				ServerNode node = (ServerNode) element;
+				if (!node.id.equals(value.toString()))
+				{
+					node.id = value.toString();
+					tableViewer.refresh();
+					editor.setDirty(true);
+				}
+			}
+
+			@Override
+			protected CellEditor getCellEditor(Object element)
+			{
+				return new TextCellEditor(tableViewer.getTable());
+			}
+		});
+
 		// 域名-编辑提供器
-		column3.setEditingSupport(new EditingSupport(column3.getViewer())
+		host.setEditingSupport(new EditingSupport(host.getViewer())
 		{
 			@Override
 			protected boolean canEdit(Object element)
@@ -648,7 +649,7 @@ public class EditProvider
 		});
 
 		// 端口-编辑提供器
-		column4.setEditingSupport(new EditingSupport(column4.getViewer())
+		port.setEditingSupport(new EditingSupport(port.getViewer())
 		{
 			@Override
 			protected boolean canEdit(Object element)
@@ -682,7 +683,7 @@ public class EditProvider
 		});
 
 		// 世界-编辑提供器
-		column5.setEditingSupport(new EditingSupport(column5.getViewer())
+		world.setEditingSupport(new EditingSupport(world.getViewer())
 		{
 			@Override
 			protected boolean canEdit(Object element)
