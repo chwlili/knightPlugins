@@ -1,30 +1,30 @@
 package org.chw.game.builder;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 public class TypeDef
 {
 	private String filePath;
-	private String				xpath;
+	private String xpath;
 
-	private String				name;
+	private String name;
 	private String comment;
-	ArrayList<TypeFieldDef>	fields	= new ArrayList<>();
-	
-	public TypeDef(String filePath,String xpath, String name,String comment)
+	ArrayList<TypeFieldDef> fields = new ArrayList<>();
+
+	public TypeDef(String filePath, String xpath, String name, String comment)
 	{
-		this.filePath=filePath;
+		this.filePath = filePath;
 		this.xpath = xpath;
 		this.name = name;
-		this.comment=comment;
+		this.comment = comment;
 	}
-	
+
 	public String getFilePath()
 	{
 		return filePath;
 	}
-	
+
 	public String getXPath()
 	{
 		return xpath;
@@ -34,7 +34,7 @@ public class TypeDef
 	{
 		return name;
 	}
-	
+
 	public String getComment()
 	{
 		return comment;

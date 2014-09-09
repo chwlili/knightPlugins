@@ -2,46 +2,33 @@ package org.chw.game.builder;
 
 public class TypeFieldDef
 {
-	private String	xpath;
+	public final String xpath;
 
-	private String	name;
-	private String comment;
-	private String	type;
+	public final String name;
+	public final String comment;
+	public final String type;
 
-	private Boolean	repeted;
+	public final Boolean repeted;
+	public final String[] indexKeys;
+
+	public TypeFieldDef(String xpath, String name, String comment, String type)
+	{
+		this(xpath, name, comment, type, false, null);
+	}
 
 	public TypeFieldDef(String xpath, String name, String comment, String type, boolean repeted)
 	{
+		this(xpath, name, comment, type, repeted, null);
+	}
+
+	public TypeFieldDef(String xpath, String name, String comment, String type, boolean repeted, String[] indexKeys)
+	{
 		this.xpath = xpath;
 		this.name = name;
-		this.comment=comment;
+		this.comment = comment;
 		this.type = type;
 		this.repeted = repeted;
-	}
-
-	public String getXPath()
-	{
-		return xpath;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-	
-	public String getComment()
-	{
-		return comment;
-	}
-
-	public String getType()
-	{
-		return type;
-	}
-
-	public boolean isRepeted()
-	{
-		return repeted;
+		this.indexKeys = indexKeys;
 	}
 
 	public boolean isNativeType()

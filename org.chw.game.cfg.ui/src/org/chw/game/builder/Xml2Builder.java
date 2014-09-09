@@ -1,5 +1,6 @@
 package org.chw.game.builder;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -12,6 +13,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.chw.game.ui.internal.CfgActivator;
@@ -86,6 +88,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		final ArrayList<IFile> cfgFiles = new ArrayList<IFile>();
 		final Hashtable<String, IFile> xmlFiles = new Hashtable<String, IFile>();
 
+		// 找出所有的.xml2文件
 		IFolder cfgFolder = (IFolder) getProject().findMember(cfgDir);
 		cfgFolder.accept(new IResourceVisitor()
 		{
@@ -105,6 +108,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			}
 		});
 
+		// 找出所有的.xml文件
 		IFolder xmlFolder = (IFolder) getProject().findMember(xmlDir);
 		xmlFolder.accept(new IResourceVisitor()
 		{
@@ -131,6 +135,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			}
 		});
 
+		// 列举所有xml2文件，并尝试寻找对应的xml文件，如果找到则进行转换。
 		for (IFile cfgFile : cfgFiles)
 		{
 			URI emfURI = URI.createPlatformResourceURI(cfgFile.getFullPath().toString(), true);
@@ -139,7 +144,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			{
 				emfFile.load(cfgFile.getContents(), null);
 
-				FileDef fileDef = new FileDef();
+				ArrayList<TypeDef> allTypes = new ArrayList<TypeDef>();
 				ArrayList<TypeDef> mainTypes = new ArrayList<TypeDef>();
 
 				XML2 xml2 = (XML2) emfFile.getContents().get(0);
@@ -160,7 +165,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 						}
 
 						TypeDef typeDef = new TypeDef(inputPath, xpath, typeName, typeComm);
-						fileDef.addTypeDef(typeDef);
+						allTypes.add(typeDef);
 						if (inputPath != null && inputPath.isEmpty() == false)
 						{
 							mainTypes.add(typeDef);
@@ -173,6 +178,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 							String fieldXPath = field.getNodePath();
 							String fieldType = "";
 							boolean fieldList = false;
+							String[] indexList = null;
 
 							if (field.getType() instanceof ListType)
 							{
@@ -185,6 +191,13 @@ public class Xml2Builder extends IncrementalProjectBuilder
 								HashType hashType = (HashType) field.getType();
 								fieldType = hashType.getType();
 								fieldList = true;
+
+								ArrayList<String> indexKeys = new ArrayList<String>();
+								for (Param param : hashType.getParams())
+								{
+									indexKeys.add(param.getParamName());
+								}
+								indexList = indexKeys.toArray(new String[indexKeys.size()]);
 							}
 							else if (field.getType() instanceof NativeType)
 							{
@@ -195,43 +208,48 @@ public class Xml2Builder extends IncrementalProjectBuilder
 
 							if (fieldType != "")
 							{
-								typeDef.fields.add(new TypeFieldDef(fieldXPath, fieldName, fieldComm, fieldType, fieldList));
+								typeDef.fields.add(new TypeFieldDef(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList));
 							}
 						}
 					}
 				}
 
+				for (TypeDef type : allTypes)
+				{
+					AsFileWriter.writeTypeClass(getProject(), xmlFolder, cfgFolder, type);
+				}
+
 				for (TypeDef type : mainTypes)
 				{
-					String filePath=type.getFilePath();
-					String nodePath=type.getXPath();
-					
-					if(nodePath.isEmpty())
+					String filePath = type.getFilePath();
+					String nodePath = type.getXPath();
+
+					if (nodePath.isEmpty())
 					{
-						nodePath="/";
+						nodePath = "/";
 					}
-					else if(nodePath.charAt(0)!='/')
+					else if (nodePath.charAt(0) != '/')
 					{
-						nodePath="/"+nodePath;
+						nodePath = "/" + nodePath;
 					}
-					
-					if(filePath.isEmpty()==false && filePath.charAt(0)!='/')
+
+					if (filePath.isEmpty() == false && filePath.charAt(0) != '/')
 					{
-						filePath="/"+filePath;
+						filePath = "/" + filePath;
 					}
-					
-					IFile file=xmlFiles.get(filePath);
-					if(file!=null)
+
+					IFile file = xmlFiles.get(filePath);
+					if (file != null)
 					{
-						Instance instance=fileDef.open(file.getContents(),type);
-						if(instance!=null)
+						Instance instance = FileDef.build(file.getContents(), allTypes.toArray(new TypeDef[allTypes.size()]), type);
+						if (instance != null)
 						{
-							System.out.println(">>"+instance);
+							toCfgFile(instance);
 						}
 					}
 					else
 					{
-						
+						//
 					}
 				}
 			}
@@ -253,5 +271,35 @@ public class Xml2Builder extends IncrementalProjectBuilder
 	private void incrementalBuild()
 	{
 
+	}
+
+	private void toCfgFile(Instance instance) throws CoreException
+	{
+		System.out.println(">>" + instance);
+
+		CfgFileWriter test = new CfgFileWriter(instance);
+		// test.open(instance);
+		try
+		{
+			byte[] bytes = test.toByteArray();
+			IFolder folder = getProject().getFolder("src");
+			IFile file = folder.getFile("test.cfg");
+
+			if (!file.exists())
+			{
+				file.create(new ByteArrayInputStream(bytes), true, null);
+			}
+			else
+			{
+				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
+			}
+
+			AsFileWriter asWriter = new AsFileWriter(instance);
+			// asWriter.go();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

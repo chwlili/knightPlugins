@@ -16,21 +16,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class FileDef
 {
-	private String xpath;
-	private InstanceField root;
-	private Hashtable<String, TypeDef> name2model = new Hashtable<String, TypeDef>();
-	private Hashtable<String, ArrayList<InstanceField>> path2Field;
-	private Stack<ArrayList<InstanceField>> stackFields;
-
-	/**
-	 * 添加类型定义
-	 * 
-	 * @param type
-	 */
-	public void addTypeDef(TypeDef type)
-	{
-		name2model.put(type.getName(), type);
-	}
+	private static String xpath;
+	private static InstanceField root;
+	private static Hashtable<String, TypeDef> name2model;
+	private static Hashtable<String, ArrayList<InstanceField>> path2Field;
+	private static Stack<ArrayList<InstanceField>> stackFields;
 
 	/**
 	 * 打开输入流
@@ -40,28 +30,34 @@ public class FileDef
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 */
-	public Instance open(InputStream stream, TypeDef type) throws SAXException, IOException, ParserConfigurationException
+	public static Instance build(InputStream stream, TypeDef[] allType, TypeDef mainType) throws SAXException, IOException, ParserConfigurationException
 	{
 		xpath = null;
 		root = null;
+		name2model = new Hashtable<String, TypeDef>();
 		path2Field = new Hashtable<String, ArrayList<InstanceField>>();
 		stackFields = new Stack<ArrayList<InstanceField>>();
 
-		if (type != null)
+		for (TypeDef type : allType)
 		{
-			root = new InstanceField("", new TypeFieldDef(type.getXPath(), "root", "", type.getName(), false));
-			path2Field.put(root.getDef().getXPath(), new ArrayList<InstanceField>());
-			path2Field.get(root.getDef().getXPath()).add(root);
+			name2model.put(type.getName(), type);
+		}
+
+		if (mainType != null)
+		{
+			root = new InstanceField("", new TypeFieldDef(mainType.getXPath(), "root", "", mainType.getName()));
+			path2Field.put(root.getDef().xpath, new ArrayList<InstanceField>());
+			path2Field.get(root.getDef().xpath).add(root);
 
 			SAXParserFactory.newInstance().newSAXParser().parse(stream, new MyHandler());
-			
+
 			return (Instance) root.getValue();
 		}
-		
+
 		return null;
 	}
 
-	private class MyHandler extends DefaultHandler
+	private static class MyHandler extends DefaultHandler
 	{
 		@SuppressWarnings("unchecked")
 		private void onEnterElement(String xpath)
@@ -83,22 +79,22 @@ public class FileDef
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().isRepeted())
+				if (field.getValue() != null && !field.getDef().repeted)
 				{
 					continue;
 				}
 
-				TypeDef model = name2model.get(field.getDef().getType());
+				TypeDef model = name2model.get(field.getDef().type);
 				if (model == null)
 				{
-					throw new Error("字段类型未找到! (" + field.getDef().getType() + ")");
+					throw new Error("字段类型未找到! (" + field.getDef().type + ")");
 				}
 
 				Instance fieldValue = new Instance(model);
 
 				for (TypeFieldDef childFieldDef : model.fields)
 				{
-					String path = xpath + "/" + childFieldDef.getXPath();
+					String path = xpath + "/" + childFieldDef.xpath;
 
 					InstanceField childField = new InstanceField(path, childFieldDef);
 
@@ -113,14 +109,14 @@ public class FileDef
 					stackFields.lastElement().add(childField);
 				}
 
-				if (field.getDef().isRepeted())
+				if (field.getDef().repeted)
 				{
-					if(field.getValue()==null)
+					if (field.getValue() == null)
 					{
 						field.setValue(new ArrayList<Object>());
 					}
-					
-					((List<Instance>)field.getValue()).add(fieldValue);
+
+					((List<Instance>) field.getValue()).add(fieldValue);
 				}
 				else
 				{
@@ -149,7 +145,7 @@ public class FileDef
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().isRepeted())
+				if (field.getValue() != null && !field.getDef().repeted)
 				{
 					continue;
 				}
@@ -173,14 +169,14 @@ public class FileDef
 					fieldValue = attributeValue;
 				}
 
-				if (field.getDef().isRepeted())
+				if (field.getDef().repeted)
 				{
-					if(field.getValue()==null)
+					if (field.getValue() == null)
 					{
 						field.setValue(new ArrayList<Object>());
 					}
-					
-					((List<Object>)field.getValue()).add(fieldValue);
+
+					((List<Object>) field.getValue()).add(fieldValue);
 				}
 				else
 				{
@@ -207,7 +203,7 @@ public class FileDef
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().isRepeted())
+				if (field.getValue() != null && !field.getDef().repeted)
 				{
 					continue;
 				}
@@ -231,14 +227,14 @@ public class FileDef
 					fieldValue = text;
 				}
 
-				if (field.getDef().isRepeted())
+				if (field.getDef().repeted)
 				{
-					if(field.getValue()==null)
+					if (field.getValue() == null)
 					{
 						field.setValue(new ArrayList<Object>());
 					}
-					
-					((List<Object>)field.getValue()).add(fieldValue);
+
+					((List<Object>) field.getValue()).add(fieldValue);
 				}
 				else
 				{
