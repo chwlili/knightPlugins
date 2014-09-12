@@ -1,8 +1,12 @@
 package org.chw.game.builder;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -25,6 +29,7 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResourceFactory;
@@ -43,10 +48,114 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		CfgActivator.getInstance().getInjector(CfgActivator.ORG_CHW_GAME_CFG).injectMembers(this);
 	}
 
+	/**
+	 * 获取Src目录
+	 * 
+	 * @return
+	 * @throws CoreException
+	 * @throws IOException
+	 */
+	private IFolder getSrcFolder() throws CoreException, IOException
+	{
+		IFile file = getProject().getFile(".actionScriptProperties");
+		if (file.exists())
+		{
+			StringBuilder sb = new StringBuilder();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(file.getContents()));
+			while (true)
+			{
+				String line = reader.readLine();// +"\n";
+				if (line == null)
+				{
+					break;
+				}
+				else
+				{
+					sb.append(line + "\n");
+				}
+			}
+
+			String content = sb.toString();
+			int propIndex = content.indexOf("sourceFolderPath");
+			if (propIndex != -1)
+			{
+				int beginIndex = content.indexOf("\"", propIndex);
+				if (beginIndex != -1)
+				{
+					int endIndex = content.indexOf("\"", beginIndex + 1);
+					if (endIndex != -1)
+					{
+						return getProject().getFolder(content.substring(beginIndex + 1, endIndex));
+					}
+				}
+			}
+		}
+		return getProject().getFolder("src");
+	}
+
+	/**
+	 * 清理
+	 */
 	@Override
 	protected void clean(IProgressMonitor monitor) throws CoreException
 	{
 		System.out.println("清理");
+
+		try
+		{
+			ArrayList<IFile> deleteableList = new ArrayList<IFile>();
+			ArrayList<IFolder> folderList = new ArrayList<IFolder>();
+
+			IFolder folder = getSrcFolder();
+			if (folder != null && folder.exists())
+			{
+				ArrayList<IFolder> folders = new ArrayList<IFolder>();
+				folders.add(folder);
+				while (folders.size() > 0)
+				{
+					IFolder currFolder = folders.remove(0);
+					for (IResource resource : currFolder.members())
+					{
+						if (resource instanceof IFile)
+						{
+							IFile file = (IFile) resource;
+							if (file.isDerived())
+							{
+								deleteableList.add(file);
+							}
+						}
+						else if (resource instanceof IFolder)
+						{
+							folders.add((IFolder) resource);
+							folderList.add((IFolder) resource);
+						}
+					}
+				}
+			}
+
+			monitor = new SubProgressMonitor(monitor, deleteableList.size() + 1);
+			for (IFile file : deleteableList)
+			{
+				file.delete(true, null);
+				monitor.worked(1);
+			}
+
+			while (folderList.size() > 0)
+			{
+				IFolder currFolder = folderList.remove(folderList.size() - 1);
+				if (currFolder.members().length == 0)
+				{
+					currFolder.delete(true, null);
+				}
+			}
+			monitor.worked(1);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		monitor.done();
 	}
 
 	@Override
@@ -80,6 +189,11 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		return null;
 	}
 
+	/**
+	 * 完整构建
+	 * 
+	 * @throws CoreException
+	 */
 	private void fullBuild() throws CoreException
 	{
 		final String cfgDir = getProject().getPersistentProperty(Xml2Nature.CFG_DIR);
@@ -150,6 +264,12 @@ public class Xml2Builder extends IncrementalProjectBuilder
 				XML2 xml2 = (XML2) emfFile.getContents().get(0);
 				if (xml2 != null)
 				{
+					String packName = "";
+					if (xml2.getPack() != null)
+					{
+						packName = xml2.getPack().getPack();
+					}
+
 					for (Type type : xml2.getTypes())
 					{
 						String typeComm = type.getComm();
@@ -164,7 +284,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 							xpath = input.getNodePath();
 						}
 
-						TypeDef typeDef = new TypeDef(inputPath, xpath, typeName, typeComm);
+						TypeDef typeDef = new TypeDef(inputPath, xpath, packName, typeName, typeComm);
 						allTypes.add(typeDef);
 						if (inputPath != null && inputPath.isEmpty() == false)
 						{
@@ -214,10 +334,23 @@ public class Xml2Builder extends IncrementalProjectBuilder
 					}
 				}
 
-				for (TypeDef type : allTypes)
+				// 排序所有类型列表
+				TypeDef[] allTypeArray = allTypes.toArray(new TypeDef[] {});
+				Arrays.sort(allTypeArray, new Comparator<TypeDef>()
 				{
-					AsFileWriter.writeTypeClass(getProject(), xmlFolder, cfgFolder, type);
-				}
+					@Override
+					public int compare(TypeDef o1, TypeDef o2)
+					{
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
+
+				// 生成自定义类型
+				String topPackName = getProject().getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
+				String corePackName = getProject().getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
+				String codePackName = getProject().getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+				AsFileWriter writer = new AsFileWriter(getSrcFolder(), topPackName, corePackName, codePackName, allTypeArray);
+				writer.writeAllType();
 
 				for (TypeDef type : mainTypes)
 				{
@@ -241,10 +374,10 @@ public class Xml2Builder extends IncrementalProjectBuilder
 					IFile file = xmlFiles.get(filePath);
 					if (file != null)
 					{
-						Instance instance = FileDef.build(file.getContents(), allTypes.toArray(new TypeDef[allTypes.size()]), type);
+						Instance instance = FileDef.build(file.getContents(), allTypeArray, type);
 						if (instance != null)
 						{
-							toCfgFile(instance);
+							toCfgFile(instance, writer);
 						}
 					}
 					else
@@ -273,16 +406,14 @@ public class Xml2Builder extends IncrementalProjectBuilder
 
 	}
 
-	private void toCfgFile(Instance instance) throws CoreException
+	private void toCfgFile(Instance instance, AsFileWriter writer) throws CoreException
 	{
-		System.out.println(">>" + instance);
-
-		CfgFileWriter test = new CfgFileWriter(instance);
-		// test.open(instance);
 		try
 		{
-			byte[] bytes = test.toByteArray();
-			IFolder folder = getProject().getFolder("src");
+			CfgFileWriter cfgWriter = new CfgFileWriter(instance, writer);
+			byte[] bytes = cfgWriter.toBytes();
+
+			IFolder folder = getSrcFolder();
 			IFile file = folder.getFile("test.cfg");
 
 			if (!file.exists())
@@ -293,9 +424,6 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			{
 				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
 			}
-
-			AsFileWriter asWriter = new AsFileWriter(instance);
-			// asWriter.go();
 		}
 		catch (IOException e)
 		{

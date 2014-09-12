@@ -13,6 +13,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 
@@ -37,6 +38,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * @generated
    */
   private EClass xml2EClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass packDefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -165,7 +173,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getXML2_Types()
+  public EReference getXML2_Pack()
   {
     return (EReference)xml2EClass.getEStructuralFeatures().get(0);
   }
@@ -175,9 +183,49 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getXML2_Types()
+  {
+    return (EReference)xml2EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getXML2_OtherComm()
   {
-    return (EAttribute)xml2EClass.getEStructuralFeatures().get(1);
+    return (EAttribute)xml2EClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPackDef()
+  {
+    return packDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPackDef_PackCHAR()
+  {
+    return (EAttribute)packDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPackDef_Pack()
+  {
+    return (EAttribute)packDefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -461,8 +509,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Create classes and their features
     xml2EClass = createEClass(XML2);
+    createEReference(xml2EClass, XML2__PACK);
     createEReference(xml2EClass, XML2__TYPES);
     createEAttribute(xml2EClass, XML2__OTHER_COMM);
+
+    packDefEClass = createEClass(PACK_DEF);
+    createEAttribute(packDefEClass, PACK_DEF__PACK_CHAR);
+    createEAttribute(packDefEClass, PACK_DEF__PACK);
 
     typeEClass = createEClass(TYPE);
     createEAttribute(typeEClass, TYPE__COMM);
@@ -529,8 +582,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(xml2EClass, org.chw.game.cfg.XML2.class, "XML2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getXML2_Pack(), this.getPackDef(), null, "pack", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Types(), this.getType(), null, "types", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getXML2_OtherComm(), ecorePackage.getEString(), "otherComm", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(packDefEClass, PackDef.class, "PackDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPackDef_PackCHAR(), ecorePackage.getEString(), "packCHAR", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPackDef_Pack(), ecorePackage.getEString(), "pack", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getType_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

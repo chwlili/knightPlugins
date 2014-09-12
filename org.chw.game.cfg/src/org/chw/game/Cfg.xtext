@@ -3,7 +3,11 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cfg "http://www.chw.org/game/Cfg"
 
 XML2:
+	pack=PackDef?
 	(types+=Type | otherComm+=COMMENT)*;
+
+PackDef:
+	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
 
 Type:
 	comm=COMMENT input=Input? prefix=C_TYPE name=NAME C_BRACE_L (fields+=Field | otherComm+=COMMENT)* C_BRACE_R;
@@ -27,6 +31,9 @@ HashType:
 
 Param:
 	paramName=NAME;
+
+PackName:
+	NAME ('.' NAME)*;
 
 TypeName:
 	C_INPUT | C_FILE | C_NODE | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_HASH | NAME;
@@ -83,7 +90,7 @@ terminal C_UINT:
 	'uint';
 
 terminal C_BOOL:
-	'boolean';
+	'Boolean';
 
 terminal C_NUMBER:
 	'Number';
@@ -96,6 +103,9 @@ terminal C_LIST:
 
 terminal C_HASH:
 	'Hash';
+
+terminal C_PACKAGE:
+	'package';
 
 terminal NAME:
 	('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;

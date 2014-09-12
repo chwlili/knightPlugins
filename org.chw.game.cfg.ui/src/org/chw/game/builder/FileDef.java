@@ -62,7 +62,7 @@ public class FileDef
 		@SuppressWarnings("unchecked")
 		private void onEnterElement(String xpath)
 		{
-			System.out.println(">" + xpath);
+			// System.out.println(">" + xpath);
 
 			stackFields.push(new ArrayList<InstanceField>());
 
@@ -128,7 +128,8 @@ public class FileDef
 		@SuppressWarnings("unchecked")
 		private void onAttribute(String xpath, String attributeName, String attributeValue)
 		{
-			System.out.println(" " + xpath + "@" + attributeName + " = " + attributeValue);
+			// System.out.println(" " + xpath + "@" + attributeName + " = " +
+			// attributeValue);
 
 			xpath = xpath + "/@" + attributeName;
 
@@ -154,15 +155,29 @@ public class FileDef
 
 				if (field.getDef().isBoolean())
 				{
-					fieldValue = attributeValue.equals("true");
+					fieldValue = attributeValue != null && !attributeValue.trim().isEmpty() && !attributeValue.trim().equals("false") && !attributeValue.trim().equals("0");
 				}
 				else if (field.getDef().isInt() || field.getDef().isUint())
 				{
-					fieldValue = Integer.parseInt(attributeValue);
+					try
+					{
+						fieldValue = Integer.parseInt(attributeValue);
+					}
+					catch (NumberFormatException err)
+					{
+						fieldValue = 0;
+					}
 				}
 				else if (field.getDef().isNumber())
 				{
-					fieldValue = Float.parseFloat(attributeValue);
+					try
+					{
+						fieldValue = Float.parseFloat(attributeValue);
+					}
+					catch (NumberFormatException err)
+					{
+						fieldValue = 0;
+					}
 				}
 				else if (field.getDef().isString())
 				{
@@ -188,7 +203,7 @@ public class FileDef
 		@SuppressWarnings("unchecked")
 		private void onText(String xpath, String text)
 		{
-			System.out.println(" " + xpath + " = " + text);
+			// System.out.println(" " + xpath + " = " + text);
 
 			ArrayList<InstanceField> fields = path2Field.get(xpath);
 			if (fields == null)
@@ -212,15 +227,29 @@ public class FileDef
 
 				if (field.getDef().isBoolean())
 				{
-					fieldValue = text.equals("true");
+					fieldValue = text != null && !text.trim().isEmpty() && !text.trim().equals("false") && !text.trim().equals("0");
 				}
 				else if (field.getDef().isInt() || field.getDef().isUint())
 				{
-					fieldValue = Integer.parseInt(text);
+					try
+					{
+						fieldValue = Integer.parseInt(text);
+					}
+					catch (NumberFormatException err)
+					{
+						fieldValue = 0;
+					}
 				}
 				else if (field.getDef().isNumber())
 				{
-					fieldValue = Float.parseFloat(text);
+					try
+					{
+						fieldValue = Float.parseFloat(text);
+					}
+					catch (NumberFormatException err)
+					{
+						fieldValue = Float.NaN;
+					}
 				}
 				else if (field.getDef().isString())
 				{
@@ -245,7 +274,7 @@ public class FileDef
 
 		private void onExitElement(String xpath)
 		{
-			System.out.println("<" + xpath);
+			// System.out.println("<" + xpath);
 
 			ArrayList<InstanceField> fields = stackFields.pop();
 			for (InstanceField field : fields)

@@ -182,7 +182,7 @@ public class CfgValidator extends AbstractCfgValidator
 
 	private boolean isNativeType(String text)
 	{
-		return text.equals("boolean") || text.equals("int") || text.equals("uint") || text.equals("Number") || text.equals("String");
+		return text.equals("Boolean") || text.equals("int") || text.equals("uint") || text.equals("Number") || text.equals("String");
 	}
 
 	private Type getType(Resource resource, String typeName)

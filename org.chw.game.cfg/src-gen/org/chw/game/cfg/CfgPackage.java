@@ -71,13 +71,22 @@ public interface CfgPackage extends EPackage
   int XML2 = 0;
 
   /**
+   * The feature id for the '<em><b>Pack</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int XML2__PACK = 0;
+
+  /**
    * The feature id for the '<em><b>Types</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2__TYPES = 0;
+  int XML2__TYPES = 1;
 
   /**
    * The feature id for the '<em><b>Other Comm</b></em>' attribute list.
@@ -86,7 +95,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int XML2__OTHER_COMM = 1;
+  int XML2__OTHER_COMM = 2;
 
   /**
    * The number of structural features of the '<em>XML2</em>' class.
@@ -95,7 +104,44 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int XML2_FEATURE_COUNT = 2;
+  int XML2_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.PackDefImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getPackDef()
+   * @generated
+   */
+  int PACK_DEF = 1;
+
+  /**
+   * The feature id for the '<em><b>Pack CHAR</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACK_DEF__PACK_CHAR = 0;
+
+  /**
+   * The feature id for the '<em><b>Pack</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACK_DEF__PACK = 1;
+
+  /**
+   * The number of structural features of the '<em>Pack Def</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACK_DEF_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.TypeImpl <em>Type</em>}' class.
@@ -105,7 +151,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getType()
    * @generated
    */
-  int TYPE = 1;
+  int TYPE = 2;
 
   /**
    * The feature id for the '<em><b>Comm</b></em>' attribute.
@@ -178,7 +224,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getInput()
    * @generated
    */
-  int INPUT = 2;
+  int INPUT = 3;
 
   /**
    * The feature id for the '<em><b>Prefix</b></em>' attribute.
@@ -224,7 +270,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getField()
    * @generated
    */
-  int FIELD = 3;
+  int FIELD = 4;
 
   /**
    * The feature id for the '<em><b>Comm</b></em>' attribute.
@@ -279,7 +325,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getNativeType()
    * @generated
    */
-  int NATIVE_TYPE = 4;
+  int NATIVE_TYPE = 5;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -307,7 +353,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getListType()
    * @generated
    */
-  int LIST_TYPE = 5;
+  int LIST_TYPE = 6;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -335,7 +381,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getHashType()
    * @generated
    */
-  int HASH_TYPE = 6;
+  int HASH_TYPE = 7;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -372,7 +418,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getParam()
    * @generated
    */
-  int PARAM = 7;
+  int PARAM = 8;
 
   /**
    * The feature id for the '<em><b>Param Name</b></em>' attribute.
@@ -404,6 +450,17 @@ public interface CfgPackage extends EPackage
   EClass getXML2();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Pack</em>'.
+   * @see org.chw.game.cfg.XML2#getPack()
+   * @see #getXML2()
+   * @generated
+   */
+  EReference getXML2_Pack();
+
+  /**
    * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getTypes <em>Types</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -424,6 +481,38 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EAttribute getXML2_OtherComm();
+
+  /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.PackDef <em>Pack Def</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Pack Def</em>'.
+   * @see org.chw.game.cfg.PackDef
+   * @generated
+   */
+  EClass getPackDef();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.PackDef#getPackCHAR <em>Pack CHAR</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pack CHAR</em>'.
+   * @see org.chw.game.cfg.PackDef#getPackCHAR()
+   * @see #getPackDef()
+   * @generated
+   */
+  EAttribute getPackDef_PackCHAR();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.PackDef#getPack <em>Pack</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pack</em>'.
+   * @see org.chw.game.cfg.PackDef#getPack()
+   * @see #getPackDef()
+   * @generated
+   */
+  EAttribute getPackDef_Pack();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.Type <em>Type</em>}'.
@@ -727,6 +816,14 @@ public interface CfgPackage extends EPackage
     EClass XML2 = eINSTANCE.getXML2();
 
     /**
+     * The meta object literal for the '<em><b>Pack</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference XML2__PACK = eINSTANCE.getXML2_Pack();
+
+    /**
      * The meta object literal for the '<em><b>Types</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -741,6 +838,32 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EAttribute XML2__OTHER_COMM = eINSTANCE.getXML2_OtherComm();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.PackDefImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getPackDef()
+     * @generated
+     */
+    EClass PACK_DEF = eINSTANCE.getPackDef();
+
+    /**
+     * The meta object literal for the '<em><b>Pack CHAR</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PACK_DEF__PACK_CHAR = eINSTANCE.getPackDef_PackCHAR();
+
+    /**
+     * The meta object literal for the '<em><b>Pack</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PACK_DEF__PACK = eINSTANCE.getPackDef_Pack();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.TypeImpl <em>Type</em>}' class.

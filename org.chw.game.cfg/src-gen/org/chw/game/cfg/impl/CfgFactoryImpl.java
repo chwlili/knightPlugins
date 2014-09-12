@@ -69,6 +69,7 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
     switch (eClass.getClassifierID())
     {
       case CfgPackage.XML2: return createXML2();
+      case CfgPackage.PACK_DEF: return createPackDef();
       case CfgPackage.TYPE: return createType();
       case CfgPackage.INPUT: return createInput();
       case CfgPackage.FIELD: return createField();
@@ -90,6 +91,17 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     XML2Impl xml2 = new XML2Impl();
     return xml2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackDef createPackDef()
+  {
+    PackDefImpl packDef = new PackDefImpl();
+    return packDef;
   }
 
   /**

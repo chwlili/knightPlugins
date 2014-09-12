@@ -36,6 +36,15 @@ public interface CfgFactory extends EFactory
   XML2 createXML2();
 
   /**
+   * Returns a new object of class '<em>Pack Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pack Def</em>'.
+   * @generated
+   */
+  PackDef createPackDef();
+
+  /**
    * Returns a new object of class '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

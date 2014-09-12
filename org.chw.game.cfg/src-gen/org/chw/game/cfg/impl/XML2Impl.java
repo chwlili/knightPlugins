@@ -9,9 +9,11 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -19,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
@@ -32,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getTypes <em>Types</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
@@ -41,6 +45,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
 {
+  /**
+   * The cached value of the '{@link #getPack() <em>Pack</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPack()
+   * @generated
+   * @ordered
+   */
+  protected PackDef pack;
+
   /**
    * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -87,6 +101,54 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * <!-- end-user-doc -->
    * @generated
    */
+  public PackDef getPack()
+  {
+    return pack;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetPack(PackDef newPack, NotificationChain msgs)
+  {
+    PackDef oldPack = pack;
+    pack = newPack;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.XML2__PACK, oldPack, newPack);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPack(PackDef newPack)
+  {
+    if (newPack != pack)
+    {
+      NotificationChain msgs = null;
+      if (pack != null)
+        msgs = ((InternalEObject)pack).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.XML2__PACK, null, msgs);
+      if (newPack != null)
+        msgs = ((InternalEObject)newPack).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.XML2__PACK, null, msgs);
+      msgs = basicSetPack(newPack, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.XML2__PACK, newPack, newPack));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Type> getTypes()
   {
     if (types == null)
@@ -120,6 +182,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__PACK:
+        return basicSetPack(null, msgs);
       case CfgPackage.XML2__TYPES:
         return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
     }
@@ -136,6 +200,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__PACK:
+        return getPack();
       case CfgPackage.XML2__TYPES:
         return getTypes();
       case CfgPackage.XML2__OTHER_COMM:
@@ -155,6 +221,9 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__PACK:
+        setPack((PackDef)newValue);
+        return;
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         getTypes().addAll((Collection<? extends Type>)newValue);
@@ -177,6 +246,9 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__PACK:
+        setPack((PackDef)null);
+        return;
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         return;
@@ -197,6 +269,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__PACK:
+        return pack != null;
       case CfgPackage.XML2__TYPES:
         return types != null && !types.isEmpty();
       case CfgPackage.XML2__OTHER_COMM:

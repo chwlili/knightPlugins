@@ -13,10 +13,14 @@ class CfgFileWriter
 {
 	private Instance root;
 
+	private AsFileWriter classWriter;
+
 	private int nextID = 1;
 
 	private HashMap<Object, Integer> def_id = new HashMap<Object, Integer>();
 	private HashMap<Integer, Integer> int_id = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> uint_id = new HashMap<Integer, Integer>();
+	private HashMap<Boolean, Integer> boolean_id = new HashMap<Boolean, Integer>();
 	private HashMap<Float, Integer> float_id = new HashMap<Float, Integer>();
 	private HashMap<String, Integer> string_id = new HashMap<String, Integer>();
 	private HashMap<String, Integer> instance_id = new HashMap<String, Integer>();
@@ -24,6 +28,7 @@ class CfgFileWriter
 
 	private HashMap<Integer, Integer> id_refCount = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Object> id_value = new HashMap<Integer, Object>();
+	private HashMap<Integer, TypeFieldDef> id_field = new HashMap<Integer, TypeFieldDef>();
 	private HashMap<Integer, Integer> id_order = new HashMap<Integer, Integer>();
 
 	private HashMap<String, HashSet<Integer>> typeName_ids = new HashMap<String, HashSet<Integer>>();
@@ -33,22 +38,24 @@ class CfgFileWriter
 	 * 构造函数
 	 * 
 	 * @param instance
+	 * @throws IOException
 	 */
-	public CfgFileWriter(Instance instance)
+	public CfgFileWriter(Instance instance, AsFileWriter writer)
 	{
 		root = instance;
+		classWriter = writer;
 	}
 
 	/**
-	 * 转换成字节数组
+	 * 转换成String
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
-	public byte[] toByteArray() throws IOException
+	public byte[] toBytes() throws IOException
 	{
 		parseInstance(root);
-		
+
 		for (String typeName : typeName_ids.keySet())
 		{
 			HashSet<Integer> ids = typeName_ids.get(typeName);
@@ -81,7 +88,7 @@ class CfgFileWriter
 			typeName_idArray.put(typeName, idArray);
 		}
 
-		toDebugString();
+		System.out.println(toDebugString());
 
 		return getBytes();
 	}
@@ -95,12 +102,35 @@ class CfgFileWriter
 	{
 		for (InstanceField field : instance.getFields())
 		{
+			if (field.getValue() == null)
+			{
+				continue;
+			}
+
 			if (field.getDef().repeted)
 			{
+				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.getValue();
 				for (Object value : list)
 				{
+					// 列表项计入引用数
 					incrementRefCount(field.getDef(), value);
+
+					// 所有主键计入引用数
+					if ((value instanceof Instance) && field.getDef().indexKeys != null)
+					{
+						Instance valueInstance = (Instance) value;
+						for (String key : field.getDef().indexKeys)
+						{
+							InstanceField keyField = valueInstance.findField(key);
+							if (keyField != null)
+							{
+								incrementRefCount(keyField.getDef(), keyField.getValue());
+							}
+						}
+					}
+
+					// 递归
 					if (field.getDef().isExtendType())
 					{
 						parseInstance((Instance) value);
@@ -109,7 +139,10 @@ class CfgFileWriter
 			}
 			else
 			{
+				// 值计入引用数
 				incrementRefCount(field.getDef(), field.getValue());
+
+				// 递归
 				if (field.getDef().isExtendType())
 				{
 					parseInstance((Instance) field.getValue());
@@ -127,14 +160,21 @@ class CfgFileWriter
 	private void incrementRefCount(TypeFieldDef def, Object value)
 	{
 		int id = getID(def, value);
+		if (id == 0)
+		{
+			return;
+		}
+
 		int count = 0;
 		if (id_refCount.containsKey(id))
 		{
 			count = id_refCount.get(id);
 		}
 		count++;
+
 		id_refCount.put(id, count);
 		id_value.put(id, value);
+		id_field.put(id, def);
 
 		if (!typeName_ids.containsKey(def.type))
 		{
@@ -145,71 +185,7 @@ class CfgFileWriter
 
 	// ------------------------------------------------------------------------------------------------------
 	//
-	// ID、序号查找函数
-	//
-	// ------------------------------------------------------------------------------------------------------
-
-	/**
-	 * 查找ID
-	 * 
-	 * @param def
-	 * @param value
-	 * @return
-	 */
-	private int getID(TypeFieldDef def, Object value)
-	{
-		int id = 0;
-		if (value != null)
-		{
-			if (def.isInt() || def.isUint())
-			{
-				id = getID((Integer) value);
-			}
-			else if (def.isNumber())
-			{
-				id = getID((Float) value);
-			}
-			else if (def.isString())
-			{
-				id = getID((String) value);
-			}
-			else if (def.isExtendType())
-			{
-				id = getID((Instance) value);
-			}
-		}
-		return id;
-	}
-
-	/**
-	 * 查找序号
-	 * 
-	 * @param def
-	 * @param value
-	 * @return
-	 */
-	private int getOrder(TypeFieldDef def, Object value)
-	{
-		if (def.isBoolean())
-		{
-			if (value != null)
-			{
-				return ((Boolean) value) ? 1 : 0;
-			}
-			return 0;
-		}
-
-		int id = getID(def, value);
-		if (id != 0)
-		{
-			return id_order.get(id);
-		}
-		return 0;
-	}
-
-	// ------------------------------------------------------------------------------------------------------
-	//
-	// 获取类型的ID
+	// 获取ID
 	//
 	// ------------------------------------------------------------------------------------------------------
 
@@ -245,11 +221,45 @@ class CfgFileWriter
 		return def_id.get(field);
 	}
 
-	// ------------------------------------------------------------------------------------------------------
-	//
-	// 获取值对象的ID
-	//
-	// ------------------------------------------------------------------------------------------------------
+	/**
+	 * 查找ID
+	 * 
+	 * @param def
+	 * @param value
+	 * @return
+	 */
+	private int getID(TypeFieldDef def, Object value)
+	{
+		int id = 0;
+		if (def != null && value != null)
+		{
+			if (def.isInt())
+			{
+				id = getID((Integer) value, false);
+			}
+			else if (def.isUint())
+			{
+				id = getID((Integer) value, true);
+			}
+			else if (def.isNumber())
+			{
+				id = getID((Float) value);
+			}
+			else if (def.isString())
+			{
+				id = getID((String) value);
+			}
+			else if (def.isBoolean())
+			{
+				id = getID((Boolean) value);
+			}
+			else if (def.isExtendType())
+			{
+				id = getID((Instance) value);
+			}
+		}
+		return id;
+	}
 
 	/**
 	 * 获取Int值的ID
@@ -257,14 +267,51 @@ class CfgFileWriter
 	 * @param value
 	 * @return
 	 */
-	private int getID(Integer value)
+	private int getID(Integer value, boolean sign)
 	{
-		if (!int_id.containsKey(value))
+		if (value == 0)
 		{
-			int_id.put(value, nextID);
+			return 0;
+		}
+
+		if (sign)
+		{
+			if (!uint_id.containsKey(value))
+			{
+				uint_id.put(value, nextID);
+				nextID++;
+			}
+			return uint_id.get(value);
+		}
+		else
+		{
+			if (!int_id.containsKey(value))
+			{
+				int_id.put(value, nextID);
+				nextID++;
+			}
+			return int_id.get(value);
+		}
+	}
+
+	/**
+	 * 获取Boolean值的ID
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private int getID(Boolean value)
+	{
+		if (value == false)
+		{
+			return 0;
+		}
+		if (!boolean_id.containsKey(value))
+		{
+			boolean_id.put(value, nextID);
 			nextID++;
 		}
-		return int_id.get(value);
+		return boolean_id.get(value);
 	}
 
 	/**
@@ -275,6 +322,10 @@ class CfgFileWriter
 	 */
 	private int getID(Float value)
 	{
+		if (Float.isNaN(value))
+		{
+			return 0;
+		}
 		if (!float_id.containsKey(value))
 		{
 			float_id.put(value, nextID);
@@ -291,6 +342,10 @@ class CfgFileWriter
 	 */
 	private int getID(String value)
 	{
+		if (value.isEmpty())
+		{
+			return 0;
+		}
 		if (!string_id.containsKey(value))
 		{
 			string_id.put(value, nextID);
@@ -314,6 +369,29 @@ class CfgFileWriter
 			nextID++;
 		}
 		return instance_id.get(txt);
+	}
+
+	// ------------------------------------------------------------------------------------------------------
+	//
+	// 序号查找
+	//
+	// ------------------------------------------------------------------------------------------------------
+
+	/**
+	 * 查找序号
+	 * 
+	 * @param def
+	 * @param value
+	 * @return
+	 */
+	private int getOrder(TypeFieldDef def, Object value)
+	{
+		int id = getID(def, value);
+		if (id != 0)
+		{
+			return id_order.get(id);
+		}
+		return 0;
 	}
 
 	// ------------------------------------------------------------------------------------------------------
@@ -376,6 +454,7 @@ class CfgFileWriter
 			if (def.repeted)
 			{
 				sb.append("[");
+				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.getValue();
 				for (Object item : list)
 				{
@@ -386,7 +465,7 @@ class CfgFileWriter
 			}
 			else
 			{
-				sb.append(field.getValue().toString());
+				sb.append(field.getValue());
 			}
 		}
 		else
@@ -394,6 +473,7 @@ class CfgFileWriter
 			if (def.repeted)
 			{
 				sb.append("[");
+				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.getValue();
 				for (Object item : list)
 				{
@@ -421,84 +501,6 @@ class CfgFileWriter
 	//
 	// ------------------------------------------------------------------------------------------------------
 
-	private void toDebugString()
-	{
-		StringBuilder sb = new StringBuilder();
-
-		for (String typeName : typeName_idArray.keySet())
-		{
-			sb.append(typeName + ":");
-			for (int id : typeName_idArray.get(typeName))
-			{
-				Object value = id_value.get(id);
-				if (value instanceof Instance)
-				{
-					sb.append("{");
-					Instance instance = (Instance) value;
-					for (InstanceField field : instance.getFields())
-					{
-						TypeFieldDef def = field.getDef();
-						int valueID = 0;
-						if (def.isExtendType())
-						{
-							valueID = getID((Instance) field.getValue());
-						}
-						else if (def.isInt() || def.isUint())
-						{
-							valueID = getID((Integer) field.getValue());
-						}
-						else if (def.isNumber())
-						{
-							valueID = getID((Float) field.getValue());
-						}
-						else if (def.isString())
-						{
-							valueID = getID((String) field.getValue());
-						}
-						sb.append(field.getDef().name);
-						sb.append(":");
-						sb.append(id_order.get(valueID));
-						sb.append(",");
-					}
-					sb.append("}");
-				}
-				else
-				{
-					sb.append(value);
-				}
-				sb.append(",");
-			}
-			sb.append("\n");
-		}
-
-		sb.append("{");
-		for (InstanceField field : root.getFields())
-		{
-			sb.append(field.getDef().name);
-			sb.append(":");
-			TypeFieldDef def = field.getDef();
-			if (def.repeted)
-			{
-				sb.append("[");
-				ArrayList list = (ArrayList) field.getValue();
-				for (Object item : list)
-				{
-					sb.append(getOrder(def, item));
-					sb.append(",");
-				}
-				sb.append("]");
-			}
-			else
-			{
-				sb.append(getOrder(def, field.getValue()));
-			}
-			sb.append(",");
-		}
-		sb.append("}");
-
-		System.out.println(sb.toString());
-	}
-
 	/**
 	 * 保存
 	 * 
@@ -515,9 +517,10 @@ class CfgFileWriter
 		dataOutput.writeInt(allTypeName.length);
 		for (String typeName : allTypeName)
 		{
-			// dataOutput.write(getBytes(typeName));
+			dataOutput.writeInt(classWriter.getTypeID(typeName));
 			dataOutput.write(getBytes(typeName_idArray.get(typeName)));
 		}
+		dataOutput.writeInt(classWriter.getTypeID(root.getType().getName()));
 		dataOutput.write(getBytes(root));
 
 		return byteArrayOutput.toByteArray();
@@ -572,22 +575,28 @@ class CfgFileWriter
 
 			for (; left < right; left++)
 			{
+				TypeFieldDef field = id_field.get(list[left]);
 				Object value = id_value.get(list[left]);
-				if (value instanceof Instance)
+
+				if (field.isInt() || field.isUint())
 				{
-					partOutputStream.write(getBytes((Instance) value));
+					partOutputStream.writeInt((Integer) value);
 				}
-				else if (value instanceof String)
+				else if (field.isBoolean())
 				{
-					partOutputStream.write(getBytes((String) value));
+					partOutputStream.writeInt((Boolean) value ? 1 : 0);
 				}
-				else if (value instanceof Float)
+				else if (field.isNumber())
 				{
 					partOutputStream.writeFloat((Float) value);
 				}
-				else if (value instanceof Integer)
+				else if (field.isString())
 				{
-					partOutputStream.writeInt((Integer) value);
+					partOutputStream.write(getBytes((String) value));
+				}
+				else if (field.isExtendType())
+				{
+					partOutputStream.write(getBytes((Instance) value));
 				}
 			}
 			partOutputStream.flush();
@@ -597,26 +606,16 @@ class CfgFileWriter
 		// 合并所有子部分
 		ByteArrayOutputStream contentByteArray = new ByteArrayOutputStream();
 		DataOutputStream contentOutputStream = new DataOutputStream(contentByteArray);
-		contentOutputStream.write(totalCount);
-		contentOutputStream.write(partLength);
+		contentOutputStream.writeInt(totalCount);
+		contentOutputStream.writeInt(partLength);
 		for (byte[] bytes : partBytes)
 		{
-			contentOutputStream.write(bytes.length);
+			contentOutputStream.writeInt(bytes.length);
 			contentOutputStream.write(bytes);
 		}
 		contentOutputStream.flush();
 
-		// 添加长度头标记
-		// byte[] content = contentByteArray.toByteArray();
-		// ByteArrayOutputStream lastByteArray = new ByteArrayOutputStream();
-		// DataOutputStream lastOutputStream = new
-		// DataOutputStream(lastByteArray);
-		// lastOutputStream.writeInt(content.length);
-		// lastOutputStream.write(content);
-		// lastOutputStream.flush();
-
 		// 返回
-		// return lastByteArray.toByteArray();
 		return contentByteArray.toByteArray();
 	}
 
@@ -639,15 +638,16 @@ class CfgFileWriter
 			// 字段为空时，简单值输出空引用，列表值输出长度标记0
 			if (field == null || field.getValue() == null)
 			{
-				contentOutputStream.write(0);
+				contentOutputStream.writeInt(0);
 				continue;
 			}
 
 			// 输出字段内容
 			if (fieldDef.repeted && fieldDef.indexKeys != null)
 			{
+				@SuppressWarnings("rawtypes")
 				ArrayList vals = (ArrayList) field.getValue();
-				contentOutputStream.write(vals.size());
+				contentOutputStream.writeInt(vals.size());
 				for (Object val : vals)
 				{
 					if (fieldDef.isExtendType())
@@ -666,24 +666,98 @@ class CfgFileWriter
 							}
 						}
 					}
-					contentOutputStream.write(getOrder(fieldDef, val));
+					contentOutputStream.writeInt(getOrder(fieldDef, val));
 				}
 			}
 			else if (fieldDef.repeted)
 			{
+				@SuppressWarnings("rawtypes")
 				ArrayList vals = (ArrayList) field.getValue();
-				contentOutputStream.write(vals.size());
+				contentOutputStream.writeInt(vals.size());
 				for (Object val : vals)
 				{
-					contentOutputStream.write(getOrder(fieldDef, val));
+					contentOutputStream.writeInt(getOrder(fieldDef, val));
 				}
 			}
 			else
 			{
-				contentOutputStream.write(getOrder(fieldDef, field.getValue()));
+				contentOutputStream.writeInt(getOrder(fieldDef, field.getValue()));
 			}
 		}
 
 		return contentByteArray.toByteArray();
+	}
+
+	// -------------------------------------------------------------------------------------------------------
+	//
+	// debug函数
+	//
+	// -------------------------------------------------------------------------------------------------------
+
+	/**
+	 * 转换成debug字符串
+	 */
+	private String toDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+
+		for (String typeName : typeName_idArray.keySet())
+		{
+			sb.append(typeName + ":");
+			for (int id : typeName_idArray.get(typeName))
+			{
+				Object value = id_value.get(id);
+				if (value instanceof Instance)
+				{
+					sb.append("{");
+					Instance instance = (Instance) value;
+					for (InstanceField field : instance.getFields())
+					{
+						sb.append(field.getDef().name);
+						sb.append(":");
+						sb.append(getOrder(field.getDef(), field.getValue()));
+						sb.append(",");
+					}
+					sb.append("}");
+				}
+				else
+				{
+					sb.append(value);
+				}
+				sb.append(",");
+			}
+			sb.append("\n");
+		}
+
+		sb.append("{");
+		for (InstanceField field : root.getFields())
+		{
+			sb.append(field.getDef().name);
+			sb.append(":");
+			TypeFieldDef def = field.getDef();
+			if (def.repeted)
+			{
+				sb.append("[");
+				if (field.getValue() != null)
+				{
+					@SuppressWarnings("rawtypes")
+					ArrayList list = (ArrayList) field.getValue();
+					for (Object item : list)
+					{
+						sb.append(getOrder(def, item));
+						sb.append(",");
+					}
+				}
+				sb.append("]");
+			}
+			else
+			{
+				sb.append(getOrder(def, field.getValue()));
+			}
+			sb.append(",");
+		}
+		sb.append("}");
+
+		return sb.toString();
 	}
 }

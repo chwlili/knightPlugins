@@ -8,6 +8,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
@@ -59,6 +60,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case CfgPackage.NATIVE_TYPE:
 				if(context == grammarAccess.getNativeTypeRule()) {
 					sequence_NativeType(context, (NativeType) semanticObject); 
+					return; 
+				}
+				else break;
+			case CfgPackage.PACK_DEF:
+				if(context == grammarAccess.getPackDefRule()) {
+					sequence_PackDef(context, (PackDef) semanticObject); 
 					return; 
 				}
 				else break;
@@ -145,6 +152,25 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
+	 *     (packCHAR=C_PACKAGE pack=PackName)
+	 */
+	protected void sequence_PackDef(EObject context, PackDef semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PACK_DEF__PACK_CHAR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PACK_DEF__PACK_CHAR));
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PACK_DEF__PACK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PACK_DEF__PACK));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getPackDefAccess().getPackCHARC_PACKAGETerminalRuleCall_0_0(), semanticObject.getPackCHAR());
+		feeder.accept(grammarAccess.getPackDefAccess().getPackPackNameParserRuleCall_1_0(), semanticObject.getPack());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     paramName=NAME
 	 */
 	protected void sequence_Param(EObject context, Param semanticObject) {
@@ -170,7 +196,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (types+=Type | otherComm+=COMMENT)*
+	 *     (pack=PackDef? (types+=Type | otherComm+=COMMENT)*)
 	 */
 	protected void sequence_XML2(EObject context, XML2 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

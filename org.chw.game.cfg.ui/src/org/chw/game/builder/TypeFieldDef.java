@@ -43,7 +43,7 @@ public class TypeFieldDef
 
 	public boolean isBoolean()
 	{
-		return type.equals("boolean");
+		return type.equals("Boolean");
 	}
 
 	public boolean isInt()

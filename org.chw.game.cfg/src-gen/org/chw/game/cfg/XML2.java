@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getTypes <em>Types</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getOtherComm <em>Other Comm</em>}</li>
  * </ul>
@@ -29,6 +30,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface XML2 extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Pack</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Pack</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Pack</em>' containment reference.
+   * @see #setPack(PackDef)
+   * @see org.chw.game.cfg.CfgPackage#getXML2_Pack()
+   * @model containment="true"
+   * @generated
+   */
+  PackDef getPack();
+
+  /**
+   * Sets the value of the '{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Pack</em>' containment reference.
+   * @see #getPack()
+   * @generated
+   */
+  void setPack(PackDef value);
+
   /**
    * Returns the value of the '<em><b>Types</b></em>' containment reference list.
    * The list contents are of type {@link org.chw.game.cfg.Type}.

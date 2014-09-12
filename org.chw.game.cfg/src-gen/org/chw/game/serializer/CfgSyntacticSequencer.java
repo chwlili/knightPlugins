@@ -18,11 +18,13 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CfgGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Field_C_SEMICOLONTerminalRuleCall_5_q;
+	protected AbstractElementAlias match_PackDef_C_SEMICOLONTerminalRuleCall_2_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CfgGrammarAccess) access;
 		match_Field_C_SEMICOLONTerminalRuleCall_5_q = new TokenAlias(false, true, grammarAccess.getFieldAccess().getC_SEMICOLONTerminalRuleCall_5());
+		match_PackDef_C_SEMICOLONTerminalRuleCall_2_q = new TokenAlias(false, true, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_2());
 	}
 	
 	@Override
@@ -218,6 +220,8 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if(match_Field_C_SEMICOLONTerminalRuleCall_5_q.equals(syntax))
 				emit_Field_C_SEMICOLONTerminalRuleCall_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_PackDef_C_SEMICOLONTerminalRuleCall_2_q.equals(syntax))
+				emit_PackDef_C_SEMICOLONTerminalRuleCall_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -227,6 +231,14 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     C_SEMICOLON?
 	 */
 	protected void emit_Field_C_SEMICOLONTerminalRuleCall_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     C_SEMICOLON?
+	 */
+	protected void emit_PackDef_C_SEMICOLONTerminalRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

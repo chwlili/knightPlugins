@@ -3,6 +3,7 @@ package org.chw.game.ui.highlight;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.Input;
+import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.xtext.nodemodel.INode;
@@ -20,76 +21,85 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 		XML2 model = (XML2) resource.getParseResult().getRootNode().getSemanticElement();
 		if (model != null)
 		{
-			for(INode node : NodeModelUtils.findNodesForFeature(model,CfgPackage.Literals.XML2__OTHER_COMM))
+			PackDef pack = model.getPack();
+			if (pack != null)
 			{
-				acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
-			}
-			
-			for(Type type:model.getTypes())
-			{
-				for(INode node : NodeModelUtils.findNodesForFeature(type,CfgPackage.Literals.TYPE__COMM))
-				{
-					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
-				}
-				for(INode node : NodeModelUtils.findNodesForFeature(type,CfgPackage.Literals.TYPE__PREFIX))
+				for (INode node : NodeModelUtils.findNodesForFeature(pack, CfgPackage.Literals.PACK_DEF__PACK_CHAR))
 				{
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
 				}
-				for(INode node : NodeModelUtils.findNodesForFeature(type,CfgPackage.Literals.TYPE__NAME))
-				{
-					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Type_Name);
-				}
-				
-				for(INode node : NodeModelUtils.findNodesForFeature(type,CfgPackage.Literals.TYPE__OTHER_COMM))
+			}
+
+			for (INode node : NodeModelUtils.findNodesForFeature(model, CfgPackage.Literals.XML2__OTHER_COMM))
+			{
+				acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+			}
+
+			for (Type type : model.getTypes())
+			{
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__COMM))
 				{
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 				}
-				
-				Input input=type.getInput();
-				if(input!=null)
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__PREFIX))
 				{
-					for(INode node : NodeModelUtils.findNodesForFeature(input,CfgPackage.Literals.INPUT__PREFIX))
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
+				}
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__NAME))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Type_Name);
+				}
+
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__OTHER_COMM))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+				}
+
+				Input input = type.getInput();
+				if (input != null)
+				{
+					for (INode node : NodeModelUtils.findNodesForFeature(input, CfgPackage.Literals.INPUT__PREFIX))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(input,CfgPackage.Literals.INPUT__FILE_PATH))
+					for (INode node : NodeModelUtils.findNodesForFeature(input, CfgPackage.Literals.INPUT__FILE_PATH))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(input,CfgPackage.Literals.INPUT__NODE_PATH))
+					for (INode node : NodeModelUtils.findNodesForFeature(input, CfgPackage.Literals.INPUT__NODE_PATH))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
 					}
 				}
-				
-				for(Field field:type.getFields())
+
+				for (Field field : type.getFields())
 				{
-					for(INode node : NodeModelUtils.findNodesForFeature(field,CfgPackage.Literals.FIELD__COMM))
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD__COMM))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 					}
-					
-					for(INode node : NodeModelUtils.findNodesForFeature(field.getType(),CfgPackage.Literals.NATIVE_TYPE__TYPE))
+
+					for (INode node : NodeModelUtils.findNodesForFeature(field.getType(), CfgPackage.Literals.NATIVE_TYPE__TYPE))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Type);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(field.getType(),CfgPackage.Literals.LIST_TYPE__TYPE))
+					for (INode node : NodeModelUtils.findNodesForFeature(field.getType(), CfgPackage.Literals.LIST_TYPE__TYPE))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Type);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(field.getType(),CfgPackage.Literals.HASH_TYPE__TYPE))
+					for (INode node : NodeModelUtils.findNodesForFeature(field.getType(), CfgPackage.Literals.HASH_TYPE__TYPE))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Type);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(field.getType(),CfgPackage.Literals.HASH_TYPE__PARAMS))
+					for (INode node : NodeModelUtils.findNodesForFeature(field.getType(), CfgPackage.Literals.HASH_TYPE__PARAMS))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Param);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(field,CfgPackage.Literals.FIELD__FIELD_NAME))
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD__FIELD_NAME))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Name);
 					}
-					for(INode node : NodeModelUtils.findNodesForFeature(field,CfgPackage.Literals.FIELD__NODE_PATH))
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD__NODE_PATH))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Path);
 					}

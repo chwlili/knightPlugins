@@ -84,6 +84,11 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createXML2Adapter();
       }
       @Override
+      public Adapter casePackDef(PackDef object)
+      {
+        return createPackDefAdapter();
+      }
+      @Override
       public Adapter caseType(Type object)
       {
         return createTypeAdapter();
@@ -151,6 +156,21 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createXML2Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.PackDef <em>Pack Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.PackDef
+   * @generated
+   */
+  public Adapter createPackDefAdapter()
   {
     return null;
   }

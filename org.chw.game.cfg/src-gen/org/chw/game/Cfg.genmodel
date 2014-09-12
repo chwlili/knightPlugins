@@ -10,8 +10,13 @@
   <genPackages prefix="Cfg" basePackage="org.chw.game" disposableProviderFactory="true"
       fileExtensions="xml2" ecorePackage="Cfg.ecore#/">
     <genClasses ecoreClass="Cfg.ecore#//XML2">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/pack"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/types"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//XML2/otherComm"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//PackDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//PackDef/packCHAR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//PackDef/pack"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Type">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/comm"/>

@@ -80,16 +80,34 @@ ruleXML2 returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getXML2Access().getPackPackDefParserRuleCall_0_0()); 
 	    }
-		lv_types_0_0=ruleType		{
+		lv_pack_0_0=rulePackDef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
+	        }
+       		set(
+       			$current, 
+       			"pack",
+        		lv_pack_0_0, 
+        		"PackDef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_1_0_0()); 
+	    }
+		lv_types_1_0=ruleType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
 	        }
        		add(
        			$current, 
        			"types",
-        		lv_types_0_0, 
+        		lv_types_1_0, 
         		"Type");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -98,9 +116,9 @@ ruleXML2 returns [EObject current=null]
 )
     |(
 (
-		lv_otherComm_1_0=RULE_COMMENT
+		lv_otherComm_2_0=RULE_COMMENT
 		{
-			newLeafNode(lv_otherComm_1_0, grammarAccess.getXML2Access().getOtherCommCOMMENTTerminalRuleCall_1_0()); 
+			newLeafNode(lv_otherComm_2_0, grammarAccess.getXML2Access().getOtherCommCOMMENTTerminalRuleCall_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -109,12 +127,73 @@ ruleXML2 returns [EObject current=null]
        		addWithLastConsumed(
        			$current, 
        			"otherComm",
-        		lv_otherComm_1_0, 
+        		lv_otherComm_2_0, 
         		"COMMENT");
 	    }
 
 )
-))*
+))*)
+;
+
+
+
+
+
+// Entry rule entryRulePackDef
+entryRulePackDef returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPackDefRule()); }
+	 iv_rulePackDef=rulePackDef 
+	 { $current=$iv_rulePackDef.current; } 
+	 EOF 
+;
+
+// Rule PackDef
+rulePackDef returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		lv_packCHAR_0_0=RULE_C_PACKAGE
+		{
+			newLeafNode(lv_packCHAR_0_0, grammarAccess.getPackDefAccess().getPackCHARC_PACKAGETerminalRuleCall_0_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPackDefRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"packCHAR",
+        		lv_packCHAR_0_0, 
+        		"C_PACKAGE");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPackDefAccess().getPackPackNameParserRuleCall_1_0()); 
+	    }
+		lv_pack_1_0=rulePackName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPackDefRule());
+	        }
+       		set(
+       			$current, 
+       			"pack",
+        		lv_pack_1_0, 
+        		"PackName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(this_C_SEMICOLON_2=RULE_C_SEMICOLON
+    { 
+    newLeafNode(this_C_SEMICOLON_2, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_2()); 
+    }
+)?)
 ;
 
 
@@ -732,6 +811,47 @@ ruleParam returns [EObject current=null]
 
 
 
+// Entry rule entryRulePackName
+entryRulePackName returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPackNameRule()); } 
+	 iv_rulePackName=rulePackName 
+	 { $current=$iv_rulePackName.current.getText(); }  
+	 EOF 
+;
+
+// Rule PackName
+rulePackName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_NAME_0=RULE_NAME    {
+		$current.merge(this_NAME_0);
+    }
+
+    { 
+    newLeafNode(this_NAME_0, grammarAccess.getPackNameAccess().getNAMETerminalRuleCall_0()); 
+    }
+(
+	kw='.' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getPackNameAccess().getFullStopKeyword_1_0()); 
+    }
+    this_NAME_2=RULE_NAME    {
+		$current.merge(this_NAME_2);
+    }
+
+    { 
+    newLeafNode(this_NAME_2, grammarAccess.getPackNameAccess().getNAMETerminalRuleCall_1_1()); 
+    }
+)*)
+    ;
+
+
+
+
+
 // Entry rule entryRuleTypeName
 entryRuleTypeName returns [String current=null] 
 	:
@@ -882,7 +1002,7 @@ RULE_C_INT : 'int';
 
 RULE_C_UINT : 'uint';
 
-RULE_C_BOOL : 'boolean';
+RULE_C_BOOL : 'Boolean';
 
 RULE_C_NUMBER : 'Number';
 
@@ -891,6 +1011,8 @@ RULE_C_STRING : 'String';
 RULE_C_LIST : 'List';
 
 RULE_C_HASH : 'Hash';
+
+RULE_C_PACKAGE : 'package';
 
 RULE_NAME : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 

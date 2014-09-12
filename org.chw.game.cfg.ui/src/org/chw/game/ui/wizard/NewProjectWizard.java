@@ -96,6 +96,9 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						project.open(new SubProgressMonitor(monitor, 1000));
 						project.setPersistentProperty(Xml2Nature.CFG_DIR, cfg_dir);
 						project.setPersistentProperty(Xml2Nature.XML_DIR, xml_dir);
+						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, "");
+						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "core");
+						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "code");
 
 						// src
 						IFolder srcDir = project.getFolder(src);

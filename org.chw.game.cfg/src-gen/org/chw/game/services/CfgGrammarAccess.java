@@ -19,31 +19,76 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class XML2Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "XML2");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cTypesAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cTypesTypeParserRuleCall_0_0 = (RuleCall)cTypesAssignment_0.eContents().get(0);
-		private final Assignment cOtherCommAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cOtherCommCOMMENTTerminalRuleCall_1_0 = (RuleCall)cOtherCommAssignment_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cPackAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cPackPackDefParserRuleCall_0_0 = (RuleCall)cPackAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cTypesAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cTypesTypeParserRuleCall_1_0_0 = (RuleCall)cTypesAssignment_1_0.eContents().get(0);
+		private final Assignment cOtherCommAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cOtherCommCOMMENTTerminalRuleCall_1_1_0 = (RuleCall)cOtherCommAssignment_1_1.eContents().get(0);
 		
 		//XML2:
 		//
-		//	(types+=Type | otherComm+=COMMENT)*;
+		//	pack=PackDef? (types+=Type | otherComm+=COMMENT)*;
 		public ParserRule getRule() { return rule; }
 
+		//pack=PackDef? (types+=Type | otherComm+=COMMENT)*
+		public Group getGroup() { return cGroup; }
+
+		//pack=PackDef?
+		public Assignment getPackAssignment_0() { return cPackAssignment_0; }
+
+		//PackDef
+		public RuleCall getPackPackDefParserRuleCall_0_0() { return cPackPackDefParserRuleCall_0_0; }
+
 		//(types+=Type | otherComm+=COMMENT)*
-		public Alternatives getAlternatives() { return cAlternatives; }
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//types+=Type
-		public Assignment getTypesAssignment_0() { return cTypesAssignment_0; }
+		public Assignment getTypesAssignment_1_0() { return cTypesAssignment_1_0; }
 
 		//Type
-		public RuleCall getTypesTypeParserRuleCall_0_0() { return cTypesTypeParserRuleCall_0_0; }
+		public RuleCall getTypesTypeParserRuleCall_1_0_0() { return cTypesTypeParserRuleCall_1_0_0; }
 
 		//otherComm+=COMMENT
-		public Assignment getOtherCommAssignment_1() { return cOtherCommAssignment_1; }
+		public Assignment getOtherCommAssignment_1_1() { return cOtherCommAssignment_1_1; }
 
 		//COMMENT
-		public RuleCall getOtherCommCOMMENTTerminalRuleCall_1_0() { return cOtherCommCOMMENTTerminalRuleCall_1_0; }
+		public RuleCall getOtherCommCOMMENTTerminalRuleCall_1_1_0() { return cOtherCommCOMMENTTerminalRuleCall_1_1_0; }
+	}
+
+	public class PackDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PackDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cPackCHARAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cPackCHARC_PACKAGETerminalRuleCall_0_0 = (RuleCall)cPackCHARAssignment_0.eContents().get(0);
+		private final Assignment cPackAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPackPackNameParserRuleCall_1_0 = (RuleCall)cPackAssignment_1.eContents().get(0);
+		private final RuleCall cC_SEMICOLONTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		
+		//PackDef:
+		//
+		//	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
+		public ParserRule getRule() { return rule; }
+
+		//packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?
+		public Group getGroup() { return cGroup; }
+
+		//packCHAR=C_PACKAGE
+		public Assignment getPackCHARAssignment_0() { return cPackCHARAssignment_0; }
+
+		//C_PACKAGE
+		public RuleCall getPackCHARC_PACKAGETerminalRuleCall_0_0() { return cPackCHARC_PACKAGETerminalRuleCall_0_0; }
+
+		//pack=PackName
+		public Assignment getPackAssignment_1() { return cPackAssignment_1; }
+
+		//PackName
+		public RuleCall getPackPackNameParserRuleCall_1_0() { return cPackPackNameParserRuleCall_1_0; }
+
+		//C_SEMICOLON?
+		public RuleCall getC_SEMICOLONTerminalRuleCall_2() { return cC_SEMICOLONTerminalRuleCall_2; }
 	}
 
 	public class TypeElements extends AbstractParserRuleElementFinder {
@@ -401,6 +446,35 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getParamNameNAMETerminalRuleCall_0() { return cParamNameNAMETerminalRuleCall_0; }
 	}
 
+	public class PackNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PackName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cNAMETerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cNAMETerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//PackName:
+		//
+		//	NAME ("." NAME)*;
+		public ParserRule getRule() { return rule; }
+
+		//NAME ("." NAME)*
+		public Group getGroup() { return cGroup; }
+
+		//NAME
+		public RuleCall getNAMETerminalRuleCall_0() { return cNAMETerminalRuleCall_0; }
+
+		//("." NAME)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//NAME
+		public RuleCall getNAMETerminalRuleCall_1_1() { return cNAMETerminalRuleCall_1_1; }
+	}
+
 	public class TypeNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -464,6 +538,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private XML2Elements pXML2;
+	private PackDefElements pPackDef;
 	private TypeElements pType;
 	private InputElements pInput;
 	private FieldElements pField;
@@ -471,6 +546,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private ListTypeElements pListType;
 	private HashTypeElements pHashType;
 	private ParamElements pParam;
+	private PackNameElements pPackName;
 	private TypeNameElements pTypeName;
 	private TerminalRule tC_BRACKET_L;
 	private TerminalRule tC_BRACKET_R;
@@ -494,6 +570,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tC_STRING;
 	private TerminalRule tC_LIST;
 	private TerminalRule tC_HASH;
+	private TerminalRule tC_PACKAGE;
 	private TerminalRule tNAME;
 	private TerminalRule tSTRING;
 	private TerminalRule tCOMMENT_END;
@@ -532,13 +609,24 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//XML2:
 	//
-	//	(types+=Type | otherComm+=COMMENT)*;
+	//	pack=PackDef? (types+=Type | otherComm+=COMMENT)*;
 	public XML2Elements getXML2Access() {
 		return (pXML2 != null) ? pXML2 : (pXML2 = new XML2Elements());
 	}
 	
 	public ParserRule getXML2Rule() {
 		return getXML2Access().getRule();
+	}
+
+	//PackDef:
+	//
+	//	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
+	public PackDefElements getPackDefAccess() {
+		return (pPackDef != null) ? pPackDef : (pPackDef = new PackDefElements());
+	}
+	
+	public ParserRule getPackDefRule() {
+		return getPackDefAccess().getRule();
 	}
 
 	//Type:
@@ -618,6 +706,17 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getParamRule() {
 		return getParamAccess().getRule();
+	}
+
+	//PackName:
+	//
+	//	NAME ("." NAME)*;
+	public PackNameElements getPackNameAccess() {
+		return (pPackName != null) ? pPackName : (pPackName = new PackNameElements());
+	}
+	
+	public ParserRule getPackNameRule() {
+		return getPackNameAccess().getRule();
 	}
 
 	//TypeName:
@@ -752,7 +851,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//terminal C_BOOL:
 	//
-	//	"boolean";
+	//	"Boolean";
 	public TerminalRule getC_BOOLRule() {
 		return (tC_BOOL != null) ? tC_BOOL : (tC_BOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_BOOL"));
 	} 
@@ -783,6 +882,13 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	//	"Hash";
 	public TerminalRule getC_HASHRule() {
 		return (tC_HASH != null) ? tC_HASH : (tC_HASH = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_HASH"));
+	} 
+
+	//terminal C_PACKAGE:
+	//
+	//	"package";
+	public TerminalRule getC_PACKAGERule() {
+		return (tC_PACKAGE != null) ? tC_PACKAGE : (tC_PACKAGE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_PACKAGE"));
 	} 
 
 	//terminal NAME:
