@@ -57,7 +57,7 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 			Type type = getType(param.eResource(), hashType.getType());
 			for (Field field : type.getFields())
 			{
-				if(param.getParamName().equals(field.getFieldName()))
+				if (param.getParamName().equals(field.getFieldName()))
 				{
 					return getFirstLine(field);
 				}
@@ -102,11 +102,13 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 
 		if (o instanceof Type)
 		{
-			comm = ((Type) o).getComm();
+			Type type = (Type) o;
+			comm = type.getComment();
 		}
 		else if (o instanceof Field)
 		{
-			comm = ((Field) o).getComm();
+			Field field = (Field) o;
+			comm = field.getComment();
 		}
 		else if (o instanceof Param)
 		{
@@ -115,7 +117,7 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 			Type type = getType(param.eResource(), hashType.getType());
 			for (Field field : type.getFields())
 			{
-				if(param.getParamName().equals(field.getFieldName()))
+				if (param.getParamName().equals(field.getFieldName()))
 				{
 					return getDocumentation(field);
 				}

@@ -166,14 +166,14 @@
         point="org.eclipse.ui.newWizards">
      <category
            id="org.chw.game.cfg.ui.xml2"
-           name="XML2 项目">
+           name="Xml2As 项目">
      </category>
      <wizard
            category="org.chw.game.cfg.ui.xml2"
            class="org.chw.game.ui.wizard.NewProjectWizard"
            icon="icons/typeIcon.gif"
            id="org.chw.game.cfg.ui.wizard.newProject"
-           name="XML2 库项目"
+           name="Xml2As 库项目"
            project="true">
      </wizard>
      <wizard
@@ -181,7 +181,7 @@
            class="org.chw.game.ui.wizard.NewFileWizard"
            icon="icons/fieldIcon.gif"
            id="org.chw.game.cfg.ui.wizard.newFile"
-           name="XML2 文件"
+           name="Xml2As 文件"
            project="false">
      </wizard>
   </extension>
@@ -229,9 +229,8 @@
         point="org.eclipse.ui.propertyPages">
      <page
            class="org.chw.game.cfg.ui.properties.OutputOptionPage"
-           icon="icons/appIcon16.png"
            id="org.chw.game.cfg.ui.properties.samplePropertyPage"
-           name="输出选项"
+           name="Xml2As"
            nameFilter="*"
            selectionFilter="single">
         <enabledWhen>

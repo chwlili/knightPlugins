@@ -21,6 +21,15 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 		XML2 model = (XML2) resource.getParseResult().getRootNode().getSemanticElement();
 		if (model != null)
 		{
+			for (INode node : NodeModelUtils.findNodesForFeature(model, CfgPackage.Literals.XML2__COMMENT))
+			{
+				acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+			}
+			for (INode node : NodeModelUtils.findNodesForFeature(model, CfgPackage.Literals.XML2__COMM))
+			{
+				acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+			}
+
 			PackDef pack = model.getPack();
 			if (pack != null)
 			{
@@ -30,14 +39,13 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 				}
 			}
 
-			for (INode node : NodeModelUtils.findNodesForFeature(model, CfgPackage.Literals.XML2__OTHER_COMM))
-			{
-				acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
-			}
-
 			for (Type type : model.getTypes())
 			{
-				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__COMM))
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__COMMENT))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+				}
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.XML2__COMM))
 				{
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 				}
@@ -48,11 +56,6 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__NAME))
 				{
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Type_Name);
-				}
-
-				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__OTHER_COMM))
-				{
-					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 				}
 
 				Input input = type.getInput();
@@ -74,7 +77,7 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 
 				for (Field field : type.getFields())
 				{
-					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD__COMM))
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD__COMMENT))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 					}
@@ -103,6 +106,11 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Path);
 					}
+				}
+
+				for (INode node : NodeModelUtils.findNodesForFeature(type, CfgPackage.Literals.TYPE__COMM))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
 				}
 			}
 		}

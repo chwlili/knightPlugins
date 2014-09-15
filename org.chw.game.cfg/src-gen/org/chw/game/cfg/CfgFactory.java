@@ -108,6 +108,15 @@ public interface CfgFactory extends EFactory
   Param createParam();
 
   /**
+   * Returns a new object of class '<em>Other Coment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Other Coment</em>'.
+   * @generated
+   */
+  OtherComent createOtherComent();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

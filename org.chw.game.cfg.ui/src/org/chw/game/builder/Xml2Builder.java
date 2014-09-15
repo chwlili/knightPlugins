@@ -2,6 +2,7 @@ package org.chw.game.builder;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.zip.Deflater;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -100,7 +102,75 @@ public class Xml2Builder extends IncrementalProjectBuilder
 	protected void clean(IProgressMonitor monitor) throws CoreException
 	{
 		System.out.println("清理");
+	}
 
+	@Override
+	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException
+	{
+		if (kind == IncrementalProjectBuilder.FULL_BUILD)
+		{
+			System.out.println("完整构建");
+			fullBuild(monitor);
+		}
+		else
+		{
+			if (getDelta(getProject()) == null)
+			{
+				System.out.println("增量构建(完整构建)");
+				fullBuild(monitor);
+			}
+			else
+			{
+				if (kind == IncrementalProjectBuilder.INCREMENTAL_BUILD)
+				{
+					System.out.println("增量构建");
+				}
+				else if (kind == IncrementalProjectBuilder.AUTO_BUILD)
+				{
+					System.out.println("自动构建");
+				}
+				incrementalBuild();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 增量构建
+	 */
+	private void incrementalBuild()
+	{
+
+	}
+
+	/**
+	 * 完整构建
+	 * 
+	 * @throws CoreException
+	 */
+	private void fullBuild(IProgressMonitor monitor) throws CoreException
+	{
+		monitor.beginTask("<构建项目>", 100);
+
+		try
+		{
+			removeALL(new SubProgressMonitor(monitor, 50));
+			generateAll(new SubProgressMonitor(monitor, 50));
+		}
+		finally
+		{
+			monitor.done();
+		}
+	}
+
+	/**
+	 * 删除所有
+	 * 
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	private void removeALL(IProgressMonitor monitor) throws CoreException
+	{
 		try
 		{
 			ArrayList<IFile> deleteableList = new ArrayList<IFile>();
@@ -158,43 +228,13 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		monitor.done();
 	}
 
-	@Override
-	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException
-	{
-		if (kind == IncrementalProjectBuilder.FULL_BUILD)
-		{
-			System.out.println("完整构建");
-			fullBuild();
-		}
-		else
-		{
-			if (getDelta(getProject()) == null)
-			{
-				System.out.println("增量构建(完整构建)");
-				fullBuild();
-			}
-			else
-			{
-				if (kind == IncrementalProjectBuilder.INCREMENTAL_BUILD)
-				{
-					System.out.println("增量构建");
-				}
-				else if (kind == IncrementalProjectBuilder.AUTO_BUILD)
-				{
-					System.out.println("自动构建");
-				}
-				incrementalBuild();
-			}
-		}
-		return null;
-	}
-
 	/**
-	 * 完整构建
+	 * 生成所有
 	 * 
+	 * @param monitor
 	 * @throws CoreException
 	 */
-	private void fullBuild() throws CoreException
+	private void generateAll(IProgressMonitor monitor) throws CoreException
 	{
 		final String cfgDir = getProject().getPersistentProperty(Xml2Nature.CFG_DIR);
 		final String xmlDir = getProject().getPersistentProperty(Xml2Nature.XML_DIR);
@@ -272,7 +312,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 
 					for (Type type : xml2.getTypes())
 					{
-						String typeComm = type.getComm();
+						String typeComm = type.getComment();
 						String typeName = type.getName();
 						String inputPath = "";
 						String xpath = "";
@@ -294,7 +334,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 						for (Field field : type.getFields())
 						{
 							String fieldName = field.getFieldName();
-							String fieldComm = field.getComm();
+							String fieldComm = field.getComment();
 							String fieldXPath = field.getNodePath();
 							String fieldType = "";
 							boolean fieldList = false;
@@ -349,6 +389,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 				String topPackName = getProject().getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
 				String corePackName = getProject().getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
 				String codePackName = getProject().getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+				String filePackName = getProject().getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 				AsFileWriter writer = new AsFileWriter(getSrcFolder(), topPackName, corePackName, codePackName, allTypeArray);
 				writer.writeAllType();
 
@@ -377,7 +418,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 						Instance instance = FileDef.build(file.getContents(), allTypeArray, type);
 						if (instance != null)
 						{
-							toCfgFile(instance, writer);
+							toCfgFile(instance, writer, filePackName, file.getName());
 						}
 					}
 					else
@@ -401,12 +442,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		}
 	}
 
-	private void incrementalBuild()
-	{
-
-	}
-
-	private void toCfgFile(Instance instance, AsFileWriter writer) throws CoreException
+	private void toCfgFile(Instance instance, AsFileWriter writer, String filePackName, String fileName) throws CoreException
 	{
 		try
 		{
@@ -414,8 +450,33 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			byte[] bytes = cfgWriter.toBytes();
 
 			IFolder folder = getSrcFolder();
-			IFile file = folder.getFile("test.cfg");
 
+			if (filePackName == null)
+			{
+				filePackName = "";
+			}
+
+			String[] segments = filePackName.split("\\\\|/");
+			for (String segment : segments)
+			{
+				if (!segment.isEmpty())
+				{
+					folder = folder.getFolder(segment);
+					if (!folder.exists())
+					{
+						folder.create(true, true, null);
+					}
+				}
+			}
+
+			int index = fileName.indexOf(".");
+			if (index != -1)
+			{
+				fileName = fileName.substring(0, index);
+			}
+			fileName = fileName + ".cfg";
+
+			IFile file = folder.getFile(fileName);
 			if (!file.exists())
 			{
 				file.create(new ByteArrayInputStream(bytes), true, null);
@@ -424,10 +485,72 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			{
 				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
 			}
+			file.setDerived(true, null);
+
+			bytes = compress(bytes);
+			fileName = fileName + "2";
+			file = folder.getFile(fileName);
+			if (!file.exists())
+			{
+				file.create(new ByteArrayInputStream(bytes), true, null);
+			}
+			else
+			{
+				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
+			}
+			file.setDerived(true, null);
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 压缩
+	 * 
+	 * @param data
+	 *            待压缩数据
+	 * @return byte[] 压缩后的数据
+	 */
+	private static byte[] compress(byte[] data)
+	{
+		byte[] output = new byte[0];
+
+		Deflater compresser = new Deflater();
+
+		compresser.reset();
+		compresser.setInput(data);
+		compresser.finish();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
+
+		try
+		{
+			byte[] buf = new byte[1024];
+			while (!compresser.finished())
+			{
+				int i = compresser.deflate(buf);
+				bos.write(buf, 0, i);
+			}
+			output = bos.toByteArray();
+		}
+		catch (Exception e)
+		{
+			output = data;
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				bos.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		compresser.end();
+		return output;
 	}
 }

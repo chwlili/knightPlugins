@@ -20,42 +20,50 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	public class XML2Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "XML2");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPackAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPackPackDefParserRuleCall_0_0 = (RuleCall)cPackAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cTypesAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cTypesTypeParserRuleCall_1_0_0 = (RuleCall)cTypesAssignment_1_0.eContents().get(0);
-		private final Assignment cOtherCommAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cOtherCommCOMMENTTerminalRuleCall_1_1_0 = (RuleCall)cOtherCommAssignment_1_1.eContents().get(0);
+		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCommentOtherComentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
+		private final Assignment cPackAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPackPackDefParserRuleCall_1_0 = (RuleCall)cPackAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cTypesAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cTypesTypeParserRuleCall_2_0_0 = (RuleCall)cTypesAssignment_2_0.eContents().get(0);
+		private final Assignment cCommAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cCommOtherComentParserRuleCall_2_1_0 = (RuleCall)cCommAssignment_2_1.eContents().get(0);
 		
 		//XML2:
 		//
-		//	pack=PackDef? (types+=Type | otherComm+=COMMENT)*;
+		//	comment+=OtherComent* pack=PackDef (=> types+=Type | comm+=OtherComent)*;
 		public ParserRule getRule() { return rule; }
 
-		//pack=PackDef? (types+=Type | otherComm+=COMMENT)*
+		//comment+=OtherComent* pack=PackDef (=> types+=Type | comm+=OtherComent)*
 		public Group getGroup() { return cGroup; }
 
-		//pack=PackDef?
-		public Assignment getPackAssignment_0() { return cPackAssignment_0; }
+		//comment+=OtherComent*
+		public Assignment getCommentAssignment_0() { return cCommentAssignment_0; }
+
+		//OtherComent
+		public RuleCall getCommentOtherComentParserRuleCall_0_0() { return cCommentOtherComentParserRuleCall_0_0; }
+
+		//pack=PackDef
+		public Assignment getPackAssignment_1() { return cPackAssignment_1; }
 
 		//PackDef
-		public RuleCall getPackPackDefParserRuleCall_0_0() { return cPackPackDefParserRuleCall_0_0; }
+		public RuleCall getPackPackDefParserRuleCall_1_0() { return cPackPackDefParserRuleCall_1_0; }
 
-		//(types+=Type | otherComm+=COMMENT)*
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		//(=> types+=Type | comm+=OtherComent)*
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//types+=Type
-		public Assignment getTypesAssignment_1_0() { return cTypesAssignment_1_0; }
+		//=> types+=Type
+		public Assignment getTypesAssignment_2_0() { return cTypesAssignment_2_0; }
 
 		//Type
-		public RuleCall getTypesTypeParserRuleCall_1_0_0() { return cTypesTypeParserRuleCall_1_0_0; }
+		public RuleCall getTypesTypeParserRuleCall_2_0_0() { return cTypesTypeParserRuleCall_2_0_0; }
 
-		//otherComm+=COMMENT
-		public Assignment getOtherCommAssignment_1_1() { return cOtherCommAssignment_1_1; }
+		//comm+=OtherComent
+		public Assignment getCommAssignment_2_1() { return cCommAssignment_2_1; }
 
-		//COMMENT
-		public RuleCall getOtherCommCOMMENTTerminalRuleCall_1_1_0() { return cOtherCommCOMMENTTerminalRuleCall_1_1_0; }
+		//OtherComent
+		public RuleCall getCommOtherComentParserRuleCall_2_1_0() { return cCommOtherComentParserRuleCall_2_1_0; }
 	}
 
 	public class PackDefElements extends AbstractParserRuleElementFinder {
@@ -69,10 +77,10 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PackDef:
 		//
-		//	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
+		//	packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
 		public ParserRule getRule() { return rule; }
 
-		//packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?
+		//packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?
 		public Group getGroup() { return cGroup; }
 
 		//packCHAR=C_PACKAGE
@@ -81,7 +89,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_PACKAGE
 		public RuleCall getPackCHARC_PACKAGETerminalRuleCall_0_0() { return cPackCHARC_PACKAGETerminalRuleCall_0_0; }
 
-		//pack=PackName
+		//pack=PackName?
 		public Assignment getPackAssignment_1() { return cPackAssignment_1; }
 
 		//PackName
@@ -94,35 +102,39 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Type");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cCommAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cCommCOMMENTTerminalRuleCall_0_0 = (RuleCall)cCommAssignment_0.eContents().get(0);
+		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCommentTypeCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
 		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cInputInputParserRuleCall_1_0 = (RuleCall)cInputAssignment_1.eContents().get(0);
 		private final Assignment cPrefixAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cPrefixC_TYPETerminalRuleCall_2_0 = (RuleCall)cPrefixAssignment_2.eContents().get(0);
 		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameNAMETerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final RuleCall cNameTypeNameParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
 		private final RuleCall cC_BRACE_LTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
 		private final Assignment cFieldsAssignment_5_0 = (Assignment)cAlternatives_5.eContents().get(0);
 		private final RuleCall cFieldsFieldParserRuleCall_5_0_0 = (RuleCall)cFieldsAssignment_5_0.eContents().get(0);
-		private final Assignment cOtherCommAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
-		private final RuleCall cOtherCommCOMMENTTerminalRuleCall_5_1_0 = (RuleCall)cOtherCommAssignment_5_1.eContents().get(0);
+		private final Assignment cCommAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
+		private final RuleCall cCommOtherComentParserRuleCall_5_1_0 = (RuleCall)cCommAssignment_5_1.eContents().get(0);
 		private final RuleCall cC_BRACE_RTerminalRuleCall_6 = (RuleCall)cGroup.eContents().get(6);
 		
 		//Type:
 		//
-		//	comm=COMMENT input=Input? prefix=C_TYPE name=NAME C_BRACE_L (fields+=Field | otherComm+=COMMENT)* C_BRACE_R;
+		//	comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName C_BRACE_L (=> fields+=Field | comm+=OtherComent)*
+		//
+		//	C_BRACE_R;
 		public ParserRule getRule() { return rule; }
 
-		//comm=COMMENT input=Input? prefix=C_TYPE name=NAME C_BRACE_L (fields+=Field | otherComm+=COMMENT)* C_BRACE_R
+		//comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName C_BRACE_L (=> fields+=Field | comm+=OtherComent)*
+		//
+		//C_BRACE_R
 		public Group getGroup() { return cGroup; }
 
-		//comm=COMMENT
-		public Assignment getCommAssignment_0() { return cCommAssignment_0; }
+		//comment=TypeComment?
+		public Assignment getCommentAssignment_0() { return cCommentAssignment_0; }
 
-		//COMMENT
-		public RuleCall getCommCOMMENTTerminalRuleCall_0_0() { return cCommCOMMENTTerminalRuleCall_0_0; }
+		//TypeComment
+		public RuleCall getCommentTypeCommentParserRuleCall_0_0() { return cCommentTypeCommentParserRuleCall_0_0; }
 
 		//input=Input?
 		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
@@ -136,29 +148,29 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_TYPE
 		public RuleCall getPrefixC_TYPETerminalRuleCall_2_0() { return cPrefixC_TYPETerminalRuleCall_2_0; }
 
-		//name=NAME
+		//name=TypeName
 		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
-		//NAME
-		public RuleCall getNameNAMETerminalRuleCall_3_0() { return cNameNAMETerminalRuleCall_3_0; }
+		//TypeName
+		public RuleCall getNameTypeNameParserRuleCall_3_0() { return cNameTypeNameParserRuleCall_3_0; }
 
 		//C_BRACE_L
 		public RuleCall getC_BRACE_LTerminalRuleCall_4() { return cC_BRACE_LTerminalRuleCall_4; }
 
-		//(fields+=Field | otherComm+=COMMENT)*
+		//(=> fields+=Field | comm+=OtherComent)*
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
-		//fields+=Field
+		//=> fields+=Field
 		public Assignment getFieldsAssignment_5_0() { return cFieldsAssignment_5_0; }
 
 		//Field
 		public RuleCall getFieldsFieldParserRuleCall_5_0_0() { return cFieldsFieldParserRuleCall_5_0_0; }
 
-		//otherComm+=COMMENT
-		public Assignment getOtherCommAssignment_5_1() { return cOtherCommAssignment_5_1; }
+		//comm+=OtherComent
+		public Assignment getCommAssignment_5_1() { return cCommAssignment_5_1; }
 
-		//COMMENT
-		public RuleCall getOtherCommCOMMENTTerminalRuleCall_5_1_0() { return cOtherCommCOMMENTTerminalRuleCall_5_1_0; }
+		//OtherComent
+		public RuleCall getCommOtherComentParserRuleCall_5_1_0() { return cCommOtherComentParserRuleCall_5_1_0; }
 
 		//C_BRACE_R
 		public RuleCall getC_BRACE_RTerminalRuleCall_6() { return cC_BRACE_RTerminalRuleCall_6; }
@@ -248,15 +260,15 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	public class FieldElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Field");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cCommAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cCommCOMMENTTerminalRuleCall_0_0 = (RuleCall)cCommAssignment_0.eContents().get(0);
+		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCommentFieldCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Alternatives cTypeAlternatives_1_0 = (Alternatives)cTypeAssignment_1.eContents().get(0);
 		private final RuleCall cTypeNativeTypeParserRuleCall_1_0_0 = (RuleCall)cTypeAlternatives_1_0.eContents().get(0);
 		private final RuleCall cTypeListTypeParserRuleCall_1_0_1 = (RuleCall)cTypeAlternatives_1_0.eContents().get(1);
 		private final RuleCall cTypeHashTypeParserRuleCall_1_0_2 = (RuleCall)cTypeAlternatives_1_0.eContents().get(2);
 		private final Assignment cFieldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cFieldNameNAMETerminalRuleCall_2_0 = (RuleCall)cFieldNameAssignment_2.eContents().get(0);
+		private final RuleCall cFieldNameTypeNameParserRuleCall_2_0 = (RuleCall)cFieldNameAssignment_2.eContents().get(0);
 		private final RuleCall cC_EQUALSTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		private final Assignment cNodePathAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cNodePathSTRINGTerminalRuleCall_4_0 = (RuleCall)cNodePathAssignment_4.eContents().get(0);
@@ -264,17 +276,19 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Field:
 		//
-		//	comm=COMMENT type=(NativeType | ListType | HashType) fieldName=NAME C_EQUALS nodePath=STRING C_SEMICOLON?;
+		//	comment=FieldComment? type=(NativeType | ListType | HashType) fieldName=TypeName C_EQUALS nodePath=STRING
+		//
+		//	C_SEMICOLON?;
 		public ParserRule getRule() { return rule; }
 
-		//comm=COMMENT type=(NativeType | ListType | HashType) fieldName=NAME C_EQUALS nodePath=STRING C_SEMICOLON?
+		//comment=FieldComment? type=(NativeType | ListType | HashType) fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?
 		public Group getGroup() { return cGroup; }
 
-		//comm=COMMENT
-		public Assignment getCommAssignment_0() { return cCommAssignment_0; }
+		//comment=FieldComment?
+		public Assignment getCommentAssignment_0() { return cCommentAssignment_0; }
 
-		//COMMENT
-		public RuleCall getCommCOMMENTTerminalRuleCall_0_0() { return cCommCOMMENTTerminalRuleCall_0_0; }
+		//FieldComment
+		public RuleCall getCommentFieldCommentParserRuleCall_0_0() { return cCommentFieldCommentParserRuleCall_0_0; }
 
 		//type=(NativeType | ListType | HashType)
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
@@ -291,11 +305,11 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//HashType
 		public RuleCall getTypeHashTypeParserRuleCall_1_0_2() { return cTypeHashTypeParserRuleCall_1_0_2; }
 
-		//fieldName=NAME
+		//fieldName=TypeName
 		public Assignment getFieldNameAssignment_2() { return cFieldNameAssignment_2; }
 
-		//NAME
-		public RuleCall getFieldNameNAMETerminalRuleCall_2_0() { return cFieldNameNAMETerminalRuleCall_2_0; }
+		//TypeName
+		public RuleCall getFieldNameTypeNameParserRuleCall_2_0() { return cFieldNameTypeNameParserRuleCall_2_0; }
 
 		//C_EQUALS
 		public RuleCall getC_EQUALSTerminalRuleCall_3() { return cC_EQUALSTerminalRuleCall_3; }
@@ -446,33 +460,76 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getParamNameNAMETerminalRuleCall_0() { return cParamNameNAMETerminalRuleCall_0; }
 	}
 
+	public class TypeCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeComment");
+		private final RuleCall cCOMMENTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//TypeComment:
+		//
+		//	COMMENT;
+		public ParserRule getRule() { return rule; }
+
+		//COMMENT
+		public RuleCall getCOMMENTTerminalRuleCall() { return cCOMMENTTerminalRuleCall; }
+	}
+
+	public class FieldCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FieldComment");
+		private final RuleCall cCOMMENTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//FieldComment:
+		//
+		//	COMMENT;
+		public ParserRule getRule() { return rule; }
+
+		//COMMENT
+		public RuleCall getCOMMENTTerminalRuleCall() { return cCOMMENTTerminalRuleCall; }
+	}
+
+	public class OtherComentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OtherComent");
+		private final Assignment cCommAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cCommCOMMENTTerminalRuleCall_0 = (RuleCall)cCommAssignment.eContents().get(0);
+		
+		//OtherComent:
+		//
+		//	comm=COMMENT;
+		public ParserRule getRule() { return rule; }
+
+		//comm=COMMENT
+		public Assignment getCommAssignment() { return cCommAssignment; }
+
+		//COMMENT
+		public RuleCall getCommCOMMENTTerminalRuleCall_0() { return cCommCOMMENTTerminalRuleCall_0; }
+	}
+
 	public class PackNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PackName");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cNAMETerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cTypeNameParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cNAMETerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeNameParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//PackName:
 		//
-		//	NAME ("." NAME)*;
+		//	TypeName ("." TypeName)*;
 		public ParserRule getRule() { return rule; }
 
-		//NAME ("." NAME)*
+		//TypeName ("." TypeName)*
 		public Group getGroup() { return cGroup; }
 
-		//NAME
-		public RuleCall getNAMETerminalRuleCall_0() { return cNAMETerminalRuleCall_0; }
+		//TypeName
+		public RuleCall getTypeNameParserRuleCall_0() { return cTypeNameParserRuleCall_0; }
 
-		//("." NAME)*
+		//("." TypeName)*
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"."
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
 
-		//NAME
-		public RuleCall getNAMETerminalRuleCall_1_1() { return cNAMETerminalRuleCall_1_1; }
+		//TypeName
+		public RuleCall getTypeNameParserRuleCall_1_1() { return cTypeNameParserRuleCall_1_1; }
 	}
 
 	public class TypeNameElements extends AbstractParserRuleElementFinder {
@@ -546,6 +603,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private ListTypeElements pListType;
 	private HashTypeElements pHashType;
 	private ParamElements pParam;
+	private TypeCommentElements pTypeComment;
+	private FieldCommentElements pFieldComment;
+	private OtherComentElements pOtherComent;
 	private PackNameElements pPackName;
 	private TypeNameElements pTypeName;
 	private TerminalRule tC_BRACKET_L;
@@ -609,7 +669,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//XML2:
 	//
-	//	pack=PackDef? (types+=Type | otherComm+=COMMENT)*;
+	//	comment+=OtherComent* pack=PackDef (=> types+=Type | comm+=OtherComent)*;
 	public XML2Elements getXML2Access() {
 		return (pXML2 != null) ? pXML2 : (pXML2 = new XML2Elements());
 	}
@@ -620,7 +680,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//PackDef:
 	//
-	//	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
+	//	packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
 	public PackDefElements getPackDefAccess() {
 		return (pPackDef != null) ? pPackDef : (pPackDef = new PackDefElements());
 	}
@@ -631,7 +691,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Type:
 	//
-	//	comm=COMMENT input=Input? prefix=C_TYPE name=NAME C_BRACE_L (fields+=Field | otherComm+=COMMENT)* C_BRACE_R;
+	//	comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName C_BRACE_L (=> fields+=Field | comm+=OtherComent)*
+	//
+	//	C_BRACE_R;
 	public TypeElements getTypeAccess() {
 		return (pType != null) ? pType : (pType = new TypeElements());
 	}
@@ -655,7 +717,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Field:
 	//
-	//	comm=COMMENT type=(NativeType | ListType | HashType) fieldName=NAME C_EQUALS nodePath=STRING C_SEMICOLON?;
+	//	comment=FieldComment? type=(NativeType | ListType | HashType) fieldName=TypeName C_EQUALS nodePath=STRING
+	//
+	//	C_SEMICOLON?;
 	public FieldElements getFieldAccess() {
 		return (pField != null) ? pField : (pField = new FieldElements());
 	}
@@ -708,9 +772,42 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		return getParamAccess().getRule();
 	}
 
+	//TypeComment:
+	//
+	//	COMMENT;
+	public TypeCommentElements getTypeCommentAccess() {
+		return (pTypeComment != null) ? pTypeComment : (pTypeComment = new TypeCommentElements());
+	}
+	
+	public ParserRule getTypeCommentRule() {
+		return getTypeCommentAccess().getRule();
+	}
+
+	//FieldComment:
+	//
+	//	COMMENT;
+	public FieldCommentElements getFieldCommentAccess() {
+		return (pFieldComment != null) ? pFieldComment : (pFieldComment = new FieldCommentElements());
+	}
+	
+	public ParserRule getFieldCommentRule() {
+		return getFieldCommentAccess().getRule();
+	}
+
+	//OtherComent:
+	//
+	//	comm=COMMENT;
+	public OtherComentElements getOtherComentAccess() {
+		return (pOtherComent != null) ? pOtherComent : (pOtherComent = new OtherComentElements());
+	}
+	
+	public ParserRule getOtherComentRule() {
+		return getOtherComentAccess().getRule();
+	}
+
 	//PackName:
 	//
-	//	NAME ("." NAME)*;
+	//	TypeName ("." TypeName)*;
 	public PackNameElements getPackNameAccess() {
 		return (pPackName != null) ? pPackName : (pPackName = new PackNameElements());
 	}

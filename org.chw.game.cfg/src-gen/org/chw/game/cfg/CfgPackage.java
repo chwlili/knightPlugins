@@ -71,13 +71,22 @@ public interface CfgPackage extends EPackage
   int XML2 = 0;
 
   /**
+   * The feature id for the '<em><b>Comment</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int XML2__COMMENT = 0;
+
+  /**
    * The feature id for the '<em><b>Pack</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2__PACK = 0;
+  int XML2__PACK = 1;
 
   /**
    * The feature id for the '<em><b>Types</b></em>' containment reference list.
@@ -86,16 +95,16 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int XML2__TYPES = 1;
+  int XML2__TYPES = 2;
 
   /**
-   * The feature id for the '<em><b>Other Comm</b></em>' attribute list.
+   * The feature id for the '<em><b>Comm</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2__OTHER_COMM = 2;
+  int XML2__COMM = 3;
 
   /**
    * The number of structural features of the '<em>XML2</em>' class.
@@ -104,7 +113,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int XML2_FEATURE_COUNT = 3;
+  int XML2_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
@@ -154,13 +163,13 @@ public interface CfgPackage extends EPackage
   int TYPE = 2;
 
   /**
-   * The feature id for the '<em><b>Comm</b></em>' attribute.
+   * The feature id for the '<em><b>Comment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE__COMM = 0;
+  int TYPE__COMMENT = 0;
 
   /**
    * The feature id for the '<em><b>Input</b></em>' containment reference.
@@ -199,13 +208,13 @@ public interface CfgPackage extends EPackage
   int TYPE__FIELDS = 4;
 
   /**
-   * The feature id for the '<em><b>Other Comm</b></em>' attribute list.
+   * The feature id for the '<em><b>Comm</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE__OTHER_COMM = 5;
+  int TYPE__COMM = 5;
 
   /**
    * The number of structural features of the '<em>Type</em>' class.
@@ -273,13 +282,13 @@ public interface CfgPackage extends EPackage
   int FIELD = 4;
 
   /**
-   * The feature id for the '<em><b>Comm</b></em>' attribute.
+   * The feature id for the '<em><b>Comment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIELD__COMM = 0;
+  int FIELD__COMMENT = 0;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -438,6 +447,34 @@ public interface CfgPackage extends EPackage
    */
   int PARAM_FEATURE_COUNT = 1;
 
+  /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.OtherComentImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getOtherComent()
+   * @generated
+   */
+  int OTHER_COMENT = 9;
+
+  /**
+   * The feature id for the '<em><b>Comm</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OTHER_COMENT__COMM = 0;
+
+  /**
+   * The number of structural features of the '<em>Other Coment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OTHER_COMENT_FEATURE_COUNT = 1;
+
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.XML2 <em>XML2</em>}'.
@@ -448,6 +485,17 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EClass getXML2();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getComment <em>Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Comment</em>'.
+   * @see org.chw.game.cfg.XML2#getComment()
+   * @see #getXML2()
+   * @generated
+   */
+  EReference getXML2_Comment();
 
   /**
    * Returns the meta object for the containment reference '{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}'.
@@ -472,15 +520,15 @@ public interface CfgPackage extends EPackage
   EReference getXML2_Types();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.XML2#getOtherComm <em>Other Comm</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getComm <em>Comm</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Other Comm</em>'.
-   * @see org.chw.game.cfg.XML2#getOtherComm()
+   * @return the meta object for the containment reference list '<em>Comm</em>'.
+   * @see org.chw.game.cfg.XML2#getComm()
    * @see #getXML2()
    * @generated
    */
-  EAttribute getXML2_OtherComm();
+  EReference getXML2_Comm();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.PackDef <em>Pack Def</em>}'.
@@ -525,15 +573,15 @@ public interface CfgPackage extends EPackage
   EClass getType();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Type#getComment <em>Comment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Comm</em>'.
-   * @see org.chw.game.cfg.Type#getComm()
+   * @return the meta object for the attribute '<em>Comment</em>'.
+   * @see org.chw.game.cfg.Type#getComment()
    * @see #getType()
    * @generated
    */
-  EAttribute getType_Comm();
+  EAttribute getType_Comment();
 
   /**
    * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Type#getInput <em>Input</em>}'.
@@ -580,15 +628,15 @@ public interface CfgPackage extends EPackage
   EReference getType_Fields();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.chw.game.cfg.Type#getOtherComm <em>Other Comm</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Other Comm</em>'.
-   * @see org.chw.game.cfg.Type#getOtherComm()
+   * @return the meta object for the containment reference list '<em>Comm</em>'.
+   * @see org.chw.game.cfg.Type#getComm()
    * @see #getType()
    * @generated
    */
-  EAttribute getType_OtherComm();
+  EReference getType_Comm();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.Input <em>Input</em>}'.
@@ -644,15 +692,15 @@ public interface CfgPackage extends EPackage
   EClass getField();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Field#getComment <em>Comment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Comm</em>'.
-   * @see org.chw.game.cfg.Field#getComm()
+   * @return the meta object for the attribute '<em>Comment</em>'.
+   * @see org.chw.game.cfg.Field#getComment()
    * @see #getField()
    * @generated
    */
-  EAttribute getField_Comm();
+  EAttribute getField_Comment();
 
   /**
    * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Field#getType <em>Type</em>}'.
@@ -783,6 +831,27 @@ public interface CfgPackage extends EPackage
   EAttribute getParam_ParamName();
 
   /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.OtherComent <em>Other Coment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Other Coment</em>'.
+   * @see org.chw.game.cfg.OtherComent
+   * @generated
+   */
+  EClass getOtherComent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.OtherComent#getComm <em>Comm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comm</em>'.
+   * @see org.chw.game.cfg.OtherComent#getComm()
+   * @see #getOtherComent()
+   * @generated
+   */
+  EAttribute getOtherComent_Comm();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -816,6 +885,14 @@ public interface CfgPackage extends EPackage
     EClass XML2 = eINSTANCE.getXML2();
 
     /**
+     * The meta object literal for the '<em><b>Comment</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference XML2__COMMENT = eINSTANCE.getXML2_Comment();
+
+    /**
      * The meta object literal for the '<em><b>Pack</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -832,12 +909,12 @@ public interface CfgPackage extends EPackage
     EReference XML2__TYPES = eINSTANCE.getXML2_Types();
 
     /**
-     * The meta object literal for the '<em><b>Other Comm</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Comm</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute XML2__OTHER_COMM = eINSTANCE.getXML2_OtherComm();
+    EReference XML2__COMM = eINSTANCE.getXML2_Comm();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
@@ -876,12 +953,12 @@ public interface CfgPackage extends EPackage
     EClass TYPE = eINSTANCE.getType();
 
     /**
-     * The meta object literal for the '<em><b>Comm</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TYPE__COMM = eINSTANCE.getType_Comm();
+    EAttribute TYPE__COMMENT = eINSTANCE.getType_Comment();
 
     /**
      * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
@@ -916,12 +993,12 @@ public interface CfgPackage extends EPackage
     EReference TYPE__FIELDS = eINSTANCE.getType_Fields();
 
     /**
-     * The meta object literal for the '<em><b>Other Comm</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Comm</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TYPE__OTHER_COMM = eINSTANCE.getType_OtherComm();
+    EReference TYPE__COMM = eINSTANCE.getType_Comm();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.InputImpl <em>Input</em>}' class.
@@ -968,12 +1045,12 @@ public interface CfgPackage extends EPackage
     EClass FIELD = eINSTANCE.getField();
 
     /**
-     * The meta object literal for the '<em><b>Comm</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute FIELD__COMM = eINSTANCE.getField_Comm();
+    EAttribute FIELD__COMMENT = eINSTANCE.getField_Comment();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
@@ -1078,6 +1155,24 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EAttribute PARAM__PARAM_NAME = eINSTANCE.getParam_ParamName();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.OtherComentImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getOtherComent()
+     * @generated
+     */
+    EClass OTHER_COMENT = eINSTANCE.getOtherComent();
+
+    /**
+     * The meta object literal for the '<em><b>Comm</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OTHER_COMENT__COMM = eINSTANCE.getOtherComent_Comm();
 
   }
 

@@ -80,34 +80,56 @@ ruleXML2 returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getXML2Access().getPackPackDefParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getXML2Access().getCommentOtherComentParserRuleCall_0_0()); 
 	    }
-		lv_pack_0_0=rulePackDef		{
+		lv_comment_0_0=ruleOtherComent		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
+	        }
+       		add(
+       			$current, 
+       			"comment",
+        		lv_comment_0_0, 
+        		"OtherComent");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getXML2Access().getPackPackDefParserRuleCall_1_0()); 
+	    }
+		lv_pack_1_0=rulePackDef		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
 	        }
        		set(
        			$current, 
        			"pack",
-        		lv_pack_0_0, 
+        		lv_pack_1_0, 
         		"PackDef");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?((
+)(((
+(
+ruleType
+)
+)=>
 (
 		{ 
-	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getXML2Access().getTypesTypeParserRuleCall_2_0_0()); 
 	    }
-		lv_types_1_0=ruleType		{
+		lv_types_2_0=ruleType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
 	        }
        		add(
        			$current, 
        			"types",
-        		lv_types_1_0, 
+        		lv_types_2_0, 
         		"Type");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -116,19 +138,19 @@ ruleXML2 returns [EObject current=null]
 )
     |(
 (
-		lv_otherComm_2_0=RULE_COMMENT
-		{
-			newLeafNode(lv_otherComm_2_0, grammarAccess.getXML2Access().getOtherCommCOMMENTTerminalRuleCall_1_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getXML2Access().getCommOtherComentParserRuleCall_2_1_0()); 
+	    }
+		lv_comm_3_0=ruleOtherComent		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getXML2Rule());
+	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
-       			"otherComm",
-        		lv_otherComm_2_0, 
-        		"COMMENT");
+       			"comm",
+        		lv_comm_3_0, 
+        		"OtherComent");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -189,7 +211,7 @@ rulePackDef returns [EObject current=null]
 	    }
 
 )
-)(this_C_SEMICOLON_2=RULE_C_SEMICOLON
+)?(this_C_SEMICOLON_2=RULE_C_SEMICOLON
     { 
     newLeafNode(this_C_SEMICOLON_2, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_2()); 
     }
@@ -216,23 +238,23 @@ ruleType returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_comm_0_0=RULE_COMMENT
-		{
-			newLeafNode(lv_comm_0_0, grammarAccess.getTypeAccess().getCommCOMMENTTerminalRuleCall_0_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTypeAccess().getCommentTypeCommentParserRuleCall_0_0()); 
+	    }
+		lv_comment_0_0=ruleTypeComment		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTypeRule());
+	            $current = createModelElementForParent(grammarAccess.getTypeRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
-       			"comm",
-        		lv_comm_0_0, 
-        		"COMMENT");
+       			"comment",
+        		lv_comment_0_0, 
+        		"TypeComment");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTypeAccess().getInputInputParserRuleCall_1_0()); 
@@ -270,19 +292,19 @@ ruleType returns [EObject current=null]
 )
 )(
 (
-		lv_name_3_0=RULE_NAME
-		{
-			newLeafNode(lv_name_3_0, grammarAccess.getTypeAccess().getNameNAMETerminalRuleCall_3_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTypeAccess().getNameTypeNameParserRuleCall_3_0()); 
+	    }
+		lv_name_3_0=ruleTypeName		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTypeRule());
+	            $current = createModelElementForParent(grammarAccess.getTypeRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"name",
         		lv_name_3_0, 
-        		"NAME");
+        		"TypeName");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -290,7 +312,11 @@ ruleType returns [EObject current=null]
     { 
     newLeafNode(this_C_BRACE_L_4, grammarAccess.getTypeAccess().getC_BRACE_LTerminalRuleCall_4()); 
     }
-((
+(((
+(
+ruleField
+)
+)=>
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTypeAccess().getFieldsFieldParserRuleCall_5_0_0()); 
@@ -311,19 +337,19 @@ ruleType returns [EObject current=null]
 )
     |(
 (
-		lv_otherComm_6_0=RULE_COMMENT
-		{
-			newLeafNode(lv_otherComm_6_0, grammarAccess.getTypeAccess().getOtherCommCOMMENTTerminalRuleCall_5_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTypeAccess().getCommOtherComentParserRuleCall_5_1_0()); 
+	    }
+		lv_comm_6_0=ruleOtherComent		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTypeRule());
+	            $current = createModelElementForParent(grammarAccess.getTypeRule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
-       			"otherComm",
-        		lv_otherComm_6_0, 
-        		"COMMENT");
+       			"comm",
+        		lv_comm_6_0, 
+        		"OtherComent");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -465,23 +491,23 @@ ruleField returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_comm_0_0=RULE_COMMENT
-		{
-			newLeafNode(lv_comm_0_0, grammarAccess.getFieldAccess().getCommCOMMENTTerminalRuleCall_0_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getFieldAccess().getCommentFieldCommentParserRuleCall_0_0()); 
+	    }
+		lv_comment_0_0=ruleFieldComment		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFieldRule());
+	            $current = createModelElementForParent(grammarAccess.getFieldRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
-       			"comm",
-        		lv_comm_0_0, 
-        		"COMMENT");
+       			"comment",
+        		lv_comment_0_0, 
+        		"FieldComment");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
+)?(
 (
 (
 		{ 
@@ -534,19 +560,19 @@ ruleField returns [EObject current=null]
 )
 )(
 (
-		lv_fieldName_2_0=RULE_NAME
-		{
-			newLeafNode(lv_fieldName_2_0, grammarAccess.getFieldAccess().getFieldNameNAMETerminalRuleCall_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getFieldAccess().getFieldNameTypeNameParserRuleCall_2_0()); 
+	    }
+		lv_fieldName_2_0=ruleTypeName		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFieldRule());
+	            $current = createModelElementForParent(grammarAccess.getFieldRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"fieldName",
         		lv_fieldName_2_0, 
-        		"NAME");
+        		"TypeName");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -811,6 +837,101 @@ ruleParam returns [EObject current=null]
 
 
 
+// Entry rule entryRuleTypeComment
+entryRuleTypeComment returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTypeCommentRule()); } 
+	 iv_ruleTypeComment=ruleTypeComment 
+	 { $current=$iv_ruleTypeComment.current.getText(); }  
+	 EOF 
+;
+
+// Rule TypeComment
+ruleTypeComment returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+    this_COMMENT_0=RULE_COMMENT    {
+		$current.merge(this_COMMENT_0);
+    }
+
+    { 
+    newLeafNode(this_COMMENT_0, grammarAccess.getTypeCommentAccess().getCOMMENTTerminalRuleCall()); 
+    }
+
+    ;
+
+
+
+
+
+// Entry rule entryRuleFieldComment
+entryRuleFieldComment returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getFieldCommentRule()); } 
+	 iv_ruleFieldComment=ruleFieldComment 
+	 { $current=$iv_ruleFieldComment.current.getText(); }  
+	 EOF 
+;
+
+// Rule FieldComment
+ruleFieldComment returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+    this_COMMENT_0=RULE_COMMENT    {
+		$current.merge(this_COMMENT_0);
+    }
+
+    { 
+    newLeafNode(this_COMMENT_0, grammarAccess.getFieldCommentAccess().getCOMMENTTerminalRuleCall()); 
+    }
+
+    ;
+
+
+
+
+
+// Entry rule entryRuleOtherComent
+entryRuleOtherComent returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getOtherComentRule()); }
+	 iv_ruleOtherComent=ruleOtherComent 
+	 { $current=$iv_ruleOtherComent.current; } 
+	 EOF 
+;
+
+// Rule OtherComent
+ruleOtherComent returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_comm_0_0=RULE_COMMENT
+		{
+			newLeafNode(lv_comm_0_0, grammarAccess.getOtherComentAccess().getCommCOMMENTTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getOtherComentRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"comm",
+        		lv_comm_0_0, 
+        		"COMMENT");
+	    }
+
+)
+)
+;
+
+
+
+
+
 // Entry rule entryRulePackName
 entryRulePackName returns [String current=null] 
 	:
@@ -825,12 +946,16 @@ rulePackName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(    this_NAME_0=RULE_NAME    {
-		$current.merge(this_NAME_0);
+(
+    { 
+        newCompositeNode(grammarAccess.getPackNameAccess().getTypeNameParserRuleCall_0()); 
+    }
+    this_TypeName_0=ruleTypeName    {
+		$current.merge(this_TypeName_0);
     }
 
     { 
-    newLeafNode(this_NAME_0, grammarAccess.getPackNameAccess().getNAMETerminalRuleCall_0()); 
+        afterParserOrEnumRuleCall();
     }
 (
 	kw='.' 
@@ -838,12 +963,16 @@ rulePackName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getPackNameAccess().getFullStopKeyword_1_0()); 
     }
-    this_NAME_2=RULE_NAME    {
-		$current.merge(this_NAME_2);
+
+    { 
+        newCompositeNode(grammarAccess.getPackNameAccess().getTypeNameParserRuleCall_1_1()); 
+    }
+    this_TypeName_2=ruleTypeName    {
+		$current.merge(this_TypeName_2);
     }
 
     { 
-    newLeafNode(this_NAME_2, grammarAccess.getPackNameAccess().getNAMETerminalRuleCall_1_1()); 
+        afterParserOrEnumRuleCall();
     }
 )*)
     ;

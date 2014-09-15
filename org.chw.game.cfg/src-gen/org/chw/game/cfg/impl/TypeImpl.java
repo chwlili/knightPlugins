@@ -11,6 +11,7 @@ import java.util.Collection;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.Input;
+import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.Type;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -35,12 +35,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getComm <em>Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getFields <em>Fields</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getOtherComm <em>Other Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getComm <em>Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,24 +49,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TypeImpl extends MinimalEObjectImpl.Container implements Type
 {
   /**
-   * The default value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * The default value of the '{@link #getComment() <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getComm()
+   * @see #getComment()
    * @generated
    * @ordered
    */
-  protected static final String COMM_EDEFAULT = null;
+  protected static final String COMMENT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * The cached value of the '{@link #getComment() <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getComm()
+   * @see #getComment()
    * @generated
    * @ordered
    */
-  protected String comm = COMM_EDEFAULT;
+  protected String comment = COMMENT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
@@ -129,14 +129,14 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   protected EList<Field> fields;
 
   /**
-   * The cached value of the '{@link #getOtherComm() <em>Other Comm</em>}' attribute list.
+   * The cached value of the '{@link #getComm() <em>Comm</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOtherComm()
+   * @see #getComm()
    * @generated
    * @ordered
    */
-  protected EList<String> otherComm;
+  protected EList<OtherComent> comm;
 
   /**
    * <!-- begin-user-doc -->
@@ -164,9 +164,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getComm()
+  public String getComment()
   {
-    return comm;
+    return comment;
   }
 
   /**
@@ -174,12 +174,12 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setComm(String newComm)
+  public void setComment(String newComment)
   {
-    String oldComm = comm;
-    comm = newComm;
+    String oldComment = comment;
+    comment = newComment;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__COMM, oldComm, comm));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__COMMENT, oldComment, comment));
   }
 
   /**
@@ -295,13 +295,13 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getOtherComm()
+  public EList<OtherComent> getComm()
   {
-    if (otherComm == null)
+    if (comm == null)
     {
-      otherComm = new EDataTypeEList<String>(String.class, this, CfgPackage.TYPE__OTHER_COMM);
+      comm = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.TYPE__COMM);
     }
-    return otherComm;
+    return comm;
   }
 
   /**
@@ -318,6 +318,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return basicSetInput(null, msgs);
       case CfgPackage.TYPE__FIELDS:
         return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
+      case CfgPackage.TYPE__COMM:
+        return ((InternalEList<?>)getComm()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -332,8 +334,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case CfgPackage.TYPE__COMM:
-        return getComm();
+      case CfgPackage.TYPE__COMMENT:
+        return getComment();
       case CfgPackage.TYPE__INPUT:
         return getInput();
       case CfgPackage.TYPE__PREFIX:
@@ -342,8 +344,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return getName();
       case CfgPackage.TYPE__FIELDS:
         return getFields();
-      case CfgPackage.TYPE__OTHER_COMM:
-        return getOtherComm();
+      case CfgPackage.TYPE__COMM:
+        return getComm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -359,8 +361,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case CfgPackage.TYPE__COMM:
-        setComm((String)newValue);
+      case CfgPackage.TYPE__COMMENT:
+        setComment((String)newValue);
         return;
       case CfgPackage.TYPE__INPUT:
         setInput((Input)newValue);
@@ -375,9 +377,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         getFields().clear();
         getFields().addAll((Collection<? extends Field>)newValue);
         return;
-      case CfgPackage.TYPE__OTHER_COMM:
-        getOtherComm().clear();
-        getOtherComm().addAll((Collection<? extends String>)newValue);
+      case CfgPackage.TYPE__COMM:
+        getComm().clear();
+        getComm().addAll((Collection<? extends OtherComent>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -393,8 +395,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case CfgPackage.TYPE__COMM:
-        setComm(COMM_EDEFAULT);
+      case CfgPackage.TYPE__COMMENT:
+        setComment(COMMENT_EDEFAULT);
         return;
       case CfgPackage.TYPE__INPUT:
         setInput((Input)null);
@@ -408,8 +410,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
       case CfgPackage.TYPE__FIELDS:
         getFields().clear();
         return;
-      case CfgPackage.TYPE__OTHER_COMM:
-        getOtherComm().clear();
+      case CfgPackage.TYPE__COMM:
+        getComm().clear();
         return;
     }
     super.eUnset(featureID);
@@ -425,8 +427,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case CfgPackage.TYPE__COMM:
-        return COMM_EDEFAULT == null ? comm != null : !COMM_EDEFAULT.equals(comm);
+      case CfgPackage.TYPE__COMMENT:
+        return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
       case CfgPackage.TYPE__INPUT:
         return input != null;
       case CfgPackage.TYPE__PREFIX:
@@ -435,8 +437,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case CfgPackage.TYPE__FIELDS:
         return fields != null && !fields.isEmpty();
-      case CfgPackage.TYPE__OTHER_COMM:
-        return otherComm != null && !otherComm.isEmpty();
+      case CfgPackage.TYPE__COMM:
+        return comm != null && !comm.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -452,14 +454,12 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (comm: ");
-    result.append(comm);
+    result.append(" (comment: ");
+    result.append(comment);
     result.append(", prefix: ");
     result.append(prefix);
     result.append(", name: ");
     result.append(name);
-    result.append(", otherComm: ");
-    result.append(otherComm);
     result.append(')');
     return result.toString();
   }

@@ -37,7 +37,7 @@ public class CfgParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getXML2Access().getAlternatives_1(), "rule__XML2__Alternatives_1");
+					put(grammarAccess.getXML2Access().getAlternatives_2(), "rule__XML2__Alternatives_2");
 					put(grammarAccess.getTypeAccess().getAlternatives_5(), "rule__Type__Alternatives_5");
 					put(grammarAccess.getFieldAccess().getTypeAlternatives_1_0(), "rule__Field__TypeAlternatives_1_0");
 					put(grammarAccess.getTypeNameAccess().getAlternatives(), "rule__TypeName__Alternatives");
@@ -53,21 +53,22 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHashTypeAccess().getGroup_4_2(), "rule__HashType__Group_4_2__0");
 					put(grammarAccess.getPackNameAccess().getGroup(), "rule__PackName__Group__0");
 					put(grammarAccess.getPackNameAccess().getGroup_1(), "rule__PackName__Group_1__0");
-					put(grammarAccess.getXML2Access().getPackAssignment_0(), "rule__XML2__PackAssignment_0");
-					put(grammarAccess.getXML2Access().getTypesAssignment_1_0(), "rule__XML2__TypesAssignment_1_0");
-					put(grammarAccess.getXML2Access().getOtherCommAssignment_1_1(), "rule__XML2__OtherCommAssignment_1_1");
+					put(grammarAccess.getXML2Access().getCommentAssignment_0(), "rule__XML2__CommentAssignment_0");
+					put(grammarAccess.getXML2Access().getPackAssignment_1(), "rule__XML2__PackAssignment_1");
+					put(grammarAccess.getXML2Access().getTypesAssignment_2_0(), "rule__XML2__TypesAssignment_2_0");
+					put(grammarAccess.getXML2Access().getCommAssignment_2_1(), "rule__XML2__CommAssignment_2_1");
 					put(grammarAccess.getPackDefAccess().getPackCHARAssignment_0(), "rule__PackDef__PackCHARAssignment_0");
 					put(grammarAccess.getPackDefAccess().getPackAssignment_1(), "rule__PackDef__PackAssignment_1");
-					put(grammarAccess.getTypeAccess().getCommAssignment_0(), "rule__Type__CommAssignment_0");
+					put(grammarAccess.getTypeAccess().getCommentAssignment_0(), "rule__Type__CommentAssignment_0");
 					put(grammarAccess.getTypeAccess().getInputAssignment_1(), "rule__Type__InputAssignment_1");
 					put(grammarAccess.getTypeAccess().getPrefixAssignment_2(), "rule__Type__PrefixAssignment_2");
 					put(grammarAccess.getTypeAccess().getNameAssignment_3(), "rule__Type__NameAssignment_3");
 					put(grammarAccess.getTypeAccess().getFieldsAssignment_5_0(), "rule__Type__FieldsAssignment_5_0");
-					put(grammarAccess.getTypeAccess().getOtherCommAssignment_5_1(), "rule__Type__OtherCommAssignment_5_1");
+					put(grammarAccess.getTypeAccess().getCommAssignment_5_1(), "rule__Type__CommAssignment_5_1");
 					put(grammarAccess.getInputAccess().getPrefixAssignment_1(), "rule__Input__PrefixAssignment_1");
 					put(grammarAccess.getInputAccess().getFilePathAssignment_5(), "rule__Input__FilePathAssignment_5");
 					put(grammarAccess.getInputAccess().getNodePathAssignment_6_3(), "rule__Input__NodePathAssignment_6_3");
-					put(grammarAccess.getFieldAccess().getCommAssignment_0(), "rule__Field__CommAssignment_0");
+					put(grammarAccess.getFieldAccess().getCommentAssignment_0(), "rule__Field__CommentAssignment_0");
 					put(grammarAccess.getFieldAccess().getTypeAssignment_1(), "rule__Field__TypeAssignment_1");
 					put(grammarAccess.getFieldAccess().getFieldNameAssignment_2(), "rule__Field__FieldNameAssignment_2");
 					put(grammarAccess.getFieldAccess().getNodePathAssignment_4(), "rule__Field__NodePathAssignment_4");
@@ -77,6 +78,7 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHashTypeAccess().getParamsAssignment_4_1(), "rule__HashType__ParamsAssignment_4_1");
 					put(grammarAccess.getHashTypeAccess().getParamsAssignment_4_2_1(), "rule__HashType__ParamsAssignment_4_2_1");
 					put(grammarAccess.getParamAccess().getParamNameAssignment(), "rule__Param__ParamNameAssignment");
+					put(grammarAccess.getOtherComentAccess().getCommAssignment(), "rule__OtherComent__CommAssignment");
 				}
 			};
 		}

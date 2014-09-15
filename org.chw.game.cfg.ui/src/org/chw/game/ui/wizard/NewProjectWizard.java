@@ -94,11 +94,6 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						writeFile(project.getFile(".actionScriptProperties").getLocation().toFile(), getActionScriptProperties(name, src, bin));
 
 						project.open(new SubProgressMonitor(monitor, 1000));
-						project.setPersistentProperty(Xml2Nature.CFG_DIR, cfg_dir);
-						project.setPersistentProperty(Xml2Nature.XML_DIR, xml_dir);
-						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, "");
-						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "core");
-						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "code");
 
 						// src
 						IFolder srcDir = project.getFolder(src);
@@ -157,6 +152,12 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						}
 
 						project.setDefaultCharset("UTF-8", new SubProgressMonitor(monitor, 1000)); //$NON-NLS-1$
+						project.setPersistentProperty(Xml2Nature.CFG_DIR, cfg_proto_file.getName());
+						project.setPersistentProperty(Xml2Nature.XML_DIR, cfg_xml_file.getName());
+						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, "");
+						project.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, "base");
+						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "code");
+						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, "files");
 					}
 					catch (CoreException e)
 					{

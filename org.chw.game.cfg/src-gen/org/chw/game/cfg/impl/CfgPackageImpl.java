@@ -13,6 +13,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
@@ -96,6 +97,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
   private EClass paramEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass otherComentEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -173,7 +181,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getXML2_Pack()
+  public EReference getXML2_Comment()
   {
     return (EReference)xml2EClass.getEStructuralFeatures().get(0);
   }
@@ -183,7 +191,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getXML2_Types()
+  public EReference getXML2_Pack()
   {
     return (EReference)xml2EClass.getEStructuralFeatures().get(1);
   }
@@ -193,9 +201,19 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getXML2_OtherComm()
+  public EReference getXML2_Types()
   {
-    return (EAttribute)xml2EClass.getEStructuralFeatures().get(2);
+    return (EReference)xml2EClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getXML2_Comm()
+  {
+    return (EReference)xml2EClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -243,7 +261,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getType_Comm()
+  public EAttribute getType_Comment()
   {
     return (EAttribute)typeEClass.getEStructuralFeatures().get(0);
   }
@@ -293,9 +311,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getType_OtherComm()
+  public EReference getType_Comm()
   {
-    return (EAttribute)typeEClass.getEStructuralFeatures().get(5);
+    return (EReference)typeEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -353,7 +371,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getField_Comm()
+  public EAttribute getField_Comment()
   {
     return (EAttribute)fieldEClass.getEStructuralFeatures().get(0);
   }
@@ -483,6 +501,26 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getOtherComent()
+  {
+    return otherComentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getOtherComent_Comm()
+  {
+    return (EAttribute)otherComentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public CfgFactory getCfgFactory()
   {
     return (CfgFactory)getEFactoryInstance();
@@ -509,21 +547,22 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Create classes and their features
     xml2EClass = createEClass(XML2);
+    createEReference(xml2EClass, XML2__COMMENT);
     createEReference(xml2EClass, XML2__PACK);
     createEReference(xml2EClass, XML2__TYPES);
-    createEAttribute(xml2EClass, XML2__OTHER_COMM);
+    createEReference(xml2EClass, XML2__COMM);
 
     packDefEClass = createEClass(PACK_DEF);
     createEAttribute(packDefEClass, PACK_DEF__PACK_CHAR);
     createEAttribute(packDefEClass, PACK_DEF__PACK);
 
     typeEClass = createEClass(TYPE);
-    createEAttribute(typeEClass, TYPE__COMM);
+    createEAttribute(typeEClass, TYPE__COMMENT);
     createEReference(typeEClass, TYPE__INPUT);
     createEAttribute(typeEClass, TYPE__PREFIX);
     createEAttribute(typeEClass, TYPE__NAME);
     createEReference(typeEClass, TYPE__FIELDS);
-    createEAttribute(typeEClass, TYPE__OTHER_COMM);
+    createEReference(typeEClass, TYPE__COMM);
 
     inputEClass = createEClass(INPUT);
     createEAttribute(inputEClass, INPUT__PREFIX);
@@ -531,7 +570,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     createEAttribute(inputEClass, INPUT__NODE_PATH);
 
     fieldEClass = createEClass(FIELD);
-    createEAttribute(fieldEClass, FIELD__COMM);
+    createEAttribute(fieldEClass, FIELD__COMMENT);
     createEReference(fieldEClass, FIELD__TYPE);
     createEAttribute(fieldEClass, FIELD__FIELD_NAME);
     createEAttribute(fieldEClass, FIELD__NODE_PATH);
@@ -548,6 +587,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     paramEClass = createEClass(PARAM);
     createEAttribute(paramEClass, PARAM__PARAM_NAME);
+
+    otherComentEClass = createEClass(OTHER_COMENT);
+    createEAttribute(otherComentEClass, OTHER_COMENT__COMM);
   }
 
   /**
@@ -582,21 +624,22 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(xml2EClass, org.chw.game.cfg.XML2.class, "XML2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getXML2_Comment(), this.getOtherComent(), null, "comment", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Pack(), this.getPackDef(), null, "pack", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Types(), this.getType(), null, "types", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getXML2_OtherComm(), ecorePackage.getEString(), "otherComm", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getXML2_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(packDefEClass, PackDef.class, "PackDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPackDef_PackCHAR(), ecorePackage.getEString(), "packCHAR", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPackDef_Pack(), ecorePackage.getEString(), "pack", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getType_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getType_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getType_Input(), this.getInput(), null, "input", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Name(), ecorePackage.getEString(), "name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getType_Fields(), this.getField(), null, "fields", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getType_OtherComm(), ecorePackage.getEString(), "otherComm", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputEClass, Input.class, "Input", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInput_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -604,7 +647,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     initEAttribute(getInput_NodePath(), ecorePackage.getEString(), "nodePath", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getField_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getField_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getField_Type(), ecorePackage.getEObject(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_NodePath(), ecorePackage.getEString(), "nodePath", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -621,6 +664,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     initEClass(paramEClass, Param.class, "Param", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getParam_ParamName(), ecorePackage.getEString(), "paramName", null, 0, 1, Param.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(otherComentEClass, OtherComent.class, "OtherComent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOtherComent_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, OtherComent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

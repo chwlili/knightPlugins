@@ -1,7 +1,6 @@
 package org.chw.game.builder;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -509,18 +508,18 @@ class CfgFileWriter
 	private byte[] getBytes() throws IOException
 	{
 		ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
-		DataOutputStream dataOutput = new DataOutputStream(byteArrayOutput);
+		CfgOutputStream dataOutput = new CfgOutputStream(byteArrayOutput);
 
 		String[] allTypeName = typeName_idArray.keySet().toArray(new String[typeName_idArray.size()]);
 		Arrays.sort(allTypeName);
 
-		dataOutput.writeInt(allTypeName.length);
+		dataOutput.writeVarInt(allTypeName.length);
 		for (String typeName : allTypeName)
 		{
-			dataOutput.writeInt(classWriter.getTypeID(typeName));
+			dataOutput.writeVarInt(classWriter.getTypeID(typeName));
 			dataOutput.write(getBytes(typeName_idArray.get(typeName)));
 		}
-		dataOutput.writeInt(classWriter.getTypeID(root.getType().getName()));
+		dataOutput.writeVarInt(classWriter.getTypeID(root.getType().getName()));
 		dataOutput.write(getBytes(root));
 
 		return byteArrayOutput.toByteArray();
@@ -536,10 +535,10 @@ class CfgFileWriter
 	private byte[] getBytes(String txt) throws IOException
 	{
 		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-		DataOutputStream output = new DataOutputStream(byteArray);
+		CfgOutputStream output = new CfgOutputStream(byteArray);
 
 		byte[] bytes = txt.getBytes("utf8");
-		output.writeInt(bytes.length);
+		output.writeVarInt(bytes.length);
 		output.write(bytes);
 
 		return byteArray.toByteArray();
@@ -555,7 +554,7 @@ class CfgFileWriter
 	private byte[] getBytes(Integer[] list) throws IOException
 	{
 		int totalCount = list.length;
-		int partLength = 10;
+		int partLength = 100;
 
 		ArrayList<byte[]> partBytes = new ArrayList<byte[]>();
 
@@ -564,7 +563,7 @@ class CfgFileWriter
 		for (int i = 0; i < partCount; i++)
 		{
 			ByteArrayOutputStream partByteArray = new ByteArrayOutputStream();
-			DataOutputStream partOutputStream = new DataOutputStream(partByteArray);
+			CfgOutputStream partOutputStream = new CfgOutputStream(partByteArray);
 
 			int left = i * partLength;
 			int right = left + partLength;
@@ -580,11 +579,11 @@ class CfgFileWriter
 
 				if (field.isInt() || field.isUint())
 				{
-					partOutputStream.writeInt((Integer) value);
+					partOutputStream.writeVarInt((Integer) value);
 				}
 				else if (field.isBoolean())
 				{
-					partOutputStream.writeInt((Boolean) value ? 1 : 0);
+					partOutputStream.writeVarInt((Boolean) value ? 1 : 0);
 				}
 				else if (field.isNumber())
 				{
@@ -605,12 +604,12 @@ class CfgFileWriter
 
 		// 合并所有子部分
 		ByteArrayOutputStream contentByteArray = new ByteArrayOutputStream();
-		DataOutputStream contentOutputStream = new DataOutputStream(contentByteArray);
-		contentOutputStream.writeInt(totalCount);
-		contentOutputStream.writeInt(partLength);
+		CfgOutputStream contentOutputStream = new CfgOutputStream(contentByteArray);
+		contentOutputStream.writeVarInt(totalCount);
+		contentOutputStream.writeVarInt(partLength);
 		for (byte[] bytes : partBytes)
 		{
-			contentOutputStream.writeInt(bytes.length);
+			contentOutputStream.writeVarInt(bytes.length);
 			contentOutputStream.write(bytes);
 		}
 		contentOutputStream.flush();
@@ -629,7 +628,7 @@ class CfgFileWriter
 	private byte[] getBytes(Instance instance) throws IOException
 	{
 		ByteArrayOutputStream contentByteArray = new ByteArrayOutputStream();
-		DataOutputStream contentOutputStream = new DataOutputStream(contentByteArray);
+		CfgOutputStream contentOutputStream = new CfgOutputStream(contentByteArray);
 
 		for (TypeFieldDef fieldDef : instance.getType().fields)
 		{
@@ -638,7 +637,7 @@ class CfgFileWriter
 			// 字段为空时，简单值输出空引用，列表值输出长度标记0
 			if (field == null || field.getValue() == null)
 			{
-				contentOutputStream.writeInt(0);
+				contentOutputStream.writeVarInt(0);
 				continue;
 			}
 
@@ -647,7 +646,7 @@ class CfgFileWriter
 			{
 				@SuppressWarnings("rawtypes")
 				ArrayList vals = (ArrayList) field.getValue();
-				contentOutputStream.writeInt(vals.size());
+				contentOutputStream.writeVarInt(vals.size());
 				for (Object val : vals)
 				{
 					if (fieldDef.isExtendType())
@@ -658,30 +657,30 @@ class CfgFileWriter
 							InstanceField instanceField = instanceVal.findField(key);
 							if (instanceField != null && instanceField.getValue() != null)
 							{
-								contentOutputStream.writeInt(getOrder(instanceField.getDef(), instanceField.getValue()));
+								contentOutputStream.writeVarInt(getOrder(instanceField.getDef(), instanceField.getValue()));
 							}
 							else
 							{
-								contentOutputStream.writeInt(0);
+								contentOutputStream.writeVarInt(0);
 							}
 						}
 					}
-					contentOutputStream.writeInt(getOrder(fieldDef, val));
+					contentOutputStream.writeVarInt(getOrder(fieldDef, val));
 				}
 			}
 			else if (fieldDef.repeted)
 			{
 				@SuppressWarnings("rawtypes")
 				ArrayList vals = (ArrayList) field.getValue();
-				contentOutputStream.writeInt(vals.size());
+				contentOutputStream.writeVarInt(vals.size());
 				for (Object val : vals)
 				{
-					contentOutputStream.writeInt(getOrder(fieldDef, val));
+					contentOutputStream.writeVarInt(getOrder(fieldDef, val));
 				}
 			}
 			else
 			{
-				contentOutputStream.writeInt(getOrder(fieldDef, field.getValue()));
+				contentOutputStream.writeVarInt(getOrder(fieldDef, field.getValue()));
 			}
 		}
 

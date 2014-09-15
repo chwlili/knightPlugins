@@ -9,6 +9,7 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -35,9 +35,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getTypes <em>Types</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getOtherComm <em>Other Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getComm <em>Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +46,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
 {
+  /**
+   * The cached value of the '{@link #getComment() <em>Comment</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getComment()
+   * @generated
+   * @ordered
+   */
+  protected EList<OtherComent> comment;
+
   /**
    * The cached value of the '{@link #getPack() <em>Pack</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -66,14 +77,14 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   protected EList<Type> types;
 
   /**
-   * The cached value of the '{@link #getOtherComm() <em>Other Comm</em>}' attribute list.
+   * The cached value of the '{@link #getComm() <em>Comm</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOtherComm()
+   * @see #getComm()
    * @generated
    * @ordered
    */
-  protected EList<String> otherComm;
+  protected EList<OtherComent> comm;
 
   /**
    * <!-- begin-user-doc -->
@@ -94,6 +105,20 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   protected EClass eStaticClass()
   {
     return CfgPackage.Literals.XML2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<OtherComent> getComment()
+  {
+    if (comment == null)
+    {
+      comment = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.XML2__COMMENT);
+    }
+    return comment;
   }
 
   /**
@@ -163,13 +188,13 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getOtherComm()
+  public EList<OtherComent> getComm()
   {
-    if (otherComm == null)
+    if (comm == null)
     {
-      otherComm = new EDataTypeEList<String>(String.class, this, CfgPackage.XML2__OTHER_COMM);
+      comm = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.XML2__COMM);
     }
-    return otherComm;
+    return comm;
   }
 
   /**
@@ -182,10 +207,14 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__COMMENT:
+        return ((InternalEList<?>)getComment()).basicRemove(otherEnd, msgs);
       case CfgPackage.XML2__PACK:
         return basicSetPack(null, msgs);
       case CfgPackage.XML2__TYPES:
         return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
+      case CfgPackage.XML2__COMM:
+        return ((InternalEList<?>)getComm()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -200,12 +229,14 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__COMMENT:
+        return getComment();
       case CfgPackage.XML2__PACK:
         return getPack();
       case CfgPackage.XML2__TYPES:
         return getTypes();
-      case CfgPackage.XML2__OTHER_COMM:
-        return getOtherComm();
+      case CfgPackage.XML2__COMM:
+        return getComm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,6 +252,10 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__COMMENT:
+        getComment().clear();
+        getComment().addAll((Collection<? extends OtherComent>)newValue);
+        return;
       case CfgPackage.XML2__PACK:
         setPack((PackDef)newValue);
         return;
@@ -228,9 +263,9 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
         getTypes().clear();
         getTypes().addAll((Collection<? extends Type>)newValue);
         return;
-      case CfgPackage.XML2__OTHER_COMM:
-        getOtherComm().clear();
-        getOtherComm().addAll((Collection<? extends String>)newValue);
+      case CfgPackage.XML2__COMM:
+        getComm().clear();
+        getComm().addAll((Collection<? extends OtherComent>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -246,14 +281,17 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__COMMENT:
+        getComment().clear();
+        return;
       case CfgPackage.XML2__PACK:
         setPack((PackDef)null);
         return;
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         return;
-      case CfgPackage.XML2__OTHER_COMM:
-        getOtherComm().clear();
+      case CfgPackage.XML2__COMM:
+        getComm().clear();
         return;
     }
     super.eUnset(featureID);
@@ -269,31 +307,16 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
+      case CfgPackage.XML2__COMMENT:
+        return comment != null && !comment.isEmpty();
       case CfgPackage.XML2__PACK:
         return pack != null;
       case CfgPackage.XML2__TYPES:
         return types != null && !types.isEmpty();
-      case CfgPackage.XML2__OTHER_COMM:
-        return otherComm != null && !otherComm.isEmpty();
+      case CfgPackage.XML2__COMM:
+        return comm != null && !comm.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (otherComm: ");
-    result.append(otherComm);
-    result.append(')');
-    return result.toString();
   }
 
 } //XML2Impl

@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Type#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getFields <em>Fields</em>}</li>
- *   <li>{@link org.chw.game.cfg.Type#getOtherComm <em>Other Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,30 +34,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Type extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Comm</b></em>' attribute.
+   * Returns the value of the '<em><b>Comment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Comm</em>' attribute isn't clear,
+   * If the meaning of the '<em>Comment</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Comm</em>' attribute.
-   * @see #setComm(String)
-   * @see org.chw.game.cfg.CfgPackage#getType_Comm()
+   * @return the value of the '<em>Comment</em>' attribute.
+   * @see #setComment(String)
+   * @see org.chw.game.cfg.CfgPackage#getType_Comment()
    * @model
    * @generated
    */
-  String getComm();
+  String getComment();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.Type#getComm <em>Comm</em>}' attribute.
+   * Sets the value of the '{@link org.chw.game.cfg.Type#getComment <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Comm</em>' attribute.
-   * @see #getComm()
+   * @param value the new value of the '<em>Comment</em>' attribute.
+   * @see #getComment()
    * @generated
    */
-  void setComm(String value);
+  void setComment(String value);
 
   /**
    * Returns the value of the '<em><b>Input</b></em>' containment reference.
@@ -154,19 +154,19 @@ public interface Type extends EObject
   EList<Field> getFields();
 
   /**
-   * Returns the value of the '<em><b>Other Comm</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Comm</b></em>' containment reference list.
+   * The list contents are of type {@link org.chw.game.cfg.OtherComent}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Other Comm</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Comm</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Other Comm</em>' attribute list.
-   * @see org.chw.game.cfg.CfgPackage#getType_OtherComm()
-   * @model unique="false"
+   * @return the value of the '<em>Comm</em>' containment reference list.
+   * @see org.chw.game.cfg.CfgPackage#getType_Comm()
+   * @model containment="true"
    * @generated
    */
-  EList<String> getOtherComm();
+  EList<OtherComent> getComm();
 
 } // Type

@@ -139,6 +139,13 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CfgPackage.OTHER_COMENT:
+      {
+        OtherComent otherComent = (OtherComent)theEObject;
+        T result = caseOtherComent(otherComent);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -283,6 +290,22 @@ public class CfgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseParam(Param object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Other Coment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Other Coment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOtherComent(OtherComent object)
   {
     return null;
   }

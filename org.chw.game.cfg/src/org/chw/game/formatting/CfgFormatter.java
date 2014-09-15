@@ -26,15 +26,24 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 	@Override
 	protected void configureFormatting(FormattingConfig c)
 	{
+		c.setLinewrap(2).after(grammarAccess.getPackDefRule());
+
+		c.setLinewrap().before(grammarAccess.getTypeCommentRule());
+		c.setLinewrap().after(grammarAccess.getTypeCommentRule());
+
+		c.setLinewrap().before(grammarAccess.getFieldCommentRule());
+		c.setLinewrap().after(grammarAccess.getFieldCommentRule());
+
+		// c.setLinewrap().before(grammarAccess.getOtherComentRule());
+		c.setLinewrap(2).after(grammarAccess.getOtherComentRule());
+
 		c.setLinewrap(2).after(grammarAccess.getTypeRule());
 
 		c.setLinewrap().before(grammarAccess.getFieldRule());
 		c.setLinewrap(2).after(grammarAccess.getFieldRule());
 
-		c.setLinewrap().before(grammarAccess.getCOMMENTRule());
-		c.setLinewrap().after(grammarAccess.getCOMMENTRule());
 		c.setLinewrap().after(grammarAccess.getInputRule());
-		
+
 		c.setLinewrap().before(grammarAccess.getC_BRACE_LRule());
 		c.setLinewrap().before(grammarAccess.getC_BRACE_RRule());
 
@@ -44,7 +53,7 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setNoSpace().before(grammarAccess.getC_ANGLE_LRule());
 		c.setNoSpace().after(grammarAccess.getC_ANGLE_LRule());
 		c.setNoSpace().before(grammarAccess.getC_ANGLE_RRule());
-		
+
 		c.setNoSpace().before(grammarAccess.getC_INPUTRule());
 		c.setNoSpace().after(grammarAccess.getC_INPUTRule());
 		c.setNoSpace().before(grammarAccess.getC_BRACKET_RRule());

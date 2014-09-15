@@ -3,22 +3,24 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cfg "http://www.chw.org/game/Cfg"
 
 XML2:
-	pack=PackDef?
-	(types+=Type | otherComm+=COMMENT)*;
+	comment+=OtherComent* pack=PackDef ((=> types+=Type) | comm+=OtherComent)*;
 
 PackDef:
-	packCHAR=C_PACKAGE pack=PackName C_SEMICOLON?;
+	packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
 
 Type:
-	comm=COMMENT input=Input? prefix=C_TYPE name=NAME C_BRACE_L (fields+=Field | otherComm+=COMMENT)* C_BRACE_R;
+	comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName C_BRACE_L ((=> fields+=Field) | comm+=OtherComent)*
+	C_BRACE_R;
 
 Input:
-	C_BRACKET_L prefix=C_INPUT C_PAREN_L C_FILE C_EQUALS filePath=STRING (C_COMMA C_NODE C_EQUALS nodePath=STRING)?
+	C_BRACKET_L prefix=C_INPUT
+	C_PAREN_L
+	C_FILE C_EQUALS filePath=STRING (C_COMMA C_NODE C_EQUALS nodePath=STRING)?
 	C_PAREN_R
 	C_BRACKET_R;
 
 Field:
-	comm=COMMENT type=(NativeType | ListType | HashType) fieldName=NAME C_EQUALS nodePath=STRING C_SEMICOLON?;
+	comment=FieldComment? type=(NativeType | ListType | HashType) fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?;
 
 NativeType:
 	type=TypeName;
@@ -32,8 +34,17 @@ HashType:
 Param:
 	paramName=NAME;
 
+TypeComment:
+	COMMENT;
+
+FieldComment:
+	COMMENT;
+
+OtherComent:
+	comm=COMMENT;
+
 PackName:
-	NAME ('.' NAME)*;
+	TypeName ('.' TypeName)*;
 
 TypeName:
 	C_INPUT | C_FILE | C_NODE | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_HASH | NAME;

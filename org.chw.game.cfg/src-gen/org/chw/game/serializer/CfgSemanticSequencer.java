@@ -8,6 +8,7 @@ import org.chw.game.cfg.HashType;
 import org.chw.game.cfg.Input;
 import org.chw.game.cfg.ListType;
 import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
@@ -63,6 +64,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else break;
+			case CfgPackage.OTHER_COMENT:
+				if(context == grammarAccess.getOtherComentRule()) {
+					sequence_OtherComent(context, (OtherComent) semanticObject); 
+					return; 
+				}
+				else break;
 			case CfgPackage.PACK_DEF:
 				if(context == grammarAccess.getPackDefRule()) {
 					sequence_PackDef(context, (PackDef) semanticObject); 
@@ -93,7 +100,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comm=COMMENT (type=NativeType | type=ListType | type=HashType) fieldName=NAME nodePath=STRING)
+	 *     (comment=FieldComment? (type=NativeType | type=ListType | type=HashType) fieldName=TypeName nodePath=STRING)
 	 */
 	protected void sequence_Field(EObject context, Field semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -152,20 +159,26 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (packCHAR=C_PACKAGE pack=PackName)
+	 *     comm=COMMENT
 	 */
-	protected void sequence_PackDef(EObject context, PackDef semanticObject) {
+	protected void sequence_OtherComent(EObject context, OtherComent semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PACK_DEF__PACK_CHAR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PACK_DEF__PACK_CHAR));
-			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PACK_DEF__PACK) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PACK_DEF__PACK));
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.OTHER_COMENT__COMM) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.OTHER_COMENT__COMM));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getPackDefAccess().getPackCHARC_PACKAGETerminalRuleCall_0_0(), semanticObject.getPackCHAR());
-		feeder.accept(grammarAccess.getPackDefAccess().getPackPackNameParserRuleCall_1_0(), semanticObject.getPack());
+		feeder.accept(grammarAccess.getOtherComentAccess().getCommCOMMENTTerminalRuleCall_0(), semanticObject.getComm());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (packCHAR=C_PACKAGE pack=PackName?)
+	 */
+	protected void sequence_PackDef(EObject context, PackDef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -187,7 +200,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comm=COMMENT input=Input? prefix=C_TYPE name=NAME (fields+=Field | otherComm+=COMMENT)*)
+	 *     (comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName (fields+=Field | comm+=OtherComent)*)
 	 */
 	protected void sequence_Type(EObject context, Type semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -196,7 +209,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (pack=PackDef? (types+=Type | otherComm+=COMMENT)*)
+	 *     (comment+=OtherComent* pack=PackDef (types+=Type | comm+=OtherComent)*)
 	 */
 	protected void sequence_XML2(EObject context, XML2 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getComm <em>Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getFieldName <em>Field Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getNodePath <em>Node Path</em>}</li>
@@ -38,24 +38,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class FieldImpl extends MinimalEObjectImpl.Container implements Field
 {
   /**
-   * The default value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * The default value of the '{@link #getComment() <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getComm()
+   * @see #getComment()
    * @generated
    * @ordered
    */
-  protected static final String COMM_EDEFAULT = null;
+  protected static final String COMMENT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getComm() <em>Comm</em>}' attribute.
+   * The cached value of the '{@link #getComment() <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getComm()
+   * @see #getComment()
    * @generated
    * @ordered
    */
-  protected String comm = COMM_EDEFAULT;
+  protected String comment = COMMENT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -133,9 +133,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getComm()
+  public String getComment()
   {
-    return comm;
+    return comment;
   }
 
   /**
@@ -143,12 +143,12 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setComm(String newComm)
+  public void setComment(String newComment)
   {
-    String oldComm = comm;
-    comm = newComm;
+    String oldComment = comment;
+    comment = newComment;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__COMM, oldComm, comm));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__COMMENT, oldComment, comment));
   }
 
   /**
@@ -271,8 +271,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD__COMM:
-        return getComm();
+      case CfgPackage.FIELD__COMMENT:
+        return getComment();
       case CfgPackage.FIELD__TYPE:
         return getType();
       case CfgPackage.FIELD__FIELD_NAME:
@@ -293,8 +293,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD__COMM:
-        setComm((String)newValue);
+      case CfgPackage.FIELD__COMMENT:
+        setComment((String)newValue);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((EObject)newValue);
@@ -319,8 +319,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD__COMM:
-        setComm(COMM_EDEFAULT);
+      case CfgPackage.FIELD__COMMENT:
+        setComment(COMMENT_EDEFAULT);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((EObject)null);
@@ -345,8 +345,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD__COMM:
-        return COMM_EDEFAULT == null ? comm != null : !COMM_EDEFAULT.equals(comm);
+      case CfgPackage.FIELD__COMMENT:
+        return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
       case CfgPackage.FIELD__TYPE:
         return type != null;
       case CfgPackage.FIELD__FIELD_NAME:
@@ -368,8 +368,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (comm: ");
-    result.append(comm);
+    result.append(" (comment: ");
+    result.append(comment);
     result.append(", fieldName: ");
     result.append(fieldName);
     result.append(", nodePath: ");

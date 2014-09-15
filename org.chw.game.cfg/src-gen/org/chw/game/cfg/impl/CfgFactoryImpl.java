@@ -77,6 +77,7 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.LIST_TYPE: return createListType();
       case CfgPackage.HASH_TYPE: return createHashType();
       case CfgPackage.PARAM: return createParam();
+      case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -179,6 +180,17 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     ParamImpl param = new ParamImpl();
     return param;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public OtherComent createOtherComent()
+  {
+    OtherComentImpl otherComent = new OtherComentImpl();
+    return otherComent;
   }
 
   /**

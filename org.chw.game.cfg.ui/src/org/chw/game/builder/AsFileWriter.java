@@ -279,7 +279,31 @@ public class AsFileWriter
 		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tpublic function readInt():int\n", typeName));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn _bytes.readInt();\n"));
+		sb.append(String.format("\t\t\tvar low:uint=0;\n"));
+		sb.append(String.format("\t\t\t\n"));
+		sb.append(String.format("\t\t\tvar byte:uint=0;\n"));
+		sb.append(String.format("\t\t\t\n"));
+		sb.append(String.format("\t\t\tvar i:int=0;\n"));
+		sb.append(String.format("\t\t\tvar left:int=0;\n"));
+		sb.append(String.format("\t\t\twhile(i<5)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tbyte=_bytes.readUnsignedByte();\n"));
+		sb.append(String.format("\t\t\t\tlow|=(byte&0x7F)<<left;\n"));
+		sb.append(String.format("\t\t\t\tif(byte<0x80)\n"));
+		sb.append(String.format("\t\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\t\treturn low;\n"));
+		sb.append(String.format("\t\t\t\t}\n"));
+		sb.append(String.format("\t\t\t\t\n"));
+		sb.append(String.format("\t\t\t\ti++;\n"));
+		sb.append(String.format("\t\t\t\tleft+=7;\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\t\n"));
+		sb.append(String.format("\t\t\twhile(byte>=0x80)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tbyte=_bytes.readUnsignedByte();\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\t\n"));
+		sb.append(String.format("\t\t\treturn low;\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
@@ -432,7 +456,7 @@ public class AsFileWriter
 		sb.append(String.format("\t\t\t\tvar pageBegins:Vector.<int>=_pageBeginLists[flagIndex];\n"));
 		sb.append(String.format("\t\t\t\n"));
 		sb.append(String.format("\t\t\t\tvar bytes:ByteStream=getBytes();\n"));
-		sb.append(String.format("\t\t\t\tvar pageIndex:int=Math.floor(index/pageSize);\n"));
+		sb.append(String.format("\t\t\t\tvar pageIndex:int=Math.floor((index-1)/pageSize);\n"));
 		sb.append(String.format("\t\t\t\tvar from:int=pageIndex*pageSize;\n"));
 		sb.append(String.format("\t\t\t\tvar to:int=Math.min(from+pageSize,totalCount);\n"));
 		sb.append(String.format("\t\t\t\t\n"));
@@ -598,7 +622,7 @@ public class AsFileWriter
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
 
-		sb.append(String.format("\timport %s.*;\n", corePack));
+		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
 		sb.append(String.format("\tinternal class %s\n", typeName));
@@ -673,8 +697,8 @@ public class AsFileWriter
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
 
-		sb.append(String.format("\timport %s.*;\n", corePack));
-		sb.append(String.format("\timport flash.utils.Dictionary;\n", corePack));
+		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
+		sb.append(String.format("\timport flash.utils.Dictionary;\n"));
 		sb.append(String.format("\t\n"));
 
 		sb.append(String.format("\t/**\n"));
@@ -806,7 +830,7 @@ public class AsFileWriter
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
 
-		sb.append(String.format("\timport %s.*;\n", corePack));
+		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
 		if (type.getComment() != null)
@@ -936,7 +960,7 @@ public class AsFileWriter
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
 
-		sb.append(String.format("\timport %s.*;\n", corePack));
+		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
 		if (type.getComment() != null)

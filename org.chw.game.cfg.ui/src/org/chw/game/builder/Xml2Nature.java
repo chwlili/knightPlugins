@@ -21,6 +21,8 @@ public class Xml2Nature implements IProjectNature
 
 	public static final QualifiedName CODE_PACKAGE_NAME = new QualifiedName("org.chw.game.cfg.ui", "codePackName");
 
+	public static final QualifiedName FILE_PACKAGE_NAME = new QualifiedName("org.chw.game.cfg.ui", "filePackName");
+
 	private IProject project;
 
 	public void configure() throws CoreException

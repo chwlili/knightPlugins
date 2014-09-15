@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Field#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.Field#getType <em>Type</em>}</li>
  *   <li>{@link org.chw.game.cfg.Field#getFieldName <em>Field Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.Field#getNodePath <em>Node Path</em>}</li>
@@ -30,30 +30,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Field extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Comm</b></em>' attribute.
+   * Returns the value of the '<em><b>Comment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Comm</em>' attribute isn't clear,
+   * If the meaning of the '<em>Comment</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Comm</em>' attribute.
-   * @see #setComm(String)
-   * @see org.chw.game.cfg.CfgPackage#getField_Comm()
+   * @return the value of the '<em>Comment</em>' attribute.
+   * @see #setComment(String)
+   * @see org.chw.game.cfg.CfgPackage#getField_Comment()
    * @model
    * @generated
    */
-  String getComm();
+  String getComment();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.Field#getComm <em>Comm</em>}' attribute.
+   * Sets the value of the '{@link org.chw.game.cfg.Field#getComment <em>Comment</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Comm</em>' attribute.
-   * @see #getComm()
+   * @param value the new value of the '<em>Comment</em>' attribute.
+   * @see #getComment()
    * @generated
    */
-  void setComm(String value);
+  void setComment(String value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' containment reference.

@@ -1,6 +1,7 @@
 package org.chw.game.cfg.ui.properties;
 
 import org.chw.game.builder.Xml2Nature;
+import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -28,7 +29,8 @@ public class OutputOptionPage extends PropertyPage
 	private Composite composite_2;
 	private Text topPackField;
 	private Text corePackField;
-	private Text codePakField;
+	private Text codePackField;
+	private Text filePackField;
 
 	/**
 	 * Constructor for SamplePropertyPage.
@@ -58,7 +60,10 @@ public class OutputOptionPage extends PropertyPage
 	private void createDefaultComposite(Composite parent)
 	{
 		Group group = new Group(composite_2, SWT.NONE);
-		group.setLayout(new GridLayout(2, false));
+		GridLayout gl_group = new GridLayout(2, false);
+		gl_group.marginBottom = 10;
+		gl_group.marginWidth = 10;
+		group.setLayout(gl_group);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		group.setText(" \u4EE3\u7801\u751F\u6210 ");
 
@@ -83,27 +88,40 @@ public class OutputOptionPage extends PropertyPage
 		codePackLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		codePackLabel.setText("\u4EE3\u7801\u5305\uFF1A");
 
-		codePakField = new Text(group, SWT.BORDER);
-		codePakField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		codePackField = new Text(group, SWT.BORDER);
+		codePackField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group group_1 = new Group(composite_2, SWT.NONE);
+		GridLayout gl_group_1 = new GridLayout(2, false);
+		gl_group_1.marginBottom = 10;
+		gl_group_1.marginWidth = 10;
+		group_1.setLayout(gl_group_1);
 		GridData gd_group_1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_group_1.verticalIndent = 10;
 		group_1.setLayoutData(gd_group_1);
 		group_1.setText(" \u914D\u7F6E\u8F93\u51FA ");
+
+		Label filePackLabel = new Label(group_1, SWT.NONE);
+		filePackLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		filePackLabel.setText("\u8F93\u51FA\u5230\uFF1A");
+
+		filePackField = new Text(group_1, SWT.BORDER);
+		filePackField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	}
 
 	private void initValues()
 	{
 		topPackField.setText("");
-		corePackField.setText("core");
-		codePakField.setText("code");
+		corePackField.setText("base");
+		codePackField.setText("code");
+		filePackField.setText("files");
 
 		try
 		{
 			String topPackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
 			String corePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
 			String codePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+			String filePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 
 			if (topPackName != null)
 			{
@@ -117,7 +135,12 @@ public class OutputOptionPage extends PropertyPage
 
 			if (codePackName != null)
 			{
-				codePakField.setText(codePackName);
+				codePackField.setText(codePackName);
+			}
+
+			if (filePackName != null)
+			{
+				filePackField.setText(filePackName);
 			}
 		}
 		catch (CoreException e)
@@ -129,8 +152,9 @@ public class OutputOptionPage extends PropertyPage
 	{
 		super.performDefaults();
 		topPackField.setText("");
-		corePackField.setText("core");
-		codePakField.setText("code");
+		corePackField.setText("base");
+		codePackField.setText("code");
+		filePackField.setText("files");
 	}
 
 	public boolean performOk()
@@ -158,11 +182,18 @@ public class OutputOptionPage extends PropertyPage
 				codePack = "";
 			}
 
-			if (!topPack.equals(topPackField.getText()) || !corePack.equals(corePackField.getText()) || !codePack.equals(codePakField.getText()))
+			String filePack = resource.getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
+			if (filePack == null)
+			{
+				filePack = "";
+			}
+
+			if (!topPack.equals(topPackField.getText()) || !corePack.equals(corePackField.getText()) || !codePack.equals(codePackField.getText()) || !filePack.equals(filePackField.getText()))
 			{
 				resource.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, topPackField.getText());
 				resource.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, corePackField.getText());
-				resource.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, codePakField.getText());
+				resource.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, codePackField.getText());
+				resource.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, filePackField.getText());
 
 				shell.getDisplay().timerExec(50, new Runnable()
 				{
