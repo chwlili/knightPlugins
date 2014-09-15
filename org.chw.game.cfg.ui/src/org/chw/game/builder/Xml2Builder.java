@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.zip.Deflater;
@@ -27,6 +28,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
@@ -129,7 +132,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 				{
 					System.out.println("自动构建");
 				}
-				incrementalBuild();
+				incrementalBuild(monitor);
 			}
 		}
 		return null;
@@ -137,10 +140,65 @@ public class Xml2Builder extends IncrementalProjectBuilder
 
 	/**
 	 * 增量构建
+	 * 
+	 * @throws CoreException
+	 * @throws IOException
 	 */
-	private void incrementalBuild()
+	private void incrementalBuild(IProgressMonitor monitor) throws CoreException, IOException
 	{
+		String cfgDir = getProject().getPersistentProperty(Xml2Nature.CFG_DIR);
+		String xmlDir = getProject().getPersistentProperty(Xml2Nature.XML_DIR);
 
+		IFolder cfgFolder = getProject().getFolder(cfgDir);
+		IFolder xmlFolder = getProject().getFolder(xmlDir);
+
+		final HashMap<String, IFile> cfgDeltaMap = new HashMap<String, IFile>();
+		final HashMap<String, IFile> xmlDeltaMap = new HashMap<String, IFile>();
+
+		final String cfgFolderURL = cfgFolder.getProjectRelativePath().toString();
+		final String xmlFolderURL = xmlFolder.getProjectRelativePath().toString();
+
+		getDelta(getProject()).accept(new IResourceDeltaVisitor()
+		{
+			@Override
+			public boolean visit(IResourceDelta delta) throws CoreException
+			{
+				IResource resource = delta.getResource();
+				if (resource instanceof IFolder)
+				{
+					return true;
+				}
+
+				if (resource instanceof IFile)
+				{
+					IFile file = (IFile) resource;
+					String fileURL = file.getProjectRelativePath().toString();
+					if (fileURL.indexOf(cfgFolderURL) == 0 && file.getName().endsWith(".xml2"))
+					{
+						cfgDeltaMap.put(fileURL.substring(cfgFolderURL.length()), file);
+					}
+					else if (fileURL.indexOf(xmlFolderURL) == 0 && file.getName().endsWith(".xml"))
+					{
+						xmlDeltaMap.put(fileURL.substring(xmlFolderURL.length()), file);
+					}
+				}
+				return false;
+			}
+		});
+
+		//
+		HashMap<IFile, TypeDef[]> allTypes = getAllTypeDef();
+
+		// 生成自定义类型
+		String topPackName = getProject().getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
+		String corePackName = getProject().getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
+		String codePackName = getProject().getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+		String filePackName = getProject().getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
+		for (TypeDef[] types : allTypes.values())
+		{
+			AsFileWriter writer = new AsFileWriter(getSrcFolder(), topPackName, corePackName, codePackName, types);
+			writer.writeAllType();
+		}
 	}
 
 	/**
@@ -553,4 +611,135 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		compresser.end();
 		return output;
 	}
+
+	/**
+	 * 解析有的类型定义
+	 * 
+	 * @return
+	 * @throws CoreException
+	 * @throws IOException
+	 */
+	private HashMap<IFile, TypeDef[]> getAllTypeDef() throws CoreException, IOException
+	{
+		HashMap<IFile, TypeDef[]> file2types = new HashMap<IFile, TypeDef[]>();
+
+		final String cfgDir = getProject().getPersistentProperty(Xml2Nature.CFG_DIR);
+
+		final ArrayList<IFile> cfgFiles = new ArrayList<IFile>();
+
+		// 找出所有的.xml2文件
+		IFolder cfgFolder = (IFolder) getProject().findMember(cfgDir);
+		cfgFolder.accept(new IResourceVisitor()
+		{
+			@Override
+			public boolean visit(IResource resource) throws CoreException
+			{
+				if (resource instanceof IFile)
+				{
+					IFile file = (IFile) resource;
+					if (file.getName().endsWith(".xml2"))
+					{
+						cfgFiles.add(file);
+					}
+					return false;
+				}
+				return true;
+			}
+		});
+
+		// 列举所有xml2文件，并尝试寻找对应的xml文件，如果找到则进行转换。
+		for (IFile cfgFile : cfgFiles)
+		{
+			ArrayList<TypeDef> allTypes = new ArrayList<TypeDef>();
+
+			URI emfURI = URI.createPlatformResourceURI(cfgFile.getFullPath().toString(), true);
+			Resource emfFile = factory.createResource(emfURI);
+			emfFile.load(cfgFile.getContents(), null);
+
+			XML2 xml2 = (XML2) emfFile.getContents().get(0);
+			if (xml2 != null)
+			{
+				String packName = "";
+				if (xml2.getPack() != null && xml2.getPack().getPack() != null)
+				{
+					packName = xml2.getPack().getPack();
+				}
+
+				for (Type type : xml2.getTypes())
+				{
+					String typeComm = type.getComment();
+					String typeName = type.getName();
+					String inputPath = "";
+					String xpath = "";
+
+					Input input = type.getInput();
+					if (input != null)
+					{
+						inputPath = input.getFilePath();
+						xpath = input.getNodePath();
+					}
+
+					TypeDef typeDef = new TypeDef(inputPath, xpath, packName, typeName, typeComm);
+					allTypes.add(typeDef);
+
+					for (Field field : type.getFields())
+					{
+						String fieldName = field.getFieldName();
+						String fieldComm = field.getComment();
+						String fieldXPath = field.getNodePath();
+						String fieldType = "";
+						boolean fieldList = false;
+						String[] indexList = null;
+
+						if (field.getType() instanceof ListType)
+						{
+							ListType listType = (ListType) field.getType();
+							fieldType = listType.getType();
+							fieldList = true;
+						}
+						else if (field.getType() instanceof HashType)
+						{
+							HashType hashType = (HashType) field.getType();
+							fieldType = hashType.getType();
+							fieldList = true;
+
+							ArrayList<String> indexKeys = new ArrayList<String>();
+							for (Param param : hashType.getParams())
+							{
+								indexKeys.add(param.getParamName());
+							}
+							indexList = indexKeys.toArray(new String[indexKeys.size()]);
+						}
+						else if (field.getType() instanceof NativeType)
+						{
+							NativeType nativeType = (NativeType) field.getType();
+							fieldType = nativeType.getType();
+							fieldList = false;
+						}
+
+						if (fieldType != "")
+						{
+							typeDef.fields.add(new TypeFieldDef(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList));
+						}
+					}
+				}
+			}
+
+			// 排序所有类型列表
+			TypeDef[] allTypeArray = allTypes.toArray(new TypeDef[] {});
+			Arrays.sort(allTypeArray, new Comparator<TypeDef>()
+			{
+				@Override
+				public int compare(TypeDef o1, TypeDef o2)
+				{
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+
+			file2types.put(cfgFile, allTypeArray);
+		}
+
+		return file2types;
+	}
+
 }
