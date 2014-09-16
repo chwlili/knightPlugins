@@ -2,6 +2,7 @@ package org.chw.game.builder;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,102 +12,83 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 
-public class AsFileWriter
+public class UnitCodeBuilder
 {
-	private IFolder folder;
 	private TypeDef[] types;
-
-	private String currPack;
 	private String corePack;
+	private String currPack;
+
+	private IFolder folder;
 
 	private HashMap<String, Integer> typeIDMap;
 
 	private HashMap<String, String> listTypeNameTable = new HashMap<String, String>();
 	private HashMap<String, HashMap<String[], String>> mapTypeNameTable = new HashMap<String, HashMap<String[], String>>();
 
-	/**
-	 * 构造函数
-	 * 
-	 * @param folder
-	 * @param topPackName
-	 * @param types
-	 */
-	public AsFileWriter(IFolder folder, String topPackName, String corePackName, String codePackName, TypeDef[] types)
+	private ArrayList<IFile> writedFiles = new ArrayList<IFile>();
+
+	public UnitCodeBuilder(TypeDef[] types, String corePack, String currPack)
 	{
-		this.folder = folder;
 		this.types = types;
-
-		if (topPackName == null)
-		{
-			topPackName = "";
-		}
-		if (corePackName == null)
-		{
-			corePackName = "";
-		}
-		if (codePackName == null)
-		{
-			codePackName = "";
-		}
-
-		if (!topPackName.isEmpty() && !corePackName.isEmpty())
-		{
-			corePackName = topPackName + "." + corePackName;
-		}
-		else if (corePackName.isEmpty())
-		{
-			corePackName = topPackName;
-		}
-
-		if (!topPackName.isEmpty() && !codePackName.isEmpty())
-		{
-			codePackName = topPackName + "." + codePackName;
-		}
-		else if (codePackName.isEmpty())
-		{
-			codePackName = topPackName;
-		}
-
-		if (types.length > 0)
-		{
-			String typePackName = types[0].getPackName();
-			if (typePackName == null)
-			{
-				typePackName = "";
-			}
-
-			if (!codePackName.isEmpty() && !typePackName.isEmpty())
-			{
-				codePackName = codePackName + "." + typePackName;
-			}
-			else if (codePackName.isEmpty())
-			{
-				codePackName = typePackName;
-			}
-		}
-
-		this.corePack = corePackName;
-		this.currPack = codePackName;
+		this.corePack = corePack;
+		this.currPack = currPack;
 	}
 
+	/**
+	 * 获取为指定类型分配的ID
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public int getTypeID(String type)
 	{
 		return typeIDMap.get(type);
 	}
 
+	/**
+	 * 获取列表类型的名称
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public String getListTypeName(String type)
 	{
 		return listTypeNameTable.get(type);
 	}
 
+	/**
+	 * 获取字典类型的名称
+	 * 
+	 * @param type
+	 * @param keys
+	 * @return
+	 */
 	public String getMapTypeName(String type, String[] keys)
 	{
 		return mapTypeNameTable.get(type).get(keys);
 	}
 
-	// 输出所有类型
-	public void writeAllType() throws UnsupportedEncodingException, CoreException
+	/**
+	 * 获取已经输出的文件
+	 * 
+	 * @return
+	 */
+	public IFile[] getWritedFiles()
 	{
+		return writedFiles.toArray(new IFile[] {});
+	}
+
+	/**
+	 * 构建到指定目录
+	 * 
+	 * @param folder
+	 * @throws UnsupportedEncodingException
+	 * @throws CoreException
+	 */
+	public void buildTo(IFolder folder) throws UnsupportedEncodingException, CoreException
+	{
+		this.folder = folder;
+
 		HashMap<String, TypeDef> name2Type = new HashMap<String, TypeDef>();
 
 		HashSet<String> listType1 = new HashSet<String>();
@@ -115,23 +97,25 @@ public class AsFileWriter
 		HashSet<String> mapType1 = new HashSet<String>();
 		HashMap<String, HashSet<String[]>> mapType2 = new HashMap<String, HashSet<String[]>>();
 
+		// 确定类型ID
 		typeIDMap = new HashMap<String, Integer>();
 		typeIDMap.put("int", 1);
 		typeIDMap.put("uint", 2);
 		typeIDMap.put("Boolean", 3);
 		typeIDMap.put("Number", 4);
 		typeIDMap.put("String", 5);
-
 		for (int i = 0; i < types.length; i++)
 		{
 			typeIDMap.put(types[i].getName(), i + 10);
 		}
 
+		// 建立名称到类型的映射
 		for (TypeDef type : types)
 		{
 			name2Type.put(type.getName(), type);
 		}
 
+		// 计算需要列表类型和字典类型
 		for (TypeDef type : types)
 		{
 			for (int i = 0; i < type.getFieldLength(); i++)
@@ -169,21 +153,25 @@ public class AsFileWriter
 			}
 		}
 
-		// 字节流类、数据池类
+		// 字节流类
 		writeByteStreamClass();
+
+		// 数据池类
 		writeDataPoolClass();
 
-		// 所有列表类型
+		// 基础列表类
 		for (String type : listType1)
 		{
 			writeListType(type);
 		}
+
+		// 自定义列表类
 		for (TypeDef type : listTypes2)
 		{
 			writeListType(type);
 		}
 
-		// 所有字典类型
+		// 自定义字典类
 		for (String type : mapType2.keySet())
 		{
 			String[][] keys = mapType2.get(type).toArray(new String[][] {});
@@ -217,13 +205,13 @@ public class AsFileWriter
 			}
 		}
 
-		// 输出所有类
+		// 自定义类
 		for (TypeDef type : types)
 		{
 			writeTypeClass(type);
 		}
 
-		// 输出所有的入口类型
+		// 入口类
 		for (TypeDef type : types)
 		{
 			if (type.getFilePath() != null && type.getFilePath().isEmpty() == false)
@@ -233,6 +221,12 @@ public class AsFileWriter
 		}
 	}
 
+	/**
+	 * 输出字节流类
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws CoreException
+	 */
 	private void writeByteStreamClass() throws UnsupportedEncodingException, CoreException
 	{
 		StringBuilder sb = new StringBuilder();
@@ -331,7 +325,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出核心类文件
+	 * 输出数据池类
 	 * 
 	 * @param folder
 	 * @param packName
@@ -543,7 +537,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出原生列表类型
+	 * 输出原生列表类
 	 * 
 	 * @param folder
 	 * @param packName
@@ -605,7 +599,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出自定义列表类型
+	 * 输出自定义列表类
 	 * 
 	 * @param folder
 	 * @param packName
@@ -670,7 +664,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出字典类型
+	 * 输出自定义字典类
 	 * 
 	 * @param folder
 	 * @param packName
@@ -816,7 +810,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出自定义类型
+	 * 输出自定义类
 	 * 
 	 * @param types
 	 * @param type
@@ -940,7 +934,7 @@ public class AsFileWriter
 	}
 
 	/**
-	 * 输出数据池类型
+	 * 输出入口类
 	 * 
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
@@ -1074,6 +1068,8 @@ public class AsFileWriter
 		}
 
 		file.setDerived(true, null);
+
+		writedFiles.add(file);
 	}
 
 	/**

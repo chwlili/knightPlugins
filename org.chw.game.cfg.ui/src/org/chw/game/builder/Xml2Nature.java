@@ -23,6 +23,14 @@ public class Xml2Nature implements IProjectNature
 
 	public static final QualifiedName FILE_PACKAGE_NAME = new QualifiedName("org.chw.game.cfg.ui", "filePackName");
 
+	public static final String DEFAULT_TOP_PACK = "org.cfg.game";
+
+	public static final String DEFAULT_CORE_PACK = "base";
+
+	public static final String DEFAULT_CODE_PACK = "code";
+
+	public static final String DEFAULT_FILE_PACK = "files";
+
 	private IProject project;
 
 	public void configure() throws CoreException

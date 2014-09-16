@@ -1,7 +1,6 @@
 package org.chw.game.cfg.ui.properties;
 
 import org.chw.game.builder.Xml2Nature;
-import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -111,10 +110,10 @@ public class OutputOptionPage extends PropertyPage
 
 	private void initValues()
 	{
-		topPackField.setText("");
-		corePackField.setText("base");
-		codePackField.setText("code");
-		filePackField.setText("files");
+		topPackField.setText(Xml2Nature.DEFAULT_TOP_PACK);
+		corePackField.setText(Xml2Nature.DEFAULT_CORE_PACK);
+		codePackField.setText(Xml2Nature.DEFAULT_CODE_PACK);
+		filePackField.setText(Xml2Nature.DEFAULT_FILE_PACK);
 
 		try
 		{
@@ -151,10 +150,10 @@ public class OutputOptionPage extends PropertyPage
 	protected void performDefaults()
 	{
 		super.performDefaults();
-		topPackField.setText("");
-		corePackField.setText("base");
-		codePackField.setText("code");
-		filePackField.setText("files");
+		topPackField.setText(Xml2Nature.DEFAULT_TOP_PACK);
+		corePackField.setText(Xml2Nature.DEFAULT_CORE_PACK);
+		codePackField.setText(Xml2Nature.DEFAULT_CODE_PACK);
+		filePackField.setText(Xml2Nature.DEFAULT_FILE_PACK);
 	}
 
 	public boolean performOk()
@@ -167,25 +166,25 @@ public class OutputOptionPage extends PropertyPage
 			String topPack = resource.getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
 			if (topPack == null)
 			{
-				topPack = "";
+				topPack = Xml2Nature.DEFAULT_TOP_PACK;
 			}
 
 			String corePack = resource.getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
 			if (corePack == null)
 			{
-				corePack = "";
+				corePack = Xml2Nature.DEFAULT_CORE_PACK;
 			}
 
 			String codePack = resource.getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
 			if (codePack == null)
 			{
-				codePack = "";
+				codePack = Xml2Nature.DEFAULT_CODE_PACK;
 			}
 
 			String filePack = resource.getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 			if (filePack == null)
 			{
-				filePack = "";
+				filePack = Xml2Nature.DEFAULT_FILE_PACK;
 			}
 
 			if (!topPack.equals(topPackField.getText()) || !corePack.equals(corePackField.getText()) || !codePack.equals(codePackField.getText()) || !filePack.equals(filePackField.getText()))

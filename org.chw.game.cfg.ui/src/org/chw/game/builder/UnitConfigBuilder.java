@@ -1,18 +1,33 @@
 package org.chw.game.builder;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.zip.Deflater;
 
-class CfgFileWriter
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.runtime.CoreException;
+import org.xml.sax.SAXException;
+
+public class UnitConfigBuilder
 {
-	private Instance root;
+	private IFile file;
+	private TypeDef[] types;
+	private TypeDef type;
 
-	private AsFileWriter classWriter;
+	private UnitCodeBuilder classWriter;
+
+	private Instance root;
 
 	private int nextID = 1;
 
@@ -33,16 +48,30 @@ class CfgFileWriter
 	private HashMap<String, HashSet<Integer>> typeName_ids = new HashMap<String, HashSet<Integer>>();
 	private HashMap<String, Integer[]> typeName_idArray = new HashMap<String, Integer[]>();
 
+	private ArrayList<IFile> writedFiles = new ArrayList<IFile>();
+
 	/**
 	 * 构造函数
 	 * 
 	 * @param instance
 	 * @throws IOException
 	 */
-	public CfgFileWriter(Instance instance, AsFileWriter writer)
+	public UnitConfigBuilder(IFile file, TypeDef[] types, TypeDef type, UnitCodeBuilder writer)
 	{
-		root = instance;
-		classWriter = writer;
+		this.file = file;
+		this.types = types;
+		this.type = type;
+		this.classWriter = writer;
+	}
+
+	/**
+	 * 获取已经输出的文件
+	 * 
+	 * @return
+	 */
+	public IFile[] getWritedFiles()
+	{
+		return writedFiles.toArray(new IFile[] {});
 	}
 
 	/**
@@ -50,46 +79,107 @@ class CfgFileWriter
 	 * 
 	 * @return
 	 * @throws IOException
+	 * @throws CoreException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
 	 */
-	public byte[] toBytes() throws IOException
+	public void buildTo(IFolder folder, String filePackName, String fileName, boolean changed) throws IOException, CoreException, SAXException, ParserConfigurationException
 	{
-		parseInstance(root);
-
-		for (String typeName : typeName_ids.keySet())
+		// 确保输出目录已存在
+		if (filePackName == null)
 		{
-			HashSet<Integer> ids = typeName_ids.get(typeName);
-			Integer[] idArray = ids.toArray(new Integer[ids.size()]);
-			Arrays.sort(idArray, new Comparator<Integer>()
+			filePackName = "";
+		}
+		String[] segments = filePackName.split("\\\\|/|\\.");
+		for (String segment : segments)
+		{
+			if (!segment.isEmpty())
 			{
-				@Override
-				public int compare(Integer o1, Integer o2)
+				folder = folder.getFolder(segment);
+				if (!folder.exists())
 				{
-					o1 = id_refCount.get(o1);
-					o2 = id_refCount.get(o2);
-					if (o1 > o2)
-					{
-						return -1;
-					}
-					else if (o1 < o2)
-					{
-						return 1;
-					}
-					return 0;
+					folder.create(true, true, null);
 				}
-			});
-
-			for (int i = 0; i < idArray.length; i++)
-			{
-				int id = idArray[i];
-				id_order.put(id, i + 1);
 			}
-
-			typeName_idArray.put(typeName, idArray);
 		}
 
-		System.out.println(toDebugString());
+		// 确定输出文件名
+		int index = fileName.indexOf(".");
+		if (index != -1)
+		{
+			fileName = fileName.substring(0, index);
+		}
+		fileName = fileName + ".cfg";
 
-		return getBytes();
+		// 输出
+		writedFiles = new ArrayList<IFile>();
+		IFile file = folder.getFile(fileName);
+		if (changed || !file.exists())
+		{
+			// 转换成字节
+			byte[] bytes = getBytes();
+
+			bytes = compress(bytes);
+
+			if (!file.exists())
+			{
+				file.create(new ByteArrayInputStream(bytes), true, null);
+			}
+			else
+			{
+				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
+			}
+			file.setDerived(true, null);
+		}
+		writedFiles.add(file);
+	}
+
+	/**
+	 * 压缩
+	 * 
+	 * @param data
+	 *            待压缩数据
+	 * @return byte[] 压缩后的数据
+	 */
+	private byte[] compress(byte[] data)
+	{
+		byte[] output = new byte[0];
+
+		Deflater compresser = new Deflater();
+
+		compresser.reset();
+		compresser.setInput(data);
+		compresser.finish();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
+
+		try
+		{
+			byte[] buf = new byte[1024];
+			while (!compresser.finished())
+			{
+				int i = compresser.deflate(buf);
+				bos.write(buf, 0, i);
+			}
+			output = bos.toByteArray();
+		}
+		catch (Exception e)
+		{
+			output = data;
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				bos.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		compresser.end();
+		return output;
 	}
 
 	/**
@@ -147,6 +237,39 @@ class CfgFileWriter
 					parseInstance((Instance) field.getValue());
 				}
 			}
+		}
+
+		// 按引用次数排序ID
+		for (String typeName : typeName_ids.keySet())
+		{
+			HashSet<Integer> ids = typeName_ids.get(typeName);
+			Integer[] idArray = ids.toArray(new Integer[ids.size()]);
+			Arrays.sort(idArray, new Comparator<Integer>()
+			{
+				@Override
+				public int compare(Integer o1, Integer o2)
+				{
+					o1 = id_refCount.get(o1);
+					o2 = id_refCount.get(o2);
+					if (o1 > o2)
+					{
+						return -1;
+					}
+					else if (o1 < o2)
+					{
+						return 1;
+					}
+					return 0;
+				}
+			});
+
+			for (int i = 0; i < idArray.length; i++)
+			{
+				int id = idArray[i];
+				id_order.put(id, i + 1);
+			}
+
+			typeName_idArray.put(typeName, idArray);
 		}
 	}
 
@@ -504,9 +627,19 @@ class CfgFileWriter
 	 * 保存
 	 * 
 	 * @throws IOException
+	 * @throws CoreException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
 	 */
-	private byte[] getBytes() throws IOException
+	private byte[] getBytes() throws IOException, SAXException, ParserConfigurationException, CoreException
 	{
+		root = UnitInstanceBuilder.build(file.getContents(), types, type);
+
+		parseInstance(root);
+
+		// debugs
+		System.out.println(toDebugString());
+
 		ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
 		CfgOutputStream dataOutput = new CfgOutputStream(byteArrayOutput);
 
@@ -758,5 +891,36 @@ class CfgFileWriter
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	/**
+	 * 配置输出流
+	 * 
+	 * @author ds
+	 * 
+	 */
+	private static class CfgOutputStream extends DataOutputStream
+	{
+		public CfgOutputStream(OutputStream arg0)
+		{
+			super(arg0);
+		}
+
+		public void writeVarInt(int value) throws IOException
+		{
+			while (true)
+			{
+				if ((value & ~0x7F) == 0)
+				{
+					writeByte(value);
+					return;
+				}
+				else
+				{
+					writeByte((value & 0x7F) | 0x80);
+					value >>>= 7;
+				}
+			}
+		}
 	}
 }

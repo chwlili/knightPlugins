@@ -154,10 +154,10 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						project.setDefaultCharset("UTF-8", new SubProgressMonitor(monitor, 1000)); //$NON-NLS-1$
 						project.setPersistentProperty(Xml2Nature.CFG_DIR, cfg_proto_file.getName());
 						project.setPersistentProperty(Xml2Nature.XML_DIR, cfg_xml_file.getName());
-						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, "");
-						project.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, "base");
-						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, "code");
-						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, "files");
+						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, Xml2Nature.DEFAULT_TOP_PACK);
+						project.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, Xml2Nature.DEFAULT_CORE_PACK);
+						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, Xml2Nature.DEFAULT_CODE_PACK);
+						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, Xml2Nature.DEFAULT_FILE_PACK);
 					}
 					catch (CoreException e)
 					{

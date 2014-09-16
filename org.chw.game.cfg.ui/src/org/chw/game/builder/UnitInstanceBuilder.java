@@ -14,7 +14,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class FileDef
+public class UnitInstanceBuilder
 {
 	private static String xpath;
 	private static InstanceField root;
