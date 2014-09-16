@@ -855,28 +855,47 @@ public class UnitConfigBuilder
 			sb.append(typeName + ":");
 			for (int id : typeName_idArray.get(typeName))
 			{
-				TypeFieldDef field = id_field.get(id);
 				Object value = id_value.get(id);
-				sb.append(field.name);
-				sb.append(":");
-				if (field.repeted)
+				if (value instanceof ArrayList)
 				{
 					sb.append("[");
-					if (value != null)
+					@SuppressWarnings("rawtypes")
+					ArrayList list = (ArrayList) value;
+					for (Object item : list)
 					{
-						@SuppressWarnings("rawtypes")
-						ArrayList list = (ArrayList) value;
-						for (Object item : list)
-						{
-							sb.append(getOrder(field, item));
-							sb.append(",");
-						}
+						sb.append(getOrder(id_field.get(id), item));
+						sb.append(",");
 					}
 					sb.append("]");
 				}
-				else
+				else if (value instanceof Instance)
 				{
-					sb.append(getOrder(field, value));
+					sb.append("{");
+					Instance instance = (Instance) value;
+					for (InstanceField field : instance.getFields())
+					{
+						sb.append(field.getDef().name);
+						sb.append(":");
+						Object val = field.getValue();
+						if(val instanceof ArrayList)
+						{
+							
+						}
+						else if (val instanceof Instance)
+						{
+							sb.append(getOrder(field.getDef(), val));
+						}
+						else if (val != null)
+						{
+							sb.append(getOrder(field.getDef(), val));
+						}
+						sb.append(",");
+					}
+					sb.append("}");
+				}
+				else if (value != null)
+				{
+					sb.append(value);
 				}
 				sb.append(",");
 			}
