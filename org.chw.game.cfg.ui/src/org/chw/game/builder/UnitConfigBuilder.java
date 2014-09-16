@@ -118,6 +118,10 @@ public class UnitConfigBuilder
 		{
 			// ×ª»»³É×Ö½Ú
 			byte[] bytes = getBytes();
+			if (bytes == null)
+			{
+				return;
+			}
 
 			bytes = compress(bytes);
 
@@ -578,10 +582,13 @@ public class UnitConfigBuilder
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.getValue();
-				for (Object item : list)
+				if (list != null)
 				{
-					sb.append(item);
-					sb.append(",");
+					for (Object item : list)
+					{
+						sb.append(item);
+						sb.append(",");
+					}
 				}
 				sb.append("]");
 			}
@@ -597,18 +604,24 @@ public class UnitConfigBuilder
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.getValue();
-				for (Object item : list)
+				if (list != null)
 				{
-					Instance instance = (Instance) item;
-					sb.append(hash(instance));
-					sb.append(",");
+					for (Object item : list)
+					{
+						Instance instance = (Instance) item;
+						sb.append(hash(instance));
+						sb.append(",");
+					}
 				}
 				sb.append("]");
 			}
 			else
 			{
 				Instance instance = (Instance) field.getValue();
-				sb.append(hash(instance));
+				if (instance != null)
+				{
+					sb.append(hash(instance));
+				}
 			}
 		}
 
@@ -634,6 +647,10 @@ public class UnitConfigBuilder
 	private byte[] getBytes() throws IOException, SAXException, ParserConfigurationException, CoreException
 	{
 		root = UnitInstanceBuilder.build(file.getContents(), types, type);
+		if (root == null)
+		{
+			return null;
+		}
 
 		parseInstance(root);
 
@@ -838,23 +855,28 @@ public class UnitConfigBuilder
 			sb.append(typeName + ":");
 			for (int id : typeName_idArray.get(typeName))
 			{
+				TypeFieldDef field = id_field.get(id);
 				Object value = id_value.get(id);
-				if (value instanceof Instance)
+				sb.append(field.name);
+				sb.append(":");
+				if (field.repeted)
 				{
-					sb.append("{");
-					Instance instance = (Instance) value;
-					for (InstanceField field : instance.getFields())
+					sb.append("[");
+					if (value != null)
 					{
-						sb.append(field.getDef().name);
-						sb.append(":");
-						sb.append(getOrder(field.getDef(), field.getValue()));
-						sb.append(",");
+						@SuppressWarnings("rawtypes")
+						ArrayList list = (ArrayList) value;
+						for (Object item : list)
+						{
+							sb.append(getOrder(field, item));
+							sb.append(",");
+						}
 					}
-					sb.append("}");
+					sb.append("]");
 				}
 				else
 				{
-					sb.append(value);
+					sb.append(getOrder(field, value));
 				}
 				sb.append(",");
 			}

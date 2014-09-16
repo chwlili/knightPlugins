@@ -442,7 +442,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\tpublic function getValue(id:int,index:int):*\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tvar pool:Dictionary=_pools[id];\n"));
-		sb.append(String.format("\t\t\tif(pool!=null && pool[index]==null)\n"));
+		sb.append(String.format("\t\t\tif(index>0 && pool!=null && pool[index]==null)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\tvar flagIndex:int=_id2Index[id];\n"));
 		sb.append(String.format("\t\t\t\tvar totalCount:int=_totalCounts[flagIndex];\n"));
@@ -619,7 +619,7 @@ public class UnitCodeBuilder
 		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
-		sb.append(String.format("\tinternal class %s\n", typeName));
+		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
 
 		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
@@ -704,7 +704,7 @@ public class UnitCodeBuilder
 		}
 		sb.append(String.format(")\n"));
 		sb.append(String.format("\t */\n"));
-		sb.append(String.format("\tinternal class %s\n", typeName));
+		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
 
 		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
@@ -831,7 +831,7 @@ public class UnitCodeBuilder
 		{
 			sb.append(String.format("%s", formatComment(type.getComment(), "\t")));
 		}
-		sb.append(String.format("\tinternal class %s\n", type.getName()));
+		sb.append(String.format("\tpublic class %s\n", type.getName()));
 		sb.append(String.format("\t{\n"));
 
 		// к╫сп╠Да©

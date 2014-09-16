@@ -66,6 +66,8 @@ public class UnitInstanceBuilder
 
 			stackFields.push(new ArrayList<InstanceField>());
 
+			ArrayList<InstanceField> selfFields = new ArrayList<InstanceField>();
+
 			ArrayList<InstanceField> fields = path2Field.get(xpath);
 			if (fields == null)
 			{
@@ -94,19 +96,41 @@ public class UnitInstanceBuilder
 
 				for (TypeFieldDef childFieldDef : model.fields)
 				{
-					String path = xpath + "/" + childFieldDef.xpath;
+					String fieldXPath = childFieldDef.xpath.trim();
+					if (fieldXPath.length() > 0)
+					{
+						while (fieldXPath.charAt(0) == '/' || fieldXPath.charAt(0) == '\\')
+						{
+							fieldXPath = fieldXPath.substring(1);
+						}
+					}
+					if (fieldXPath.isEmpty())
+					{
+						fieldXPath = ".";
+					}
+
+					boolean isSelf = fieldXPath.equals(".");
+
+					String path = isSelf ? xpath : xpath + "/" + childFieldDef.xpath;
 
 					InstanceField childField = new InstanceField(path, childFieldDef);
 
 					fieldValue.getFields().add(childField);
 
-					if (!path2Field.containsKey(path))
+					if (!isSelf)
 					{
-						path2Field.put(path, new ArrayList<InstanceField>());
-					}
-					path2Field.get(path).add(childField);
+						if (!path2Field.containsKey(path))
+						{
+							path2Field.put(path, new ArrayList<InstanceField>());
+						}
+						path2Field.get(path).add(childField);
 
-					stackFields.lastElement().add(childField);
+						stackFields.lastElement().add(childField);
+					}
+					else
+					{
+						selfFields.add(childField);
+					}
 				}
 
 				if (field.getDef().repeted)
@@ -123,6 +147,96 @@ public class UnitInstanceBuilder
 					field.setValue(fieldValue);
 				}
 			}
+
+			extendToAllSelf(selfFields);
+		}
+
+		private void extendToAllSelf(ArrayList<InstanceField> selfFields)
+		{
+			if (selfFields == null || selfFields.size() == 0)
+			{
+				return;
+			}
+
+			ArrayList<InstanceField> childs = new ArrayList<InstanceField>();
+
+			for (InstanceField field : selfFields)
+			{
+				String xpath = field.getXPath();
+
+				if (!field.getDef().isExtendType())
+				{
+					continue;
+				}
+
+				if (field.getValue() != null && !field.getDef().repeted)
+				{
+					continue;
+				}
+
+				TypeDef model = name2model.get(field.getDef().type);
+				if (model == null)
+				{
+					throw new Error("×Ö¶ÎÀàÐÍÎ´ÕÒµ½! (" + field.getDef().type + ")");
+				}
+
+				Instance fieldValue = new Instance(model);
+
+				for (TypeFieldDef childFieldDef : model.fields)
+				{
+					String fieldXPath = childFieldDef.xpath.trim();
+					if (fieldXPath.length() > 0)
+					{
+						while (fieldXPath.charAt(0) == '/' || fieldXPath.charAt(0) == '\\')
+						{
+							fieldXPath = fieldXPath.substring(1);
+						}
+					}
+					if (fieldXPath.isEmpty())
+					{
+						fieldXPath = ".";
+					}
+
+					boolean isSelf = fieldXPath.equals(".");
+
+					String path = isSelf ? xpath : xpath + "/" + childFieldDef.xpath;
+
+					InstanceField childField = new InstanceField(path, childFieldDef);
+
+					fieldValue.getFields().add(childField);
+
+					if (!isSelf)
+					{
+						if (!path2Field.containsKey(path))
+						{
+							path2Field.put(path, new ArrayList<InstanceField>());
+						}
+						path2Field.get(path).add(childField);
+
+						stackFields.lastElement().add(childField);
+					}
+					else
+					{
+						childs.add(childField);
+					}
+				}
+
+				if (field.getDef().repeted)
+				{
+					if (field.getValue() == null)
+					{
+						field.setValue(new ArrayList<Object>());
+					}
+
+					((List<Instance>) field.getValue()).add(fieldValue);
+				}
+				else
+				{
+					field.setValue(fieldValue);
+				}
+			}
+
+			extendToAllSelf(childs);
 		}
 
 		@SuppressWarnings("unchecked")
