@@ -16,48 +16,78 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class UnitInstanceBuilder
 {
-	private static String xpath;
-	private static InstanceField root;
-	private static Hashtable<String, TypeDef> name2model;
-	private static Hashtable<String, ArrayList<InstanceField>> path2Field;
-	private static Stack<ArrayList<InstanceField>> stackFields;
+	private ClassTable classTable;
+
+	private String xpath;
+
+	private Hashtable<String, ArrayList<InstanceField>> path2Field;
+	private Stack<ArrayList<InstanceField>> stackFields;
 
 	/**
-	 * 打开输入流
+	 * 构建Instance
+	 * 
+	 * @param classTable
+	 * @param stream
+	 * @return
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
+	public static Instance[] build(ClassTable classTable, InputStream stream) throws SAXException, IOException, ParserConfigurationException
+	{
+		return new UnitInstanceBuilder().exec(classTable, stream);
+	}
+
+	/**
+	 * 执行转换
 	 * 
 	 * @param stream
 	 * @throws SAXException
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 */
-	public static Instance build(InputStream stream, TypeDef[] allType, TypeDef mainType) throws SAXException, IOException, ParserConfigurationException
+	private Instance[] exec(ClassTable classTable, InputStream stream) throws SAXException, IOException, ParserConfigurationException
 	{
-		xpath = null;
-		root = null;
-		name2model = new Hashtable<String, TypeDef>();
-		path2Field = new Hashtable<String, ArrayList<InstanceField>>();
-		stackFields = new Stack<ArrayList<InstanceField>>();
+		this.classTable = classTable;
 
-		for (TypeDef type : allType)
+		this.xpath = null;
+		this.path2Field = new Hashtable<String, ArrayList<InstanceField>>();
+		this.stackFields = new Stack<ArrayList<InstanceField>>();
+
+		ArrayList<ClassField> fields = new ArrayList<ClassField>();
+		for (Class clazz : classTable.getAllMainClass())
 		{
-			name2model.put(type.getName(), type);
+			fields.add(new ClassField(clazz.xpath, clazz.name, clazz.comment, clazz.name));
 		}
 
-		if (mainType != null)
+		if (fields.size() > 0)
 		{
-			root = new InstanceField("", new TypeFieldDef(mainType.getXPath(), "root", "", mainType.getName()));
-			path2Field.put(root.getDef().xpath, new ArrayList<InstanceField>());
-			path2Field.get(root.getDef().xpath).add(root);
+			Instance instance = new Instance(new Class("", "", "", "", "", 0, fields.toArray(new ClassField[] {})));
+			for (ClassField field : instance.type.fields)
+			{
+				InstanceField instanceField = new InstanceField(field, "");
+				if(!path2Field.containsKey(instanceField.meta.xpath))
+				{
+					path2Field.put(instanceField.meta.xpath, new ArrayList<InstanceField>());
+				}
+				path2Field.get(instanceField.meta.xpath).add(instanceField);
+				instance.fields.add(instanceField);
+			}
 
 			SAXParserFactory.newInstance().newSAXParser().parse(stream, new MyHandler());
 
-			return (Instance) root.getValue();
+			ArrayList<Instance> result = new ArrayList<Instance>();
+			for (InstanceField field : instance.fields)
+			{
+				result.add((Instance) field.value);
+			}
+			return result.toArray(new Instance[] {});
 		}
 
-		return null;
+		return new Instance[] {};
 	}
 
-	private static class MyHandler extends DefaultHandler
+	private class MyHandler extends DefaultHandler
 	{
 		@SuppressWarnings("unchecked")
 		private void onEnterElement(String xpath)
@@ -76,25 +106,25 @@ public class UnitInstanceBuilder
 
 			for (InstanceField field : fields)
 			{
-				if (!field.getDef().isExtendType())
+				if (!field.meta.isExtendType())
 				{
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().repeted)
+				if (field.value != null && !field.meta.repeted)
 				{
 					continue;
 				}
 
-				TypeDef model = name2model.get(field.getDef().type);
+				Class model = classTable.getClass(field.meta.type);
 				if (model == null)
 				{
-					throw new Error("字段类型未找到! (" + field.getDef().type + ")");
+					throw new Error("字段类型未找到! (" + field.meta.type + ")");
 				}
 
 				Instance fieldValue = new Instance(model);
 
-				for (TypeFieldDef childFieldDef : model.fields)
+				for (ClassField childFieldDef : model.fields)
 				{
 					String fieldXPath = childFieldDef.xpath.trim();
 					if (fieldXPath.length() > 0)
@@ -113,9 +143,9 @@ public class UnitInstanceBuilder
 
 					String path = isSelf ? xpath : xpath + "/" + childFieldDef.xpath;
 
-					InstanceField childField = new InstanceField(path, childFieldDef);
+					InstanceField childField = new InstanceField(childFieldDef, path);
 
-					fieldValue.getFields().add(childField);
+					fieldValue.fields.add(childField);
 
 					if (!isSelf)
 					{
@@ -133,18 +163,18 @@ public class UnitInstanceBuilder
 					}
 				}
 
-				if (field.getDef().repeted)
+				if (field.meta.repeted)
 				{
-					if (field.getValue() == null)
+					if (field.value == null)
 					{
-						field.setValue(new ArrayList<Object>());
+						field.value = new ArrayList<Object>();
 					}
 
-					((List<Instance>) field.getValue()).add(fieldValue);
+					((List<Instance>) field.value).add(fieldValue);
 				}
 				else
 				{
-					field.setValue(fieldValue);
+					field.value = fieldValue;
 				}
 			}
 
@@ -162,27 +192,27 @@ public class UnitInstanceBuilder
 
 			for (InstanceField field : selfFields)
 			{
-				String xpath = field.getXPath();
+				String xpath = field.xpath;
 
-				if (!field.getDef().isExtendType())
+				if (!field.meta.isExtendType())
 				{
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().repeted)
+				if (field.value != null && !field.meta.repeted)
 				{
 					continue;
 				}
 
-				TypeDef model = name2model.get(field.getDef().type);
+				Class model = classTable.getClass(field.meta.type);
 				if (model == null)
 				{
-					throw new Error("字段类型未找到! (" + field.getDef().type + ")");
+					throw new Error("字段类型未找到! (" + field.meta.type + ")");
 				}
 
 				Instance fieldValue = new Instance(model);
 
-				for (TypeFieldDef childFieldDef : model.fields)
+				for (ClassField childFieldDef : model.fields)
 				{
 					String fieldXPath = childFieldDef.xpath.trim();
 					if (fieldXPath.length() > 0)
@@ -201,9 +231,9 @@ public class UnitInstanceBuilder
 
 					String path = isSelf ? xpath : xpath + "/" + childFieldDef.xpath;
 
-					InstanceField childField = new InstanceField(path, childFieldDef);
+					InstanceField childField = new InstanceField(childFieldDef, path);
 
-					fieldValue.getFields().add(childField);
+					fieldValue.fields.add(childField);
 
 					if (!isSelf)
 					{
@@ -221,18 +251,18 @@ public class UnitInstanceBuilder
 					}
 				}
 
-				if (field.getDef().repeted)
+				if (field.meta.repeted)
 				{
-					if (field.getValue() == null)
+					if (field.value == null)
 					{
-						field.setValue(new ArrayList<Object>());
+						field.value = new ArrayList<Object>();
 					}
 
-					((List<Instance>) field.getValue()).add(fieldValue);
+					((List<Instance>) field.value).add(fieldValue);
 				}
 				else
 				{
-					field.setValue(fieldValue);
+					field.value = fieldValue;
 				}
 			}
 
@@ -255,23 +285,23 @@ public class UnitInstanceBuilder
 
 			for (InstanceField field : fields)
 			{
-				if (field.getDef().isExtendType())
+				if (field.meta.isExtendType())
 				{
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().repeted)
+				if (field.value != null && !field.meta.repeted)
 				{
 					continue;
 				}
 
 				Object fieldValue = null;
 
-				if (field.getDef().isBoolean())
+				if (field.meta.isBoolean())
 				{
 					fieldValue = attributeValue != null && !attributeValue.trim().isEmpty() && !attributeValue.trim().equals("false") && !attributeValue.trim().equals("0");
 				}
-				else if (field.getDef().isInt() || field.getDef().isUint())
+				else if (field.meta.isInt() || field.meta.isUint())
 				{
 					try
 					{
@@ -282,7 +312,7 @@ public class UnitInstanceBuilder
 						fieldValue = 0;
 					}
 				}
-				else if (field.getDef().isNumber())
+				else if (field.meta.isNumber())
 				{
 					try
 					{
@@ -293,23 +323,23 @@ public class UnitInstanceBuilder
 						fieldValue = 0;
 					}
 				}
-				else if (field.getDef().isString())
+				else if (field.meta.isString())
 				{
 					fieldValue = attributeValue;
 				}
 
-				if (field.getDef().repeted)
+				if (field.meta.repeted)
 				{
-					if (field.getValue() == null)
+					if (field.value == null)
 					{
-						field.setValue(new ArrayList<Object>());
+						field.value = new ArrayList<Object>();
 					}
 
-					((List<Object>) field.getValue()).add(fieldValue);
+					((List<Object>) field.value).add(fieldValue);
 				}
 				else
 				{
-					field.setValue(fieldValue);
+					field.value = fieldValue;
 				}
 			}
 		}
@@ -327,23 +357,23 @@ public class UnitInstanceBuilder
 
 			for (InstanceField field : fields)
 			{
-				if (field.getDef().isExtendType())
+				if (field.meta.isExtendType())
 				{
 					continue;
 				}
 
-				if (field.getValue() != null && !field.getDef().repeted)
+				if (field.value != null && !field.meta.repeted)
 				{
 					continue;
 				}
 
 				Object fieldValue = null;
 
-				if (field.getDef().isBoolean())
+				if (field.meta.isBoolean())
 				{
 					fieldValue = text != null && !text.trim().isEmpty() && !text.trim().equals("false") && !text.trim().equals("0");
 				}
-				else if (field.getDef().isInt() || field.getDef().isUint())
+				else if (field.meta.isInt() || field.meta.isUint())
 				{
 					try
 					{
@@ -354,7 +384,7 @@ public class UnitInstanceBuilder
 						fieldValue = 0;
 					}
 				}
-				else if (field.getDef().isNumber())
+				else if (field.meta.isNumber())
 				{
 					try
 					{
@@ -365,23 +395,23 @@ public class UnitInstanceBuilder
 						fieldValue = Float.NaN;
 					}
 				}
-				else if (field.getDef().isString())
+				else if (field.meta.isString())
 				{
 					fieldValue = text;
 				}
 
-				if (field.getDef().repeted)
+				if (field.meta.repeted)
 				{
-					if (field.getValue() == null)
+					if (field.value == null)
 					{
-						field.setValue(new ArrayList<Object>());
+						field.value = new ArrayList<Object>();
 					}
 
-					((List<Object>) field.getValue()).add(fieldValue);
+					((List<Object>) field.value).add(fieldValue);
 				}
 				else
 				{
-					field.setValue(fieldValue);
+					field.value = fieldValue;
 				}
 			}
 		}
@@ -393,7 +423,7 @@ public class UnitInstanceBuilder
 			ArrayList<InstanceField> fields = stackFields.pop();
 			for (InstanceField field : fields)
 			{
-				String path = field.getXPath();
+				String path = field.xpath;
 
 				ArrayList<InstanceField> table = path2Field.get(path);
 				if (table != null)

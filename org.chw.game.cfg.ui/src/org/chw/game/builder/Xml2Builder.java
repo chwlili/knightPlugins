@@ -10,13 +10,6 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.Input;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
-import org.chw.game.cfg.Param;
-import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.chw.game.ui.internal.CfgActivator;
 import org.eclipse.core.resources.IFile;
@@ -185,17 +178,17 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			{
 				boolean changed = changedCFG.contains(file);
 
-				TypeDef[] types = getTypeDefs(file);
+				ClassTable types = getTypeDefs(file);
 				if (!changed)
 				{
-					for (TypeDef type : types)
+					for (Class type : types.getAllClass())
 					{
-						if (type.getFilePath() == null || type.getFilePath().isEmpty())
+						if (type.filePath == null || type.filePath.isEmpty())
 						{
 							continue;
 						}
 
-						String filePath = type.getFilePath();
+						String filePath = type.filePath;
 						if (filePath.charAt(0) != '/')
 						{
 							filePath = "/" + filePath;
@@ -273,7 +266,7 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			for (IFile file : cfgFiles)
 			{
 				buildMonitor.setTaskName("构建文件：" + file.getProjectRelativePath().toString());
-				TypeDef[] types = getTypeDefs(file);
+				ClassTable types = getTypeDefs(file);
 				UnitBuilder unit = new UnitBuilder(getProject(), types);
 				IFile[] writedFiles = unit.buildTo(srcFolder, true);
 				allWritedFiles.addAll(Arrays.asList(writedFiles));
@@ -373,86 +366,12 @@ public class Xml2Builder extends IncrementalProjectBuilder
 	/**
 	 * 初始化所有类型
 	 */
-	private TypeDef[] getTypeDefs(IFile file) throws IOException, CoreException
+	private ClassTable getTypeDefs(IFile file) throws IOException, CoreException
 	{
 		Resource emfFile = factory.createResource(URI.createPlatformResourceURI(file.getFullPath().toString(), true));
 		emfFile.load(file.getContents(), null);
 
-		XML2 xml2 = (XML2) emfFile.getContents().get(0);
-		if (xml2 == null)
-		{
-			return new TypeDef[] {};
-		}
-
-		ArrayList<TypeDef> allTypes = new ArrayList<TypeDef>();
-
-		String packName = "";
-		if (xml2.getPack() != null)
-		{
-			packName = xml2.getPack().getPack();
-		}
-
-		for (Type type : xml2.getTypes())
-		{
-			String typeComm = type.getComment();
-			String typeName = type.getName();
-			String inputPath = "";
-			String xpath = "";
-
-			Input input = type.getInput();
-			if (input != null)
-			{
-				inputPath = input.getFilePath();
-				xpath = input.getNodePath();
-			}
-
-			TypeDef typeDef = new TypeDef(inputPath, xpath, packName, typeName, typeComm);
-
-			for (Field field : type.getFields())
-			{
-				String fieldName = field.getFieldName();
-				String fieldComm = field.getComment();
-				String fieldXPath = field.getNodePath();
-				String fieldType = "";
-				boolean fieldList = false;
-				String[] indexList = null;
-
-				if (field.getType() instanceof ListType)
-				{
-					ListType listType = (ListType) field.getType();
-					fieldType = listType.getType();
-					fieldList = true;
-				}
-				else if (field.getType() instanceof HashType)
-				{
-					HashType hashType = (HashType) field.getType();
-					fieldType = hashType.getType();
-					fieldList = true;
-
-					ArrayList<String> indexKeys = new ArrayList<String>();
-					for (Param param : hashType.getParams())
-					{
-						indexKeys.add(param.getParamName());
-					}
-					indexList = indexKeys.toArray(new String[indexKeys.size()]);
-				}
-				else if (field.getType() instanceof NativeType)
-				{
-					NativeType nativeType = (NativeType) field.getType();
-					fieldType = nativeType.getType();
-					fieldList = false;
-				}
-
-				if (fieldType != "")
-				{
-					typeDef.fields.add(new TypeFieldDef(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList));
-				}
-			}
-
-			allTypes.add(typeDef);
-		}
-
-		return allTypes.toArray(new TypeDef[] {});
+		return new ClassTable((XML2) emfFile.getContents().get(0));
 	}
 
 	/**

@@ -21,13 +21,8 @@ import org.xml.sax.SAXException;
 
 public class UnitConfigBuilder
 {
-	private IFile file;
-	private TypeDef[] types;
-	private TypeDef type;
-
-	private UnitCodeBuilder classWriter;
-
-	private Instance root;
+	private IFile inputFile;
+	private ClassTable classTable;
 
 	private int nextID = 1;
 
@@ -42,7 +37,7 @@ public class UnitConfigBuilder
 
 	private HashMap<Integer, Integer> id_refCount = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Object> id_value = new HashMap<Integer, Object>();
-	private HashMap<Integer, TypeFieldDef> id_field = new HashMap<Integer, TypeFieldDef>();
+	private HashMap<Integer, ClassField> id_field = new HashMap<Integer, ClassField>();
 	private HashMap<Integer, Integer> id_order = new HashMap<Integer, Integer>();
 
 	private HashMap<String, HashSet<Integer>> typeName_ids = new HashMap<String, HashSet<Integer>>();
@@ -56,12 +51,10 @@ public class UnitConfigBuilder
 	 * @param instance
 	 * @throws IOException
 	 */
-	public UnitConfigBuilder(IFile file, TypeDef[] types, TypeDef type, UnitCodeBuilder writer)
+	public UnitConfigBuilder(IFile file, ClassTable types)
 	{
-		this.file = file;
-		this.types = types;
-		this.type = type;
-		this.classWriter = writer;
+		this.inputFile = file;
+		this.classTable = types;
 	}
 
 	/**
@@ -113,29 +106,23 @@ public class UnitConfigBuilder
 
 		// 输出
 		writedFiles = new ArrayList<IFile>();
-		IFile file = folder.getFile(fileName);
-		if (changed || !file.exists())
+		IFile outputFile = folder.getFile(fileName);
+		if (changed || !outputFile.exists())
 		{
 			// 转换成字节
-			byte[] bytes = getBytes();
-			if (bytes == null)
-			{
-				return;
-			}
+			byte[] bytes = getBytes(UnitInstanceBuilder.build(classTable, inputFile.getContents()));
 
-			bytes = compress(bytes);
-
-			if (!file.exists())
+			if (!outputFile.exists())
 			{
-				file.create(new ByteArrayInputStream(bytes), true, null);
+				outputFile.create(new ByteArrayInputStream(bytes), true, null);
 			}
 			else
 			{
-				file.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
+				outputFile.setContents(new ByteArrayInputStream(bytes), IFile.FORCE, null);
 			}
-			file.setDerived(true, null);
+			outputFile.setDerived(true, null);
 		}
-		writedFiles.add(file);
+		writedFiles.add(outputFile);
 	}
 
 	/**
@@ -193,38 +180,38 @@ public class UnitConfigBuilder
 	 */
 	private void parseInstance(Instance instance)
 	{
-		for (InstanceField field : instance.getFields())
+		for (InstanceField field : instance.fields)
 		{
-			if (field.getValue() == null)
+			if (field.value == null)
 			{
 				continue;
 			}
 
-			if (field.getDef().repeted)
+			if (field.meta.repeted)
 			{
 				@SuppressWarnings("rawtypes")
-				ArrayList list = (ArrayList) field.getValue();
+				ArrayList list = (ArrayList) field.value;
 				for (Object value : list)
 				{
 					// 列表项计入引用数
-					incrementRefCount(field.getDef(), value);
+					incrementRefCount(field.meta, value);
 
 					// 所有主键计入引用数
-					if ((value instanceof Instance) && field.getDef().indexKeys != null)
+					if ((value instanceof Instance) && field.meta.indexKeys != null)
 					{
 						Instance valueInstance = (Instance) value;
-						for (String key : field.getDef().indexKeys)
+						for (String key : field.meta.indexKeys)
 						{
-							InstanceField keyField = valueInstance.findField(key);
+							InstanceField keyField = valueInstance.getField(key);
 							if (keyField != null)
 							{
-								incrementRefCount(keyField.getDef(), keyField.getValue());
+								incrementRefCount(keyField.meta, keyField.value);
 							}
 						}
 					}
 
 					// 递归
-					if (field.getDef().isExtendType())
+					if (field.meta.isExtendType())
 					{
 						parseInstance((Instance) value);
 					}
@@ -233,12 +220,12 @@ public class UnitConfigBuilder
 			else
 			{
 				// 值计入引用数
-				incrementRefCount(field.getDef(), field.getValue());
+				incrementRefCount(field.meta, field.value);
 
 				// 递归
-				if (field.getDef().isExtendType())
+				if (field.meta.isExtendType())
 				{
-					parseInstance((Instance) field.getValue());
+					parseInstance((Instance) field.value);
 				}
 			}
 		}
@@ -283,7 +270,7 @@ public class UnitConfigBuilder
 	 * @param def
 	 * @param value
 	 */
-	private void incrementRefCount(TypeFieldDef def, Object value)
+	private void incrementRefCount(ClassField def, Object value)
 	{
 		int id = getID(def, value);
 		if (id == 0)
@@ -321,7 +308,7 @@ public class UnitConfigBuilder
 	 * @param type
 	 * @return
 	 */
-	private int getID(TypeDef type)
+	private int getID(Class type)
 	{
 		if (!def_id.containsKey(type))
 		{
@@ -337,7 +324,7 @@ public class UnitConfigBuilder
 	 * @param field
 	 * @return
 	 */
-	private int getID(TypeFieldDef field)
+	private int getID(ClassField field)
 	{
 		if (!def_id.containsKey(field))
 		{
@@ -354,7 +341,7 @@ public class UnitConfigBuilder
 	 * @param value
 	 * @return
 	 */
-	private int getID(TypeFieldDef def, Object value)
+	private int getID(ClassField def, Object value)
 	{
 		int id = 0;
 		if (def != null && value != null)
@@ -510,7 +497,7 @@ public class UnitConfigBuilder
 	 * @param value
 	 * @return
 	 */
-	private int getOrder(TypeFieldDef def, Object value)
+	private int getOrder(ClassField def, Object value)
 	{
 		int id = getID(def, value);
 		if (id != 0)
@@ -534,20 +521,20 @@ public class UnitConfigBuilder
 	 */
 	private String hash(Instance instance)
 	{
-		InstanceField[] fields = instance.getFields().toArray(new InstanceField[instance.getFields().size()]);
+		InstanceField[] fields = instance.fields.toArray(new InstanceField[instance.fields.size()]);
 		Arrays.sort(fields, new Comparator<InstanceField>()
 		{
 			@Override
 			public int compare(InstanceField o1, InstanceField o2)
 			{
-				return getID(o1.getDef()) - getID(o2.getDef());
+				return getID(o1.meta) - getID(o2.meta);
 			}
 		});
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
 		sb.append("$");
-		sb.append(getID(instance.getType()));
+		sb.append(getID(instance.type));
 		sb.append(":");
 		for (InstanceField field : fields)
 		{
@@ -568,20 +555,20 @@ public class UnitConfigBuilder
 	 */
 	private String hash(InstanceField field)
 	{
-		TypeFieldDef def = field.getDef();
+		ClassField def = field.meta;
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("@");
 		sb.append(getID(def));
 		sb.append("=");
 
-		if (def.isNativeType())
+		if (!def.isExtendType())
 		{
 			if (def.repeted)
 			{
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
-				ArrayList list = (ArrayList) field.getValue();
+				ArrayList list = (ArrayList) field.value;
 				if (list != null)
 				{
 					for (Object item : list)
@@ -594,7 +581,7 @@ public class UnitConfigBuilder
 			}
 			else
 			{
-				sb.append(field.getValue());
+				sb.append(field.value);
 			}
 		}
 		else
@@ -603,7 +590,7 @@ public class UnitConfigBuilder
 			{
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
-				ArrayList list = (ArrayList) field.getValue();
+				ArrayList list = (ArrayList) field.value;
 				if (list != null)
 				{
 					for (Object item : list)
@@ -617,7 +604,7 @@ public class UnitConfigBuilder
 			}
 			else
 			{
-				Instance instance = (Instance) field.getValue();
+				Instance instance = (Instance) field.value;
 				if (instance != null)
 				{
 					sb.append(hash(instance));
@@ -644,35 +631,39 @@ public class UnitConfigBuilder
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	private byte[] getBytes() throws IOException, SAXException, ParserConfigurationException, CoreException
+	private byte[] getBytes(Instance[] allInstance) throws IOException, SAXException, ParserConfigurationException, CoreException
 	{
-		root = UnitInstanceBuilder.build(file.getContents(), types, type);
-		if (root == null)
+		// 遍历所有根节点
+		for (Instance instance : allInstance)
 		{
-			return null;
+			parseInstance(instance);
 		}
 
-		parseInstance(root);
-
 		// debugs
-		System.out.println(toDebugString());
+		System.out.println(toDebugString(allInstance));
 
-		ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
-		CfgOutputStream dataOutput = new CfgOutputStream(byteArrayOutput);
-
+		// 排序类名列表
 		String[] allTypeName = typeName_idArray.keySet().toArray(new String[typeName_idArray.size()]);
 		Arrays.sort(allTypeName);
+
+		// 转换到字节流
+		ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
+		CfgOutputStream dataOutput = new CfgOutputStream(byteArrayOutput);
 
 		dataOutput.writeVarInt(allTypeName.length);
 		for (String typeName : allTypeName)
 		{
-			dataOutput.writeVarInt(classWriter.getTypeID(typeName));
+			dataOutput.writeVarInt(classTable.getClassID(typeName));
 			dataOutput.write(getBytes(typeName_idArray.get(typeName)));
 		}
-		dataOutput.writeVarInt(classWriter.getTypeID(root.getType().getName()));
-		dataOutput.write(getBytes(root));
 
-		return byteArrayOutput.toByteArray();
+		for (Instance instance : allInstance)
+		{
+			dataOutput.writeVarInt(classTable.getClassID(instance.type.name));
+			dataOutput.write(getBytes(instance));
+		}
+
+		return compress(byteArrayOutput.toByteArray());
 	}
 
 	/**
@@ -724,7 +715,7 @@ public class UnitConfigBuilder
 
 			for (; left < right; left++)
 			{
-				TypeFieldDef field = id_field.get(list[left]);
+				ClassField field = id_field.get(list[left]);
 				Object value = id_value.get(list[left]);
 
 				if (field.isInt() || field.isUint())
@@ -780,12 +771,12 @@ public class UnitConfigBuilder
 		ByteArrayOutputStream contentByteArray = new ByteArrayOutputStream();
 		CfgOutputStream contentOutputStream = new CfgOutputStream(contentByteArray);
 
-		for (TypeFieldDef fieldDef : instance.getType().fields)
+		for (ClassField fieldDef : instance.type.fields)
 		{
-			InstanceField field = instance.findField(fieldDef.name);
+			InstanceField field = instance.getField(fieldDef.name);
 
 			// 字段为空时，简单值输出空引用，列表值输出长度标记0
-			if (field == null || field.getValue() == null)
+			if (field == null || field.value == null)
 			{
 				contentOutputStream.writeVarInt(0);
 				continue;
@@ -795,7 +786,7 @@ public class UnitConfigBuilder
 			if (fieldDef.repeted && fieldDef.indexKeys != null)
 			{
 				@SuppressWarnings("rawtypes")
-				ArrayList vals = (ArrayList) field.getValue();
+				ArrayList vals = (ArrayList) field.value;
 				contentOutputStream.writeVarInt(vals.size());
 				for (Object val : vals)
 				{
@@ -804,10 +795,10 @@ public class UnitConfigBuilder
 						Instance instanceVal = (Instance) val;
 						for (String key : fieldDef.indexKeys)
 						{
-							InstanceField instanceField = instanceVal.findField(key);
-							if (instanceField != null && instanceField.getValue() != null)
+							InstanceField instanceField = instanceVal.getField(key);
+							if (instanceField != null && instanceField.value != null)
 							{
-								contentOutputStream.writeVarInt(getOrder(instanceField.getDef(), instanceField.getValue()));
+								contentOutputStream.writeVarInt(getOrder(instanceField.meta, instanceField.value));
 							}
 							else
 							{
@@ -821,7 +812,7 @@ public class UnitConfigBuilder
 			else if (fieldDef.repeted)
 			{
 				@SuppressWarnings("rawtypes")
-				ArrayList vals = (ArrayList) field.getValue();
+				ArrayList vals = (ArrayList) field.value;
 				contentOutputStream.writeVarInt(vals.size());
 				for (Object val : vals)
 				{
@@ -830,7 +821,7 @@ public class UnitConfigBuilder
 			}
 			else
 			{
-				contentOutputStream.writeVarInt(getOrder(fieldDef, field.getValue()));
+				contentOutputStream.writeVarInt(getOrder(fieldDef, field.value));
 			}
 		}
 
@@ -846,7 +837,7 @@ public class UnitConfigBuilder
 	/**
 	 * 转换成debug字符串
 	 */
-	private String toDebugString()
+	private String toDebugString(Instance[] allInstance)
 	{
 		StringBuilder sb = new StringBuilder();
 
@@ -872,22 +863,22 @@ public class UnitConfigBuilder
 				{
 					sb.append("{");
 					Instance instance = (Instance) value;
-					for (InstanceField field : instance.getFields())
+					for (InstanceField field : instance.fields)
 					{
-						sb.append(field.getDef().name);
+						sb.append(field.meta.name);
 						sb.append(":");
-						Object val = field.getValue();
-						if(val instanceof ArrayList)
+						Object val = field.value;
+						if (val instanceof ArrayList)
 						{
-							
+
 						}
 						else if (val instanceof Instance)
 						{
-							sb.append(getOrder(field.getDef(), val));
+							sb.append(getOrder(field.meta, val));
 						}
 						else if (val != null)
 						{
-							sb.append(getOrder(field.getDef(), val));
+							sb.append(getOrder(field.meta, val));
 						}
 						sb.append(",");
 					}
@@ -902,34 +893,38 @@ public class UnitConfigBuilder
 			sb.append("\n");
 		}
 
-		sb.append("{");
-		for (InstanceField field : root.getFields())
+		for (Instance instance : allInstance)
 		{
-			sb.append(field.getDef().name);
-			sb.append(":");
-			TypeFieldDef def = field.getDef();
-			if (def.repeted)
+			sb.append("{");
+			for (InstanceField field : instance.fields)
 			{
-				sb.append("[");
-				if (field.getValue() != null)
+				sb.append(field.meta.name);
+				sb.append(":");
+				ClassField def = field.meta;
+				if (def.repeted)
 				{
-					@SuppressWarnings("rawtypes")
-					ArrayList list = (ArrayList) field.getValue();
-					for (Object item : list)
+					sb.append("[");
+					if (field.value != null)
 					{
-						sb.append(getOrder(def, item));
-						sb.append(",");
+						@SuppressWarnings("rawtypes")
+						ArrayList list = (ArrayList) field.value;
+						for (Object item : list)
+						{
+							sb.append(getOrder(def, item));
+							sb.append(",");
+						}
 					}
+					sb.append("]");
 				}
-				sb.append("]");
+				else
+				{
+					sb.append(getOrder(def, field.value));
+				}
+				sb.append(",");
 			}
-			else
-			{
-				sb.append(getOrder(def, field.getValue()));
-			}
-			sb.append(",");
+			sb.append("}");
+			sb.append("\n");
 		}
-		sb.append("}");
 
 		return sb.toString();
 	}

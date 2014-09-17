@@ -1,60 +1,44 @@
 package org.chw.game.builder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 class Instance
 {
-	private TypeDef type;
-	private ArrayList<InstanceField> fields = new ArrayList<InstanceField>();
-	private HashMap<String, InstanceField> fieldMap;
+	/**
+	 * 类型定义
+	 */
+	public final Class type;
+
+	/**
+	 * 字段列表
+	 */
+	public final ArrayList<InstanceField> fields = new ArrayList<InstanceField>();
 
 	/**
 	 * 构造函数
 	 * 
 	 * @param type
 	 */
-	public Instance(TypeDef type)
+	public Instance(Class type)
 	{
 		this.type = type;
 	}
 
 	/**
-	 * 获取类型
-	 * 
-	 * @return
-	 */
-	public TypeDef getType()
-	{
-		return type;
-	}
-
-	/**
-	 * 字段列表
-	 * 
-	 * @return
-	 */
-	public ArrayList<InstanceField> getFields()
-	{
-		return fields;
-	}
-
-	/**
 	 * 查找字段
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public InstanceField findField(String name)
+	public InstanceField getField(String name)
 	{
-		if (fieldMap == null)
-		{
-			fieldMap = new HashMap<String, InstanceField>();
-		}
-
 		for (InstanceField field : fields)
 		{
-			fieldMap.put(field.getDef().name, field);
+			if (field.meta.name.equals(name))
+			{
+				return field;
+			}
 		}
-		return fieldMap.get(name);
+		return null;
 	}
 }

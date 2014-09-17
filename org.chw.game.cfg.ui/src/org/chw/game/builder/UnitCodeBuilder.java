@@ -14,58 +14,22 @@ import org.eclipse.core.runtime.CoreException;
 
 public class UnitCodeBuilder
 {
-	private TypeDef[] types;
+	private ClassTable classTable;
 	private String corePack;
 	private String currPack;
 
 	private IFolder folder;
-
-	private HashMap<String, Integer> typeIDMap;
 
 	private HashMap<String, String> listTypeNameTable = new HashMap<String, String>();
 	private HashMap<String, HashMap<String[], String>> mapTypeNameTable = new HashMap<String, HashMap<String[], String>>();
 
 	private ArrayList<IFile> writedFiles = new ArrayList<IFile>();
 
-	public UnitCodeBuilder(TypeDef[] types, String corePack, String currPack)
+	public UnitCodeBuilder(ClassTable classTable, String corePack, String currPack)
 	{
-		this.types = types;
+		this.classTable = classTable;
 		this.corePack = corePack;
 		this.currPack = currPack;
-	}
-
-	/**
-	 * 获取为指定类型分配的ID
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public int getTypeID(String type)
-	{
-		return typeIDMap.get(type);
-	}
-
-	/**
-	 * 获取列表类型的名称
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public String getListTypeName(String type)
-	{
-		return listTypeNameTable.get(type);
-	}
-
-	/**
-	 * 获取字典类型的名称
-	 * 
-	 * @param type
-	 * @param keys
-	 * @return
-	 */
-	public String getMapTypeName(String type, String[] keys)
-	{
-		return mapTypeNameTable.get(type).get(keys);
 	}
 
 	/**
@@ -79,6 +43,29 @@ public class UnitCodeBuilder
 	}
 
 	/**
+	 * 获取列表类型的名称
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private String getListTypeName(String type)
+	{
+		return listTypeNameTable.get(type);
+	}
+
+	/**
+	 * 获取字典类型的名称
+	 * 
+	 * @param type
+	 * @param keys
+	 * @return
+	 */
+	private String getMapTypeName(String type, String[] keys)
+	{
+		return mapTypeNameTable.get(type).get(keys);
+	}
+
+	/**
 	 * 构建到指定目录
 	 * 
 	 * @param folder
@@ -89,38 +76,18 @@ public class UnitCodeBuilder
 	{
 		this.folder = folder;
 
-		HashMap<String, TypeDef> name2Type = new HashMap<String, TypeDef>();
-
 		HashSet<String> listType1 = new HashSet<String>();
-		HashSet<TypeDef> listTypes2 = new HashSet<TypeDef>();
+		HashSet<Class> listTypes2 = new HashSet<Class>();
 
 		HashSet<String> mapType1 = new HashSet<String>();
 		HashMap<String, HashSet<String[]>> mapType2 = new HashMap<String, HashSet<String[]>>();
 
-		// 确定类型ID
-		typeIDMap = new HashMap<String, Integer>();
-		typeIDMap.put("int", 1);
-		typeIDMap.put("uint", 2);
-		typeIDMap.put("Boolean", 3);
-		typeIDMap.put("Number", 4);
-		typeIDMap.put("String", 5);
-		for (int i = 0; i < types.length; i++)
-		{
-			typeIDMap.put(types[i].getName(), i + 10);
-		}
-
-		// 建立名称到类型的映射
-		for (TypeDef type : types)
-		{
-			name2Type.put(type.getName(), type);
-		}
-
 		// 计算需要列表类型和字典类型
-		for (TypeDef type : types)
+		for (Class type : classTable.getAllClass())
 		{
-			for (int i = 0; i < type.getFieldLength(); i++)
+			for (int i = 0; i < type.fields.length; i++)
 			{
-				TypeFieldDef field = type.getFieldAt(i);
+				ClassField field = type.fields[i];
 				if (field.repeted)
 				{
 					if (field.isExtendType())
@@ -135,7 +102,7 @@ public class UnitCodeBuilder
 						}
 						else
 						{
-							listTypes2.add(name2Type.get(field.type));
+							listTypes2.add(classTable.getClass(field.type));
 						}
 					}
 					else
@@ -166,7 +133,7 @@ public class UnitCodeBuilder
 		}
 
 		// 自定义列表类
-		for (TypeDef type : listTypes2)
+		for (Class type : listTypes2)
 		{
 			writeListType(type);
 		}
@@ -201,23 +168,20 @@ public class UnitCodeBuilder
 
 			for (int i = 0; i < keys.length; i++)
 			{
-				writeMapType(name2Type.get(type), i, keys[i]);
+				writeMapType(classTable.getClass(type), i, keys[i]);
 			}
 		}
 
 		// 自定义类
-		for (TypeDef type : types)
+		for (Class type : classTable.getAllClass())
 		{
 			writeTypeClass(type);
 		}
 
 		// 入口类
-		for (TypeDef type : types)
+		for (Class type : classTable.getAllMainClass())
 		{
-			if (type.getFilePath() != null && type.getFilePath().isEmpty() == false)
-			{
-				writePoolType(type);
-			}
+			writePoolType(type);
 		}
 	}
 
@@ -256,13 +220,21 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 可读字节数\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function get bytesAvailable():uint\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn _bytes.bytesAvailable;\n"));
+		sb.append(String.format("\t\t}\n"));
+		
+		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 当前位置\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function get position():uint\n", typeName));
+		sb.append(String.format("\t\tpublic function get position():uint\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\treturn _bytes.position;\n"));
 		sb.append(String.format("\t\t}\n"));
-		sb.append(String.format("\t\tpublic function set position(value:uint):void\n", typeName));
+		sb.append(String.format("\t\tpublic function set position(value:uint):void\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t_bytes.position=value;\n"));
 		sb.append(String.format("\t\t}\n"));
@@ -271,7 +243,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 读取INT\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function readInt():int\n", typeName));
+		sb.append(String.format("\t\tpublic function readInt():int\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tvar low:uint=0;\n"));
 		sb.append(String.format("\t\t\t\n"));
@@ -304,7 +276,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 读取Float\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function readFloat():Number\n", typeName));
+		sb.append(String.format("\t\tpublic function readFloat():Number\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\treturn _bytes.readFloat();\n"));
 		sb.append(String.format("\t\t}\n"));
@@ -313,7 +285,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 读取UTF\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function readUTFBytes(length:int):String\n", typeName));
+		sb.append(String.format("\t\tpublic function readUTFBytes(length:int):String\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\treturn _bytes.readUTFBytes(length);\n"));
 		sb.append(String.format("\t\t}\n"));
@@ -371,13 +343,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\n"));
 
 		// 私有变量
+		sb.append(String.format("\t\tprivate var _inited:Boolean=false;\n"));
 		sb.append(String.format("\t\tprivate var _id2Index:Dictionary=new Dictionary();\n"));
 		sb.append(String.format("\t\tprivate var _totalCounts:Vector.<int>=new Vector.<int>();\n"));
 		sb.append(String.format("\t\tprivate var _pageSizes:Vector.<int>=new Vector.<int>();\n"));
 		sb.append(String.format("\t\tprivate var _pageBeginLists:Vector.<Vector.<int>>=new Vector.<Vector.<int>>();\n"));
 		sb.append(String.format("\t\tprivate var _pageEndLists:Vector.<Vector.<int>>=new Vector.<Vector.<int>>();\n"));
 		sb.append(String.format("\t\tprivate var _pools:Dictionary=new Dictionary();\n"));
-		sb.append(String.format("\t\tprivate var _root:Object;\n"));
+		sb.append(String.format("\t\tprivate var _roots:Dictionary=new Dictionary();\n"));
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
@@ -392,7 +365,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 初始化所有列表范围\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprotected function initRange():void\n"));
+		sb.append(String.format("\t\tprivate function initRange():void\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tvar bytes:ByteStream=getBytes();\n"));
 		sb.append(String.format("\t\t\tif(bytes==null)\n"));
@@ -432,7 +405,11 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\t\t_pools[typeID]=new Dictionary();\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\t\n"));
-		sb.append(String.format("\t\t\t_root=readObject(bytes.readInt(),bytes);\n"));
+		sb.append(String.format("\t\t\twhile(bytes.bytesAvailable>0)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tvar typeID:int=bytes.readInt();\n"));
+		sb.append(String.format("\t\t\t\t_roots[typeID]=readObject(typeID,bytes);\n"));
+		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
@@ -525,9 +502,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 根节点对象\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprotected function get root():*\n"));
+		sb.append(String.format("\t\tprotected function getRoot(typeID:int):*\n"));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn _root;\n"));
+		sb.append(String.format("\t\t\tif(!_inited)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tinitRange();\n"));
+		sb.append(String.format("\t\t\t\t_inited=true;\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn _roots[typeID];\n"));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -585,7 +567,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", typeIDMap.get(type)));
+		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", classTable.getClassID(type)));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -607,11 +589,11 @@ public class UnitCodeBuilder
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void writeListType(TypeDef type) throws CoreException, UnsupportedEncodingException
+	private void writeListType(Class type) throws CoreException, UnsupportedEncodingException
 	{
 		StringBuilder sb = new StringBuilder();
 
-		String typeName = type.getName() + "List";
+		String typeName = type.name + "List";
 
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
@@ -648,9 +630,9 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 按索引获取\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.getName()));
+		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.name));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", typeIDMap.get(type.getName())));
+		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", classTable.getClassID(type.name)));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -660,7 +642,7 @@ public class UnitCodeBuilder
 		writeByteToFile(folder, currPack, typeName, sb.toString());
 
 		// 记录List类型
-		listTypeNameTable.put(type.getName(), typeName);
+		listTypeNameTable.put(type.name, typeName);
 	}
 
 	/**
@@ -672,7 +654,7 @@ public class UnitCodeBuilder
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void writeMapType(TypeDef type, int index, String[] keys) throws CoreException, UnsupportedEncodingException
+	private void writeMapType(Class type, int index, String[] keys) throws CoreException, UnsupportedEncodingException
 	{
 		StringBuilder classComment = new StringBuilder();
 		for (String key : keys)
@@ -686,7 +668,7 @@ public class UnitCodeBuilder
 
 		StringBuilder sb = new StringBuilder();
 
-		String typeName = type.getName() + "Map" + (index > 0 ? index : "");
+		String typeName = type.name + "Map" + (index > 0 ? index : "");
 
 		sb.append(String.format("package %s\n", currPack));
 		sb.append(String.format("{\n"));
@@ -709,7 +691,7 @@ public class UnitCodeBuilder
 
 		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
 		sb.append(String.format("\t\tprivate var _indexList:Vector.<int>=new Vector.<int>();\n"));
-		sb.append(String.format("\t\tprivate var _table:Dictionary=new Dictionary();\n", type.getName()));
+		sb.append(String.format("\t\tprivate var _table:Dictionary=new Dictionary();\n", type.name));
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
@@ -729,11 +711,11 @@ public class UnitCodeBuilder
 		for (int i = 0; i < keys.length; i++)
 		{
 			String fieldName = keys[i];
-			String fieldType = type.getFieldBy(fieldName).type;
+			String fieldType = type.getField(fieldName).type;
 			sb.append(String.format("\t\t\t\t//主键：%s\n", fieldName));
 			if (i < keys.length - 1)
 			{
-				sb.append(String.format("\t\t\t\tvar key_%s:%s=_pool.getValue(%s,values[begin+%s]);\n", (i + 1), fieldType, typeIDMap.get(fieldType), i));
+				sb.append(String.format("\t\t\t\tvar key_%s:%s=_pool.getValue(%s,values[begin+%s]);\n", (i + 1), fieldType, classTable.getClassID(fieldType), i));
 				sb.append(String.format("\t\t\t\tif(dic[key_%s]==null)\n", (i + 1)));
 				sb.append(String.format("\t\t\t\t{\n"));
 				sb.append(String.format("\t\t\t\t\tdic[key_%s]=new Dictionary();\n", (i + 1)));
@@ -743,7 +725,7 @@ public class UnitCodeBuilder
 			}
 			else
 			{
-				sb.append(String.format("\t\t\t\tvar key_%s:%s=_pool.getValue(%s,values[begin+%s]);\n", (i + 1), fieldType, typeIDMap.get(fieldType), i));
+				sb.append(String.format("\t\t\t\tvar key_%s:%s=_pool.getValue(%s,values[begin+%s]);\n", (i + 1), fieldType, classTable.getClassID(fieldType), i));
 				sb.append(String.format("\t\t\t\tdic[key_%s]=values[begin+%s];\n", i + 1, i + 1));
 				sb.append(String.format("\t\t\t\t\n"));
 				sb.append(String.format("\t\t\t\t//值列表\n"));
@@ -766,9 +748,9 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 按索引获取\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.getName()));
+		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.name));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", typeIDMap.get(type.getName())));
+		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", classTable.getClassID(type.name)));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
@@ -779,9 +761,9 @@ public class UnitCodeBuilder
 		for (int i = 0; i < keys.length; i++)
 		{
 			sb.append(i > 0 ? "," : "");
-			sb.append(keys[i] + ":" + type.getFieldBy(keys[i]).type);
+			sb.append(keys[i] + ":" + type.getField(keys[i]).type);
 		}
-		sb.append(String.format("):%s\n", type.getName()));
+		sb.append(String.format("):%s\n", type.name));
 		sb.append(String.format("\t\t{\n"));
 		StringBuilder depths = new StringBuilder();
 		for (int i = 0; i < keys.length; i++)
@@ -792,7 +774,7 @@ public class UnitCodeBuilder
 			sb.append(String.format("\t\t\t\treturn null;\n"));
 			sb.append(String.format("\t\t\t}\n"));
 		}
-		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_table%s);\n", typeIDMap.get(type.getName()), depths));
+		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_table%s);\n", classTable.getClassID(type.name), depths));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -802,22 +784,22 @@ public class UnitCodeBuilder
 		writeByteToFile(folder, currPack, typeName, sb.toString());
 
 		// 记录Map类型的名称
-		if (!mapTypeNameTable.containsKey(type.getName()))
+		if (!mapTypeNameTable.containsKey(type.name))
 		{
-			mapTypeNameTable.put(type.getName(), new HashMap<String[], String>());
+			mapTypeNameTable.put(type.name, new HashMap<String[], String>());
 		}
-		mapTypeNameTable.get(type.getName()).put(keys, typeName);
+		mapTypeNameTable.get(type.name).put(keys, typeName);
 	}
 
 	/**
 	 * 输出自定义类
 	 * 
-	 * @param types
+	 * @param classTable
 	 * @param type
 	 * @throws UnsupportedEncodingException
 	 * @throws CoreException
 	 */
-	private void writeTypeClass(TypeDef type) throws UnsupportedEncodingException, CoreException
+	private void writeTypeClass(Class type) throws UnsupportedEncodingException, CoreException
 	{
 		StringBuilder sb = new StringBuilder();
 
@@ -827,17 +809,17 @@ public class UnitCodeBuilder
 		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
-		if (type.getComment() != null)
+		if (type.comment != null)
 		{
-			sb.append(String.format("%s", formatComment(type.getComment(), "\t")));
+			sb.append(String.format("%s", formatComment(type.comment, "\t")));
 		}
-		sb.append(String.format("\tpublic class %s\n", type.getName()));
+		sb.append(String.format("\tpublic class %s\n", type.name));
 		sb.append(String.format("\t{\n"));
 
 		// 私有变量
 		sb.append(String.format("\t\tprivate var __pool__:DataPool;\n"));
 		sb.append(String.format("\t\t\n"));
-		for (TypeFieldDef field : type.fields)
+		for (ClassField field : type.fields)
 		{
 			if (field.repeted && field.indexKeys != null)
 			{
@@ -858,12 +840,12 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:DataPool)\n", type.getName()));
+		sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:DataPool)\n", type.name));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t__pool__=pool;\n"));
 		sb.append(String.format("\t\t\t\n"));
 		sb.append(String.format("\t\t\tvar pos:int=bytes.position;\n"));
-		for (TypeFieldDef field : type.fields)
+		for (ClassField field : type.fields)
 		{
 			sb.append(String.format("\t\t\t\n"));
 			sb.append(String.format("\t\t\t//%s\n", field.name));
@@ -903,7 +885,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\n"));
 
 		// 字段列表
-		for (TypeFieldDef field : type.fields)
+		for (ClassField field : type.fields)
 		{
 			if (field.comment != null)
 			{
@@ -921,7 +903,7 @@ public class UnitCodeBuilder
 			}
 			else
 			{
-				sb.append(String.format("\t\t\treturn __pool__.getValue(%s,_%sKind);\n", typeIDMap.get(field.type), field.name));
+				sb.append(String.format("\t\t\treturn __pool__.getValue(%s,_%sKind);\n", classTable.getClassID(field.type), field.name));
 			}
 			sb.append(String.format("\t\t}\n"));
 			sb.append(String.format("\t\t\n"));
@@ -930,7 +912,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t}\n"));
 		sb.append(String.format("}"));
 
-		writeByteToFile(folder, currPack, type.getName(), sb.toString());
+		writeByteToFile(folder, currPack, type.name, sb.toString());
 	}
 
 	/**
@@ -939,9 +921,9 @@ public class UnitCodeBuilder
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void writePoolType(TypeDef type) throws UnsupportedEncodingException, CoreException
+	private void writePoolType(Class type) throws UnsupportedEncodingException, CoreException
 	{
-		String filePath = type.getFilePath();
+		String filePath = type.filePath;
 
 		String[] parts = filePath.split("\\\\|/");
 
@@ -957,9 +939,9 @@ public class UnitCodeBuilder
 		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
-		if (type.getComment() != null)
+		if (type.comment != null)
 		{
-			sb.append(String.format("%s", formatComment(type.getComment(), "\t")));
+			sb.append(String.format("%s", formatComment(type.comment, "\t")));
 		}
 		sb.append(String.format("\tpublic class %s extends DataPool\n", typeName));
 		sb.append(String.format("\t{\n"));
@@ -980,10 +962,10 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tswitch(typeID)\n"));
 		sb.append(String.format("\t\t\t{\n"));
-		for (TypeDef curr : types)
+		for (Class curr : classTable.getAllClass())
 		{
-			sb.append(String.format("\t\t\t\tcase %s:\n", typeIDMap.get(curr.getName())));
-			sb.append(String.format("\t\t\t\t\treturn new %s(bytes,this);\n", curr.getName()));
+			sb.append(String.format("\t\t\t\tcase %s:\n", classTable.getClassID(curr.name)));
+			sb.append(String.format("\t\t\t\t\treturn new %s(bytes,this);\n", curr.name));
 			sb.append(String.format("\t\t\t\t\tbreak;\n"));
 		}
 		sb.append(String.format("\t\t\t}\n"));
@@ -997,28 +979,25 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 获取单例\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprivate static function get instance():%s\n", type.getName()));
+		sb.append(String.format("\t\tprivate static function get instance():%s\n", typeName));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tif(!_instance)\n", fileName));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\t_instance=new %s();\n", typeName));
-		sb.append(String.format("\t\t\t\t_instance.initRange();\n", typeName));
 		sb.append(String.format("\t\t\t}\n"));
-		sb.append(String.format("\t\t\treturn _instance.root;\n", fileName));
+		sb.append(String.format("\t\t\treturn _instance;\n", fileName));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
-		for (int i = 0; i < type.getFieldLength(); i++)
+		for (Class clazz : classTable.getAllMainClass())
 		{
-			TypeFieldDef field = type.getFieldAt(i);
-
-			if (field.comment != null)
+			if (clazz.comment != null)
 			{
-				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
+				sb.append(String.format("%s", formatComment(clazz.comment, "\t\t")));
 			}
-			sb.append(String.format("\t\tpublic static function get %s():%s\n", field.name, getFieldAsTypeName(field)));
+			sb.append(String.format("\t\tpublic static function get %s():%s\n", clazz.name.substring(0, 1).toLowerCase() + clazz.name.substring(1), clazz.name));
 			sb.append(String.format("\t\t{\n"));
-			sb.append(String.format("\t\t\treturn instance.%s;\n", field.name));
+			sb.append(String.format("\t\t\treturn instance.getRoot(%s);\n", classTable.getClassID(clazz.name)));
 			sb.append(String.format("\t\t}\n"));
 			sb.append(String.format("\t\t\n"));
 		}
@@ -1078,7 +1057,7 @@ public class UnitCodeBuilder
 	 * @param field
 	 * @return
 	 */
-	private String getFieldAsTypeName(TypeFieldDef field)
+	private String getFieldAsTypeName(ClassField field)
 	{
 		if (field.repeted)
 		{

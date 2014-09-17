@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 public class UnitBuilder
 {
 	private IProject project;
-	private TypeDef[] types;
+	private ClassTable classTable;
 
 	private String corePack;
 	private String currPack;
@@ -38,10 +38,10 @@ public class UnitBuilder
 	 * @param project
 	 * @param folder
 	 */
-	public UnitBuilder(IProject project, TypeDef[] types)
+	public UnitBuilder(IProject project, ClassTable types)
 	{
 		this.project = project;
-		this.types = types;
+		this.classTable = types;
 	}
 
 	/**
@@ -114,21 +114,18 @@ public class UnitBuilder
 			codePackName = topPackName;
 		}
 
-		if (types.length > 0)
+		String typePackName = classTable.getPackName();
+		if (typePackName == null)
 		{
-			String typePackName = types[0].getPackName();
-			if (typePackName == null)
-			{
-				typePackName = "";
-			}
-			if (!codePackName.isEmpty() && !typePackName.isEmpty())
-			{
-				codePackName = codePackName + "." + typePackName;
-			}
-			else if (codePackName.isEmpty())
-			{
-				codePackName = typePackName;
-			}
+			typePackName = "";
+		}
+		if (!codePackName.isEmpty() && !typePackName.isEmpty())
+		{
+			codePackName = codePackName + "." + typePackName;
+		}
+		else if (codePackName.isEmpty())
+		{
+			codePackName = typePackName;
 		}
 
 		this.corePack = corePackName;
@@ -145,7 +142,7 @@ public class UnitBuilder
 	 */
 	private IFile[] writeCodeFiles(IFolder folder, boolean changed) throws CoreException, UnsupportedEncodingException
 	{
-		codeBuilder = new UnitCodeBuilder(types, corePack, currPack);
+		codeBuilder = new UnitCodeBuilder(classTable, corePack, currPack);
 		codeBuilder.buildTo(folder);
 
 		return codeBuilder.getWritedFiles();
@@ -166,15 +163,10 @@ public class UnitBuilder
 
 		IFolder xmlFolder = project.getFolder(project.getPersistentProperty(Xml2Nature.XML_DIR));
 
-		for (TypeDef type : types)
+		for (Class type : classTable.getAllMainClass())
 		{
-			if (type.getFilePath() == null || type.getFilePath().isEmpty())
-			{
-				continue;
-			}
-
-			String filePath = type.getFilePath();
-			String nodePath = type.getXPath();
+			String filePath = type.filePath;
+			String nodePath = type.xpath;
 
 			if (nodePath.isEmpty())
 			{
@@ -195,7 +187,7 @@ public class UnitBuilder
 			{
 				IFile file = (IFile) resource;
 
-				configBuilder = new UnitConfigBuilder(file, types, type, codeBuilder);
+				configBuilder = new UnitConfigBuilder(file, classTable);
 				configBuilder.buildTo(folder, filePack, file.getName(), changed);
 
 				for (IFile writedFile : configBuilder.getWritedFiles())
@@ -207,6 +199,8 @@ public class UnitBuilder
 			{
 				//
 			}
+
+			break;
 		}
 
 		return writedFiles.toArray(new IFile[] {});
