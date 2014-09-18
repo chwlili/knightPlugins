@@ -120,11 +120,14 @@ public class UnitCodeBuilder
 			}
 		}
 
+		//
+		writeConfigPoolClass();
+
 		// 字节流类
 		writeByteStreamClass();
 
 		// 数据池类
-		writeDataPoolClass();
+		writeByteFileClass();
 
 		// 基础列表类
 		for (String type : listType1)
@@ -144,7 +147,6 @@ public class UnitCodeBuilder
 			String[][] keys = mapType2.get(type).toArray(new String[][] {});
 			Arrays.sort(keys, new Comparator<String[]>()
 			{
-				@Override
 				public int compare(String[] o1, String[] o2)
 				{
 					if (o1.length != o2.length)
@@ -191,6 +193,56 @@ public class UnitCodeBuilder
 	 * @throws UnsupportedEncodingException
 	 * @throws CoreException
 	 */
+	private void writeConfigPoolClass() throws UnsupportedEncodingException, CoreException
+	{
+		StringBuilder sb = new StringBuilder();
+
+		String typeName = "ConfigPool";
+
+		sb.append(String.format("package %s\n", corePack));
+		sb.append(String.format("{\n"));
+
+		sb.append(String.format("\timport flash.utils.Dictionary;\n"));
+		sb.append(String.format("\timport flash.utils.ByteArray;\n"));
+		sb.append(String.format("\t\n"));
+
+		sb.append(String.format("\tpublic class %s\n", typeName));
+		sb.append(String.format("\t{\n"));
+
+		// 私有变量
+		sb.append(String.format("\t\tprivate static var byteStreamMap:Dictionary=new Dictionary();\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 获取文件\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic static function getFile(name:String):ByteStream\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn byteStreamMap[name];\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 添加文件\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic static function addFile(name:String,bytes:ByteArray):void\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tbyteStreamMap[name]=new ByteStream(bytes);\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t}\n"));
+		sb.append(String.format("}"));
+
+		writeByteToFile(folder, corePack, typeName, sb.toString());
+	}
+
+	/**
+	 * 输出字节流类
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws CoreException
+	 */
 	private void writeByteStreamClass() throws UnsupportedEncodingException, CoreException
 	{
 		StringBuilder sb = new StringBuilder();
@@ -226,7 +278,8 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\treturn _bytes.bytesAvailable;\n"));
 		sb.append(String.format("\t\t}\n"));
-		
+		sb.append(String.format("\t\t\n"));
+
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 当前位置\n"));
 		sb.append(String.format("\t\t */\n"));
@@ -300,47 +353,23 @@ public class UnitCodeBuilder
 	 * 输出数据池类
 	 * 
 	 * @param folder
-	 * @param packName
 	 * @throws UnsupportedEncodingException
 	 * @throws CoreException
 	 */
-	private void writeDataPoolClass() throws UnsupportedEncodingException, CoreException
+	private void writeByteFileClass() throws UnsupportedEncodingException, CoreException
 	{
 		StringBuilder sb = new StringBuilder();
 
-		String typeName = "DataPool";
+		String typeName = "ByteFile";
 
 		sb.append(String.format("package %s\n", corePack));
 		sb.append(String.format("{\n"));
 
 		sb.append(String.format("\timport flash.utils.Dictionary;\n"));
-		sb.append(String.format("\timport flash.utils.ByteArray;\n"));
 		sb.append(String.format("\t\n"));
 
 		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
-
-		// 私有变量
-		sb.append(String.format("\t\tprivate static var byteStreamMap:Dictionary=new Dictionary();\n"));
-		sb.append(String.format("\t\t\n"));
-
-		sb.append(String.format("\t\t/**\n"));
-		sb.append(String.format("\t\t * 获取文件\n"));
-		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic static function getFile(name:String):ByteStream\n"));
-		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn byteStreamMap[name];\n"));
-		sb.append(String.format("\t\t}\n"));
-		sb.append(String.format("\t\t\n"));
-
-		sb.append(String.format("\t\t/**\n"));
-		sb.append(String.format("\t\t * 添加文件\n"));
-		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic static function addFile(name:String,bytes:ByteArray):void\n"));
-		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\tbyteStreamMap[name]=new ByteStream(bytes);\n"));
-		sb.append(String.format("\t\t}\n"));
-		sb.append(String.format("\t\t\n"));
 
 		// 私有变量
 		sb.append(String.format("\t\tprivate var _inited:Boolean=false;\n"));
@@ -407,8 +436,8 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\t\n"));
 		sb.append(String.format("\t\t\twhile(bytes.bytesAvailable>0)\n"));
 		sb.append(String.format("\t\t\t{\n"));
-		sb.append(String.format("\t\t\t\tvar typeID:int=bytes.readInt();\n"));
-		sb.append(String.format("\t\t\t\t_roots[typeID]=readObject(typeID,bytes);\n"));
+		sb.append(String.format("\t\t\t\tvar tid:int=bytes.readInt();\n"));
+		sb.append(String.format("\t\t\t\t_roots[tid]=readObject(tid,bytes);\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
@@ -522,7 +551,6 @@ public class UnitCodeBuilder
 	 * 输出原生列表类
 	 * 
 	 * @param folder
-	 * @param packName
 	 * @param type
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
@@ -539,14 +567,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
 
-		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
+		sb.append(String.format("\t\tprivate var _pool:ByteFile;\n"));
 		sb.append(String.format("\t\tprivate var _indexList:Vector.<int>;\n"));
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(pool:DataPool,indexList:Vector.<int>)\n", typeName));
+		sb.append(String.format("\t\tpublic function %s(pool:ByteFile,indexList:Vector.<int>)\n", typeName));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t_pool=pool;\n"));
 		sb.append(String.format("\t\t\t_indexList=indexList;\n"));
@@ -584,7 +612,6 @@ public class UnitCodeBuilder
 	 * 输出自定义列表类
 	 * 
 	 * @param folder
-	 * @param packName
 	 * @param typeName
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
@@ -604,14 +631,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
 
-		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
+		sb.append(String.format("\t\tprivate var _pool:ByteFile;\n"));
 		sb.append(String.format("\t\tprivate var _indexList:Vector.<int>;\n"));
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(pool:DataPool,indexList:Vector.<int>)\n", typeName));
+		sb.append(String.format("\t\tpublic function %s(pool:ByteFile,indexList:Vector.<int>)\n", typeName));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t_pool=pool;\n"));
 		sb.append(String.format("\t\t\t_indexList=indexList;\n"));
@@ -649,7 +676,6 @@ public class UnitCodeBuilder
 	 * 输出自定义字典类
 	 * 
 	 * @param folder
-	 * @param packName
 	 * @param type
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
@@ -689,7 +715,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\tpublic class %s\n", typeName));
 		sb.append(String.format("\t{\n"));
 
-		sb.append(String.format("\t\tprivate var _pool:DataPool;\n"));
+		sb.append(String.format("\t\tprivate var _pool:ByteFile;\n"));
 		sb.append(String.format("\t\tprivate var _indexList:Vector.<int>=new Vector.<int>();\n"));
 		sb.append(String.format("\t\tprivate var _table:Dictionary=new Dictionary();\n", type.name));
 		sb.append(String.format("\t\t\n"));
@@ -697,7 +723,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(pool:DataPool,count:int,values:Vector.<int>)\n", typeName));
+		sb.append(String.format("\t\tpublic function %s(pool:ByteFile,count:int,values:Vector.<int>)\n", typeName));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t_pool=pool;\n"));
 		sb.append(String.format("\t\t\t\n"));
@@ -817,7 +843,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t{\n"));
 
 		// 私有变量
-		sb.append(String.format("\t\tprivate var __pool__:DataPool;\n"));
+		sb.append(String.format("\t\tprivate var __pool__:ByteFile;\n"));
 		sb.append(String.format("\t\t\n"));
 		for (ClassField field : type.fields)
 		{
@@ -840,7 +866,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:DataPool)\n", type.name));
+		sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:ByteFile)\n", type.name));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t__pool__=pool;\n"));
 		sb.append(String.format("\t\t\t\n"));
@@ -923,7 +949,11 @@ public class UnitCodeBuilder
 	 */
 	private void writePoolType(Class type) throws UnsupportedEncodingException, CoreException
 	{
-		String filePath = type.filePath;
+		String filePath = classTable.getInputURL();
+		if (filePath == null)
+		{
+			return;
+		}
 
 		String[] parts = filePath.split("\\\\|/");
 
@@ -943,7 +973,7 @@ public class UnitCodeBuilder
 		{
 			sb.append(String.format("%s", formatComment(type.comment, "\t")));
 		}
-		sb.append(String.format("\tpublic class %s extends DataPool\n", typeName));
+		sb.append(String.format("\tpublic class %s extends ByteFile\n", typeName));
 		sb.append(String.format("\t{\n"));
 
 		sb.append(String.format("\t\t/**\n"));
@@ -951,7 +981,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tprotected override function getBytes():ByteStream\n"));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\treturn DataPool.getFile(\"%s\");\n", fileName));
+		sb.append(String.format("\t\t\treturn ConfigPool.getFile(\"%s\");\n", fileName));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 

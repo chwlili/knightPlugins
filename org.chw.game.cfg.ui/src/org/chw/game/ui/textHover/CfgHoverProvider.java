@@ -1,10 +1,8 @@
 package org.chw.game.ui.textHover;
 
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -28,11 +26,11 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 		{
 			return true;
 		}
-		else if (o instanceof NativeType || o instanceof ListType || o instanceof HashType)
+		else if (o instanceof FieldType)
 		{
 			return true;
 		}
-		else if (o instanceof Param)
+		else if (o instanceof FieldMetaKey)
 		{
 			return true;
 		}
@@ -50,38 +48,12 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 		{
 			return "<b>" + ((Field) o).getFieldName() + "</b>";
 		}
-		else if (o instanceof Param)
+		else if (o instanceof FieldType)
 		{
-			Param param = (Param) o;
-			HashType hashType = (HashType) NodeModelUtils.findActualNodeFor(param).getParent().getSemanticElement();
-			Type type = getType(param.eResource(), hashType.getType());
-			for (Field field : type.getFields())
-			{
-				if (param.getParamName().equals(field.getFieldName()))
-				{
-					return getFirstLine(field);
-				}
-			}
-		}
-		else
-		{
-			String typeName = null;
-			if (o instanceof NativeType)
-			{
-				typeName = ((NativeType) o).getType();
-			}
-			else if (o instanceof ListType)
-			{
-				typeName = ((ListType) o).getType();
-			}
-			else if (o instanceof HashType)
-			{
-				typeName = ((HashType) o).getType();
-			}
-
+			String typeName = ((FieldType) o).getType();
 			if (isNativeType(typeName))
 			{
-				return "<b>" + typeName + "</b>";
+				return "";
 			}
 			else
 			{
@@ -89,6 +61,22 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				if (fieldType != null)
 				{
 					return getFirstLine(fieldType);
+				}
+			}
+		}
+		else if (o instanceof FieldMetaKey)
+		{
+			FieldMetaKey param = (FieldMetaKey) o;
+			Field parentField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
+			Type type = getType(param.eResource(), parentField.getType().getType());
+			if (type != null)
+			{
+				for (Field field : type.getFields())
+				{
+					if (param.getFieldName().equals(field.getFieldName()))
+					{
+						return getFirstLine(field);
+					}
 				}
 			}
 		}
@@ -110,35 +98,9 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 			Field field = (Field) o;
 			comm = field.getComment();
 		}
-		else if (o instanceof Param)
+		else if (o instanceof FieldType)
 		{
-			Param param = (Param) o;
-			HashType hashType = (HashType) NodeModelUtils.findActualNodeFor(param).getParent().getSemanticElement();
-			Type type = getType(param.eResource(), hashType.getType());
-			for (Field field : type.getFields())
-			{
-				if (param.getParamName().equals(field.getFieldName()))
-				{
-					return getDocumentation(field);
-				}
-			}
-		}
-		else
-		{
-			String typeName = null;
-			if (o instanceof NativeType)
-			{
-				typeName = ((NativeType) o).getType();
-			}
-			else if (o instanceof ListType)
-			{
-				typeName = ((ListType) o).getType();
-			}
-			else if (o instanceof HashType)
-			{
-				typeName = ((HashType) o).getType();
-			}
-
+			String typeName = ((FieldType) o).getType();
 			if (isNativeType(typeName))
 			{
 				return "<b>" + typeName + "</b>";
@@ -149,6 +111,22 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				if (fieldType != null)
 				{
 					return getDocumentation(fieldType);
+				}
+			}
+		}
+		else if (o instanceof FieldMetaKey)
+		{
+			FieldMetaKey param = (FieldMetaKey) o;
+			Field parentField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
+			Type type = getType(param.eResource(), parentField.getType().getType());
+			if (type != null)
+			{
+				for (Field field : type.getFields())
+				{
+					if (param.getFieldName().equals(field.getFieldName()))
+					{
+						return getDocumentation(field);
+					}
 				}
 			}
 		}
@@ -194,7 +172,7 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 
 	private boolean isNativeType(String text)
 	{
-		return text.equals("boolean") || text.equals("int") || text.equals("uint") || text.equals("Number") || text.equals("String");
+		return text.equals("Boolean") || text.equals("int") || text.equals("uint") || text.equals("Number") || text.equals("String");
 	}
 
 	private Type getType(Resource resource, String typeName)

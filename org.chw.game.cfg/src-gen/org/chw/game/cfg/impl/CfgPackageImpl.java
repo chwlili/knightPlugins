@@ -8,14 +8,14 @@ package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.Input;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.InputDef;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
-import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -45,6 +45,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass inputDefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass packDefEClass = null;
 
   /**
@@ -59,7 +66,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass inputEClass = null;
+  private EClass enterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,28 +80,21 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass nativeTypeEClass = null;
+  private EClass fieldTypeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass listTypeEClass = null;
+  private EClass fieldMetaEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass hashTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass paramEClass = null;
+  private EClass fieldMetaKeyEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -181,7 +181,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getXML2_Comment()
+  public EReference getXML2_Input()
   {
     return (EReference)xml2EClass.getEStructuralFeatures().get(0);
   }
@@ -221,6 +221,46 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getInputDef()
+  {
+    return inputDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInputDef_Comment()
+  {
+    return (EReference)inputDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInputDef_InputCHAR()
+  {
+    return (EAttribute)inputDefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInputDef_Url()
+  {
+    return (EAttribute)inputDefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPackDef()
   {
     return packDefEClass;
@@ -231,9 +271,19 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPackDef_Comment()
+  {
+    return (EReference)packDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getPackDef_PackCHAR()
   {
-    return (EAttribute)packDefEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)packDefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -243,7 +293,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    */
   public EAttribute getPackDef_Pack()
   {
-    return (EAttribute)packDefEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)packDefEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -271,7 +321,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getType_Input()
+  public EReference getType_Enter()
   {
     return (EReference)typeEClass.getEStructuralFeatures().get(1);
   }
@@ -321,9 +371,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInput()
+  public EClass getEnter()
   {
-    return inputEClass;
+    return enterEClass;
   }
 
   /**
@@ -331,9 +381,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInput_Prefix()
+  public EAttribute getEnter_Prefix()
   {
-    return (EAttribute)inputEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)enterEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -341,19 +391,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInput_FilePath()
+  public EAttribute getEnter_RootPath()
   {
-    return (EAttribute)inputEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getInput_NodePath()
-  {
-    return (EAttribute)inputEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)enterEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -381,7 +421,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getField_Type()
+  public EReference getField_Meta()
   {
     return (EReference)fieldEClass.getEStructuralFeatures().get(1);
   }
@@ -391,9 +431,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getField_FieldName()
+  public EReference getField_Type()
   {
-    return (EAttribute)fieldEClass.getEStructuralFeatures().get(2);
+    return (EReference)fieldEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -401,7 +441,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getField_NodePath()
+  public EAttribute getField_FieldName()
   {
     return (EAttribute)fieldEClass.getEStructuralFeatures().get(3);
   }
@@ -411,9 +451,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getNativeType()
+  public EAttribute getField_NodePath()
   {
-    return nativeTypeEClass;
+    return (EAttribute)fieldEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -421,9 +461,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getNativeType_Type()
+  public EClass getFieldType()
   {
-    return (EAttribute)nativeTypeEClass.getEStructuralFeatures().get(0);
+    return fieldTypeEClass;
   }
 
   /**
@@ -431,9 +471,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getListType()
+  public EAttribute getFieldType_Type()
   {
-    return listTypeEClass;
+    return (EAttribute)fieldTypeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -441,9 +481,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getListType_Type()
+  public EClass getFieldMeta()
   {
-    return (EAttribute)listTypeEClass.getEStructuralFeatures().get(0);
+    return fieldMetaEClass;
   }
 
   /**
@@ -451,9 +491,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getHashType()
+  public EAttribute getFieldMeta_Prefix()
   {
-    return hashTypeEClass;
+    return (EAttribute)fieldMetaEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -461,9 +501,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getHashType_Type()
+  public EReference getFieldMeta_Params()
   {
-    return (EAttribute)hashTypeEClass.getEStructuralFeatures().get(0);
+    return (EReference)fieldMetaEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -471,9 +511,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getHashType_Params()
+  public EClass getFieldMetaKey()
   {
-    return (EReference)hashTypeEClass.getEStructuralFeatures().get(1);
+    return fieldMetaKeyEClass;
   }
 
   /**
@@ -481,19 +521,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getParam()
+  public EAttribute getFieldMetaKey_FieldName()
   {
-    return paramEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getParam_ParamName()
-  {
-    return (EAttribute)paramEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)fieldMetaKeyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -547,46 +577,49 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Create classes and their features
     xml2EClass = createEClass(XML2);
-    createEReference(xml2EClass, XML2__COMMENT);
+    createEReference(xml2EClass, XML2__INPUT);
     createEReference(xml2EClass, XML2__PACK);
     createEReference(xml2EClass, XML2__TYPES);
     createEReference(xml2EClass, XML2__COMM);
 
+    inputDefEClass = createEClass(INPUT_DEF);
+    createEReference(inputDefEClass, INPUT_DEF__COMMENT);
+    createEAttribute(inputDefEClass, INPUT_DEF__INPUT_CHAR);
+    createEAttribute(inputDefEClass, INPUT_DEF__URL);
+
     packDefEClass = createEClass(PACK_DEF);
+    createEReference(packDefEClass, PACK_DEF__COMMENT);
     createEAttribute(packDefEClass, PACK_DEF__PACK_CHAR);
     createEAttribute(packDefEClass, PACK_DEF__PACK);
 
     typeEClass = createEClass(TYPE);
     createEAttribute(typeEClass, TYPE__COMMENT);
-    createEReference(typeEClass, TYPE__INPUT);
+    createEReference(typeEClass, TYPE__ENTER);
     createEAttribute(typeEClass, TYPE__PREFIX);
     createEAttribute(typeEClass, TYPE__NAME);
     createEReference(typeEClass, TYPE__FIELDS);
     createEReference(typeEClass, TYPE__COMM);
 
-    inputEClass = createEClass(INPUT);
-    createEAttribute(inputEClass, INPUT__PREFIX);
-    createEAttribute(inputEClass, INPUT__FILE_PATH);
-    createEAttribute(inputEClass, INPUT__NODE_PATH);
+    enterEClass = createEClass(ENTER);
+    createEAttribute(enterEClass, ENTER__PREFIX);
+    createEAttribute(enterEClass, ENTER__ROOT_PATH);
 
     fieldEClass = createEClass(FIELD);
     createEAttribute(fieldEClass, FIELD__COMMENT);
+    createEReference(fieldEClass, FIELD__META);
     createEReference(fieldEClass, FIELD__TYPE);
     createEAttribute(fieldEClass, FIELD__FIELD_NAME);
     createEAttribute(fieldEClass, FIELD__NODE_PATH);
 
-    nativeTypeEClass = createEClass(NATIVE_TYPE);
-    createEAttribute(nativeTypeEClass, NATIVE_TYPE__TYPE);
+    fieldTypeEClass = createEClass(FIELD_TYPE);
+    createEAttribute(fieldTypeEClass, FIELD_TYPE__TYPE);
 
-    listTypeEClass = createEClass(LIST_TYPE);
-    createEAttribute(listTypeEClass, LIST_TYPE__TYPE);
+    fieldMetaEClass = createEClass(FIELD_META);
+    createEAttribute(fieldMetaEClass, FIELD_META__PREFIX);
+    createEReference(fieldMetaEClass, FIELD_META__PARAMS);
 
-    hashTypeEClass = createEClass(HASH_TYPE);
-    createEAttribute(hashTypeEClass, HASH_TYPE__TYPE);
-    createEReference(hashTypeEClass, HASH_TYPE__PARAMS);
-
-    paramEClass = createEClass(PARAM);
-    createEAttribute(paramEClass, PARAM__PARAM_NAME);
+    fieldMetaKeyEClass = createEClass(FIELD_META_KEY);
+    createEAttribute(fieldMetaKeyEClass, FIELD_META_KEY__FIELD_NAME);
 
     otherComentEClass = createEClass(OTHER_COMENT);
     createEAttribute(otherComentEClass, OTHER_COMENT__COMM);
@@ -624,46 +657,49 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(xml2EClass, org.chw.game.cfg.XML2.class, "XML2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getXML2_Comment(), this.getOtherComent(), null, "comment", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getXML2_Input(), this.getInputDef(), null, "input", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Pack(), this.getPackDef(), null, "pack", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Types(), this.getType(), null, "types", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(inputDefEClass, InputDef.class, "InputDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInputDef_Comment(), this.getOtherComent(), null, "comment", null, 0, -1, InputDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInputDef_InputCHAR(), ecorePackage.getEString(), "inputCHAR", null, 0, 1, InputDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInputDef_Url(), ecorePackage.getEString(), "url", null, 0, 1, InputDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(packDefEClass, PackDef.class, "PackDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPackDef_Comment(), this.getOtherComent(), null, "comment", null, 0, -1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPackDef_PackCHAR(), ecorePackage.getEString(), "packCHAR", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPackDef_Pack(), ecorePackage.getEString(), "pack", null, 0, 1, PackDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getType_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_Input(), this.getInput(), null, "input", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Enter(), this.getEnter(), null, "enter", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Name(), ecorePackage.getEString(), "name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getType_Fields(), this.getField(), null, "fields", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getType_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(inputEClass, Input.class, "Input", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getInput_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInput_FilePath(), ecorePackage.getEString(), "filePath", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInput_NodePath(), ecorePackage.getEString(), "nodePath", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(enterEClass, Enter.class, "Enter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEnter_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Enter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEnter_RootPath(), ecorePackage.getEString(), "rootPath", null, 0, 1, Enter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getField_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getField_Type(), ecorePackage.getEObject(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Meta(), this.getFieldMeta(), null, "meta", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Type(), this.getFieldType(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_NodePath(), ecorePackage.getEString(), "nodePath", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(nativeTypeEClass, NativeType.class, "NativeType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNativeType_Type(), ecorePackage.getEString(), "type", null, 0, 1, NativeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(fieldTypeEClass, FieldType.class, "FieldType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFieldType_Type(), ecorePackage.getEString(), "type", null, 0, 1, FieldType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getListType_Type(), ecorePackage.getEString(), "type", null, 0, 1, ListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(fieldMetaEClass, FieldMeta.class, "FieldMeta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFieldMeta_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, FieldMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFieldMeta_Params(), this.getFieldMetaKey(), null, "params", null, 0, -1, FieldMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(hashTypeEClass, HashType.class, "HashType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHashType_Type(), ecorePackage.getEString(), "type", null, 0, 1, HashType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHashType_Params(), this.getParam(), null, "params", null, 0, -1, HashType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(paramEClass, Param.class, "Param", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getParam_ParamName(), ecorePackage.getEString(), "paramName", null, 0, 1, Param.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(fieldMetaKeyEClass, FieldMetaKey.class, "FieldMetaKey", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFieldMetaKey_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, FieldMetaKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(otherComentEClass, OtherComent.class, "OtherComent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getOtherComent_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, OtherComent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

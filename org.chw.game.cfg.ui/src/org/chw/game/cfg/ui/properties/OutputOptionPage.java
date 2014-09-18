@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class OutputOptionPage extends PropertyPage
 {
@@ -30,6 +33,7 @@ public class OutputOptionPage extends PropertyPage
 	private Text corePackField;
 	private Text codePackField;
 	private Text filePackField;
+	private Button filePackChecker;
 
 	/**
 	 * Constructor for SamplePropertyPage.
@@ -60,6 +64,7 @@ public class OutputOptionPage extends PropertyPage
 	{
 		Group group = new Group(composite_2, SWT.NONE);
 		GridLayout gl_group = new GridLayout(2, false);
+		gl_group.horizontalSpacing = 0;
 		gl_group.marginBottom = 10;
 		gl_group.marginWidth = 10;
 		group.setLayout(gl_group);
@@ -92,6 +97,7 @@ public class OutputOptionPage extends PropertyPage
 
 		Group group_1 = new Group(composite_2, SWT.NONE);
 		GridLayout gl_group_1 = new GridLayout(2, false);
+		gl_group_1.horizontalSpacing = 0;
 		gl_group_1.marginBottom = 10;
 		gl_group_1.marginWidth = 10;
 		group_1.setLayout(gl_group_1);
@@ -100,11 +106,19 @@ public class OutputOptionPage extends PropertyPage
 		group_1.setLayoutData(gd_group_1);
 		group_1.setText(" \u914D\u7F6E\u8F93\u51FA ");
 
-		Label filePackLabel = new Label(group_1, SWT.NONE);
-		filePackLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		filePackLabel.setText("\u8F93\u51FA\u5230\uFF1A");
+		filePackChecker = new Button(group_1, SWT.CHECK);
+		filePackChecker.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			public void widgetSelected(SelectionEvent e)
+			{
+				filePackField.setEnabled(filePackChecker.getSelection());
+			}
+		});
+		filePackChecker.setText(" \u8F93\u51FA\u5230\uFF1A");
 
 		filePackField = new Text(group_1, SWT.BORDER);
+		filePackField.setEnabled(false);
 		filePackField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	}
 
@@ -113,6 +127,7 @@ public class OutputOptionPage extends PropertyPage
 		topPackField.setText(Xml2Nature.DEFAULT_TOP_PACK);
 		corePackField.setText(Xml2Nature.DEFAULT_CORE_PACK);
 		codePackField.setText(Xml2Nature.DEFAULT_CODE_PACK);
+		filePackChecker.setSelection(Xml2Nature.DEFAULT_FILE_CHECK);
 		filePackField.setText(Xml2Nature.DEFAULT_FILE_PACK);
 
 		try
@@ -120,6 +135,7 @@ public class OutputOptionPage extends PropertyPage
 			String topPackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
 			String corePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
 			String codePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+			String filePackCheck = ((IResource) getElement()).getPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK);
 			String filePackName = ((IResource) getElement()).getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 
 			if (topPackName != null)
@@ -137,6 +153,11 @@ public class OutputOptionPage extends PropertyPage
 				codePackField.setText(codePackName);
 			}
 
+			if (filePackCheck != null && filePackCheck.equals("true"))
+			{
+				filePackChecker.setSelection(true);
+			}
+
 			if (filePackName != null)
 			{
 				filePackField.setText(filePackName);
@@ -145,6 +166,8 @@ public class OutputOptionPage extends PropertyPage
 		catch (CoreException e)
 		{
 		}
+
+		filePackField.setEnabled(filePackChecker.getSelection());
 	}
 
 	protected void performDefaults()
@@ -153,6 +176,7 @@ public class OutputOptionPage extends PropertyPage
 		topPackField.setText(Xml2Nature.DEFAULT_TOP_PACK);
 		corePackField.setText(Xml2Nature.DEFAULT_CORE_PACK);
 		codePackField.setText(Xml2Nature.DEFAULT_CODE_PACK);
+		filePackChecker.setSelection(Xml2Nature.DEFAULT_FILE_CHECK);
 		filePackField.setText(Xml2Nature.DEFAULT_FILE_PACK);
 	}
 
@@ -181,18 +205,21 @@ public class OutputOptionPage extends PropertyPage
 				codePack = Xml2Nature.DEFAULT_CODE_PACK;
 			}
 
+			boolean filePackCheck = "true".equals(resource.getPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK));
+
 			String filePack = resource.getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 			if (filePack == null)
 			{
 				filePack = Xml2Nature.DEFAULT_FILE_PACK;
 			}
 
-			if (!topPack.equals(topPackField.getText()) || !corePack.equals(corePackField.getText()) || !codePack.equals(codePackField.getText()) || !filePack.equals(filePackField.getText()))
+			if (!topPack.equals(topPackField.getText()) || !corePack.equals(corePackField.getText()) || !codePack.equals(codePackField.getText()) || !filePack.equals(filePackField.getText()) || filePackCheck != filePackChecker.getSelection())
 			{
 				resource.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, topPackField.getText());
 				resource.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, corePackField.getText());
 				resource.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, codePackField.getText());
 				resource.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, filePackField.getText());
+				resource.setPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK, filePackChecker.getSelection() ? "true" : "false");
 
 				shell.getDisplay().timerExec(50, new Runnable()
 				{

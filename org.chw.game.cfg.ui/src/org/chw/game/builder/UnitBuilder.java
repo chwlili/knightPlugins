@@ -27,6 +27,7 @@ public class UnitBuilder
 
 	private String corePack;
 	private String currPack;
+	private boolean filePackCheck;
 	private String filePack;
 
 	private UnitCodeBuilder codeBuilder;
@@ -57,12 +58,14 @@ public class UnitBuilder
 	{
 		initPackNames();
 
-		IFile[] codeFiles = writeCodeFiles(folder, changed);
-		IFile[] configFiles = writeConfigFiles(folder, changed);
-
 		ArrayList<IFile> files = new ArrayList<IFile>();
-		files.addAll(Arrays.asList(codeFiles));
-		files.addAll(Arrays.asList(configFiles));
+
+		files.addAll(Arrays.asList(writeCodeFiles(folder, changed)));
+
+		if (filePackCheck)
+		{
+			files.addAll(Arrays.asList(writeConfigFiles(folder, changed)));
+		}
 
 		return files.toArray(new IFile[] {});
 	}
@@ -77,6 +80,7 @@ public class UnitBuilder
 		String topPackName = project.getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
 		String corePackName = project.getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
 		String codePackName = project.getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+		boolean filePackCheck = "true".equals(project.getPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK));
 		String filePackName = project.getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
 
 		if (topPackName == null)
@@ -130,6 +134,7 @@ public class UnitBuilder
 
 		this.corePack = corePackName;
 		this.currPack = codePackName;
+		this.filePackCheck = filePackCheck;
 		this.filePack = filePackName;
 	}
 
@@ -163,25 +168,9 @@ public class UnitBuilder
 
 		IFolder xmlFolder = project.getFolder(project.getPersistentProperty(Xml2Nature.XML_DIR));
 
-		for (Class type : classTable.getAllMainClass())
+		String filePath = classTable.getInputURL();
+		if (filePath != null)
 		{
-			String filePath = type.filePath;
-			String nodePath = type.xpath;
-
-			if (nodePath.isEmpty())
-			{
-				nodePath = "/";
-			}
-			else if (nodePath.charAt(0) != '/')
-			{
-				nodePath = "/" + nodePath;
-			}
-
-			if (filePath.charAt(0) != '/')
-			{
-				filePath = "/" + filePath;
-			}
-
 			IResource resource = xmlFolder.findMember(filePath);
 			if (resource != null && resource instanceof IFile)
 			{
@@ -199,8 +188,6 @@ public class UnitBuilder
 			{
 				//
 			}
-
-			break;
 		}
 
 		return writedFiles.toArray(new IFile[] {});

@@ -6,6 +6,8 @@
  */
 package org.chw.game.cfg;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.chw.game.cfg.PackDef#getComment <em>Comment</em>}</li>
  *   <li>{@link org.chw.game.cfg.PackDef#getPackCHAR <em>Pack CHAR</em>}</li>
  *   <li>{@link org.chw.game.cfg.PackDef#getPack <em>Pack</em>}</li>
  * </ul>
@@ -27,6 +30,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface PackDef extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Comment</b></em>' containment reference list.
+   * The list contents are of type {@link org.chw.game.cfg.OtherComent}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Comment</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Comment</em>' containment reference list.
+   * @see org.chw.game.cfg.CfgPackage#getPackDef_Comment()
+   * @model containment="true"
+   * @generated
+   */
+  EList<OtherComent> getComment();
+
   /**
    * Returns the value of the '<em><b>Pack CHAR</b></em>' attribute.
    * <!-- begin-user-doc -->

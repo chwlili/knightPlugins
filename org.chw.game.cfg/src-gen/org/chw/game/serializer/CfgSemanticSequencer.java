@@ -3,14 +3,14 @@ package org.chw.game.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.Input;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.InputDef;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
-import org.chw.game.cfg.Param;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.chw.game.services.CfgGrammarAccess;
@@ -34,33 +34,39 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == CfgPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case CfgPackage.ENTER:
+				if(context == grammarAccess.getEnterRule()) {
+					sequence_Enter(context, (Enter) semanticObject); 
+					return; 
+				}
+				else break;
 			case CfgPackage.FIELD:
 				if(context == grammarAccess.getFieldRule()) {
 					sequence_Field(context, (Field) semanticObject); 
 					return; 
 				}
 				else break;
-			case CfgPackage.HASH_TYPE:
-				if(context == grammarAccess.getHashTypeRule()) {
-					sequence_HashType(context, (HashType) semanticObject); 
+			case CfgPackage.FIELD_META:
+				if(context == grammarAccess.getFieldMetaRule()) {
+					sequence_FieldMeta(context, (FieldMeta) semanticObject); 
 					return; 
 				}
 				else break;
-			case CfgPackage.INPUT:
-				if(context == grammarAccess.getInputRule()) {
-					sequence_Input(context, (Input) semanticObject); 
+			case CfgPackage.FIELD_META_KEY:
+				if(context == grammarAccess.getFieldMetaKeyRule()) {
+					sequence_FieldMetaKey(context, (FieldMetaKey) semanticObject); 
 					return; 
 				}
 				else break;
-			case CfgPackage.LIST_TYPE:
-				if(context == grammarAccess.getListTypeRule()) {
-					sequence_ListType(context, (ListType) semanticObject); 
+			case CfgPackage.FIELD_TYPE:
+				if(context == grammarAccess.getFieldTypeRule()) {
+					sequence_FieldType(context, (FieldType) semanticObject); 
 					return; 
 				}
 				else break;
-			case CfgPackage.NATIVE_TYPE:
-				if(context == grammarAccess.getNativeTypeRule()) {
-					sequence_NativeType(context, (NativeType) semanticObject); 
+			case CfgPackage.INPUT_DEF:
+				if(context == grammarAccess.getInputDefRule()) {
+					sequence_InputDef(context, (InputDef) semanticObject); 
 					return; 
 				}
 				else break;
@@ -73,12 +79,6 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case CfgPackage.PACK_DEF:
 				if(context == grammarAccess.getPackDefRule()) {
 					sequence_PackDef(context, (PackDef) semanticObject); 
-					return; 
-				}
-				else break;
-			case CfgPackage.PARAM:
-				if(context == grammarAccess.getParamRule()) {
-					sequence_Param(context, (Param) semanticObject); 
 					return; 
 				}
 				else break;
@@ -100,7 +100,67 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comment=FieldComment? (type=NativeType | type=ListType | type=HashType) fieldName=TypeName nodePath=STRING)
+	 *     (prefix=C_MAIN rootPath=STRING)
+	 */
+	protected void sequence_Enter(EObject context, Enter semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.ENTER__PREFIX) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.ENTER__PREFIX));
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.ENTER__ROOT_PATH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.ENTER__ROOT_PATH));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getEnterAccess().getPrefixC_MAINTerminalRuleCall_1_0(), semanticObject.getPrefix());
+		feeder.accept(grammarAccess.getEnterAccess().getRootPathSTRINGTerminalRuleCall_3_0(), semanticObject.getRootPath());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     fieldName=TypeName
+	 */
+	protected void sequence_FieldMetaKey(EObject context, FieldMetaKey semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getFieldMetaKeyAccess().getFieldNameTypeNameParserRuleCall_0(), semanticObject.getFieldName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (prefix=C_LIST (params+=FieldMetaKey params+=FieldMetaKey*)?)
+	 */
+	protected void sequence_FieldMeta(EObject context, FieldMeta semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     type=TypeName
+	 */
+	protected void sequence_FieldType(EObject context, FieldType semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.FIELD_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.FIELD_TYPE__TYPE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getFieldTypeAccess().getTypeTypeNameParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName nodePath=STRING)
 	 */
 	protected void sequence_Field(EObject context, Field semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -109,51 +169,10 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (type=TypeName (params+=Param params+=Param*)?)
+	 *     (comment+=OtherComent* inputCHAR=C_INPUT url=STRING)
 	 */
-	protected void sequence_HashType(EObject context, HashType semanticObject) {
+	protected void sequence_InputDef(EObject context, InputDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (prefix=C_INPUT filePath=STRING nodePath=STRING?)
-	 */
-	protected void sequence_Input(EObject context, Input semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     type=TypeName
-	 */
-	protected void sequence_ListType(EObject context, ListType semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.LIST_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.LIST_TYPE__TYPE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getListTypeAccess().getTypeTypeNameParserRuleCall_2_0(), semanticObject.getType());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     type=TypeName
-	 */
-	protected void sequence_NativeType(EObject context, NativeType semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.NATIVE_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.NATIVE_TYPE__TYPE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getNativeTypeAccess().getTypeTypeNameParserRuleCall_0(), semanticObject.getType());
-		feeder.finish();
 	}
 	
 	
@@ -175,7 +194,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (packCHAR=C_PACKAGE pack=PackName?)
+	 *     (comment+=OtherComent* packCHAR=C_PACKAGE pack=PackName?)
 	 */
 	protected void sequence_PackDef(EObject context, PackDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -184,23 +203,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     paramName=NAME
-	 */
-	protected void sequence_Param(EObject context, Param semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.PARAM__PARAM_NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.PARAM__PARAM_NAME));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getParamAccess().getParamNameNAMETerminalRuleCall_0(), semanticObject.getParamName());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName (fields+=Field | comm+=OtherComent)*)
+	 *     (comment=TypeComment? enter=Enter? prefix=C_TYPE name=TypeName (fields+=Field | comm+=OtherComent)*)
 	 */
 	protected void sequence_Type(EObject context, Type semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -209,7 +212,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comment+=OtherComent* pack=PackDef (types+=Type | comm+=OtherComent)*)
+	 *     (((input=InputDef pack=PackDef) | (pack=PackDef input=InputDef) | pack=PackDef | input=InputDef) (types+=Type | comm+=OtherComent)*)
 	 */
 	protected void sequence_XML2(EObject context, XML2 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

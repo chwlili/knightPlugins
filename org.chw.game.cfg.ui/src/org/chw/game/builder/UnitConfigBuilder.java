@@ -237,7 +237,6 @@ public class UnitConfigBuilder
 			Integer[] idArray = ids.toArray(new Integer[ids.size()]);
 			Arrays.sort(idArray, new Comparator<Integer>()
 			{
-				@Override
 				public int compare(Integer o1, Integer o2)
 				{
 					o1 = id_refCount.get(o1);
@@ -524,7 +523,6 @@ public class UnitConfigBuilder
 		InstanceField[] fields = instance.fields.toArray(new InstanceField[instance.fields.size()]);
 		Arrays.sort(fields, new Comparator<InstanceField>()
 		{
-			@Override
 			public int compare(InstanceField o1, InstanceField o2)
 			{
 				return getID(o1.meta) - getID(o2.meta);

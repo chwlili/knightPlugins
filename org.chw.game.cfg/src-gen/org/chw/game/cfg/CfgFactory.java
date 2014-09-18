@@ -36,6 +36,15 @@ public interface CfgFactory extends EFactory
   XML2 createXML2();
 
   /**
+   * Returns a new object of class '<em>Input Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input Def</em>'.
+   * @generated
+   */
+  InputDef createInputDef();
+
+  /**
    * Returns a new object of class '<em>Pack Def</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -54,13 +63,13 @@ public interface CfgFactory extends EFactory
   Type createType();
 
   /**
-   * Returns a new object of class '<em>Input</em>'.
+   * Returns a new object of class '<em>Enter</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Input</em>'.
+   * @return a new object of class '<em>Enter</em>'.
    * @generated
    */
-  Input createInput();
+  Enter createEnter();
 
   /**
    * Returns a new object of class '<em>Field</em>'.
@@ -72,40 +81,31 @@ public interface CfgFactory extends EFactory
   Field createField();
 
   /**
-   * Returns a new object of class '<em>Native Type</em>'.
+   * Returns a new object of class '<em>Field Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Native Type</em>'.
+   * @return a new object of class '<em>Field Type</em>'.
    * @generated
    */
-  NativeType createNativeType();
+  FieldType createFieldType();
 
   /**
-   * Returns a new object of class '<em>List Type</em>'.
+   * Returns a new object of class '<em>Field Meta</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>List Type</em>'.
+   * @return a new object of class '<em>Field Meta</em>'.
    * @generated
    */
-  ListType createListType();
+  FieldMeta createFieldMeta();
 
   /**
-   * Returns a new object of class '<em>Hash Type</em>'.
+   * Returns a new object of class '<em>Field Meta Key</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Hash Type</em>'.
+   * @return a new object of class '<em>Field Meta Key</em>'.
    * @generated
    */
-  HashType createHashType();
-
-  /**
-   * Returns a new object of class '<em>Param</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Param</em>'.
-   * @generated
-   */
-  Param createParam();
+  FieldMetaKey createFieldMetaKey();
 
   /**
    * Returns a new object of class '<em>Other Coment</em>'.

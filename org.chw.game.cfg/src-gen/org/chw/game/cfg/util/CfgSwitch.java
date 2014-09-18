@@ -83,6 +83,13 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CfgPackage.INPUT_DEF:
+      {
+        InputDef inputDef = (InputDef)theEObject;
+        T result = caseInputDef(inputDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case CfgPackage.PACK_DEF:
       {
         PackDef packDef = (PackDef)theEObject;
@@ -97,10 +104,10 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.INPUT:
+      case CfgPackage.ENTER:
       {
-        Input input = (Input)theEObject;
-        T result = caseInput(input);
+        Enter enter = (Enter)theEObject;
+        T result = caseEnter(enter);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -111,31 +118,24 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.NATIVE_TYPE:
+      case CfgPackage.FIELD_TYPE:
       {
-        NativeType nativeType = (NativeType)theEObject;
-        T result = caseNativeType(nativeType);
+        FieldType fieldType = (FieldType)theEObject;
+        T result = caseFieldType(fieldType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.LIST_TYPE:
+      case CfgPackage.FIELD_META:
       {
-        ListType listType = (ListType)theEObject;
-        T result = caseListType(listType);
+        FieldMeta fieldMeta = (FieldMeta)theEObject;
+        T result = caseFieldMeta(fieldMeta);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.HASH_TYPE:
+      case CfgPackage.FIELD_META_KEY:
       {
-        HashType hashType = (HashType)theEObject;
-        T result = caseHashType(hashType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CfgPackage.PARAM:
-      {
-        Param param = (Param)theEObject;
-        T result = caseParam(param);
+        FieldMetaKey fieldMetaKey = (FieldMetaKey)theEObject;
+        T result = caseFieldMetaKey(fieldMetaKey);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -162,6 +162,22 @@ public class CfgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseXML2(XML2 object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Input Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Input Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInputDef(InputDef object)
   {
     return null;
   }
@@ -199,17 +215,17 @@ public class CfgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Input</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Enter</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Input</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Enter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInput(Input object)
+  public T caseEnter(Enter object)
   {
     return null;
   }
@@ -231,65 +247,49 @@ public class CfgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Native Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Field Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Native Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Field Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseNativeType(NativeType object)
+  public T caseFieldType(FieldType object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Field Meta</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>List Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Field Meta</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseListType(ListType object)
+  public T caseFieldMeta(FieldMeta object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Hash Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Field Meta Key</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Hash Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Field Meta Key</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseHashType(HashType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Param</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Param</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseParam(Param object)
+  public T caseFieldMetaKey(FieldMetaKey object)
   {
     return null;
   }

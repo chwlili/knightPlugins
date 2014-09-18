@@ -9,8 +9,8 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.InputDef;
 import org.chw.game.cfg.OtherComent;
-import org.chw.game.cfg.PackDef;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,20 +28,20 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Pack Def</b></em>'.
+ * An implementation of the model object '<em><b>Input Def</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.PackDefImpl#getComment <em>Comment</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.PackDefImpl#getPackCHAR <em>Pack CHAR</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.PackDefImpl#getPack <em>Pack</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.InputDefImpl#getComment <em>Comment</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.InputDefImpl#getInputCHAR <em>Input CHAR</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.InputDefImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
+public class InputDefImpl extends MinimalEObjectImpl.Container implements InputDef
 {
   /**
    * The cached value of the '{@link #getComment() <em>Comment</em>}' containment reference list.
@@ -54,51 +54,51 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   protected EList<OtherComent> comment;
 
   /**
-   * The default value of the '{@link #getPackCHAR() <em>Pack CHAR</em>}' attribute.
+   * The default value of the '{@link #getInputCHAR() <em>Input CHAR</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackCHAR()
+   * @see #getInputCHAR()
    * @generated
    * @ordered
    */
-  protected static final String PACK_CHAR_EDEFAULT = null;
+  protected static final String INPUT_CHAR_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPackCHAR() <em>Pack CHAR</em>}' attribute.
+   * The cached value of the '{@link #getInputCHAR() <em>Input CHAR</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackCHAR()
+   * @see #getInputCHAR()
    * @generated
    * @ordered
    */
-  protected String packCHAR = PACK_CHAR_EDEFAULT;
+  protected String inputCHAR = INPUT_CHAR_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPack() <em>Pack</em>}' attribute.
+   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPack()
+   * @see #getUrl()
    * @generated
    * @ordered
    */
-  protected static final String PACK_EDEFAULT = null;
+  protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPack() <em>Pack</em>}' attribute.
+   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPack()
+   * @see #getUrl()
    * @generated
    * @ordered
    */
-  protected String pack = PACK_EDEFAULT;
+  protected String url = URL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PackDefImpl()
+  protected InputDefImpl()
   {
     super();
   }
@@ -111,7 +111,7 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.PACK_DEF;
+    return CfgPackage.Literals.INPUT_DEF;
   }
 
   /**
@@ -123,7 +123,7 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     if (comment == null)
     {
-      comment = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.PACK_DEF__COMMENT);
+      comment = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.INPUT_DEF__COMMENT);
     }
     return comment;
   }
@@ -133,9 +133,9 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getPackCHAR()
+  public String getInputCHAR()
   {
-    return packCHAR;
+    return inputCHAR;
   }
 
   /**
@@ -143,12 +143,12 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPackCHAR(String newPackCHAR)
+  public void setInputCHAR(String newInputCHAR)
   {
-    String oldPackCHAR = packCHAR;
-    packCHAR = newPackCHAR;
+    String oldInputCHAR = inputCHAR;
+    inputCHAR = newInputCHAR;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.PACK_DEF__PACK_CHAR, oldPackCHAR, packCHAR));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.INPUT_DEF__INPUT_CHAR, oldInputCHAR, inputCHAR));
   }
 
   /**
@@ -156,9 +156,9 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getPack()
+  public String getUrl()
   {
-    return pack;
+    return url;
   }
 
   /**
@@ -166,12 +166,12 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPack(String newPack)
+  public void setUrl(String newUrl)
   {
-    String oldPack = pack;
-    pack = newPack;
+    String oldUrl = url;
+    url = newUrl;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.PACK_DEF__PACK, oldPack, pack));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.INPUT_DEF__URL, oldUrl, url));
   }
 
   /**
@@ -184,7 +184,7 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     switch (featureID)
     {
-      case CfgPackage.PACK_DEF__COMMENT:
+      case CfgPackage.INPUT_DEF__COMMENT:
         return ((InternalEList<?>)getComment()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -200,12 +200,12 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     switch (featureID)
     {
-      case CfgPackage.PACK_DEF__COMMENT:
+      case CfgPackage.INPUT_DEF__COMMENT:
         return getComment();
-      case CfgPackage.PACK_DEF__PACK_CHAR:
-        return getPackCHAR();
-      case CfgPackage.PACK_DEF__PACK:
-        return getPack();
+      case CfgPackage.INPUT_DEF__INPUT_CHAR:
+        return getInputCHAR();
+      case CfgPackage.INPUT_DEF__URL:
+        return getUrl();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,15 +221,15 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     switch (featureID)
     {
-      case CfgPackage.PACK_DEF__COMMENT:
+      case CfgPackage.INPUT_DEF__COMMENT:
         getComment().clear();
         getComment().addAll((Collection<? extends OtherComent>)newValue);
         return;
-      case CfgPackage.PACK_DEF__PACK_CHAR:
-        setPackCHAR((String)newValue);
+      case CfgPackage.INPUT_DEF__INPUT_CHAR:
+        setInputCHAR((String)newValue);
         return;
-      case CfgPackage.PACK_DEF__PACK:
-        setPack((String)newValue);
+      case CfgPackage.INPUT_DEF__URL:
+        setUrl((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -245,14 +245,14 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     switch (featureID)
     {
-      case CfgPackage.PACK_DEF__COMMENT:
+      case CfgPackage.INPUT_DEF__COMMENT:
         getComment().clear();
         return;
-      case CfgPackage.PACK_DEF__PACK_CHAR:
-        setPackCHAR(PACK_CHAR_EDEFAULT);
+      case CfgPackage.INPUT_DEF__INPUT_CHAR:
+        setInputCHAR(INPUT_CHAR_EDEFAULT);
         return;
-      case CfgPackage.PACK_DEF__PACK:
-        setPack(PACK_EDEFAULT);
+      case CfgPackage.INPUT_DEF__URL:
+        setUrl(URL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -268,12 +268,12 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
   {
     switch (featureID)
     {
-      case CfgPackage.PACK_DEF__COMMENT:
+      case CfgPackage.INPUT_DEF__COMMENT:
         return comment != null && !comment.isEmpty();
-      case CfgPackage.PACK_DEF__PACK_CHAR:
-        return PACK_CHAR_EDEFAULT == null ? packCHAR != null : !PACK_CHAR_EDEFAULT.equals(packCHAR);
-      case CfgPackage.PACK_DEF__PACK:
-        return PACK_EDEFAULT == null ? pack != null : !PACK_EDEFAULT.equals(pack);
+      case CfgPackage.INPUT_DEF__INPUT_CHAR:
+        return INPUT_CHAR_EDEFAULT == null ? inputCHAR != null : !INPUT_CHAR_EDEFAULT.equals(inputCHAR);
+      case CfgPackage.INPUT_DEF__URL:
+        return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
     }
     return super.eIsSet(featureID);
   }
@@ -289,12 +289,12 @@ public class PackDefImpl extends MinimalEObjectImpl.Container implements PackDef
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (packCHAR: ");
-    result.append(packCHAR);
-    result.append(", pack: ");
-    result.append(pack);
+    result.append(" (inputCHAR: ");
+    result.append(inputCHAR);
+    result.append(", url: ");
+    result.append(url);
     result.append(')');
     return result.toString();
   }
 
-} //PackDefImpl
+} //InputDefImpl

@@ -125,7 +125,6 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			final HashSet<IFile> changedXML = new HashSet<IFile>();
 			getDelta(getProject()).accept(new IResourceDeltaVisitor()
 			{
-				@Override
 				public boolean visit(IResourceDelta delta) throws CoreException
 				{
 					IResource resource = delta.getResource();
@@ -153,7 +152,6 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			final ArrayList<IFile> cfgFiles = new ArrayList<IFile>();
 			cfgFolder.accept(new IResourceVisitor()
 			{
-				@Override
 				public boolean visit(IResource resource) throws CoreException
 				{
 					if (resource instanceof IFile)
@@ -181,20 +179,10 @@ public class Xml2Builder extends IncrementalProjectBuilder
 				ClassTable types = getTypeDefs(file);
 				if (!changed)
 				{
-					for (Class type : types.getAllClass())
+					String inputURL = types.getInputURL();
+					if (inputURL != null)
 					{
-						if (type.filePath == null || type.filePath.isEmpty())
-						{
-							continue;
-						}
-
-						String filePath = type.filePath;
-						if (filePath.charAt(0) != '/')
-						{
-							filePath = "/" + filePath;
-						}
-
-						IResource resource = xmlFolder.findMember(filePath);
+						IResource resource = xmlFolder.findMember(inputURL);
 						if (resource != null && (resource instanceof IFile) && changedXML.contains(resource))
 						{
 							changed = true;
@@ -243,7 +231,6 @@ public class Xml2Builder extends IncrementalProjectBuilder
 			monitor.setTaskName("查找xml2文件");
 			cfgFolder.accept(new IResourceVisitor()
 			{
-				@Override
 				public boolean visit(IResource resource) throws CoreException
 				{
 					if (resource instanceof IFile)
@@ -308,7 +295,6 @@ public class Xml2Builder extends IncrementalProjectBuilder
 		monitor.setTaskName("查找无效文件");
 		srcFolder.accept(new IResourceVisitor()
 		{
-			@Override
 			public boolean visit(IResource resource) throws CoreException
 			{
 				if (resource instanceof IFile)

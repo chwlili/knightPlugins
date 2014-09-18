@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.XML2#getComment <em>Comment</em>}</li>
+ *   <li>{@link org.chw.game.cfg.XML2#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getTypes <em>Types</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getComm <em>Comm</em>}</li>
@@ -32,20 +32,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface XML2 extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Comment</b></em>' containment reference list.
-   * The list contents are of type {@link org.chw.game.cfg.OtherComent}.
+   * Returns the value of the '<em><b>Input</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Comment</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Input</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Comment</em>' containment reference list.
-   * @see org.chw.game.cfg.CfgPackage#getXML2_Comment()
+   * @return the value of the '<em>Input</em>' containment reference.
+   * @see #setInput(InputDef)
+   * @see org.chw.game.cfg.CfgPackage#getXML2_Input()
    * @model containment="true"
    * @generated
    */
-  EList<OtherComent> getComment();
+  InputDef getInput();
+
+  /**
+   * Sets the value of the '{@link org.chw.game.cfg.XML2#getInput <em>Input</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Input</em>' containment reference.
+   * @see #getInput()
+   * @generated
+   */
+  void setInput(InputDef value);
 
   /**
    * Returns the value of the '<em><b>Pack</b></em>' containment reference.

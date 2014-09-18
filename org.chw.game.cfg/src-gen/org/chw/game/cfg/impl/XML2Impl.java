@@ -9,6 +9,7 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.InputDef;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
 import org.chw.game.cfg.Type;
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getComment <em>Comment</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getTypes <em>Types</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getComm <em>Comm</em>}</li>
@@ -47,14 +48,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
 {
   /**
-   * The cached value of the '{@link #getComment() <em>Comment</em>}' containment reference list.
+   * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getComment()
+   * @see #getInput()
    * @generated
    * @ordered
    */
-  protected EList<OtherComent> comment;
+  protected InputDef input;
 
   /**
    * The cached value of the '{@link #getPack() <em>Pack</em>}' containment reference.
@@ -112,13 +113,47 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<OtherComent> getComment()
+  public InputDef getInput()
   {
-    if (comment == null)
+    return input;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetInput(InputDef newInput, NotificationChain msgs)
+  {
+    InputDef oldInput = input;
+    input = newInput;
+    if (eNotificationRequired())
     {
-      comment = new EObjectContainmentEList<OtherComent>(OtherComent.class, this, CfgPackage.XML2__COMMENT);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.XML2__INPUT, oldInput, newInput);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return comment;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setInput(InputDef newInput)
+  {
+    if (newInput != input)
+    {
+      NotificationChain msgs = null;
+      if (input != null)
+        msgs = ((InternalEObject)input).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.XML2__INPUT, null, msgs);
+      if (newInput != null)
+        msgs = ((InternalEObject)newInput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.XML2__INPUT, null, msgs);
+      msgs = basicSetInput(newInput, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.XML2__INPUT, newInput, newInput));
   }
 
   /**
@@ -207,8 +242,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
-      case CfgPackage.XML2__COMMENT:
-        return ((InternalEList<?>)getComment()).basicRemove(otherEnd, msgs);
+      case CfgPackage.XML2__INPUT:
+        return basicSetInput(null, msgs);
       case CfgPackage.XML2__PACK:
         return basicSetPack(null, msgs);
       case CfgPackage.XML2__TYPES:
@@ -229,8 +264,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
-      case CfgPackage.XML2__COMMENT:
-        return getComment();
+      case CfgPackage.XML2__INPUT:
+        return getInput();
       case CfgPackage.XML2__PACK:
         return getPack();
       case CfgPackage.XML2__TYPES:
@@ -252,9 +287,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
-      case CfgPackage.XML2__COMMENT:
-        getComment().clear();
-        getComment().addAll((Collection<? extends OtherComent>)newValue);
+      case CfgPackage.XML2__INPUT:
+        setInput((InputDef)newValue);
         return;
       case CfgPackage.XML2__PACK:
         setPack((PackDef)newValue);
@@ -281,8 +315,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
-      case CfgPackage.XML2__COMMENT:
-        getComment().clear();
+      case CfgPackage.XML2__INPUT:
+        setInput((InputDef)null);
         return;
       case CfgPackage.XML2__PACK:
         setPack((PackDef)null);
@@ -307,8 +341,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
   {
     switch (featureID)
     {
-      case CfgPackage.XML2__COMMENT:
-        return comment != null && !comment.isEmpty();
+      case CfgPackage.XML2__INPUT:
+        return input != null;
       case CfgPackage.XML2__PACK:
         return pack != null;
       case CfgPackage.XML2__TYPES:

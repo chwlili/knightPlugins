@@ -3,18 +3,18 @@ package org.chw.game.builder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.Input;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
+import org.eclipse.emf.common.util.EList;
 
 public class ClassTable
 {
 	private String packName = "";
+	private String inputFile = null;
 	private ArrayList<Class> mainClass = new ArrayList<Class>();
 	private HashMap<String, Class> name2Class = new HashMap<String, Class>();
 
@@ -26,6 +26,16 @@ public class ClassTable
 	public ClassTable(XML2 root)
 	{
 		open(root);
+	}
+
+	/**
+	 * ªÒ»° ‰»ÎURL
+	 * 
+	 * @return
+	 */
+	public String getInputURL()
+	{
+		return inputFile;
 	}
 
 	/**
@@ -121,19 +131,27 @@ public class ClassTable
 			packName = xml2.getPack().getPack();
 		}
 
+		inputFile = null;
+		if (xml2.getInput() != null)
+		{
+			inputFile = xml2.getInput().getUrl();
+		}
+
 		int order = 1;
 		for (Type type : xml2.getTypes())
 		{
 			String typeComm = type.getComment();
 			String typeName = type.getName();
-			String inputPath = null;
-			String xpath = null;
+			String rootXPath = null;
 
-			Input input = type.getInput();
-			if (input != null)
+			Enter enter = type.getEnter();
+			if (enter != null)
 			{
-				inputPath = input.getFilePath();
-				xpath = input.getNodePath();
+				rootXPath = enter.getRootPath();
+				if (rootXPath.charAt(0) != '/')
+				{
+					rootXPath = "/" + rootXPath;
+				}
 			}
 
 			ArrayList<ClassField> fieldDefs = new ArrayList<ClassField>();
@@ -142,34 +160,34 @@ public class ClassTable
 				String fieldName = field.getFieldName();
 				String fieldComm = field.getComment();
 				String fieldXPath = field.getNodePath();
-				String fieldType = "";
+				String fieldType = field.getType().getType();
 				boolean fieldList = false;
 				String[] indexList = null;
 
-				if (field.getType() instanceof ListType)
+				FieldMeta meta = field.getMeta();
+				if (meta != null)
 				{
-					ListType listType = (ListType) field.getType();
-					fieldType = listType.getType();
-					fieldList = true;
-				}
-				else if (field.getType() instanceof HashType)
-				{
-					HashType hashType = (HashType) field.getType();
-					fieldType = hashType.getType();
 					fieldList = true;
 
-					ArrayList<String> indexKeys = new ArrayList<String>();
-					for (Param param : hashType.getParams())
+					ArrayList<String> keys = null;
+					EList<FieldMetaKey> params = meta.getParams();
+					if (params != null)
 					{
-						indexKeys.add(param.getParamName());
+						keys = new ArrayList<String>();
+						for (FieldMetaKey param : params)
+						{
+							String paramName = param.getFieldName();
+							if (paramName != null && paramName.isEmpty() == false)
+							{
+								keys.add(paramName);
+							}
+						}
 					}
-					indexList = indexKeys.toArray(new String[indexKeys.size()]);
-				}
-				else if (field.getType() instanceof NativeType)
-				{
-					NativeType nativeType = (NativeType) field.getType();
-					fieldType = nativeType.getType();
-					fieldList = false;
+
+					if (keys != null && keys.size() > 0)
+					{
+						indexList = keys.toArray(new String[] {});
+					}
 				}
 
 				if (fieldType != "")
@@ -178,11 +196,11 @@ public class ClassTable
 				}
 			}
 
-			Class clazz = new Class(inputPath, xpath, packName, typeName, typeComm, order, fieldDefs.toArray(new ClassField[] {}));
+			Class clazz = new Class(rootXPath, typeName, typeComm, order, fieldDefs.toArray(new ClassField[] {}));
 			order++;
 
 			name2Class.put(typeName, clazz);
-			if (inputPath != null)
+			if (rootXPath != null)
 			{
 				mainClass.add(clazz);
 			}

@@ -8,12 +8,13 @@ package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldType;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getComment <em>Comment</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getMeta <em>Meta</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getFieldName <em>Field Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.FieldImpl#getNodePath <em>Node Path</em>}</li>
@@ -58,6 +60,16 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   protected String comment = COMMENT_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getMeta() <em>Meta</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMeta()
+   * @generated
+   * @ordered
+   */
+  protected FieldMeta meta;
+
+  /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -65,7 +77,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * @generated
    * @ordered
    */
-  protected EObject type;
+  protected FieldType type;
 
   /**
    * The default value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
@@ -156,7 +168,55 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public EObject getType()
+  public FieldMeta getMeta()
+  {
+    return meta;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetMeta(FieldMeta newMeta, NotificationChain msgs)
+  {
+    FieldMeta oldMeta = meta;
+    meta = newMeta;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__META, oldMeta, newMeta);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMeta(FieldMeta newMeta)
+  {
+    if (newMeta != meta)
+    {
+      NotificationChain msgs = null;
+      if (meta != null)
+        msgs = ((InternalEObject)meta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.FIELD__META, null, msgs);
+      if (newMeta != null)
+        msgs = ((InternalEObject)newMeta).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.FIELD__META, null, msgs);
+      msgs = basicSetMeta(newMeta, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__META, newMeta, newMeta));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FieldType getType()
   {
     return type;
   }
@@ -166,9 +226,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetType(EObject newType, NotificationChain msgs)
+  public NotificationChain basicSetType(FieldType newType, NotificationChain msgs)
   {
-    EObject oldType = type;
+    FieldType oldType = type;
     type = newType;
     if (eNotificationRequired())
     {
@@ -183,7 +243,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(EObject newType)
+  public void setType(FieldType newType)
   {
     if (newType != type)
     {
@@ -255,6 +315,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
+      case CfgPackage.FIELD__META:
+        return basicSetMeta(null, msgs);
       case CfgPackage.FIELD__TYPE:
         return basicSetType(null, msgs);
     }
@@ -273,6 +335,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     {
       case CfgPackage.FIELD__COMMENT:
         return getComment();
+      case CfgPackage.FIELD__META:
+        return getMeta();
       case CfgPackage.FIELD__TYPE:
         return getType();
       case CfgPackage.FIELD__FIELD_NAME:
@@ -296,8 +360,11 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
       case CfgPackage.FIELD__COMMENT:
         setComment((String)newValue);
         return;
+      case CfgPackage.FIELD__META:
+        setMeta((FieldMeta)newValue);
+        return;
       case CfgPackage.FIELD__TYPE:
-        setType((EObject)newValue);
+        setType((FieldType)newValue);
         return;
       case CfgPackage.FIELD__FIELD_NAME:
         setFieldName((String)newValue);
@@ -322,8 +389,11 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
       case CfgPackage.FIELD__COMMENT:
         setComment(COMMENT_EDEFAULT);
         return;
+      case CfgPackage.FIELD__META:
+        setMeta((FieldMeta)null);
+        return;
       case CfgPackage.FIELD__TYPE:
-        setType((EObject)null);
+        setType((FieldType)null);
         return;
       case CfgPackage.FIELD__FIELD_NAME:
         setFieldName(FIELD_NAME_EDEFAULT);
@@ -347,6 +417,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     {
       case CfgPackage.FIELD__COMMENT:
         return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
+      case CfgPackage.FIELD__META:
+        return meta != null;
       case CfgPackage.FIELD__TYPE:
         return type != null;
       case CfgPackage.FIELD__FIELD_NAME:

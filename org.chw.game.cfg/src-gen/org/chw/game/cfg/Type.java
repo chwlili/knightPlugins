@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.chw.game.cfg.Type#getComment <em>Comment</em>}</li>
- *   <li>{@link org.chw.game.cfg.Type#getInput <em>Input</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Type#getEnter <em>Enter</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getFields <em>Fields</em>}</li>
@@ -60,30 +60,30 @@ public interface Type extends EObject
   void setComment(String value);
 
   /**
-   * Returns the value of the '<em><b>Input</b></em>' containment reference.
+   * Returns the value of the '<em><b>Enter</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Input</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Enter</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Input</em>' containment reference.
-   * @see #setInput(Input)
-   * @see org.chw.game.cfg.CfgPackage#getType_Input()
+   * @return the value of the '<em>Enter</em>' containment reference.
+   * @see #setEnter(Enter)
+   * @see org.chw.game.cfg.CfgPackage#getType_Enter()
    * @model containment="true"
    * @generated
    */
-  Input getInput();
+  Enter getEnter();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.Type#getInput <em>Input</em>}' containment reference.
+   * Sets the value of the '{@link org.chw.game.cfg.Type#getEnter <em>Enter</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Input</em>' containment reference.
-   * @see #getInput()
+   * @param value the new value of the '<em>Enter</em>' containment reference.
+   * @see #getEnter()
    * @generated
    */
-  void setInput(Input value);
+  void setEnter(Enter value);
 
   /**
    * Returns the value of the '<em><b>Prefix</b></em>' attribute.

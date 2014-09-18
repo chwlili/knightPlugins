@@ -7,7 +7,7 @@
 package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.NativeType;
+import org.chw.game.cfg.FieldMetaKey;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -18,45 +18,45 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Native Type</b></em>'.
+ * An implementation of the model object '<em><b>Field Meta Key</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.NativeTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldMetaKeyImpl#getFieldName <em>Field Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class NativeTypeImpl extends MinimalEObjectImpl.Container implements NativeType
+public class FieldMetaKeyImpl extends MinimalEObjectImpl.Container implements FieldMetaKey
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The default value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getFieldName()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
+  protected static final String FIELD_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getFieldName()
    * @generated
    * @ordered
    */
-  protected String type = TYPE_EDEFAULT;
+  protected String fieldName = FIELD_NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected NativeTypeImpl()
+  protected FieldMetaKeyImpl()
   {
     super();
   }
@@ -69,7 +69,7 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.NATIVE_TYPE;
+    return CfgPackage.Literals.FIELD_META_KEY;
   }
 
   /**
@@ -77,9 +77,9 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public String getFieldName()
   {
-    return type;
+    return fieldName;
   }
 
   /**
@@ -87,12 +87,12 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public void setFieldName(String newFieldName)
   {
-    String oldType = type;
-    type = newType;
+    String oldFieldName = fieldName;
+    fieldName = newFieldName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.NATIVE_TYPE__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD_META_KEY__FIELD_NAME, oldFieldName, fieldName));
   }
 
   /**
@@ -105,8 +105,8 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
   {
     switch (featureID)
     {
-      case CfgPackage.NATIVE_TYPE__TYPE:
-        return getType();
+      case CfgPackage.FIELD_META_KEY__FIELD_NAME:
+        return getFieldName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,8 +121,8 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
   {
     switch (featureID)
     {
-      case CfgPackage.NATIVE_TYPE__TYPE:
-        setType((String)newValue);
+      case CfgPackage.FIELD_META_KEY__FIELD_NAME:
+        setFieldName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,8 +138,8 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
   {
     switch (featureID)
     {
-      case CfgPackage.NATIVE_TYPE__TYPE:
-        setType(TYPE_EDEFAULT);
+      case CfgPackage.FIELD_META_KEY__FIELD_NAME:
+        setFieldName(FIELD_NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -155,8 +155,8 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
   {
     switch (featureID)
     {
-      case CfgPackage.NATIVE_TYPE__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case CfgPackage.FIELD_META_KEY__FIELD_NAME:
+        return FIELD_NAME_EDEFAULT == null ? fieldName != null : !FIELD_NAME_EDEFAULT.equals(fieldName);
     }
     return super.eIsSet(featureID);
   }
@@ -172,10 +172,10 @@ public class NativeTypeImpl extends MinimalEObjectImpl.Container implements Nati
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
+    result.append(" (fieldName: ");
+    result.append(fieldName);
     result.append(')');
     return result.toString();
   }
 
-} //NativeTypeImpl
+} //FieldMetaKeyImpl

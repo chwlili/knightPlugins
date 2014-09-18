@@ -2,10 +2,8 @@ package org.chw.game.ui.hyperlink;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.ecore.EObject;
@@ -43,129 +41,55 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 			return;
 		}
 
-		if (emfNode instanceof NativeType)
+		if (emfNode instanceof FieldMetaKey)
 		{
-			NativeType field = (NativeType) emfNode;
-			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.NATIVE_TYPE__TYPE))
+			FieldMetaKey param = (FieldMetaKey) emfNode;
+			for (INode leaf : NodeModelUtils.findNodesForFeature(param, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME))
 			{
-				String type = field.getType();
-				if (type.equals("boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
-				{
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				else
-				{
-					XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
-					for (Type def : model.getTypes())
-					{
-						if (def.getName().equals(type))
-						{
-							emfNode = def;
-							break;
-						}
-					}
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				break;
-			}
-		}
-		else if (emfNode instanceof ListType)
-		{
-			ListType field = (ListType) emfNode;
-			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.LIST_TYPE__TYPE))
-			{
-				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() <= offset)
-				{
-					return;
-				}
+				Field currField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
+				String typeName = currField.getType().getType();
 
-				emfNode = leaf.getSemanticElement();
-
-				String type = field.getType();
-				if (type.equals("boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
-				{
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				else
-				{
-					XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
-					for (Type def : model.getTypes())
-					{
-						if (def.getName().equals(type))
-						{
-							emfNode = def;
-							break;
-						}
-					}
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				break;
-			}
-		}
-		else if (emfNode instanceof HashType)
-		{
-			HashType field = (HashType) emfNode;
-			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.HASH_TYPE__TYPE))
-			{
-				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() <= offset)
-				{
-					break;
-				}
-
-				emfNode = leaf.getSemanticElement();
-
-				String type = field.getType();
-				if (type.equals("boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
-				{
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				else
-				{
-					XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
-					for (Type def : model.getTypes())
-					{
-						if (def.getName().equals(type))
-						{
-							emfNode = def;
-							break;
-						}
-					}
-					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				}
-				break;
-			}
-		}
-		else if(emfNode instanceof Param)
-		{
-			Param param=(Param)emfNode;
-			for (INode leaf : NodeModelUtils.findNodesForFeature(param, CfgPackage.Literals.PARAM__PARAM_NAME))
-			{
-				if (offset < leaf.getOffset() || leaf.getOffset() + leaf.getLength() < offset)
-				{
-					continue;
-				}
-
-				HashType type = (HashType) NodeModelUtils.findActualNodeFor(param).getParent().getSemanticElement();
-				String typeName=type.getType();
-				
 				XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
 				for (Type def : model.getTypes())
 				{
 					if (def.getName().equals(typeName))
 					{
-						for(Field field:def.getFields())
+						for (Field field : def.getFields())
 						{
-							if(field.getFieldName().equals(param.getParamName()))
+							if (field.getFieldName().equals(param.getFieldName()))
 							{
-								emfNode = field;
-								break;
+								createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), field, acceptor);
+								return;
 							}
 						}
 					}
 				}
-				
-				createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
-				break;
+			}
+		}
+
+		if (emfNode instanceof FieldType)
+		{
+			FieldType field = (FieldType) emfNode;
+			for (INode leaf : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.FIELD_TYPE__TYPE))
+			{
+				String type = field.getType();
+				if (type.equals("Boolean") || type.equals("int") || type.equals("uint") || type.equals("Number") || type.equals("String"))
+				{
+					createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), emfNode, acceptor);
+					return;
+				}
+				else
+				{
+					XML2 model = (XML2) parseResult.getRootNode().getSemanticElement();
+					for (Type def : model.getTypes())
+					{
+						if (def.getName().equals(type))
+						{
+							createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), def, acceptor);
+							return;
+						}
+					}
+				}
 			}
 		}
 	}

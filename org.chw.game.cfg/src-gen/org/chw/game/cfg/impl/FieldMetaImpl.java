@@ -9,8 +9,8 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldMetaKey;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,39 +28,39 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Hash Type</b></em>'.
+ * An implementation of the model object '<em><b>Field Meta</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.HashTypeImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.HashTypeImpl#getParams <em>Params</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldMetaImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldMetaImpl#getParams <em>Params</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashType
+public class FieldMetaImpl extends MinimalEObjectImpl.Container implements FieldMeta
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getPrefix()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
+  protected static final String PREFIX_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getPrefix()
    * @generated
    * @ordered
    */
-  protected String type = TYPE_EDEFAULT;
+  protected String prefix = PREFIX_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
@@ -70,14 +70,14 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
    * @generated
    * @ordered
    */
-  protected EList<Param> params;
+  protected EList<FieldMetaKey> params;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected HashTypeImpl()
+  protected FieldMetaImpl()
   {
     super();
   }
@@ -90,7 +90,7 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.HASH_TYPE;
+    return CfgPackage.Literals.FIELD_META;
   }
 
   /**
@@ -98,9 +98,9 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public String getPrefix()
   {
-    return type;
+    return prefix;
   }
 
   /**
@@ -108,12 +108,12 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public void setPrefix(String newPrefix)
   {
-    String oldType = type;
-    type = newType;
+    String oldPrefix = prefix;
+    prefix = newPrefix;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.HASH_TYPE__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD_META__PREFIX, oldPrefix, prefix));
   }
 
   /**
@@ -121,11 +121,11 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Param> getParams()
+  public EList<FieldMetaKey> getParams()
   {
     if (params == null)
     {
-      params = new EObjectContainmentEList<Param>(Param.class, this, CfgPackage.HASH_TYPE__PARAMS);
+      params = new EObjectContainmentEList<FieldMetaKey>(FieldMetaKey.class, this, CfgPackage.FIELD_META__PARAMS);
     }
     return params;
   }
@@ -140,7 +140,7 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   {
     switch (featureID)
     {
-      case CfgPackage.HASH_TYPE__PARAMS:
+      case CfgPackage.FIELD_META__PARAMS:
         return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -156,9 +156,9 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   {
     switch (featureID)
     {
-      case CfgPackage.HASH_TYPE__TYPE:
-        return getType();
-      case CfgPackage.HASH_TYPE__PARAMS:
+      case CfgPackage.FIELD_META__PREFIX:
+        return getPrefix();
+      case CfgPackage.FIELD_META__PARAMS:
         return getParams();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -175,12 +175,12 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   {
     switch (featureID)
     {
-      case CfgPackage.HASH_TYPE__TYPE:
-        setType((String)newValue);
+      case CfgPackage.FIELD_META__PREFIX:
+        setPrefix((String)newValue);
         return;
-      case CfgPackage.HASH_TYPE__PARAMS:
+      case CfgPackage.FIELD_META__PARAMS:
         getParams().clear();
-        getParams().addAll((Collection<? extends Param>)newValue);
+        getParams().addAll((Collection<? extends FieldMetaKey>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -196,10 +196,10 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   {
     switch (featureID)
     {
-      case CfgPackage.HASH_TYPE__TYPE:
-        setType(TYPE_EDEFAULT);
+      case CfgPackage.FIELD_META__PREFIX:
+        setPrefix(PREFIX_EDEFAULT);
         return;
-      case CfgPackage.HASH_TYPE__PARAMS:
+      case CfgPackage.FIELD_META__PARAMS:
         getParams().clear();
         return;
     }
@@ -216,9 +216,9 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
   {
     switch (featureID)
     {
-      case CfgPackage.HASH_TYPE__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-      case CfgPackage.HASH_TYPE__PARAMS:
+      case CfgPackage.FIELD_META__PREFIX:
+        return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
+      case CfgPackage.FIELD_META__PARAMS:
         return params != null && !params.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -235,10 +235,10 @@ public class HashTypeImpl extends MinimalEObjectImpl.Container implements HashTy
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
+    result.append(" (prefix: ");
+    result.append(prefix);
     result.append(')');
     return result.toString();
   }
 
-} //HashTypeImpl
+} //FieldMetaImpl

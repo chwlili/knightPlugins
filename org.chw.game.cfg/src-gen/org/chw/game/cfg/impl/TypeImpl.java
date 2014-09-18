@@ -9,8 +9,8 @@ package org.chw.game.cfg.impl;
 import java.util.Collection;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.Input;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.Type;
 
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getComment <em>Comment</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getInput <em>Input</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getEnter <em>Enter</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.TypeImpl#getFields <em>Fields</em>}</li>
@@ -69,14 +69,14 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   protected String comment = COMMENT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference.
+   * The cached value of the '{@link #getEnter() <em>Enter</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInput()
+   * @see #getEnter()
    * @generated
    * @ordered
    */
-  protected Input input;
+  protected Enter enter;
 
   /**
    * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -187,9 +187,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public Input getInput()
+  public Enter getEnter()
   {
-    return input;
+    return enter;
   }
 
   /**
@@ -197,13 +197,13 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetInput(Input newInput, NotificationChain msgs)
+  public NotificationChain basicSetEnter(Enter newEnter, NotificationChain msgs)
   {
-    Input oldInput = input;
-    input = newInput;
+    Enter oldEnter = enter;
+    enter = newEnter;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__INPUT, oldInput, newInput);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__ENTER, oldEnter, newEnter);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -214,20 +214,20 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInput(Input newInput)
+  public void setEnter(Enter newEnter)
   {
-    if (newInput != input)
+    if (newEnter != enter)
     {
       NotificationChain msgs = null;
-      if (input != null)
-        msgs = ((InternalEObject)input).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.TYPE__INPUT, null, msgs);
-      if (newInput != null)
-        msgs = ((InternalEObject)newInput).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.TYPE__INPUT, null, msgs);
-      msgs = basicSetInput(newInput, msgs);
+      if (enter != null)
+        msgs = ((InternalEObject)enter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.TYPE__ENTER, null, msgs);
+      if (newEnter != null)
+        msgs = ((InternalEObject)newEnter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.TYPE__ENTER, null, msgs);
+      msgs = basicSetEnter(newEnter, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__INPUT, newInput, newInput));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.TYPE__ENTER, newEnter, newEnter));
   }
 
   /**
@@ -314,8 +314,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case CfgPackage.TYPE__INPUT:
-        return basicSetInput(null, msgs);
+      case CfgPackage.TYPE__ENTER:
+        return basicSetEnter(null, msgs);
       case CfgPackage.TYPE__FIELDS:
         return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
       case CfgPackage.TYPE__COMM:
@@ -336,8 +336,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     {
       case CfgPackage.TYPE__COMMENT:
         return getComment();
-      case CfgPackage.TYPE__INPUT:
-        return getInput();
+      case CfgPackage.TYPE__ENTER:
+        return getEnter();
       case CfgPackage.TYPE__PREFIX:
         return getPrefix();
       case CfgPackage.TYPE__NAME:
@@ -364,8 +364,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
       case CfgPackage.TYPE__COMMENT:
         setComment((String)newValue);
         return;
-      case CfgPackage.TYPE__INPUT:
-        setInput((Input)newValue);
+      case CfgPackage.TYPE__ENTER:
+        setEnter((Enter)newValue);
         return;
       case CfgPackage.TYPE__PREFIX:
         setPrefix((String)newValue);
@@ -398,8 +398,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
       case CfgPackage.TYPE__COMMENT:
         setComment(COMMENT_EDEFAULT);
         return;
-      case CfgPackage.TYPE__INPUT:
-        setInput((Input)null);
+      case CfgPackage.TYPE__ENTER:
+        setEnter((Enter)null);
         return;
       case CfgPackage.TYPE__PREFIX:
         setPrefix(PREFIX_EDEFAULT);
@@ -429,8 +429,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     {
       case CfgPackage.TYPE__COMMENT:
         return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
-      case CfgPackage.TYPE__INPUT:
-        return input != null;
+      case CfgPackage.TYPE__ENTER:
+        return enter != null;
       case CfgPackage.TYPE__PREFIX:
         return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
       case CfgPackage.TYPE__NAME:

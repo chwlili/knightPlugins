@@ -62,11 +62,11 @@ public class UnitInstanceBuilder
 
 		if (fields.size() > 0)
 		{
-			Instance instance = new Instance(new Class("", "", "", "", "", 0, fields.toArray(new ClassField[] {})));
+			Instance instance = new Instance(new Class("", "", "", 0, fields.toArray(new ClassField[] {})));
 			for (ClassField field : instance.type.fields)
 			{
 				InstanceField instanceField = new InstanceField(field, "");
-				if(!path2Field.containsKey(instanceField.meta.xpath))
+				if (!path2Field.containsKey(instanceField.meta.xpath))
 				{
 					path2Field.put(instanceField.meta.xpath, new ArrayList<InstanceField>());
 				}

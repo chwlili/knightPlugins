@@ -6,12 +6,13 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.chw.game.ui.CfgExecutableExtensionFactory:org.chw.game.ui.editor.Xml2AsEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="xml2"
-            id="org.chw.game.Cfg"
-            name="Cfg Editor">
+              class="org.chw.game.ui.CfgExecutableExtensionFactory:org.chw.game.ui.editor.Xml2AsEditor"
+              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+              default="true"
+              extensions="xml2"
+              icon="icons/cfgFileIcon.png"
+              id="org.chw.game.Cfg"
+              name="Cfg Editor">
         </editor>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
@@ -171,7 +172,7 @@
      <wizard
            category="org.chw.game.cfg.ui.xml2"
            class="org.chw.game.ui.wizard.NewProjectWizard"
-           icon="icons/typeIcon.gif"
+           icon="icons/cfgProjectIcon.png"
            id="org.chw.game.cfg.ui.wizard.newProject"
            name="Xml2As 库项目"
            project="true">
@@ -179,7 +180,7 @@
      <wizard
            category="org.chw.game.cfg.ui.xml2"
            class="org.chw.game.ui.wizard.NewFileWizard"
-           icon="icons/fieldIcon.gif"
+           icon="icons/cfgFileIcon.png"
            id="org.chw.game.cfg.ui.wizard.newFile"
            name="Xml2As 文件"
            project="false">
@@ -239,6 +240,14 @@
            </instanceof>
         </enabledWhen>
      </page>
+  </extension>
+  <extension
+        point="org.eclipse.ui.ide.projectNatureImages">
+     <image
+           icon="icons/cfgProjectIcon.png"
+           id="org.chw.game.cfg.ui.image1"
+           natureId="org.chw.game.cfg.ui.Xml2Nature">
+     </image>
   </extension>
 
 </plugin>

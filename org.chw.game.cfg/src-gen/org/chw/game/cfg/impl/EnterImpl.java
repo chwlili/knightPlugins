@@ -7,7 +7,7 @@
 package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.Input;
+import org.chw.game.cfg.Enter;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -18,20 +18,19 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Input</b></em>'.
+ * An implementation of the model object '<em><b>Enter</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.InputImpl#getPrefix <em>Prefix</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.InputImpl#getFilePath <em>File Path</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.InputImpl#getNodePath <em>Node Path</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.EnterImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.EnterImpl#getRootPath <em>Root Path</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class InputImpl extends MinimalEObjectImpl.Container implements Input
+public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
 {
   /**
    * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -54,51 +53,31 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   protected String prefix = PREFIX_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getFilePath() <em>File Path</em>}' attribute.
+   * The default value of the '{@link #getRootPath() <em>Root Path</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFilePath()
+   * @see #getRootPath()
    * @generated
    * @ordered
    */
-  protected static final String FILE_PATH_EDEFAULT = null;
+  protected static final String ROOT_PATH_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getFilePath() <em>File Path</em>}' attribute.
+   * The cached value of the '{@link #getRootPath() <em>Root Path</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFilePath()
+   * @see #getRootPath()
    * @generated
    * @ordered
    */
-  protected String filePath = FILE_PATH_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getNodePath() <em>Node Path</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNodePath()
-   * @generated
-   * @ordered
-   */
-  protected static final String NODE_PATH_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getNodePath() <em>Node Path</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNodePath()
-   * @generated
-   * @ordered
-   */
-  protected String nodePath = NODE_PATH_EDEFAULT;
+  protected String rootPath = ROOT_PATH_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected InputImpl()
+  protected EnterImpl()
   {
     super();
   }
@@ -111,7 +90,7 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.INPUT;
+    return CfgPackage.Literals.ENTER;
   }
 
   /**
@@ -134,7 +113,7 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
     String oldPrefix = prefix;
     prefix = newPrefix;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.INPUT__PREFIX, oldPrefix, prefix));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.ENTER__PREFIX, oldPrefix, prefix));
   }
 
   /**
@@ -142,9 +121,9 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getFilePath()
+  public String getRootPath()
   {
-    return filePath;
+    return rootPath;
   }
 
   /**
@@ -152,35 +131,12 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFilePath(String newFilePath)
+  public void setRootPath(String newRootPath)
   {
-    String oldFilePath = filePath;
-    filePath = newFilePath;
+    String oldRootPath = rootPath;
+    rootPath = newRootPath;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.INPUT__FILE_PATH, oldFilePath, filePath));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getNodePath()
-  {
-    return nodePath;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setNodePath(String newNodePath)
-  {
-    String oldNodePath = nodePath;
-    nodePath = newNodePath;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.INPUT__NODE_PATH, oldNodePath, nodePath));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.ENTER__ROOT_PATH, oldRootPath, rootPath));
   }
 
   /**
@@ -193,12 +149,10 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   {
     switch (featureID)
     {
-      case CfgPackage.INPUT__PREFIX:
+      case CfgPackage.ENTER__PREFIX:
         return getPrefix();
-      case CfgPackage.INPUT__FILE_PATH:
-        return getFilePath();
-      case CfgPackage.INPUT__NODE_PATH:
-        return getNodePath();
+      case CfgPackage.ENTER__ROOT_PATH:
+        return getRootPath();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -213,14 +167,11 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   {
     switch (featureID)
     {
-      case CfgPackage.INPUT__PREFIX:
+      case CfgPackage.ENTER__PREFIX:
         setPrefix((String)newValue);
         return;
-      case CfgPackage.INPUT__FILE_PATH:
-        setFilePath((String)newValue);
-        return;
-      case CfgPackage.INPUT__NODE_PATH:
-        setNodePath((String)newValue);
+      case CfgPackage.ENTER__ROOT_PATH:
+        setRootPath((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,14 +187,11 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   {
     switch (featureID)
     {
-      case CfgPackage.INPUT__PREFIX:
+      case CfgPackage.ENTER__PREFIX:
         setPrefix(PREFIX_EDEFAULT);
         return;
-      case CfgPackage.INPUT__FILE_PATH:
-        setFilePath(FILE_PATH_EDEFAULT);
-        return;
-      case CfgPackage.INPUT__NODE_PATH:
-        setNodePath(NODE_PATH_EDEFAULT);
+      case CfgPackage.ENTER__ROOT_PATH:
+        setRootPath(ROOT_PATH_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -259,12 +207,10 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
   {
     switch (featureID)
     {
-      case CfgPackage.INPUT__PREFIX:
+      case CfgPackage.ENTER__PREFIX:
         return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
-      case CfgPackage.INPUT__FILE_PATH:
-        return FILE_PATH_EDEFAULT == null ? filePath != null : !FILE_PATH_EDEFAULT.equals(filePath);
-      case CfgPackage.INPUT__NODE_PATH:
-        return NODE_PATH_EDEFAULT == null ? nodePath != null : !NODE_PATH_EDEFAULT.equals(nodePath);
+      case CfgPackage.ENTER__ROOT_PATH:
+        return ROOT_PATH_EDEFAULT == null ? rootPath != null : !ROOT_PATH_EDEFAULT.equals(rootPath);
     }
     return super.eIsSet(featureID);
   }
@@ -282,12 +228,10 @@ public class InputImpl extends MinimalEObjectImpl.Container implements Input
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (prefix: ");
     result.append(prefix);
-    result.append(", filePath: ");
-    result.append(filePath);
-    result.append(", nodePath: ");
-    result.append(nodePath);
+    result.append(", rootPath: ");
+    result.append(rootPath);
     result.append(')');
     return result.toString();
   }
 
-} //InputImpl
+} //EnterImpl

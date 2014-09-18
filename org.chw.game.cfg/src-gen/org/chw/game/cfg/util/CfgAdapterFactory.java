@@ -84,6 +84,11 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createXML2Adapter();
       }
       @Override
+      public Adapter caseInputDef(InputDef object)
+      {
+        return createInputDefAdapter();
+      }
+      @Override
       public Adapter casePackDef(PackDef object)
       {
         return createPackDefAdapter();
@@ -94,9 +99,9 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createTypeAdapter();
       }
       @Override
-      public Adapter caseInput(Input object)
+      public Adapter caseEnter(Enter object)
       {
-        return createInputAdapter();
+        return createEnterAdapter();
       }
       @Override
       public Adapter caseField(Field object)
@@ -104,24 +109,19 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createFieldAdapter();
       }
       @Override
-      public Adapter caseNativeType(NativeType object)
+      public Adapter caseFieldType(FieldType object)
       {
-        return createNativeTypeAdapter();
+        return createFieldTypeAdapter();
       }
       @Override
-      public Adapter caseListType(ListType object)
+      public Adapter caseFieldMeta(FieldMeta object)
       {
-        return createListTypeAdapter();
+        return createFieldMetaAdapter();
       }
       @Override
-      public Adapter caseHashType(HashType object)
+      public Adapter caseFieldMetaKey(FieldMetaKey object)
       {
-        return createHashTypeAdapter();
-      }
-      @Override
-      public Adapter caseParam(Param object)
-      {
-        return createParamAdapter();
+        return createFieldMetaKeyAdapter();
       }
       @Override
       public Adapter caseOtherComent(OtherComent object)
@@ -166,6 +166,21 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.InputDef <em>Input Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.InputDef
+   * @generated
+   */
+  public Adapter createInputDefAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.chw.game.cfg.PackDef <em>Pack Def</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -196,16 +211,16 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.Input <em>Input</em>}'.
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.Enter <em>Enter</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.chw.game.cfg.Input
+   * @see org.chw.game.cfg.Enter
    * @generated
    */
-  public Adapter createInputAdapter()
+  public Adapter createEnterAdapter()
   {
     return null;
   }
@@ -226,61 +241,46 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.NativeType <em>Native Type</em>}'.
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.FieldType <em>Field Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.chw.game.cfg.NativeType
+   * @see org.chw.game.cfg.FieldType
    * @generated
    */
-  public Adapter createNativeTypeAdapter()
+  public Adapter createFieldTypeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.ListType <em>List Type</em>}'.
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.FieldMeta <em>Field Meta</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.chw.game.cfg.ListType
+   * @see org.chw.game.cfg.FieldMeta
    * @generated
    */
-  public Adapter createListTypeAdapter()
+  public Adapter createFieldMetaAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.HashType <em>Hash Type</em>}'.
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.FieldMetaKey <em>Field Meta Key</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.chw.game.cfg.HashType
+   * @see org.chw.game.cfg.FieldMetaKey
    * @generated
    */
-  public Adapter createHashTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.Param <em>Param</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.chw.game.cfg.Param
-   * @generated
-   */
-  public Adapter createParamAdapter()
+  public Adapter createFieldMetaKeyAdapter()
   {
     return null;
   }

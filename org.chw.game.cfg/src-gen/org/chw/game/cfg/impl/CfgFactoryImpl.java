@@ -69,14 +69,14 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
     switch (eClass.getClassifierID())
     {
       case CfgPackage.XML2: return createXML2();
+      case CfgPackage.INPUT_DEF: return createInputDef();
       case CfgPackage.PACK_DEF: return createPackDef();
       case CfgPackage.TYPE: return createType();
-      case CfgPackage.INPUT: return createInput();
+      case CfgPackage.ENTER: return createEnter();
       case CfgPackage.FIELD: return createField();
-      case CfgPackage.NATIVE_TYPE: return createNativeType();
-      case CfgPackage.LIST_TYPE: return createListType();
-      case CfgPackage.HASH_TYPE: return createHashType();
-      case CfgPackage.PARAM: return createParam();
+      case CfgPackage.FIELD_TYPE: return createFieldType();
+      case CfgPackage.FIELD_META: return createFieldMeta();
+      case CfgPackage.FIELD_META_KEY: return createFieldMetaKey();
       case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -92,6 +92,17 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     XML2Impl xml2 = new XML2Impl();
     return xml2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InputDef createInputDef()
+  {
+    InputDefImpl inputDef = new InputDefImpl();
+    return inputDef;
   }
 
   /**
@@ -121,10 +132,10 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Input createInput()
+  public Enter createEnter()
   {
-    InputImpl input = new InputImpl();
-    return input;
+    EnterImpl enter = new EnterImpl();
+    return enter;
   }
 
   /**
@@ -143,10 +154,10 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public NativeType createNativeType()
+  public FieldType createFieldType()
   {
-    NativeTypeImpl nativeType = new NativeTypeImpl();
-    return nativeType;
+    FieldTypeImpl fieldType = new FieldTypeImpl();
+    return fieldType;
   }
 
   /**
@@ -154,10 +165,10 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ListType createListType()
+  public FieldMeta createFieldMeta()
   {
-    ListTypeImpl listType = new ListTypeImpl();
-    return listType;
+    FieldMetaImpl fieldMeta = new FieldMetaImpl();
+    return fieldMeta;
   }
 
   /**
@@ -165,21 +176,10 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public HashType createHashType()
+  public FieldMetaKey createFieldMetaKey()
   {
-    HashTypeImpl hashType = new HashTypeImpl();
-    return hashType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Param createParam()
-  {
-    ParamImpl param = new ParamImpl();
-    return param;
+    FieldMetaKeyImpl fieldMetaKey = new FieldMetaKeyImpl();
+    return fieldMetaKey;
   }
 
   /**

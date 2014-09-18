@@ -158,6 +158,7 @@ public class NewProjectWizard extends Wizard implements INewWizard
 						project.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, Xml2Nature.DEFAULT_CORE_PACK);
 						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, Xml2Nature.DEFAULT_CODE_PACK);
 						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, Xml2Nature.DEFAULT_FILE_PACK);
+						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK, Xml2Nature.DEFAULT_FILE_CHECK ? "true" : "false");
 					}
 					catch (CoreException e)
 					{

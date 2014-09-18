@@ -3,36 +3,35 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cfg "http://www.chw.org/game/Cfg"
 
 XML2:
-	comment+=OtherComent* pack=PackDef ((=> types+=Type) | comm+=OtherComent)*;
+	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) ((=> types+=Type) |
+	comm+=OtherComent)*;
+
+InputDef:
+	comment+=OtherComent* inputCHAR=C_INPUT url=STRING C_SEMICOLON?;
 
 PackDef:
-	packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
+	comment+=OtherComent* packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
 
 Type:
-	comment=TypeComment? input=Input? prefix=C_TYPE name=TypeName C_BRACE_L ((=> fields+=Field) | comm+=OtherComent)*
+	comment=TypeComment? enter=Enter? prefix=C_TYPE name=TypeName C_BRACE_L ((=> fields+=Field) | comm+=OtherComent)*
 	C_BRACE_R;
 
-Input:
-	C_BRACKET_L prefix=C_INPUT
-	C_PAREN_L
-	C_FILE C_EQUALS filePath=STRING (C_COMMA C_NODE C_EQUALS nodePath=STRING)?
-	C_PAREN_R
-	C_BRACKET_R;
+Enter:
+	C_BRACKET_L prefix=C_MAIN C_PAREN_L rootPath=STRING C_PAREN_R C_BRACKET_R;
 
 Field:
-	comment=FieldComment? type=(NativeType | ListType | HashType) fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?;
+	comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName C_EQUALS
+	nodePath=STRING
+	C_SEMICOLON?;
 
-NativeType:
+FieldType:
 	type=TypeName;
 
-ListType:
-	C_LIST C_ANGLE_L type=TypeName C_ANGLE_R;
+FieldMeta:
+	C_BRACKET_L prefix=C_LIST (C_PAREN_L (params+=FieldMetaKey (C_COMMA params+=FieldMetaKey)*)? C_PAREN_R)? C_BRACKET_R;
 
-HashType:
-	C_HASH C_ANGLE_L type=TypeName C_ANGLE_R (C_PAREN_L params+=Param (C_COMMA params+=Param)* C_PAREN_R)?;
-
-Param:
-	paramName=NAME;
+FieldMetaKey:
+	fieldName=TypeName;
 
 TypeComment:
 	COMMENT;
@@ -47,7 +46,7 @@ PackName:
 	TypeName ('.' TypeName)*;
 
 TypeName:
-	C_INPUT | C_FILE | C_NODE | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_HASH | NAME;
+	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | NAME;
 
 terminal C_BRACKET_L:
 	'[';
@@ -85,11 +84,8 @@ terminal C_SEMICOLON:
 terminal C_INPUT:
 	'input';
 
-terminal C_FILE:
-	'file';
-
-terminal C_NODE:
-	'node';
+terminal C_MAIN:
+	'Main';
 
 terminal C_TYPE:
 	'type';
@@ -111,9 +107,6 @@ terminal C_STRING:
 
 terminal C_LIST:
 	'List';
-
-terminal C_HASH:
-	'Hash';
 
 terminal C_PACKAGE:
 	'package';

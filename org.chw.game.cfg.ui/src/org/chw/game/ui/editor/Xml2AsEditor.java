@@ -46,10 +46,10 @@ public class Xml2AsEditor extends XtextEditor
 		action.setActionDefinitionId("org.eclipse.xtext.ui.FormatAction");
 		setAction("chw_formatAction", action);
 		
-		action=new TextOperationAction(boundle, "", this, ISourceViewer.FORMAT);
-		action.setText("≤‚ ‘");
-		action.setActionDefinitionId("org.eclipse.xtext.ui.FormatAction");
-		setAction("chw_testAction", action);
+//		action=new TextOperationAction(boundle, "", this, ISourceViewer.FORMAT);
+//		action.setText("≤‚ ‘");
+//		action.setActionDefinitionId("org.eclipse.xtext.ui.FormatAction");
+//		setAction("chw_testAction", action);
 		
 	}
 	

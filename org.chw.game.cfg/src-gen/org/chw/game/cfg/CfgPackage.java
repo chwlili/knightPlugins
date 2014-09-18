@@ -71,13 +71,13 @@ public interface CfgPackage extends EPackage
   int XML2 = 0;
 
   /**
-   * The feature id for the '<em><b>Comment</b></em>' containment reference list.
+   * The feature id for the '<em><b>Input</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2__COMMENT = 0;
+  int XML2__INPUT = 0;
 
   /**
    * The feature id for the '<em><b>Pack</b></em>' containment reference.
@@ -116,6 +116,52 @@ public interface CfgPackage extends EPackage
   int XML2_FEATURE_COUNT = 4;
 
   /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.InputDefImpl <em>Input Def</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.InputDefImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getInputDef()
+   * @generated
+   */
+  int INPUT_DEF = 1;
+
+  /**
+   * The feature id for the '<em><b>Comment</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INPUT_DEF__COMMENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Input CHAR</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INPUT_DEF__INPUT_CHAR = 1;
+
+  /**
+   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INPUT_DEF__URL = 2;
+
+  /**
+   * The number of structural features of the '<em>Input Def</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INPUT_DEF_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -123,7 +169,16 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getPackDef()
    * @generated
    */
-  int PACK_DEF = 1;
+  int PACK_DEF = 2;
+
+  /**
+   * The feature id for the '<em><b>Comment</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACK_DEF__COMMENT = 0;
 
   /**
    * The feature id for the '<em><b>Pack CHAR</b></em>' attribute.
@@ -132,7 +187,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_DEF__PACK_CHAR = 0;
+  int PACK_DEF__PACK_CHAR = 1;
 
   /**
    * The feature id for the '<em><b>Pack</b></em>' attribute.
@@ -141,7 +196,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_DEF__PACK = 1;
+  int PACK_DEF__PACK = 2;
 
   /**
    * The number of structural features of the '<em>Pack Def</em>' class.
@@ -150,7 +205,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_DEF_FEATURE_COUNT = 2;
+  int PACK_DEF_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.TypeImpl <em>Type</em>}' class.
@@ -160,7 +215,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getType()
    * @generated
    */
-  int TYPE = 2;
+  int TYPE = 3;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -172,13 +227,13 @@ public interface CfgPackage extends EPackage
   int TYPE__COMMENT = 0;
 
   /**
-   * The feature id for the '<em><b>Input</b></em>' containment reference.
+   * The feature id for the '<em><b>Enter</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE__INPUT = 1;
+  int TYPE__ENTER = 1;
 
   /**
    * The feature id for the '<em><b>Prefix</b></em>' attribute.
@@ -226,14 +281,14 @@ public interface CfgPackage extends EPackage
   int TYPE_FEATURE_COUNT = 6;
 
   /**
-   * The meta object id for the '{@link org.chw.game.cfg.impl.InputImpl <em>Input</em>}' class.
+   * The meta object id for the '{@link org.chw.game.cfg.impl.EnterImpl <em>Enter</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.chw.game.cfg.impl.InputImpl
-   * @see org.chw.game.cfg.impl.CfgPackageImpl#getInput()
+   * @see org.chw.game.cfg.impl.EnterImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnter()
    * @generated
    */
-  int INPUT = 3;
+  int ENTER = 4;
 
   /**
    * The feature id for the '<em><b>Prefix</b></em>' attribute.
@@ -242,34 +297,25 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INPUT__PREFIX = 0;
+  int ENTER__PREFIX = 0;
 
   /**
-   * The feature id for the '<em><b>File Path</b></em>' attribute.
+   * The feature id for the '<em><b>Root Path</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT__FILE_PATH = 1;
+  int ENTER__ROOT_PATH = 1;
 
   /**
-   * The feature id for the '<em><b>Node Path</b></em>' attribute.
+   * The number of structural features of the '<em>Enter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT__NODE_PATH = 2;
-
-  /**
-   * The number of structural features of the '<em>Input</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INPUT_FEATURE_COUNT = 3;
+  int ENTER_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.FieldImpl <em>Field</em>}' class.
@@ -279,7 +325,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getField()
    * @generated
    */
-  int FIELD = 4;
+  int FIELD = 5;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -291,13 +337,22 @@ public interface CfgPackage extends EPackage
   int FIELD__COMMENT = 0;
 
   /**
+   * The feature id for the '<em><b>Meta</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIELD__META = 1;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIELD__TYPE = 1;
+  int FIELD__TYPE = 2;
 
   /**
    * The feature id for the '<em><b>Field Name</b></em>' attribute.
@@ -306,7 +361,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIELD__FIELD_NAME = 2;
+  int FIELD__FIELD_NAME = 3;
 
   /**
    * The feature id for the '<em><b>Node Path</b></em>' attribute.
@@ -315,7 +370,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIELD__NODE_PATH = 3;
+  int FIELD__NODE_PATH = 4;
 
   /**
    * The number of structural features of the '<em>Field</em>' class.
@@ -324,45 +379,17 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIELD_FEATURE_COUNT = 4;
+  int FIELD_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link org.chw.game.cfg.impl.NativeTypeImpl <em>Native Type</em>}' class.
+   * The meta object id for the '{@link org.chw.game.cfg.impl.FieldTypeImpl <em>Field Type</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.chw.game.cfg.impl.NativeTypeImpl
-   * @see org.chw.game.cfg.impl.CfgPackageImpl#getNativeType()
+   * @see org.chw.game.cfg.impl.FieldTypeImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldType()
    * @generated
    */
-  int NATIVE_TYPE = 5;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NATIVE_TYPE__TYPE = 0;
-
-  /**
-   * The number of structural features of the '<em>Native Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NATIVE_TYPE_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link org.chw.game.cfg.impl.ListTypeImpl <em>List Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.chw.game.cfg.impl.ListTypeImpl
-   * @see org.chw.game.cfg.impl.CfgPackageImpl#getListType()
-   * @generated
-   */
-  int LIST_TYPE = 6;
+  int FIELD_TYPE = 6;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -371,35 +398,35 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LIST_TYPE__TYPE = 0;
+  int FIELD_TYPE__TYPE = 0;
 
   /**
-   * The number of structural features of the '<em>List Type</em>' class.
+   * The number of structural features of the '<em>Field Type</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LIST_TYPE_FEATURE_COUNT = 1;
+  int FIELD_TYPE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.chw.game.cfg.impl.HashTypeImpl <em>Hash Type</em>}' class.
+   * The meta object id for the '{@link org.chw.game.cfg.impl.FieldMetaImpl <em>Field Meta</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.chw.game.cfg.impl.HashTypeImpl
-   * @see org.chw.game.cfg.impl.CfgPackageImpl#getHashType()
+   * @see org.chw.game.cfg.impl.FieldMetaImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldMeta()
    * @generated
    */
-  int HASH_TYPE = 7;
+  int FIELD_META = 7;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Prefix</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HASH_TYPE__TYPE = 0;
+  int FIELD_META__PREFIX = 0;
 
   /**
    * The feature id for the '<em><b>Params</b></em>' containment reference list.
@@ -408,44 +435,44 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HASH_TYPE__PARAMS = 1;
+  int FIELD_META__PARAMS = 1;
 
   /**
-   * The number of structural features of the '<em>Hash Type</em>' class.
+   * The number of structural features of the '<em>Field Meta</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HASH_TYPE_FEATURE_COUNT = 2;
+  int FIELD_META_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.chw.game.cfg.impl.ParamImpl <em>Param</em>}' class.
+   * The meta object id for the '{@link org.chw.game.cfg.impl.FieldMetaKeyImpl <em>Field Meta Key</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.chw.game.cfg.impl.ParamImpl
-   * @see org.chw.game.cfg.impl.CfgPackageImpl#getParam()
+   * @see org.chw.game.cfg.impl.FieldMetaKeyImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldMetaKey()
    * @generated
    */
-  int PARAM = 8;
+  int FIELD_META_KEY = 8;
 
   /**
-   * The feature id for the '<em><b>Param Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARAM__PARAM_NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Param</em>' class.
+   * The feature id for the '<em><b>Field Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARAM_FEATURE_COUNT = 1;
+  int FIELD_META_KEY__FIELD_NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Field Meta Key</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIELD_META_KEY_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.
@@ -487,15 +514,15 @@ public interface CfgPackage extends EPackage
   EClass getXML2();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getComment <em>Comment</em>}'.
+   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.XML2#getInput <em>Input</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Comment</em>'.
-   * @see org.chw.game.cfg.XML2#getComment()
+   * @return the meta object for the containment reference '<em>Input</em>'.
+   * @see org.chw.game.cfg.XML2#getInput()
    * @see #getXML2()
    * @generated
    */
-  EReference getXML2_Comment();
+  EReference getXML2_Input();
 
   /**
    * Returns the meta object for the containment reference '{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}'.
@@ -531,6 +558,49 @@ public interface CfgPackage extends EPackage
   EReference getXML2_Comm();
 
   /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.InputDef <em>Input Def</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Input Def</em>'.
+   * @see org.chw.game.cfg.InputDef
+   * @generated
+   */
+  EClass getInputDef();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.InputDef#getComment <em>Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Comment</em>'.
+   * @see org.chw.game.cfg.InputDef#getComment()
+   * @see #getInputDef()
+   * @generated
+   */
+  EReference getInputDef_Comment();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.InputDef#getInputCHAR <em>Input CHAR</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Input CHAR</em>'.
+   * @see org.chw.game.cfg.InputDef#getInputCHAR()
+   * @see #getInputDef()
+   * @generated
+   */
+  EAttribute getInputDef_InputCHAR();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.InputDef#getUrl <em>Url</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Url</em>'.
+   * @see org.chw.game.cfg.InputDef#getUrl()
+   * @see #getInputDef()
+   * @generated
+   */
+  EAttribute getInputDef_Url();
+
+  /**
    * Returns the meta object for class '{@link org.chw.game.cfg.PackDef <em>Pack Def</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -539,6 +609,17 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EClass getPackDef();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.PackDef#getComment <em>Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Comment</em>'.
+   * @see org.chw.game.cfg.PackDef#getComment()
+   * @see #getPackDef()
+   * @generated
+   */
+  EReference getPackDef_Comment();
 
   /**
    * Returns the meta object for the attribute '{@link org.chw.game.cfg.PackDef#getPackCHAR <em>Pack CHAR</em>}'.
@@ -584,15 +665,15 @@ public interface CfgPackage extends EPackage
   EAttribute getType_Comment();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Type#getInput <em>Input</em>}'.
+   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Type#getEnter <em>Enter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Input</em>'.
-   * @see org.chw.game.cfg.Type#getInput()
+   * @return the meta object for the containment reference '<em>Enter</em>'.
+   * @see org.chw.game.cfg.Type#getEnter()
    * @see #getType()
    * @generated
    */
-  EReference getType_Input();
+  EReference getType_Enter();
 
   /**
    * Returns the meta object for the attribute '{@link org.chw.game.cfg.Type#getPrefix <em>Prefix</em>}'.
@@ -639,47 +720,36 @@ public interface CfgPackage extends EPackage
   EReference getType_Comm();
 
   /**
-   * Returns the meta object for class '{@link org.chw.game.cfg.Input <em>Input</em>}'.
+   * Returns the meta object for class '{@link org.chw.game.cfg.Enter <em>Enter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Input</em>'.
-   * @see org.chw.game.cfg.Input
+   * @return the meta object for class '<em>Enter</em>'.
+   * @see org.chw.game.cfg.Enter
    * @generated
    */
-  EClass getInput();
+  EClass getEnter();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Input#getPrefix <em>Prefix</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Enter#getPrefix <em>Prefix</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Prefix</em>'.
-   * @see org.chw.game.cfg.Input#getPrefix()
-   * @see #getInput()
+   * @see org.chw.game.cfg.Enter#getPrefix()
+   * @see #getEnter()
    * @generated
    */
-  EAttribute getInput_Prefix();
+  EAttribute getEnter_Prefix();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Input#getFilePath <em>File Path</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Enter#getRootPath <em>Root Path</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>File Path</em>'.
-   * @see org.chw.game.cfg.Input#getFilePath()
-   * @see #getInput()
+   * @return the meta object for the attribute '<em>Root Path</em>'.
+   * @see org.chw.game.cfg.Enter#getRootPath()
+   * @see #getEnter()
    * @generated
    */
-  EAttribute getInput_FilePath();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Input#getNodePath <em>Node Path</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Node Path</em>'.
-   * @see org.chw.game.cfg.Input#getNodePath()
-   * @see #getInput()
-   * @generated
-   */
-  EAttribute getInput_NodePath();
+  EAttribute getEnter_RootPath();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.Field <em>Field</em>}'.
@@ -701,6 +771,17 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EAttribute getField_Comment();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Field#getMeta <em>Meta</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Meta</em>'.
+   * @see org.chw.game.cfg.Field#getMeta()
+   * @see #getField()
+   * @generated
+   */
+  EReference getField_Meta();
 
   /**
    * Returns the meta object for the containment reference '{@link org.chw.game.cfg.Field#getType <em>Type</em>}'.
@@ -736,99 +817,78 @@ public interface CfgPackage extends EPackage
   EAttribute getField_NodePath();
 
   /**
-   * Returns the meta object for class '{@link org.chw.game.cfg.NativeType <em>Native Type</em>}'.
+   * Returns the meta object for class '{@link org.chw.game.cfg.FieldType <em>Field Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Native Type</em>'.
-   * @see org.chw.game.cfg.NativeType
+   * @return the meta object for class '<em>Field Type</em>'.
+   * @see org.chw.game.cfg.FieldType
    * @generated
    */
-  EClass getNativeType();
+  EClass getFieldType();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.NativeType#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see org.chw.game.cfg.NativeType#getType()
-   * @see #getNativeType()
-   * @generated
-   */
-  EAttribute getNativeType_Type();
-
-  /**
-   * Returns the meta object for class '{@link org.chw.game.cfg.ListType <em>List Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>List Type</em>'.
-   * @see org.chw.game.cfg.ListType
-   * @generated
-   */
-  EClass getListType();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.ListType#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.FieldType#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Type</em>'.
-   * @see org.chw.game.cfg.ListType#getType()
-   * @see #getListType()
+   * @see org.chw.game.cfg.FieldType#getType()
+   * @see #getFieldType()
    * @generated
    */
-  EAttribute getListType_Type();
+  EAttribute getFieldType_Type();
 
   /**
-   * Returns the meta object for class '{@link org.chw.game.cfg.HashType <em>Hash Type</em>}'.
+   * Returns the meta object for class '{@link org.chw.game.cfg.FieldMeta <em>Field Meta</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Hash Type</em>'.
-   * @see org.chw.game.cfg.HashType
+   * @return the meta object for class '<em>Field Meta</em>'.
+   * @see org.chw.game.cfg.FieldMeta
    * @generated
    */
-  EClass getHashType();
+  EClass getFieldMeta();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.HashType#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.FieldMeta#getPrefix <em>Prefix</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see org.chw.game.cfg.HashType#getType()
-   * @see #getHashType()
+   * @return the meta object for the attribute '<em>Prefix</em>'.
+   * @see org.chw.game.cfg.FieldMeta#getPrefix()
+   * @see #getFieldMeta()
    * @generated
    */
-  EAttribute getHashType_Type();
+  EAttribute getFieldMeta_Prefix();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.HashType#getParams <em>Params</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.FieldMeta#getParams <em>Params</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Params</em>'.
-   * @see org.chw.game.cfg.HashType#getParams()
-   * @see #getHashType()
+   * @see org.chw.game.cfg.FieldMeta#getParams()
+   * @see #getFieldMeta()
    * @generated
    */
-  EReference getHashType_Params();
+  EReference getFieldMeta_Params();
 
   /**
-   * Returns the meta object for class '{@link org.chw.game.cfg.Param <em>Param</em>}'.
+   * Returns the meta object for class '{@link org.chw.game.cfg.FieldMetaKey <em>Field Meta Key</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Param</em>'.
-   * @see org.chw.game.cfg.Param
+   * @return the meta object for class '<em>Field Meta Key</em>'.
+   * @see org.chw.game.cfg.FieldMetaKey
    * @generated
    */
-  EClass getParam();
+  EClass getFieldMetaKey();
 
   /**
-   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Param#getParamName <em>Param Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.FieldMetaKey#getFieldName <em>Field Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Param Name</em>'.
-   * @see org.chw.game.cfg.Param#getParamName()
-   * @see #getParam()
+   * @return the meta object for the attribute '<em>Field Name</em>'.
+   * @see org.chw.game.cfg.FieldMetaKey#getFieldName()
+   * @see #getFieldMetaKey()
    * @generated
    */
-  EAttribute getParam_ParamName();
+  EAttribute getFieldMetaKey_FieldName();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.OtherComent <em>Other Coment</em>}'.
@@ -885,12 +945,12 @@ public interface CfgPackage extends EPackage
     EClass XML2 = eINSTANCE.getXML2();
 
     /**
-     * The meta object literal for the '<em><b>Comment</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference XML2__COMMENT = eINSTANCE.getXML2_Comment();
+    EReference XML2__INPUT = eINSTANCE.getXML2_Input();
 
     /**
      * The meta object literal for the '<em><b>Pack</b></em>' containment reference feature.
@@ -917,6 +977,40 @@ public interface CfgPackage extends EPackage
     EReference XML2__COMM = eINSTANCE.getXML2_Comm();
 
     /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.InputDefImpl <em>Input Def</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.InputDefImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getInputDef()
+     * @generated
+     */
+    EClass INPUT_DEF = eINSTANCE.getInputDef();
+
+    /**
+     * The meta object literal for the '<em><b>Comment</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INPUT_DEF__COMMENT = eINSTANCE.getInputDef_Comment();
+
+    /**
+     * The meta object literal for the '<em><b>Input CHAR</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INPUT_DEF__INPUT_CHAR = eINSTANCE.getInputDef_InputCHAR();
+
+    /**
+     * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INPUT_DEF__URL = eINSTANCE.getInputDef_Url();
+
+    /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.PackDefImpl <em>Pack Def</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -925,6 +1019,14 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EClass PACK_DEF = eINSTANCE.getPackDef();
+
+    /**
+     * The meta object literal for the '<em><b>Comment</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PACK_DEF__COMMENT = eINSTANCE.getPackDef_Comment();
 
     /**
      * The meta object literal for the '<em><b>Pack CHAR</b></em>' attribute feature.
@@ -961,12 +1063,12 @@ public interface CfgPackage extends EPackage
     EAttribute TYPE__COMMENT = eINSTANCE.getType_Comment();
 
     /**
-     * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Enter</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TYPE__INPUT = eINSTANCE.getType_Input();
+    EReference TYPE__ENTER = eINSTANCE.getType_Enter();
 
     /**
      * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
@@ -1001,14 +1103,14 @@ public interface CfgPackage extends EPackage
     EReference TYPE__COMM = eINSTANCE.getType_Comm();
 
     /**
-     * The meta object literal for the '{@link org.chw.game.cfg.impl.InputImpl <em>Input</em>}' class.
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.EnterImpl <em>Enter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.chw.game.cfg.impl.InputImpl
-     * @see org.chw.game.cfg.impl.CfgPackageImpl#getInput()
+     * @see org.chw.game.cfg.impl.EnterImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnter()
      * @generated
      */
-    EClass INPUT = eINSTANCE.getInput();
+    EClass ENTER = eINSTANCE.getEnter();
 
     /**
      * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
@@ -1016,23 +1118,15 @@ public interface CfgPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INPUT__PREFIX = eINSTANCE.getInput_Prefix();
+    EAttribute ENTER__PREFIX = eINSTANCE.getEnter_Prefix();
 
     /**
-     * The meta object literal for the '<em><b>File Path</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Root Path</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INPUT__FILE_PATH = eINSTANCE.getInput_FilePath();
-
-    /**
-     * The meta object literal for the '<em><b>Node Path</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INPUT__NODE_PATH = eINSTANCE.getInput_NodePath();
+    EAttribute ENTER__ROOT_PATH = eINSTANCE.getEnter_RootPath();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.FieldImpl <em>Field</em>}' class.
@@ -1051,6 +1145,14 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EAttribute FIELD__COMMENT = eINSTANCE.getField_Comment();
+
+    /**
+     * The meta object literal for the '<em><b>Meta</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FIELD__META = eINSTANCE.getField_Meta();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
@@ -1077,14 +1179,14 @@ public interface CfgPackage extends EPackage
     EAttribute FIELD__NODE_PATH = eINSTANCE.getField_NodePath();
 
     /**
-     * The meta object literal for the '{@link org.chw.game.cfg.impl.NativeTypeImpl <em>Native Type</em>}' class.
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.FieldTypeImpl <em>Field Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.chw.game.cfg.impl.NativeTypeImpl
-     * @see org.chw.game.cfg.impl.CfgPackageImpl#getNativeType()
+     * @see org.chw.game.cfg.impl.FieldTypeImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldType()
      * @generated
      */
-    EClass NATIVE_TYPE = eINSTANCE.getNativeType();
+    EClass FIELD_TYPE = eINSTANCE.getFieldType();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -1092,43 +1194,25 @@ public interface CfgPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute NATIVE_TYPE__TYPE = eINSTANCE.getNativeType_Type();
+    EAttribute FIELD_TYPE__TYPE = eINSTANCE.getFieldType_Type();
 
     /**
-     * The meta object literal for the '{@link org.chw.game.cfg.impl.ListTypeImpl <em>List Type</em>}' class.
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.FieldMetaImpl <em>Field Meta</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.chw.game.cfg.impl.ListTypeImpl
-     * @see org.chw.game.cfg.impl.CfgPackageImpl#getListType()
+     * @see org.chw.game.cfg.impl.FieldMetaImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldMeta()
      * @generated
      */
-    EClass LIST_TYPE = eINSTANCE.getListType();
+    EClass FIELD_META = eINSTANCE.getFieldMeta();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LIST_TYPE__TYPE = eINSTANCE.getListType_Type();
-
-    /**
-     * The meta object literal for the '{@link org.chw.game.cfg.impl.HashTypeImpl <em>Hash Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.chw.game.cfg.impl.HashTypeImpl
-     * @see org.chw.game.cfg.impl.CfgPackageImpl#getHashType()
-     * @generated
-     */
-    EClass HASH_TYPE = eINSTANCE.getHashType();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HASH_TYPE__TYPE = eINSTANCE.getHashType_Type();
+    EAttribute FIELD_META__PREFIX = eINSTANCE.getFieldMeta_Prefix();
 
     /**
      * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
@@ -1136,25 +1220,25 @@ public interface CfgPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference HASH_TYPE__PARAMS = eINSTANCE.getHashType_Params();
+    EReference FIELD_META__PARAMS = eINSTANCE.getFieldMeta_Params();
 
     /**
-     * The meta object literal for the '{@link org.chw.game.cfg.impl.ParamImpl <em>Param</em>}' class.
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.FieldMetaKeyImpl <em>Field Meta Key</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.chw.game.cfg.impl.ParamImpl
-     * @see org.chw.game.cfg.impl.CfgPackageImpl#getParam()
+     * @see org.chw.game.cfg.impl.FieldMetaKeyImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getFieldMetaKey()
      * @generated
      */
-    EClass PARAM = eINSTANCE.getParam();
+    EClass FIELD_META_KEY = eINSTANCE.getFieldMetaKey();
 
     /**
-     * The meta object literal for the '<em><b>Param Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Field Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PARAM__PARAM_NAME = eINSTANCE.getParam_ParamName();
+    EAttribute FIELD_META_KEY__FIELD_NAME = eINSTANCE.getFieldMetaKey_FieldName();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.

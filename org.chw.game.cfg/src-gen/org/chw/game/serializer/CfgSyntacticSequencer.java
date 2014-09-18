@@ -8,6 +8,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
@@ -17,23 +18,23 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CfgGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Field_C_SEMICOLONTerminalRuleCall_5_q;
-	protected AbstractElementAlias match_PackDef_C_SEMICOLONTerminalRuleCall_2_q;
+	protected AbstractElementAlias match_FieldMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q;
+	protected AbstractElementAlias match_Field_C_SEMICOLONTerminalRuleCall_6_q;
+	protected AbstractElementAlias match_InputDef_C_SEMICOLONTerminalRuleCall_3_q;
+	protected AbstractElementAlias match_PackDef_C_SEMICOLONTerminalRuleCall_3_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CfgGrammarAccess) access;
-		match_Field_C_SEMICOLONTerminalRuleCall_5_q = new TokenAlias(false, true, grammarAccess.getFieldAccess().getC_SEMICOLONTerminalRuleCall_5());
-		match_PackDef_C_SEMICOLONTerminalRuleCall_2_q = new TokenAlias(false, true, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_2());
+		match_FieldMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getFieldMetaAccess().getC_PAREN_LTerminalRuleCall_2_0()), new TokenAlias(false, false, grammarAccess.getFieldMetaAccess().getC_PAREN_RTerminalRuleCall_2_2()));
+		match_Field_C_SEMICOLONTerminalRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getFieldAccess().getC_SEMICOLONTerminalRuleCall_6());
+		match_InputDef_C_SEMICOLONTerminalRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getInputDefAccess().getC_SEMICOLONTerminalRuleCall_3());
+		match_PackDef_C_SEMICOLONTerminalRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_3());
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if(ruleCall.getRule() == grammarAccess.getC_ANGLE_LRule())
-			return getC_ANGLE_LToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_ANGLE_RRule())
-			return getC_ANGLE_RToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_BRACE_LRule())
+		if(ruleCall.getRule() == grammarAccess.getC_BRACE_LRule())
 			return getC_BRACE_LToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getC_BRACE_RRule())
 			return getC_BRACE_RToken(semanticObject, ruleCall, node);
@@ -45,14 +46,6 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 			return getC_COMMAToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getC_EQUALSRule())
 			return getC_EQUALSToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_FILERule())
-			return getC_FILEToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_HASHRule())
-			return getC_HASHToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_LISTRule())
-			return getC_LISTToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getC_NODERule())
-			return getC_NODEToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getC_PAREN_LRule())
 			return getC_PAREN_LToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getC_PAREN_RRule())
@@ -60,26 +53,6 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 		else if(ruleCall.getRule() == grammarAccess.getC_SEMICOLONRule())
 			return getC_SEMICOLONToken(semanticObject, ruleCall, node);
 		return "";
-	}
-	
-	/**
-	 * terminal C_ANGLE_L:
-	 * 	'<';
-	 */
-	protected String getC_ANGLE_LToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "<";
-	}
-	
-	/**
-	 * terminal C_ANGLE_R:
-	 * 	'>';
-	 */
-	protected String getC_ANGLE_RToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return ">";
 	}
 	
 	/**
@@ -143,46 +116,6 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * terminal C_FILE:
-	 * 	'file';
-	 */
-	protected String getC_FILEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "file";
-	}
-	
-	/**
-	 * terminal C_HASH:
-	 * 	'Hash';
-	 */
-	protected String getC_HASHToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "Hash";
-	}
-	
-	/**
-	 * terminal C_LIST:
-	 * 	'List';
-	 */
-	protected String getC_LISTToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "List";
-	}
-	
-	/**
-	 * terminal C_NODE:
-	 * 	'node';
-	 */
-	protected String getC_NODEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "node";
-	}
-	
-	/**
 	 * terminal C_PAREN_L:
 	 * 	'(';
 	 */
@@ -218,19 +151,23 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Field_C_SEMICOLONTerminalRuleCall_5_q.equals(syntax))
-				emit_Field_C_SEMICOLONTerminalRuleCall_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_PackDef_C_SEMICOLONTerminalRuleCall_2_q.equals(syntax))
-				emit_PackDef_C_SEMICOLONTerminalRuleCall_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if(match_FieldMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q.equals(syntax))
+				emit_FieldMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Field_C_SEMICOLONTerminalRuleCall_6_q.equals(syntax))
+				emit_Field_C_SEMICOLONTerminalRuleCall_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_InputDef_C_SEMICOLONTerminalRuleCall_3_q.equals(syntax))
+				emit_InputDef_C_SEMICOLONTerminalRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_PackDef_C_SEMICOLONTerminalRuleCall_3_q.equals(syntax))
+				emit_PackDef_C_SEMICOLONTerminalRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Syntax:
-	 *     C_SEMICOLON?
+	 *     (C_PAREN_L C_PAREN_R)?
 	 */
-	protected void emit_Field_C_SEMICOLONTerminalRuleCall_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_FieldMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -238,7 +175,23 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * Syntax:
 	 *     C_SEMICOLON?
 	 */
-	protected void emit_PackDef_C_SEMICOLONTerminalRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Field_C_SEMICOLONTerminalRuleCall_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     C_SEMICOLON?
+	 */
+	protected void emit_InputDef_C_SEMICOLONTerminalRuleCall_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     C_SEMICOLON?
+	 */
+	protected void emit_PackDef_C_SEMICOLONTerminalRuleCall_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

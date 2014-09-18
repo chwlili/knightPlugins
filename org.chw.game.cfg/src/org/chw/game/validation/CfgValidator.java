@@ -4,10 +4,8 @@ import java.util.HashSet;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.HashType;
-import org.chw.game.cfg.ListType;
-import org.chw.game.cfg.NativeType;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldMeta;
+import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -20,9 +18,9 @@ public class CfgValidator extends AbstractCfgValidator
 	@Check
 	public void checkXMl2(XML2 dom)
 	{
-		HashSet<String> names = new HashSet<>();
+		HashSet<String> names = new HashSet<String>();
 
-		HashSet<String> errorNames = new HashSet<>();
+		HashSet<String> errorNames = new HashSet<String>();
 
 		EList<Type> types = dom.getTypes();
 		for (int i = 0; i < types.size(); i++)
@@ -59,9 +57,9 @@ public class CfgValidator extends AbstractCfgValidator
 	@Check
 	public void checkType(Type type)
 	{
-		HashSet<String> names = new HashSet<>();
+		HashSet<String> names = new HashSet<String>();
 
-		HashSet<String> errorNames = new HashSet<>();
+		HashSet<String> errorNames = new HashSet<String>();
 
 		EList<Field> fields = type.getFields();
 		for (int i = 0; i < fields.size(); i++)
@@ -98,84 +96,64 @@ public class CfgValidator extends AbstractCfgValidator
 	@Check
 	public void checkField(Field field)
 	{
-		if (field.getType() instanceof NativeType)
+		String typeName = field.getType().getType();
+		boolean isNative = isNativeType(typeName);
+
+		FieldMeta meta = field.getMeta();
+		if (meta != null)
 		{
-			NativeType type = (NativeType) field.getType();
-			if (!isNativeType(type.getType()))
+			if (meta.getParams().size() > 0)
 			{
-				if (getType(type.eResource(), type.getType())==null)
+				HashSet<String> keySet = new HashSet<String>();
+
+				for (FieldMetaKey key : meta.getParams())
 				{
-					error("未定义的类型", type, CfgPackage.Literals.NATIVE_TYPE__TYPE);
-				}
-			}
-		}
-		else if(field.getType() instanceof ListType)
-		{
-			ListType type=(ListType)field.getType();
-			if (!isNativeType(type.getType()))
-			{
-				if (getType(type.eResource(), type.getType())==null)
-				{
-					error("未定义的类型", type, CfgPackage.Literals.LIST_TYPE__TYPE);
-				}
-			}
-		}
-		else if(field.getType() instanceof HashType)
-		{
-			HashType type=(HashType)field.getType();
-			if (!isNativeType(type.getType()))
-			{
-				Type fieldType=getType(type.eResource(), type.getType());
-				if (fieldType==null)
-				{
-					error("未定义的类型", type, CfgPackage.Literals.HASH_TYPE__TYPE);
-				}
-				else
-				{
-					HashSet<String> fieldNameTable=new HashSet<String>();
-					for(Field typeField:fieldType.getFields())
+					if (isNative)
 					{
-						fieldNameTable.add(typeField.getFieldName());
+						error("\"" + typeName + "\" 是原生类型,不支持索引键！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
 					}
-					
-					EList<Param> params=type.getParams();
-					if(params!=null && params.size()>0)
+					else
 					{
-						for(int i=0;i<params.size();i++)
+						String indexKey = key.getFieldName();
+
+						Type type = getType(field.eResource(), typeName);
+						if (type != null)
 						{
-							if(!fieldNameTable.contains(params.get(i).getParamName()))
+							boolean finded = false;
+							for (Field row : type.getFields())
 							{
-								error(fieldType.getName()+" 没有定义名为 "+params.get(i).getParamName()+" 的字段",type,CfgPackage.Literals.HASH_TYPE__PARAMS,i);
+								if (row.getFieldName().equals(indexKey))
+								{
+									finded = true;
+									break;
+								}
 							}
-						}
-					}
-				}
-				
-				if(type.getParams()!=null)
-				{
-					HashSet<String> names=new HashSet<String>();
-					HashSet<String> errorNames=new HashSet<String>();
-					for(int i=0;i<type.getParams().size();i++)
-					{
-						String name=type.getParams().get(i).getParamName();
-						if(names.contains(name))
-						{
-							errorNames.add(name);
+
+							if (!finded)
+							{
+								error(typeName + "没有定义名为\"" + indexKey + "\"的字段！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+							}
 						}
 						else
 						{
-							names.add(name);
+							error(typeName + "未找到，索引键\"" + indexKey + "\"无效！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
 						}
-					}
-					
-					for(int i=0;i<type.getParams().size();i++)
-					{
-						if(errorNames.contains(type.getParams().get(i)))
+
+						if (keySet.contains(indexKey))
 						{
-							error("重复的字段名参数",type,CfgPackage.Literals.HASH_TYPE__PARAMS,i);
+							error("重复的索引键！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
 						}
+						keySet.add(indexKey);
 					}
 				}
+			}
+		}
+
+		if (!isNative)
+		{
+			if (getType(field.eResource(), typeName) == null)
+			{
+				error("未找到 \"" + typeName + "\" 的定义", field, CfgPackage.Literals.FIELD__TYPE);
 			}
 		}
 	}
@@ -187,18 +165,18 @@ public class CfgValidator extends AbstractCfgValidator
 
 	private Type getType(Resource resource, String typeName)
 	{
-		if(resource!=null)
+		if (resource != null)
 		{
 			EList<EObject> list = resource.getContents();
-			
-			if(list.size()>0)
+
+			if (list.size() > 0)
 			{
 				XML2 xml2 = (XML2) list.get(0);
 				if (xml2 != null)
 				{
-					for(Type type:xml2.getTypes())
+					for (Type type : xml2.getTypes())
 					{
-						if(typeName.equals(type.getName()))
+						if (typeName.equals(type.getName()))
 						{
 							return type;
 						}

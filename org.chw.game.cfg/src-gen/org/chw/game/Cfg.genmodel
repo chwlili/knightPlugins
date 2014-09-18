@@ -10,46 +10,49 @@
   <genPackages prefix="Cfg" basePackage="org.chw.game" disposableProviderFactory="true"
       fileExtensions="xml2" ecorePackage="Cfg.ecore#/">
     <genClasses ecoreClass="Cfg.ecore#//XML2">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/pack"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/types"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/comm"/>
     </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//InputDef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//InputDef/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//InputDef/inputCHAR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//InputDef/url"/>
+    </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//PackDef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//PackDef/comment"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//PackDef/packCHAR"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//PackDef/pack"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Type">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/comment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/enter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/prefix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/fields"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/comm"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//Input">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Input/prefix"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Input/filePath"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Input/nodePath"/>
+    <genClasses ecoreClass="Cfg.ecore#//Enter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enter/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enter/rootPath"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Field">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Field/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Field/meta"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Field/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Field/fieldName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Field/nodePath"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//NativeType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//NativeType/type"/>
+    <genClasses ecoreClass="Cfg.ecore#//FieldType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldType/type"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//ListType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//ListType/type"/>
+    <genClasses ecoreClass="Cfg.ecore#//FieldMeta">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMeta/prefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//FieldMeta/params"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//HashType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//HashType/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//HashType/params"/>
-    </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//Param">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Param/paramName"/>
+    <genClasses ecoreClass="Cfg.ecore#//FieldMetaKey">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMetaKey/fieldName"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//OtherComent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//OtherComent/comm"/>

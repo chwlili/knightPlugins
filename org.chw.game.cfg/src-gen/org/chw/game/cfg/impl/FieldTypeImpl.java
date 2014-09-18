@@ -7,7 +7,7 @@
 package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.Param;
+import org.chw.game.cfg.FieldType;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -18,45 +18,45 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Param</b></em>'.
+ * An implementation of the model object '<em><b>Field Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.ParamImpl#getParamName <em>Param Name</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.FieldTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParamImpl extends MinimalEObjectImpl.Container implements Param
+public class FieldTypeImpl extends MinimalEObjectImpl.Container implements FieldType
 {
   /**
-   * The default value of the '{@link #getParamName() <em>Param Name</em>}' attribute.
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getParamName()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String PARAM_NAME_EDEFAULT = null;
+  protected static final String TYPE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getParamName() <em>Param Name</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getParamName()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected String paramName = PARAM_NAME_EDEFAULT;
+  protected String type = TYPE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ParamImpl()
+  protected FieldTypeImpl()
   {
     super();
   }
@@ -69,7 +69,7 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.PARAM;
+    return CfgPackage.Literals.FIELD_TYPE;
   }
 
   /**
@@ -77,9 +77,9 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getParamName()
+  public String getType()
   {
-    return paramName;
+    return type;
   }
 
   /**
@@ -87,12 +87,12 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setParamName(String newParamName)
+  public void setType(String newType)
   {
-    String oldParamName = paramName;
-    paramName = newParamName;
+    String oldType = type;
+    type = newType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.PARAM__PARAM_NAME, oldParamName, paramName));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD_TYPE__TYPE, oldType, type));
   }
 
   /**
@@ -105,8 +105,8 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
   {
     switch (featureID)
     {
-      case CfgPackage.PARAM__PARAM_NAME:
-        return getParamName();
+      case CfgPackage.FIELD_TYPE__TYPE:
+        return getType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,8 +121,8 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
   {
     switch (featureID)
     {
-      case CfgPackage.PARAM__PARAM_NAME:
-        setParamName((String)newValue);
+      case CfgPackage.FIELD_TYPE__TYPE:
+        setType((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,8 +138,8 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
   {
     switch (featureID)
     {
-      case CfgPackage.PARAM__PARAM_NAME:
-        setParamName(PARAM_NAME_EDEFAULT);
+      case CfgPackage.FIELD_TYPE__TYPE:
+        setType(TYPE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -155,8 +155,8 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
   {
     switch (featureID)
     {
-      case CfgPackage.PARAM__PARAM_NAME:
-        return PARAM_NAME_EDEFAULT == null ? paramName != null : !PARAM_NAME_EDEFAULT.equals(paramName);
+      case CfgPackage.FIELD_TYPE__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
     }
     return super.eIsSet(featureID);
   }
@@ -172,10 +172,10 @@ public class ParamImpl extends MinimalEObjectImpl.Container implements Param
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (paramName: ");
-    result.append(paramName);
+    result.append(" (type: ");
+    result.append(type);
     result.append(')');
     return result.toString();
   }
 
-} //ParamImpl
+} //FieldTypeImpl
