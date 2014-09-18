@@ -6,41 +6,31 @@
  */
 package org.chw.game.cfg.impl;
 
-import java.util.Collection;
-
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.FieldMeta;
-import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.SliceMeta;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Field Meta</b></em>'.
+ * An implementation of the model object '<em><b>Slice Meta</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.FieldMetaImpl#getPrefix <em>Prefix</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.FieldMetaImpl#getParams <em>Params</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.SliceMetaImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.SliceMetaImpl#getSliceChar <em>Slice Char</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FieldMetaImpl extends MinimalEObjectImpl.Container implements FieldMeta
+public class SliceMetaImpl extends MinimalEObjectImpl.Container implements SliceMeta
 {
   /**
    * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -63,21 +53,31 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
   protected String prefix = PREFIX_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
+   * The default value of the '{@link #getSliceChar() <em>Slice Char</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getParams()
+   * @see #getSliceChar()
    * @generated
    * @ordered
    */
-  protected EList<FieldMetaKey> params;
+  protected static final String SLICE_CHAR_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSliceChar() <em>Slice Char</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSliceChar()
+   * @generated
+   * @ordered
+   */
+  protected String sliceChar = SLICE_CHAR_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected FieldMetaImpl()
+  protected SliceMetaImpl()
   {
     super();
   }
@@ -90,7 +90,7 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.FIELD_META;
+    return CfgPackage.Literals.SLICE_META;
   }
 
   /**
@@ -113,7 +113,7 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
     String oldPrefix = prefix;
     prefix = newPrefix;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD_META__PREFIX, oldPrefix, prefix));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.SLICE_META__PREFIX, oldPrefix, prefix));
   }
 
   /**
@@ -121,13 +121,9 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<FieldMetaKey> getParams()
+  public String getSliceChar()
   {
-    if (params == null)
-    {
-      params = new EObjectContainmentEList<FieldMetaKey>(FieldMetaKey.class, this, CfgPackage.FIELD_META__PARAMS);
-    }
-    return params;
+    return sliceChar;
   }
 
   /**
@@ -135,15 +131,12 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  public void setSliceChar(String newSliceChar)
   {
-    switch (featureID)
-    {
-      case CfgPackage.FIELD_META__PARAMS:
-        return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+    String oldSliceChar = sliceChar;
+    sliceChar = newSliceChar;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.SLICE_META__SLICE_CHAR, oldSliceChar, sliceChar));
   }
 
   /**
@@ -156,10 +149,10 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD_META__PREFIX:
+      case CfgPackage.SLICE_META__PREFIX:
         return getPrefix();
-      case CfgPackage.FIELD_META__PARAMS:
-        return getParams();
+      case CfgPackage.SLICE_META__SLICE_CHAR:
+        return getSliceChar();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -169,18 +162,16 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD_META__PREFIX:
+      case CfgPackage.SLICE_META__PREFIX:
         setPrefix((String)newValue);
         return;
-      case CfgPackage.FIELD_META__PARAMS:
-        getParams().clear();
-        getParams().addAll((Collection<? extends FieldMetaKey>)newValue);
+      case CfgPackage.SLICE_META__SLICE_CHAR:
+        setSliceChar((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -196,11 +187,11 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD_META__PREFIX:
+      case CfgPackage.SLICE_META__PREFIX:
         setPrefix(PREFIX_EDEFAULT);
         return;
-      case CfgPackage.FIELD_META__PARAMS:
-        getParams().clear();
+      case CfgPackage.SLICE_META__SLICE_CHAR:
+        setSliceChar(SLICE_CHAR_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -216,10 +207,10 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case CfgPackage.FIELD_META__PREFIX:
+      case CfgPackage.SLICE_META__PREFIX:
         return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
-      case CfgPackage.FIELD_META__PARAMS:
-        return params != null && !params.isEmpty();
+      case CfgPackage.SLICE_META__SLICE_CHAR:
+        return SLICE_CHAR_EDEFAULT == null ? sliceChar != null : !SLICE_CHAR_EDEFAULT.equals(sliceChar);
     }
     return super.eIsSet(featureID);
   }
@@ -237,8 +228,10 @@ public class FieldMetaImpl extends MinimalEObjectImpl.Container implements Field
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (prefix: ");
     result.append(prefix);
+    result.append(", sliceChar: ");
+    result.append(sliceChar);
     result.append(')');
     return result.toString();
   }
 
-} //FieldMetaImpl
+} //SliceMetaImpl

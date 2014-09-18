@@ -12,33 +12,34 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalCfgLexer extends Lexer {
-    public static final int RULE_C_NUMBER=23;
+    public static final int RULE_C_NUMBER=24;
     public static final int RULE_C_COMMA=18;
     public static final int RULE_C_TYPE=8;
     public static final int RULE_C_PAREN_R=14;
     public static final int RULE_C_SEMICOLON=6;
     public static final int RULE_C_PAREN_L=13;
     public static final int RULE_C_INPUT=4;
-    public static final int RULE_C_STRING=24;
-    public static final int RULE_COMMENT=19;
+    public static final int RULE_C_STRING=25;
+    public static final int RULE_C_SLICE=19;
+    public static final int RULE_COMMENT=20;
     public static final int RULE_C_PACKAGE=7;
     public static final int EOF=-1;
-    public static final int RULE_C_ANGLE_L=26;
-    public static final int RULE_C_ANGLE_R=27;
-    public static final int RULE_COMMENT_END=28;
-    public static final int T__30=30;
+    public static final int RULE_C_ANGLE_L=27;
+    public static final int RULE_C_ANGLE_R=28;
+    public static final int RULE_COMMENT_END=29;
     public static final int RULE_C_BRACKET_L=11;
+    public static final int T__31=31;
     public static final int RULE_STRING=5;
     public static final int RULE_C_EQUALS=16;
-    public static final int RULE_C_UINT=21;
+    public static final int RULE_C_UINT=22;
     public static final int RULE_C_BRACKET_R=15;
     public static final int RULE_C_MAIN=12;
-    public static final int RULE_C_INT=20;
-    public static final int RULE_NAME=25;
-    public static final int RULE_WS=29;
+    public static final int RULE_C_INT=21;
+    public static final int RULE_NAME=26;
+    public static final int RULE_WS=30;
     public static final int RULE_C_LIST=17;
     public static final int RULE_C_BRACE_L=9;
-    public static final int RULE_C_BOOL=22;
+    public static final int RULE_C_BOOL=23;
     public static final int RULE_C_BRACE_R=10;
 
     // delegates
@@ -54,10 +55,10 @@ public class InternalCfgLexer extends Lexer {
     }
     public String getGrammarFileName() { return "../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g"; }
 
-    // $ANTLR start "T__30"
-    public final void mT__30() throws RecognitionException {
+    // $ANTLR start "T__31"
+    public final void mT__31() throws RecognitionException {
         try {
-            int _type = T__30;
+            int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:11:7: ( '.' )
             // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:11:9: '.'
@@ -72,15 +73,15 @@ public class InternalCfgLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__30"
+    // $ANTLR end "T__31"
 
     // $ANTLR start "RULE_C_BRACKET_L"
     public final void mRULE_C_BRACKET_L() throws RecognitionException {
         try {
             int _type = RULE_C_BRACKET_L;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1148:18: ( '[' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1148:20: '['
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1248:18: ( '[' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1248:20: '['
             {
             match('['); 
 
@@ -99,8 +100,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_BRACKET_R;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1150:18: ( ']' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1150:20: ']'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1250:18: ( ']' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1250:20: ']'
             {
             match(']'); 
 
@@ -119,8 +120,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_PAREN_L;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1152:16: ( '(' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1152:18: '('
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1252:16: ( '(' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1252:18: '('
             {
             match('('); 
 
@@ -139,8 +140,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_PAREN_R;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1154:16: ( ')' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1154:18: ')'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1254:16: ( ')' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1254:18: ')'
             {
             match(')'); 
 
@@ -159,8 +160,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_BRACE_L;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1156:16: ( '{' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1156:18: '{'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1256:16: ( '{' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1256:18: '{'
             {
             match('{'); 
 
@@ -179,8 +180,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_BRACE_R;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1158:16: ( '}' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1158:18: '}'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1258:16: ( '}' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1258:18: '}'
             {
             match('}'); 
 
@@ -199,8 +200,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_ANGLE_L;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1160:16: ( '<' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1160:18: '<'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1260:16: ( '<' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1260:18: '<'
             {
             match('<'); 
 
@@ -219,8 +220,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_ANGLE_R;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1162:16: ( '>' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1162:18: '>'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1262:16: ( '>' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1262:18: '>'
             {
             match('>'); 
 
@@ -239,8 +240,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_EQUALS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1164:15: ( '=' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1164:17: '='
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1264:15: ( '=' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1264:17: '='
             {
             match('='); 
 
@@ -259,8 +260,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_COMMA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1166:14: ( ',' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1166:16: ','
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1266:14: ( ',' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1266:16: ','
             {
             match(','); 
 
@@ -279,8 +280,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_SEMICOLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1168:18: ( ';' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1168:20: ';'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1268:18: ( ';' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1268:20: ';'
             {
             match(';'); 
 
@@ -299,8 +300,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_INPUT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1170:14: ( 'input' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1170:16: 'input'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1270:14: ( 'input' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1270:16: 'input'
             {
             match("input"); 
 
@@ -320,8 +321,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_MAIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1172:13: ( 'Main' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1172:15: 'Main'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1272:13: ( 'Main' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1272:15: 'Main'
             {
             match("Main"); 
 
@@ -341,8 +342,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_TYPE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1174:13: ( 'type' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1174:15: 'type'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1274:13: ( 'type' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1274:15: 'type'
             {
             match("type"); 
 
@@ -362,8 +363,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1176:12: ( 'int' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1176:14: 'int'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1276:12: ( 'int' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1276:14: 'int'
             {
             match("int"); 
 
@@ -383,8 +384,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_UINT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1178:13: ( 'uint' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1178:15: 'uint'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1278:13: ( 'uint' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1278:15: 'uint'
             {
             match("uint"); 
 
@@ -404,8 +405,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1180:13: ( 'Boolean' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1180:15: 'Boolean'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1280:13: ( 'Boolean' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1280:15: 'Boolean'
             {
             match("Boolean"); 
 
@@ -425,8 +426,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1182:15: ( 'Number' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1182:17: 'Number'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1282:15: ( 'Number' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1282:17: 'Number'
             {
             match("Number"); 
 
@@ -446,8 +447,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1184:15: ( 'String' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1184:17: 'String'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1284:15: ( 'String' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1284:17: 'String'
             {
             match("String"); 
 
@@ -467,8 +468,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_C_LIST;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1186:13: ( 'List' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1186:15: 'List'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1286:13: ( 'List' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1286:15: 'List'
             {
             match("List"); 
 
@@ -483,13 +484,34 @@ public class InternalCfgLexer extends Lexer {
     }
     // $ANTLR end "RULE_C_LIST"
 
+    // $ANTLR start "RULE_C_SLICE"
+    public final void mRULE_C_SLICE() throws RecognitionException {
+        try {
+            int _type = RULE_C_SLICE;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1288:14: ( 'Slice' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1288:16: 'Slice'
+            {
+            match("Slice"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_C_SLICE"
+
     // $ANTLR start "RULE_C_PACKAGE"
     public final void mRULE_C_PACKAGE() throws RecognitionException {
         try {
             int _type = RULE_C_PACKAGE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1188:16: ( 'package' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1188:18: 'package'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1290:16: ( 'package' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1290:18: 'package'
             {
             match("package"); 
 
@@ -509,8 +531,8 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_NAME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1190:11: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1190:13: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1292:11: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1292:13: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -521,7 +543,7 @@ public class InternalCfgLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1190:33: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1292:33: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop1:
             do {
                 int alt1=2;
@@ -570,11 +592,11 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1192:13: ( '\"' (~ ( ( '\\r' | '\\n' | '\"' ) ) )* '\"' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1192:15: '\"' (~ ( ( '\\r' | '\\n' | '\"' ) ) )* '\"'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1294:13: ( '\"' (~ ( ( '\\r' | '\\n' | '\"' ) ) )* '\"' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1294:15: '\"' (~ ( ( '\\r' | '\\n' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1192:19: (~ ( ( '\\r' | '\\n' | '\"' ) ) )*
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1294:19: (~ ( ( '\\r' | '\\n' | '\"' ) ) )*
             loop2:
             do {
                 int alt2=2;
@@ -587,7 +609,7 @@ public class InternalCfgLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1192:19: ~ ( ( '\\r' | '\\n' | '\"' ) )
+            	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1294:19: ~ ( ( '\\r' | '\\n' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -622,8 +644,8 @@ public class InternalCfgLexer extends Lexer {
     // $ANTLR start "RULE_COMMENT_END"
     public final void mRULE_COMMENT_END() throws RecognitionException {
         try {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1194:27: ( '*/' )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1194:29: '*/'
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1296:27: ( '*/' )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1296:29: '*/'
             {
             match("*/"); 
 
@@ -641,10 +663,10 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:14: ( ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* ) )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:16: ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:14: ( ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* ) )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:16: ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* )
             {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:16: ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:16: ( '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END | '//' (~ ( ( '\\r' | '\\n' ) ) )* )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -672,11 +694,11 @@ public class InternalCfgLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:17: '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:17: '/*' ( options {greedy=false; } : . )* RULE_COMMENT_END
                     {
                     match("/*"); 
 
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:22: ( options {greedy=false; } : . )*
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:22: ( options {greedy=false; } : . )*
                     loop3:
                     do {
                         int alt3=2;
@@ -701,7 +723,7 @@ public class InternalCfgLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:50: .
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:50: .
                     	    {
                     	    matchAny(); 
 
@@ -718,11 +740,11 @@ public class InternalCfgLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:71: '//' (~ ( ( '\\r' | '\\n' ) ) )*
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:71: '//' (~ ( ( '\\r' | '\\n' ) ) )*
                     {
                     match("//"); 
 
-                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:76: (~ ( ( '\\r' | '\\n' ) ) )*
+                    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:76: (~ ( ( '\\r' | '\\n' ) ) )*
                     loop4:
                     do {
                         int alt4=2;
@@ -735,7 +757,7 @@ public class InternalCfgLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1196:76: ~ ( ( '\\r' | '\\n' ) )
+                    	    // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1298:76: ~ ( ( '\\r' | '\\n' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -777,10 +799,10 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1198:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1198:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1300:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1300:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1198:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1300:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt6=0;
             loop6:
             do {
@@ -830,14 +852,14 @@ public class InternalCfgLexer extends Lexer {
     // $ANTLR end "RULE_WS"
 
     public void mTokens() throws RecognitionException {
-        // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:8: ( T__30 | RULE_C_BRACKET_L | RULE_C_BRACKET_R | RULE_C_PAREN_L | RULE_C_PAREN_R | RULE_C_BRACE_L | RULE_C_BRACE_R | RULE_C_ANGLE_L | RULE_C_ANGLE_R | RULE_C_EQUALS | RULE_C_COMMA | RULE_C_SEMICOLON | RULE_C_INPUT | RULE_C_MAIN | RULE_C_TYPE | RULE_C_INT | RULE_C_UINT | RULE_C_BOOL | RULE_C_NUMBER | RULE_C_STRING | RULE_C_LIST | RULE_C_PACKAGE | RULE_NAME | RULE_STRING | RULE_COMMENT | RULE_WS )
-        int alt7=26;
+        // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:8: ( T__31 | RULE_C_BRACKET_L | RULE_C_BRACKET_R | RULE_C_PAREN_L | RULE_C_PAREN_R | RULE_C_BRACE_L | RULE_C_BRACE_R | RULE_C_ANGLE_L | RULE_C_ANGLE_R | RULE_C_EQUALS | RULE_C_COMMA | RULE_C_SEMICOLON | RULE_C_INPUT | RULE_C_MAIN | RULE_C_TYPE | RULE_C_INT | RULE_C_UINT | RULE_C_BOOL | RULE_C_NUMBER | RULE_C_STRING | RULE_C_LIST | RULE_C_SLICE | RULE_C_PACKAGE | RULE_NAME | RULE_STRING | RULE_COMMENT | RULE_WS )
+        int alt7=27;
         alt7 = dfa7.predict(input);
         switch (alt7) {
             case 1 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:10: T__30
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:10: T__31
                 {
-                mT__30(); 
+                mT__31(); 
 
                 }
                 break;
@@ -982,35 +1004,42 @@ public class InternalCfgLexer extends Lexer {
                 }
                 break;
             case 22 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:296: RULE_C_PACKAGE
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:296: RULE_C_SLICE
+                {
+                mRULE_C_SLICE(); 
+
+                }
+                break;
+            case 23 :
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:309: RULE_C_PACKAGE
                 {
                 mRULE_C_PACKAGE(); 
 
                 }
                 break;
-            case 23 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:311: RULE_NAME
+            case 24 :
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:324: RULE_NAME
                 {
                 mRULE_NAME(); 
 
                 }
                 break;
-            case 24 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:321: RULE_STRING
+            case 25 :
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:334: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 25 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:333: RULE_COMMENT
+            case 26 :
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:346: RULE_COMMENT
                 {
                 mRULE_COMMENT(); 
 
                 }
                 break;
-            case 26 :
-                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:346: RULE_WS
+            case 27 :
+                // ../org.chw.game.cfg/src-gen/org/chw/game/parser/antlr/internal/InternalCfg.g:1:359: RULE_WS
                 {
                 mRULE_WS(); 
 
@@ -1024,31 +1053,32 @@ public class InternalCfgLexer extends Lexer {
 
     protected DFA7 dfa7 = new DFA7(this);
     static final String DFA7_eotS =
-        "\15\uffff\11\26\4\uffff\12\26\1\56\11\26\1\uffff\1\70\1\71\1\72"+
-        "\3\26\1\76\1\26\1\100\3\uffff\3\26\1\uffff\1\26\1\uffff\1\26\1\106"+
-        "\1\107\1\26\1\111\2\uffff\1\112\2\uffff";
+        "\15\uffff\11\26\4\uffff\13\26\1\60\12\26\1\uffff\1\73\1\74\1\75"+
+        "\4\26\1\102\1\26\1\104\3\uffff\3\26\1\110\1\uffff\1\26\1\uffff\1"+
+        "\26\1\113\1\114\1\uffff\1\26\1\116\2\uffff\1\117\2\uffff";
     static final String DFA7_eofS =
-        "\113\uffff";
+        "\120\uffff";
     static final String DFA7_minS =
-        "\1\11\14\uffff\1\156\1\141\1\171\1\151\1\157\1\165\1\164\1\151"+
-        "\1\141\4\uffff\1\160\1\151\1\160\1\156\1\157\1\155\1\162\1\163\1"+
-        "\143\1\165\1\60\1\156\1\145\1\164\1\154\1\142\1\151\1\164\1\153"+
-        "\1\164\1\uffff\3\60\2\145\1\156\1\60\1\141\1\60\3\uffff\1\141\1"+
-        "\162\1\147\1\uffff\1\147\1\uffff\1\156\2\60\1\145\1\60\2\uffff\1"+
-        "\60\2\uffff";
+        "\1\11\14\uffff\1\156\1\141\1\171\1\151\1\157\1\165\1\154\1\151"+
+        "\1\141\4\uffff\1\160\1\151\1\160\1\156\1\157\1\155\1\162\1\151\1"+
+        "\163\1\143\1\165\1\60\1\156\1\145\1\164\1\154\1\142\1\151\1\143"+
+        "\1\164\1\153\1\164\1\uffff\3\60\2\145\1\156\1\145\1\60\1\141\1\60"+
+        "\3\uffff\1\141\1\162\1\147\1\60\1\uffff\1\147\1\uffff\1\156\2\60"+
+        "\1\uffff\1\145\1\60\2\uffff\1\60\2\uffff";
     static final String DFA7_maxS =
         "\1\175\14\uffff\1\156\1\141\1\171\1\151\1\157\1\165\1\164\1\151"+
-        "\1\141\4\uffff\1\164\1\151\1\160\1\156\1\157\1\155\1\162\1\163\1"+
-        "\143\1\165\1\172\1\156\1\145\1\164\1\154\1\142\1\151\1\164\1\153"+
-        "\1\164\1\uffff\3\172\2\145\1\156\1\172\1\141\1\172\3\uffff\1\141"+
-        "\1\162\1\147\1\uffff\1\147\1\uffff\1\156\2\172\1\145\1\172\2\uffff"+
-        "\1\172\2\uffff";
+        "\1\141\4\uffff\1\164\1\151\1\160\1\156\1\157\1\155\1\162\1\151\1"+
+        "\163\1\143\1\165\1\172\1\156\1\145\1\164\1\154\1\142\1\151\1\143"+
+        "\1\164\1\153\1\164\1\uffff\3\172\2\145\1\156\1\145\1\172\1\141\1"+
+        "\172\3\uffff\1\141\1\162\1\147\1\172\1\uffff\1\147\1\uffff\1\156"+
+        "\2\172\1\uffff\1\145\1\172\2\uffff\1\172\2\uffff";
     static final String DFA7_acceptS =
         "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\11"+
-        "\uffff\1\27\1\30\1\31\1\32\24\uffff\1\20\11\uffff\1\16\1\17\1\21"+
-        "\3\uffff\1\25\1\uffff\1\15\5\uffff\1\23\1\24\1\uffff\1\22\1\26";
+        "\uffff\1\30\1\31\1\32\1\33\26\uffff\1\20\12\uffff\1\16\1\17\1\21"+
+        "\4\uffff\1\25\1\uffff\1\15\3\uffff\1\26\2\uffff\1\23\1\24\1\uffff"+
+        "\1\22\1\27";
     static final String DFA7_specialS =
-        "\113\uffff}>";
+        "\120\uffff}>";
     static final String[] DFA7_transitionS = {
             "\2\31\2\uffff\1\31\22\uffff\1\31\1\uffff\1\27\5\uffff\1\4\1"+
             "\5\2\uffff\1\13\1\uffff\1\1\1\30\13\uffff\1\14\1\10\1\12\1\11"+
@@ -1073,15 +1103,14 @@ public class InternalCfgLexer extends Lexer {
             "\1\35",
             "\1\36",
             "\1\37",
-            "\1\40",
-            "\1\41",
+            "\1\41\7\uffff\1\40",
             "\1\42",
+            "\1\43",
             "",
             "",
             "",
             "",
-            "\1\43\3\uffff\1\44",
-            "\1\45",
+            "\1\44\3\uffff\1\45",
             "\1\46",
             "\1\47",
             "\1\50",
@@ -1090,9 +1119,9 @@ public class InternalCfgLexer extends Lexer {
             "\1\53",
             "\1\54",
             "\1\55",
-            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\1\56",
             "\1\57",
-            "\1\60",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\1\61",
             "\1\62",
             "\1\63",
@@ -1100,29 +1129,35 @@ public class InternalCfgLexer extends Lexer {
             "\1\65",
             "\1\66",
             "\1\67",
+            "\1\70",
+            "\1\71",
+            "\1\72",
             "",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
-            "\1\73",
-            "\1\74",
-            "\1\75",
-            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\1\76",
             "\1\77",
+            "\1\100",
+            "\1\101",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\1\103",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
             "",
-            "",
-            "\1\101",
-            "\1\102",
-            "\1\103",
-            "",
-            "\1\104",
             "",
             "\1\105",
+            "\1\106",
+            "\1\107",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "",
+            "\1\111",
+            "",
+            "\1\112",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
-            "\1\110",
+            "",
+            "\1\115",
             "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
             "",
@@ -1161,7 +1196,7 @@ public class InternalCfgLexer extends Lexer {
             this.transition = DFA7_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__30 | RULE_C_BRACKET_L | RULE_C_BRACKET_R | RULE_C_PAREN_L | RULE_C_PAREN_R | RULE_C_BRACE_L | RULE_C_BRACE_R | RULE_C_ANGLE_L | RULE_C_ANGLE_R | RULE_C_EQUALS | RULE_C_COMMA | RULE_C_SEMICOLON | RULE_C_INPUT | RULE_C_MAIN | RULE_C_TYPE | RULE_C_INT | RULE_C_UINT | RULE_C_BOOL | RULE_C_NUMBER | RULE_C_STRING | RULE_C_LIST | RULE_C_PACKAGE | RULE_NAME | RULE_STRING | RULE_COMMENT | RULE_WS );";
+            return "1:1: Tokens : ( T__31 | RULE_C_BRACKET_L | RULE_C_BRACKET_R | RULE_C_PAREN_L | RULE_C_PAREN_R | RULE_C_BRACE_L | RULE_C_BRACE_R | RULE_C_ANGLE_L | RULE_C_ANGLE_R | RULE_C_EQUALS | RULE_C_COMMA | RULE_C_SEMICOLON | RULE_C_INPUT | RULE_C_MAIN | RULE_C_TYPE | RULE_C_INT | RULE_C_UINT | RULE_C_BOOL | RULE_C_NUMBER | RULE_C_STRING | RULE_C_LIST | RULE_C_SLICE | RULE_C_PACKAGE | RULE_NAME | RULE_STRING | RULE_COMMENT | RULE_WS );";
         }
     }
  

@@ -47,9 +47,13 @@
     <genClasses ecoreClass="Cfg.ecore#//FieldType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldType/type"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//FieldMeta">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMeta/prefix"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//FieldMeta/params"/>
+    <genClasses ecoreClass="Cfg.ecore#//ListMeta">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//ListMeta/prefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//ListMeta/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//SliceMeta">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//SliceMeta/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//SliceMeta/sliceChar"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//FieldMetaKey">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMetaKey/fieldName"/>

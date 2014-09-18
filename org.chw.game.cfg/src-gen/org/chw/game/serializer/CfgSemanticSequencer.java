@@ -5,12 +5,13 @@ import com.google.inject.Provider;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMeta;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.InputDef;
+import org.chw.game.cfg.ListMeta;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
+import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.chw.game.services.CfgGrammarAccess;
@@ -46,12 +47,6 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else break;
-			case CfgPackage.FIELD_META:
-				if(context == grammarAccess.getFieldMetaRule()) {
-					sequence_FieldMeta(context, (FieldMeta) semanticObject); 
-					return; 
-				}
-				else break;
 			case CfgPackage.FIELD_META_KEY:
 				if(context == grammarAccess.getFieldMetaKeyRule()) {
 					sequence_FieldMetaKey(context, (FieldMetaKey) semanticObject); 
@@ -70,6 +65,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else break;
+			case CfgPackage.LIST_META:
+				if(context == grammarAccess.getListMetaRule()) {
+					sequence_ListMeta(context, (ListMeta) semanticObject); 
+					return; 
+				}
+				else break;
 			case CfgPackage.OTHER_COMENT:
 				if(context == grammarAccess.getOtherComentRule()) {
 					sequence_OtherComent(context, (OtherComent) semanticObject); 
@@ -79,6 +80,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case CfgPackage.PACK_DEF:
 				if(context == grammarAccess.getPackDefRule()) {
 					sequence_PackDef(context, (PackDef) semanticObject); 
+					return; 
+				}
+				else break;
+			case CfgPackage.SLICE_META:
+				if(context == grammarAccess.getSliceMetaRule()) {
+					sequence_SliceMeta(context, (SliceMeta) semanticObject); 
 					return; 
 				}
 				else break;
@@ -135,15 +142,6 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (prefix=C_LIST (params+=FieldMetaKey params+=FieldMetaKey*)?)
-	 */
-	protected void sequence_FieldMeta(EObject context, FieldMeta semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     type=TypeName
 	 */
 	protected void sequence_FieldType(EObject context, FieldType semanticObject) {
@@ -160,7 +158,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName nodePath=STRING)
+	 *     (comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName nodePath=STRING)
 	 */
 	protected void sequence_Field(EObject context, Field semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -172,6 +170,15 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (comment+=OtherComent* inputCHAR=C_INPUT url=STRING)
 	 */
 	protected void sequence_InputDef(EObject context, InputDef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (prefix=C_LIST (params+=FieldMetaKey params+=FieldMetaKey*)?)
+	 */
+	protected void sequence_ListMeta(EObject context, ListMeta semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -198,6 +205,25 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_PackDef(EObject context, PackDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (prefix=C_SLICE sliceChar=STRING)
+	 */
+	protected void sequence_SliceMeta(EObject context, SliceMeta semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.SLICE_META__PREFIX) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.SLICE_META__PREFIX));
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.SLICE_META__SLICE_CHAR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.SLICE_META__SLICE_CHAR));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getSliceMetaAccess().getPrefixC_SLICETerminalRuleCall_1_0(), semanticObject.getPrefix());
+		feeder.accept(grammarAccess.getSliceMetaAccess().getSliceCharSTRINGTerminalRuleCall_3_0(), semanticObject.getSliceChar());
+		feeder.finish();
 	}
 	
 	

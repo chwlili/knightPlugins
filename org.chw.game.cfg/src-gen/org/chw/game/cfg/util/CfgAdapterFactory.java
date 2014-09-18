@@ -114,9 +114,14 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
         return createFieldTypeAdapter();
       }
       @Override
-      public Adapter caseFieldMeta(FieldMeta object)
+      public Adapter caseListMeta(ListMeta object)
       {
-        return createFieldMetaAdapter();
+        return createListMetaAdapter();
+      }
+      @Override
+      public Adapter caseSliceMeta(SliceMeta object)
+      {
+        return createSliceMetaAdapter();
       }
       @Override
       public Adapter caseFieldMetaKey(FieldMetaKey object)
@@ -256,16 +261,31 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.FieldMeta <em>Field Meta</em>}'.
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.ListMeta <em>List Meta</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.chw.game.cfg.FieldMeta
+   * @see org.chw.game.cfg.ListMeta
    * @generated
    */
-  public Adapter createFieldMetaAdapter()
+  public Adapter createListMetaAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.SliceMeta <em>Slice Meta</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.SliceMeta
+   * @generated
+   */
+  public Adapter createSliceMetaAdapter()
   {
     return null;
   }

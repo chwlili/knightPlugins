@@ -10,12 +10,13 @@ import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMeta;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.InputDef;
+import org.chw.game.cfg.ListMeta;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
+import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -87,7 +88,14 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass fieldMetaEClass = null;
+  private EClass listMetaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sliceMetaEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -481,9 +489,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getFieldMeta()
+  public EClass getListMeta()
   {
-    return fieldMetaEClass;
+    return listMetaEClass;
   }
 
   /**
@@ -491,9 +499,9 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getFieldMeta_Prefix()
+  public EAttribute getListMeta_Prefix()
   {
-    return (EAttribute)fieldMetaEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)listMetaEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -501,9 +509,39 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFieldMeta_Params()
+  public EReference getListMeta_Params()
   {
-    return (EReference)fieldMetaEClass.getEStructuralFeatures().get(1);
+    return (EReference)listMetaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSliceMeta()
+  {
+    return sliceMetaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSliceMeta_Prefix()
+  {
+    return (EAttribute)sliceMetaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSliceMeta_SliceChar()
+  {
+    return (EAttribute)sliceMetaEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -614,9 +652,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     fieldTypeEClass = createEClass(FIELD_TYPE);
     createEAttribute(fieldTypeEClass, FIELD_TYPE__TYPE);
 
-    fieldMetaEClass = createEClass(FIELD_META);
-    createEAttribute(fieldMetaEClass, FIELD_META__PREFIX);
-    createEReference(fieldMetaEClass, FIELD_META__PARAMS);
+    listMetaEClass = createEClass(LIST_META);
+    createEAttribute(listMetaEClass, LIST_META__PREFIX);
+    createEReference(listMetaEClass, LIST_META__PARAMS);
+
+    sliceMetaEClass = createEClass(SLICE_META);
+    createEAttribute(sliceMetaEClass, SLICE_META__PREFIX);
+    createEAttribute(sliceMetaEClass, SLICE_META__SLICE_CHAR);
 
     fieldMetaKeyEClass = createEClass(FIELD_META_KEY);
     createEAttribute(fieldMetaKeyEClass, FIELD_META_KEY__FIELD_NAME);
@@ -686,7 +728,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getField_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getField_Meta(), this.getFieldMeta(), null, "meta", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Meta(), ecorePackage.getEObject(), null, "meta", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getField_Type(), this.getFieldType(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_NodePath(), ecorePackage.getEString(), "nodePath", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -694,9 +736,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     initEClass(fieldTypeEClass, FieldType.class, "FieldType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFieldType_Type(), ecorePackage.getEString(), "type", null, 0, 1, FieldType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(fieldMetaEClass, FieldMeta.class, "FieldMeta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFieldMeta_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, FieldMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFieldMeta_Params(), this.getFieldMetaKey(), null, "params", null, 0, -1, FieldMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(listMetaEClass, ListMeta.class, "ListMeta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getListMeta_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, ListMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getListMeta_Params(), this.getFieldMetaKey(), null, "params", null, 0, -1, ListMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sliceMetaEClass, SliceMeta.class, "SliceMeta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSliceMeta_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, SliceMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSliceMeta_SliceChar(), ecorePackage.getEString(), "sliceChar", null, 0, 1, SliceMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldMetaKeyEClass, FieldMetaKey.class, "FieldMetaKey", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFieldMetaKey_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, FieldMetaKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -187,7 +187,7 @@ public class UnitConfigBuilder
 				continue;
 			}
 
-			if (field.meta.repeted)
+			if (field.meta.repeted || field.meta.slice)
 			{
 				@SuppressWarnings("rawtypes")
 				ArrayList list = (ArrayList) field.value;
@@ -562,7 +562,7 @@ public class UnitConfigBuilder
 
 		if (!def.isExtendType())
 		{
-			if (def.repeted)
+			if (def.repeted || def.slice)
 			{
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
@@ -584,7 +584,7 @@ public class UnitConfigBuilder
 		}
 		else
 		{
-			if (def.repeted)
+			if (def.repeted || def.slice)
 			{
 				sb.append("[");
 				@SuppressWarnings("rawtypes")
@@ -807,7 +807,7 @@ public class UnitConfigBuilder
 					contentOutputStream.writeVarInt(getOrder(fieldDef, val));
 				}
 			}
-			else if (fieldDef.repeted)
+			else if (fieldDef.repeted || fieldDef.slice)
 			{
 				@SuppressWarnings("rawtypes")
 				ArrayList vals = (ArrayList) field.value;
@@ -899,7 +899,7 @@ public class UnitConfigBuilder
 				sb.append(field.meta.name);
 				sb.append(":");
 				ClassField def = field.meta;
-				if (def.repeted)
+				if (def.repeted || def.slice)
 				{
 					sb.append("[");
 					if (field.value != null)

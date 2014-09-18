@@ -4,8 +4,9 @@ import java.util.HashSet;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMeta;
 import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -99,9 +100,44 @@ public class CfgValidator extends AbstractCfgValidator
 		String typeName = field.getType().getType();
 		boolean isNative = isNativeType(typeName);
 
-		FieldMeta meta = field.getMeta();
-		if (meta != null)
+		// 检查字段类型是否有定义
+		if (!isNative && getType(field.eResource(), typeName) == null)
 		{
+			error("未找到 \"" + typeName + "\" 的定义", field, CfgPackage.Literals.FIELD__TYPE);
+		}
+
+		EObject fieldMeta = null;
+
+		EList<EObject> fieldMetas = field.getMeta();
+		if (fieldMetas != null && fieldMetas.size() > 1)
+		{
+			for (int i = 0; i < fieldMetas.size() - 1; i++)
+			{
+				EObject currMeta = fieldMetas.get(i);
+				if (currMeta instanceof ListMeta)
+				{
+					error("此元数据将被忽略！", fieldMetas.get(i), CfgPackage.Literals.LIST_META__PREFIX);
+				}
+				else if (currMeta instanceof SliceMeta)
+				{
+					error("此元数据将被忽略！", fieldMetas.get(i), CfgPackage.Literals.SLICE_META__PREFIX);
+				}
+			}
+
+			fieldMeta = fieldMetas.get(fieldMetas.size() - 1);
+		}
+
+		if (fieldMeta instanceof SliceMeta)
+		{
+			if (!isNative)
+			{
+				error("\"" + typeName + "\" 不是原生类型,此元数据只能用于原生类型！", fieldMeta, CfgPackage.Literals.SLICE_META__PREFIX);
+			}
+		}
+
+		if (fieldMeta instanceof ListMeta)
+		{
+			ListMeta meta = (ListMeta) fieldMeta;
 			if (meta.getParams().size() > 0)
 			{
 				HashSet<String> keySet = new HashSet<String>();
@@ -146,14 +182,6 @@ public class CfgValidator extends AbstractCfgValidator
 						keySet.add(indexKey);
 					}
 				}
-			}
-		}
-
-		if (!isNative)
-		{
-			if (getType(field.eResource(), typeName) == null)
-			{
-				error("未找到 \"" + typeName + "\" 的定义", field, CfgPackage.Literals.FIELD__TYPE);
 			}
 		}
 	}

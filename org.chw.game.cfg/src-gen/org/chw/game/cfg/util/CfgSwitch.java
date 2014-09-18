@@ -125,10 +125,17 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.FIELD_META:
+      case CfgPackage.LIST_META:
       {
-        FieldMeta fieldMeta = (FieldMeta)theEObject;
-        T result = caseFieldMeta(fieldMeta);
+        ListMeta listMeta = (ListMeta)theEObject;
+        T result = caseListMeta(listMeta);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CfgPackage.SLICE_META:
+      {
+        SliceMeta sliceMeta = (SliceMeta)theEObject;
+        T result = caseSliceMeta(sliceMeta);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -263,17 +270,33 @@ public class CfgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Field Meta</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>List Meta</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Field Meta</em>'.
+   * @return the result of interpreting the object as an instance of '<em>List Meta</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseFieldMeta(FieldMeta object)
+  public T caseListMeta(ListMeta object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Slice Meta</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Slice Meta</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSliceMeta(SliceMeta object)
   {
     return null;
   }

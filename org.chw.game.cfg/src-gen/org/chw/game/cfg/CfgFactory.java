@@ -90,13 +90,22 @@ public interface CfgFactory extends EFactory
   FieldType createFieldType();
 
   /**
-   * Returns a new object of class '<em>Field Meta</em>'.
+   * Returns a new object of class '<em>List Meta</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Field Meta</em>'.
+   * @return a new object of class '<em>List Meta</em>'.
    * @generated
    */
-  FieldMeta createFieldMeta();
+  ListMeta createListMeta();
+
+  /**
+   * Returns a new object of class '<em>Slice Meta</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Slice Meta</em>'.
+   * @generated
+   */
+  SliceMeta createSliceMeta();
 
   /**
    * Returns a new object of class '<em>Field Meta Key</em>'.

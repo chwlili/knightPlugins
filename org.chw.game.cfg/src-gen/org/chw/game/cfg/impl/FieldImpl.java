@@ -6,19 +6,26 @@
  */
 package org.chw.game.cfg.impl;
 
+import java.util.Collection;
+
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMeta;
 import org.chw.game.cfg.FieldType;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,14 +67,14 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   protected String comment = COMMENT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getMeta() <em>Meta</em>}' containment reference.
+   * The cached value of the '{@link #getMeta() <em>Meta</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getMeta()
    * @generated
    * @ordered
    */
-  protected FieldMeta meta;
+  protected EList<EObject> meta;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -168,47 +175,13 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public FieldMeta getMeta()
+  public EList<EObject> getMeta()
   {
+    if (meta == null)
+    {
+      meta = new EObjectContainmentEList<EObject>(EObject.class, this, CfgPackage.FIELD__META);
+    }
     return meta;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetMeta(FieldMeta newMeta, NotificationChain msgs)
-  {
-    FieldMeta oldMeta = meta;
-    meta = newMeta;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__META, oldMeta, newMeta);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setMeta(FieldMeta newMeta)
-  {
-    if (newMeta != meta)
-    {
-      NotificationChain msgs = null;
-      if (meta != null)
-        msgs = ((InternalEObject)meta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.FIELD__META, null, msgs);
-      if (newMeta != null)
-        msgs = ((InternalEObject)newMeta).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.FIELD__META, null, msgs);
-      msgs = basicSetMeta(newMeta, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.FIELD__META, newMeta, newMeta));
   }
 
   /**
@@ -316,7 +289,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
     switch (featureID)
     {
       case CfgPackage.FIELD__META:
-        return basicSetMeta(null, msgs);
+        return ((InternalEList<?>)getMeta()).basicRemove(otherEnd, msgs);
       case CfgPackage.FIELD__TYPE:
         return basicSetType(null, msgs);
     }
@@ -352,6 +325,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -361,7 +335,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         setComment((String)newValue);
         return;
       case CfgPackage.FIELD__META:
-        setMeta((FieldMeta)newValue);
+        getMeta().clear();
+        getMeta().addAll((Collection<? extends EObject>)newValue);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((FieldType)newValue);
@@ -390,7 +365,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         setComment(COMMENT_EDEFAULT);
         return;
       case CfgPackage.FIELD__META:
-        setMeta((FieldMeta)null);
+        getMeta().clear();
         return;
       case CfgPackage.FIELD__TYPE:
         setType((FieldType)null);
@@ -418,7 +393,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
       case CfgPackage.FIELD__COMMENT:
         return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
       case CfgPackage.FIELD__META:
-        return meta != null;
+        return meta != null && !meta.isEmpty();
       case CfgPackage.FIELD__TYPE:
         return type != null;
       case CfgPackage.FIELD__FIELD_NAME:

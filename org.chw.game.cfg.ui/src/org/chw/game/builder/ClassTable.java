@@ -5,11 +5,13 @@ import java.util.HashMap;
 
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMeta;
 import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 public class ClassTable
 {
@@ -112,6 +114,17 @@ public class ClassTable
 	}
 
 	/**
+	 * 是否为基础类型
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private boolean isBaseType(String name)
+	{
+		return "int".equals(name) || "uint".equals(name) || "Boolean".equals(name) || "Number".equals(name) || "String".equals(name);
+	}
+
+	/**
 	 * 初始化所有类型
 	 */
 	private void open(XML2 root)
@@ -163,36 +176,55 @@ public class ClassTable
 				String fieldType = field.getType().getType();
 				boolean fieldList = false;
 				String[] indexList = null;
+				boolean sliceList = false;
+				String sliceChar = null;
 
-				FieldMeta meta = field.getMeta();
-				if (meta != null)
+				boolean isBase = isBaseType(fieldType);
+
+				EList<EObject> fieldMetas = field.getMeta();
+				EObject fieldMeta = fieldMetas != null && fieldMetas.size() > 0 ? fieldMetas.get(fieldMetas.size() - 1) : null;
+				if (fieldMeta instanceof ListMeta)
 				{
+					ListMeta meta = (ListMeta) fieldMeta;
+
 					fieldList = true;
 
-					ArrayList<String> keys = null;
-					EList<FieldMetaKey> params = meta.getParams();
-					if (params != null)
+					if (!isBase)
 					{
-						keys = new ArrayList<String>();
-						for (FieldMetaKey param : params)
+						ArrayList<String> keys = null;
+						EList<FieldMetaKey> params = meta.getParams();
+						if (params != null)
 						{
-							String paramName = param.getFieldName();
-							if (paramName != null && paramName.isEmpty() == false)
+							keys = new ArrayList<String>();
+							for (FieldMetaKey param : params)
 							{
-								keys.add(paramName);
+								String paramName = param.getFieldName();
+								if (paramName != null && paramName.isEmpty() == false)
+								{
+									keys.add(paramName);
+								}
 							}
 						}
-					}
 
-					if (keys != null && keys.size() > 0)
+						if (keys != null && keys.size() > 0)
+						{
+							indexList = keys.toArray(new String[] {});
+						}
+					}
+				}
+				else if (fieldMeta instanceof SliceMeta)
+				{
+					SliceMeta meta = (SliceMeta) fieldMeta;
+					if (isBase)
 					{
-						indexList = keys.toArray(new String[] {});
+						sliceList = true;
+						sliceChar = meta.getSliceChar();
 					}
 				}
 
 				if (fieldType != "")
 				{
-					fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList));
+					fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList, sliceList, sliceChar));
 				}
 			}
 

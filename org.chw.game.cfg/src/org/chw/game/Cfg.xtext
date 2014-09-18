@@ -20,15 +20,18 @@ Enter:
 	C_BRACKET_L prefix=C_MAIN C_PAREN_L rootPath=STRING C_PAREN_R C_BRACKET_R;
 
 Field:
-	comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName C_EQUALS
+	comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName C_EQUALS
 	nodePath=STRING
 	C_SEMICOLON?;
 
 FieldType:
 	type=TypeName;
 
-FieldMeta:
+ListMeta:
 	C_BRACKET_L prefix=C_LIST (C_PAREN_L (params+=FieldMetaKey (C_COMMA params+=FieldMetaKey)*)? C_PAREN_R)? C_BRACKET_R;
+
+SliceMeta:
+	C_BRACKET_L prefix=C_SLICE C_PAREN_L sliceChar=STRING C_PAREN_R C_BRACKET_R;
 
 FieldMetaKey:
 	fieldName=TypeName;
@@ -46,7 +49,7 @@ PackName:
 	TypeName ('.' TypeName)*;
 
 TypeName:
-	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | NAME;
+	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 
 terminal C_BRACKET_L:
 	'[';
@@ -107,6 +110,9 @@ terminal C_STRING:
 
 terminal C_LIST:
 	'List';
+
+terminal C_SLICE:
+	'Slice';
 
 terminal C_PACKAGE:
 	'package';

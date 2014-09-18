@@ -36,8 +36,11 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setLinewrap().before(grammarAccess.getFieldCommentRule());
 		c.setLinewrap().after(grammarAccess.getFieldCommentRule());
 
-		c.setLinewrap().before(grammarAccess.getFieldMetaRule());
-		c.setLinewrap().after(grammarAccess.getFieldMetaRule());
+		c.setLinewrap().before(grammarAccess.getListMetaRule());
+		c.setLinewrap().after(grammarAccess.getListMetaRule());
+
+		c.setLinewrap().before(grammarAccess.getSliceMetaRule());
+		c.setLinewrap().after(grammarAccess.getSliceMetaRule());
 
 		// c.setLinewrap().before(grammarAccess.getOtherComentRule());
 		c.setLinewrap(2).after(grammarAccess.getOtherComentRule());
@@ -61,8 +64,8 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 
 		c.setNoSpace().before(grammarAccess.getC_MAINRule());
 		c.setNoSpace().after(grammarAccess.getC_MAINRule());
-		//c.setNoSpace().before(grammarAccess.getC_LISTRule());
-		//c.setNoSpace().after(grammarAccess.getC_LISTRule());
+		// c.setNoSpace().before(grammarAccess.getC_LISTRule());
+		// c.setNoSpace().after(grammarAccess.getC_LISTRule());
 		c.setNoSpace().after(grammarAccess.getC_BRACKET_LRule());
 		c.setNoSpace().before(grammarAccess.getC_BRACKET_RRule());
 		c.setNoSpace().before(grammarAccess.getC_PAREN_LRule());

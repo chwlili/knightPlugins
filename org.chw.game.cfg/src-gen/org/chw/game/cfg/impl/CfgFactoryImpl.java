@@ -75,7 +75,8 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.ENTER: return createEnter();
       case CfgPackage.FIELD: return createField();
       case CfgPackage.FIELD_TYPE: return createFieldType();
-      case CfgPackage.FIELD_META: return createFieldMeta();
+      case CfgPackage.LIST_META: return createListMeta();
+      case CfgPackage.SLICE_META: return createSliceMeta();
       case CfgPackage.FIELD_META_KEY: return createFieldMetaKey();
       case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
@@ -165,10 +166,21 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public FieldMeta createFieldMeta()
+  public ListMeta createListMeta()
   {
-    FieldMetaImpl fieldMeta = new FieldMetaImpl();
-    return fieldMeta;
+    ListMetaImpl listMeta = new ListMetaImpl();
+    return listMeta;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SliceMeta createSliceMeta()
+  {
+    SliceMetaImpl sliceMeta = new SliceMetaImpl();
+    return sliceMeta;
   }
 
   /**

@@ -12,22 +12,22 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Field Meta</b></em>'.
+ * A representation of the model object '<em><b>List Meta</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.FieldMeta#getPrefix <em>Prefix</em>}</li>
- *   <li>{@link org.chw.game.cfg.FieldMeta#getParams <em>Params</em>}</li>
+ *   <li>{@link org.chw.game.cfg.ListMeta#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.ListMeta#getParams <em>Params</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.chw.game.cfg.CfgPackage#getFieldMeta()
+ * @see org.chw.game.cfg.CfgPackage#getListMeta()
  * @model
  * @generated
  */
-public interface FieldMeta extends EObject
+public interface ListMeta extends EObject
 {
   /**
    * Returns the value of the '<em><b>Prefix</b></em>' attribute.
@@ -39,14 +39,14 @@ public interface FieldMeta extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Prefix</em>' attribute.
    * @see #setPrefix(String)
-   * @see org.chw.game.cfg.CfgPackage#getFieldMeta_Prefix()
+   * @see org.chw.game.cfg.CfgPackage#getListMeta_Prefix()
    * @model
    * @generated
    */
   String getPrefix();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.FieldMeta#getPrefix <em>Prefix</em>}' attribute.
+   * Sets the value of the '{@link org.chw.game.cfg.ListMeta#getPrefix <em>Prefix</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Prefix</em>' attribute.
@@ -65,10 +65,10 @@ public interface FieldMeta extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Params</em>' containment reference list.
-   * @see org.chw.game.cfg.CfgPackage#getFieldMeta_Params()
+   * @see org.chw.game.cfg.CfgPackage#getListMeta_Params()
    * @model containment="true"
    * @generated
    */
   EList<FieldMetaKey> getParams();
 
-} // FieldMeta
+} // ListMeta

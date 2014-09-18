@@ -117,6 +117,10 @@ public class UnitCodeBuilder
 						}
 					}
 				}
+				else if (field.slice && !field.isExtendType())
+				{
+					listType1.add(field.type);
+				}
 			}
 		}
 
@@ -181,10 +185,7 @@ public class UnitCodeBuilder
 		}
 
 		// Èë¿ÚÀà
-		for (Class type : classTable.getAllMainClass())
-		{
-			writePoolType(type);
-		}
+		writePoolType();
 	}
 
 	/**
@@ -855,6 +856,10 @@ public class UnitCodeBuilder
 			{
 				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
 			}
+			else if (field.slice && !field.isExtendType())
+			{
+				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
+			}
 			else
 			{
 				sb.append(String.format("\t\tprivate var _%sKind:int;\n", field.name));
@@ -902,6 +907,18 @@ public class UnitCodeBuilder
 				sb.append(String.format("\t\t\t_%sKind=new %s(pool,%s_list);\n", field.name, getFieldAsTypeName(field), field.name));
 				sb.append(String.format("\t\t\tbytes.position=pos;\n"));
 			}
+			else if (field.slice && !field.isExtendType())
+			{
+				sb.append(String.format("\t\t\tvar %s_list:Vector.<int>=new Vector.<int>();\n", field.name));
+				sb.append(String.format("\t\t\tvar %s_length:int=bytes.readInt();\n", field.name));
+				sb.append(String.format("\t\t\tfor(var %s_i:int=0;%s_i<%s_length;%s_i++)\n", field.name, field.name, field.name, field.name));
+				sb.append(String.format("\t\t\t{\n"));
+				sb.append(String.format("\t\t\t\t%s_list.push(bytes.readInt());\n", field.name));
+				sb.append(String.format("\t\t\t}\n"));
+				sb.append(String.format("\t\t\tpos=bytes.position;\n"));
+				sb.append(String.format("\t\t\t_%sKind=new %s(pool,%s_list);\n", field.name, getFieldAsTypeName(field), field.name));
+				sb.append(String.format("\t\t\tbytes.position=pos;\n"));
+			}
 			else
 			{
 				sb.append(String.format("\t\t\t_%sKind=bytes.readInt();\n", field.name));
@@ -927,6 +944,10 @@ public class UnitCodeBuilder
 			{
 				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
 			}
+			else if (field.slice && !field.isExtendType())
+			{
+				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+			}
 			else
 			{
 				sb.append(String.format("\t\t\treturn __pool__.getValue(%s,_%sKind);\n", classTable.getClassID(field.type), field.name));
@@ -947,7 +968,7 @@ public class UnitCodeBuilder
 	 * @throws CoreException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void writePoolType(Class type) throws UnsupportedEncodingException, CoreException
+	private void writePoolType() throws UnsupportedEncodingException, CoreException
 	{
 		String filePath = classTable.getInputURL();
 		if (filePath == null)
@@ -969,10 +990,6 @@ public class UnitCodeBuilder
 		sb.append(corePack.isEmpty() == false ? String.format("\timport %s.*;\n", corePack) : "");
 		sb.append(String.format("\t\n"));
 
-		if (type.comment != null)
-		{
-			sb.append(String.format("%s", formatComment(type.comment, "\t")));
-		}
 		sb.append(String.format("\tpublic class %s extends ByteFile\n", typeName));
 		sb.append(String.format("\t{\n"));
 
@@ -1099,6 +1116,10 @@ public class UnitCodeBuilder
 			{
 				return getMapTypeName(field.type, field.indexKeys);
 			}
+		}
+		else if (field.slice && !field.isExtendType())
+		{
+			return getListTypeName(field.type);
 		}
 		else
 		{

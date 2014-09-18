@@ -323,8 +323,11 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cCommentFieldCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
-		private final Assignment cMetaAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cMetaFieldMetaParserRuleCall_1_0 = (RuleCall)cMetaAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cMetaAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cMetaListMetaParserRuleCall_1_0_0 = (RuleCall)cMetaAssignment_1_0.eContents().get(0);
+		private final Assignment cMetaAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cMetaSliceMetaParserRuleCall_1_1_0 = (RuleCall)cMetaAssignment_1_1.eContents().get(0);
 		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cTypeFieldTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
 		private final Assignment cFieldNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -336,10 +339,14 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Field:
 		//
-		//	comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?;
+		//	comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING
+		//
+		//	C_SEMICOLON?;
 		public ParserRule getRule() { return rule; }
 
-		//comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?
+		//comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING
+		//
+		//C_SEMICOLON?
 		public Group getGroup() { return cGroup; }
 
 		//comment=FieldComment?
@@ -348,11 +355,20 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//FieldComment
 		public RuleCall getCommentFieldCommentParserRuleCall_0_0() { return cCommentFieldCommentParserRuleCall_0_0; }
 
-		//meta=FieldMeta?
-		public Assignment getMetaAssignment_1() { return cMetaAssignment_1; }
+		//(meta+=ListMeta | meta+=SliceMeta)*
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//FieldMeta
-		public RuleCall getMetaFieldMetaParserRuleCall_1_0() { return cMetaFieldMetaParserRuleCall_1_0; }
+		//meta+=ListMeta
+		public Assignment getMetaAssignment_1_0() { return cMetaAssignment_1_0; }
+
+		//ListMeta
+		public RuleCall getMetaListMetaParserRuleCall_1_0_0() { return cMetaListMetaParserRuleCall_1_0_0; }
+
+		//meta+=SliceMeta
+		public Assignment getMetaAssignment_1_1() { return cMetaAssignment_1_1; }
+
+		//SliceMeta
+		public RuleCall getMetaSliceMetaParserRuleCall_1_1_0() { return cMetaSliceMetaParserRuleCall_1_1_0; }
 
 		//type=FieldType
 		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
@@ -396,8 +412,8 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTypeTypeNameParserRuleCall_0() { return cTypeTypeNameParserRuleCall_0; }
 	}
 
-	public class FieldMetaElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FieldMeta");
+	public class ListMetaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ListMeta");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cC_BRACKET_LTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Assignment cPrefixAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -414,7 +430,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cC_PAREN_RTerminalRuleCall_2_2 = (RuleCall)cGroup_2.eContents().get(2);
 		private final RuleCall cC_BRACKET_RTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
-		//FieldMeta:
+		//ListMeta:
 		//
 		//	C_BRACKET_L prefix=C_LIST (C_PAREN_L (params+=FieldMetaKey (C_COMMA params+=FieldMetaKey)*)? C_PAREN_R)? C_BRACKET_R;
 		public ParserRule getRule() { return rule; }
@@ -463,6 +479,51 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 		//C_BRACKET_R
 		public RuleCall getC_BRACKET_RTerminalRuleCall_3() { return cC_BRACKET_RTerminalRuleCall_3; }
+	}
+
+	public class SliceMetaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SliceMeta");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cC_BRACKET_LTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cPrefixAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPrefixC_SLICETerminalRuleCall_1_0 = (RuleCall)cPrefixAssignment_1.eContents().get(0);
+		private final RuleCall cC_PAREN_LTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Assignment cSliceCharAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cSliceCharSTRINGTerminalRuleCall_3_0 = (RuleCall)cSliceCharAssignment_3.eContents().get(0);
+		private final RuleCall cC_PAREN_RTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
+		private final RuleCall cC_BRACKET_RTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		
+		//SliceMeta:
+		//
+		//	C_BRACKET_L prefix=C_SLICE C_PAREN_L sliceChar=STRING C_PAREN_R C_BRACKET_R;
+		public ParserRule getRule() { return rule; }
+
+		//C_BRACKET_L prefix=C_SLICE C_PAREN_L sliceChar=STRING C_PAREN_R C_BRACKET_R
+		public Group getGroup() { return cGroup; }
+
+		//C_BRACKET_L
+		public RuleCall getC_BRACKET_LTerminalRuleCall_0() { return cC_BRACKET_LTerminalRuleCall_0; }
+
+		//prefix=C_SLICE
+		public Assignment getPrefixAssignment_1() { return cPrefixAssignment_1; }
+
+		//C_SLICE
+		public RuleCall getPrefixC_SLICETerminalRuleCall_1_0() { return cPrefixC_SLICETerminalRuleCall_1_0; }
+
+		//C_PAREN_L
+		public RuleCall getC_PAREN_LTerminalRuleCall_2() { return cC_PAREN_LTerminalRuleCall_2; }
+
+		//sliceChar=STRING
+		public Assignment getSliceCharAssignment_3() { return cSliceCharAssignment_3; }
+
+		//STRING
+		public RuleCall getSliceCharSTRINGTerminalRuleCall_3_0() { return cSliceCharSTRINGTerminalRuleCall_3_0; }
+
+		//C_PAREN_R
+		public RuleCall getC_PAREN_RTerminalRuleCall_4() { return cC_PAREN_RTerminalRuleCall_4; }
+
+		//C_BRACKET_R
+		public RuleCall getC_BRACKET_RTerminalRuleCall_5() { return cC_BRACKET_RTerminalRuleCall_5; }
 	}
 
 	public class FieldMetaKeyElements extends AbstractParserRuleElementFinder {
@@ -566,14 +627,15 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cC_NUMBERTerminalRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cC_STRINGTerminalRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cC_LISTTerminalRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cNAMETerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cC_SLICETerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cNAMETerminalRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		
 		//TypeName:
 		//
-		//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | NAME;
+		//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 		public ParserRule getRule() { return rule; }
 
-		//C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | NAME
+		//C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//C_INPUT
@@ -603,8 +665,11 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_LIST
 		public RuleCall getC_LISTTerminalRuleCall_8() { return cC_LISTTerminalRuleCall_8; }
 
+		//C_SLICE
+		public RuleCall getC_SLICETerminalRuleCall_9() { return cC_SLICETerminalRuleCall_9; }
+
 		//NAME
-		public RuleCall getNAMETerminalRuleCall_9() { return cNAMETerminalRuleCall_9; }
+		public RuleCall getNAMETerminalRuleCall_10() { return cNAMETerminalRuleCall_10; }
 	}
 	
 	
@@ -615,7 +680,8 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private EnterElements pEnter;
 	private FieldElements pField;
 	private FieldTypeElements pFieldType;
-	private FieldMetaElements pFieldMeta;
+	private ListMetaElements pListMeta;
+	private SliceMetaElements pSliceMeta;
 	private FieldMetaKeyElements pFieldMetaKey;
 	private TypeCommentElements pTypeComment;
 	private FieldCommentElements pFieldComment;
@@ -642,6 +708,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tC_NUMBER;
 	private TerminalRule tC_STRING;
 	private TerminalRule tC_LIST;
+	private TerminalRule tC_SLICE;
 	private TerminalRule tC_PACKAGE;
 	private TerminalRule tNAME;
 	private TerminalRule tSTRING;
@@ -740,7 +807,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Field:
 	//
-	//	comment=FieldComment? meta=FieldMeta? type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING C_SEMICOLON?;
+	//	comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName C_EQUALS nodePath=STRING
+	//
+	//	C_SEMICOLON?;
 	public FieldElements getFieldAccess() {
 		return (pField != null) ? pField : (pField = new FieldElements());
 	}
@@ -760,15 +829,26 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		return getFieldTypeAccess().getRule();
 	}
 
-	//FieldMeta:
+	//ListMeta:
 	//
 	//	C_BRACKET_L prefix=C_LIST (C_PAREN_L (params+=FieldMetaKey (C_COMMA params+=FieldMetaKey)*)? C_PAREN_R)? C_BRACKET_R;
-	public FieldMetaElements getFieldMetaAccess() {
-		return (pFieldMeta != null) ? pFieldMeta : (pFieldMeta = new FieldMetaElements());
+	public ListMetaElements getListMetaAccess() {
+		return (pListMeta != null) ? pListMeta : (pListMeta = new ListMetaElements());
 	}
 	
-	public ParserRule getFieldMetaRule() {
-		return getFieldMetaAccess().getRule();
+	public ParserRule getListMetaRule() {
+		return getListMetaAccess().getRule();
+	}
+
+	//SliceMeta:
+	//
+	//	C_BRACKET_L prefix=C_SLICE C_PAREN_L sliceChar=STRING C_PAREN_R C_BRACKET_R;
+	public SliceMetaElements getSliceMetaAccess() {
+		return (pSliceMeta != null) ? pSliceMeta : (pSliceMeta = new SliceMetaElements());
+	}
+	
+	public ParserRule getSliceMetaRule() {
+		return getSliceMetaAccess().getRule();
 	}
 
 	//FieldMetaKey:
@@ -828,7 +908,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeName:
 	//
-	//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | NAME;
+	//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 	public TypeNameElements getTypeNameAccess() {
 		return (pTypeName != null) ? pTypeName : (pTypeName = new TypeNameElements());
 	}
@@ -975,6 +1055,13 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	//	"List";
 	public TerminalRule getC_LISTRule() {
 		return (tC_LIST != null) ? tC_LIST : (tC_LIST = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_LIST"));
+	} 
+
+	//terminal C_SLICE:
+	//
+	//	"Slice";
+	public TerminalRule getC_SLICERule() {
+		return (tC_SLICE != null) ? tC_SLICE : (tC_SLICE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_SLICE"));
 	} 
 
 	//terminal C_PACKAGE:
