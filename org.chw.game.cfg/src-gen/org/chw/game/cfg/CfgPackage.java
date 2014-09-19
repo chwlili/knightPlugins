@@ -98,13 +98,22 @@ public interface CfgPackage extends EPackage
   int XML2__TYPES = 2;
 
   /**
+   * The feature id for the '<em><b>Enums</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int XML2__ENUMS = 3;
+
+  /**
    * The feature id for the '<em><b>Comm</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int XML2__COMM = 3;
+  int XML2__COMM = 4;
 
   /**
    * The number of structural features of the '<em>XML2</em>' class.
@@ -113,7 +122,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int XML2_FEATURE_COUNT = 4;
+  int XML2_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.InputDefImpl <em>Input Def</em>}' class.
@@ -512,6 +521,116 @@ public interface CfgPackage extends EPackage
   int FIELD_META_KEY_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.EnumImpl <em>Enum</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.EnumImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnum()
+   * @generated
+   */
+  int ENUM = 10;
+
+  /**
+   * The feature id for the '<em><b>Comment</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__COMMENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Prefix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__PREFIX = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__NAME = 2;
+
+  /**
+   * The feature id for the '<em><b>Fields</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__FIELDS = 3;
+
+  /**
+   * The feature id for the '<em><b>Comm</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__COMM = 4;
+
+  /**
+   * The number of structural features of the '<em>Enum</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FEATURE_COUNT = 5;
+
+  /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.EnumFieldImpl <em>Enum Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.EnumFieldImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnumField()
+   * @generated
+   */
+  int ENUM_FIELD = 11;
+
+  /**
+   * The feature id for the '<em><b>Comment</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FIELD__COMMENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Field Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FIELD__FIELD_NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Field Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FIELD__FIELD_VALUE = 2;
+
+  /**
+   * The number of structural features of the '<em>Enum Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FIELD_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -519,7 +638,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getOtherComent()
    * @generated
    */
-  int OTHER_COMENT = 10;
+  int OTHER_COMENT = 12;
 
   /**
    * The feature id for the '<em><b>Comm</b></em>' attribute.
@@ -582,6 +701,17 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EReference getXML2_Types();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getEnums <em>Enums</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Enums</em>'.
+   * @see org.chw.game.cfg.XML2#getEnums()
+   * @see #getXML2()
+   * @generated
+   */
+  EReference getXML2_Enums();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.XML2#getComm <em>Comm</em>}'.
@@ -960,6 +1090,114 @@ public interface CfgPackage extends EPackage
   EAttribute getFieldMetaKey_FieldName();
 
   /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.Enum <em>Enum</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Enum</em>'.
+   * @see org.chw.game.cfg.Enum
+   * @generated
+   */
+  EClass getEnum();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Enum#getComment <em>Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comment</em>'.
+   * @see org.chw.game.cfg.Enum#getComment()
+   * @see #getEnum()
+   * @generated
+   */
+  EAttribute getEnum_Comment();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Enum#getPrefix <em>Prefix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Prefix</em>'.
+   * @see org.chw.game.cfg.Enum#getPrefix()
+   * @see #getEnum()
+   * @generated
+   */
+  EAttribute getEnum_Prefix();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.Enum#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.chw.game.cfg.Enum#getName()
+   * @see #getEnum()
+   * @generated
+   */
+  EAttribute getEnum_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.Enum#getFields <em>Fields</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Fields</em>'.
+   * @see org.chw.game.cfg.Enum#getFields()
+   * @see #getEnum()
+   * @generated
+   */
+  EReference getEnum_Fields();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.chw.game.cfg.Enum#getComm <em>Comm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Comm</em>'.
+   * @see org.chw.game.cfg.Enum#getComm()
+   * @see #getEnum()
+   * @generated
+   */
+  EReference getEnum_Comm();
+
+  /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.EnumField <em>Enum Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Enum Field</em>'.
+   * @see org.chw.game.cfg.EnumField
+   * @generated
+   */
+  EClass getEnumField();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.EnumField#getComment <em>Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comment</em>'.
+   * @see org.chw.game.cfg.EnumField#getComment()
+   * @see #getEnumField()
+   * @generated
+   */
+  EAttribute getEnumField_Comment();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.EnumField#getFieldName <em>Field Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Field Name</em>'.
+   * @see org.chw.game.cfg.EnumField#getFieldName()
+   * @see #getEnumField()
+   * @generated
+   */
+  EAttribute getEnumField_FieldName();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.EnumField#getFieldValue <em>Field Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Field Value</em>'.
+   * @see org.chw.game.cfg.EnumField#getFieldValue()
+   * @see #getEnumField()
+   * @generated
+   */
+  EAttribute getEnumField_FieldValue();
+
+  /**
    * Returns the meta object for class '{@link org.chw.game.cfg.OtherComent <em>Other Coment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1036,6 +1274,14 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EReference XML2__TYPES = eINSTANCE.getXML2_Types();
+
+    /**
+     * The meta object literal for the '<em><b>Enums</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference XML2__ENUMS = eINSTANCE.getXML2_Enums();
 
     /**
      * The meta object literal for the '<em><b>Comm</b></em>' containment reference list feature.
@@ -1334,6 +1580,90 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EAttribute FIELD_META_KEY__FIELD_NAME = eINSTANCE.getFieldMetaKey_FieldName();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.EnumImpl <em>Enum</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.EnumImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnum()
+     * @generated
+     */
+    EClass ENUM = eINSTANCE.getEnum();
+
+    /**
+     * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM__COMMENT = eINSTANCE.getEnum_Comment();
+
+    /**
+     * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM__PREFIX = eINSTANCE.getEnum_Prefix();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM__NAME = eINSTANCE.getEnum_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Fields</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ENUM__FIELDS = eINSTANCE.getEnum_Fields();
+
+    /**
+     * The meta object literal for the '<em><b>Comm</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ENUM__COMM = eINSTANCE.getEnum_Comm();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.EnumFieldImpl <em>Enum Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.EnumFieldImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getEnumField()
+     * @generated
+     */
+    EClass ENUM_FIELD = eINSTANCE.getEnumField();
+
+    /**
+     * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM_FIELD__COMMENT = eINSTANCE.getEnumField_Comment();
+
+    /**
+     * The meta object literal for the '<em><b>Field Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM_FIELD__FIELD_NAME = eINSTANCE.getEnumField_FieldName();
+
+    /**
+     * The meta object literal for the '<em><b>Field Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM_FIELD__FIELD_VALUE = eINSTANCE.getEnumField_FieldValue();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.

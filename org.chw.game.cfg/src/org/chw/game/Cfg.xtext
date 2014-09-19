@@ -4,7 +4,7 @@ generate cfg "http://www.chw.org/game/Cfg"
 
 XML2:
 	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) ((=> types+=Type) |
-	comm+=OtherComent)*;
+	(=> enums+=Enum) | comm+=OtherComent)*;
 
 InputDef:
 	comment+=OtherComent* inputCHAR=C_INPUT url=STRING C_SEMICOLON?;
@@ -36,6 +36,12 @@ SliceMeta:
 FieldMetaKey:
 	fieldName=TypeName;
 
+Enum:
+	comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L ((=> fields+=EnumField) | comm+=OtherComent)* C_BRACE_R;
+
+EnumField:
+	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+
 TypeComment:
 	COMMENT;
 
@@ -49,7 +55,7 @@ PackName:
 	TypeName ('.' TypeName)*;
 
 TypeName:
-	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 
 terminal C_BRACKET_L:
 	'[';
@@ -92,6 +98,9 @@ terminal C_MAIN:
 
 terminal C_TYPE:
 	'type';
+
+terminal C_ENUM:
+	'enum';
 
 terminal C_INT:
 	'int';

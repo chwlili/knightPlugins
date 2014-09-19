@@ -69,18 +69,16 @@ public class UnitCodeBuilder
 	 * 构建到指定目录
 	 * 
 	 * @param folder
-	 * @throws UnsupportedEncodingException
-	 * @throws CoreException
+	 * @throws Exception
 	 */
-	public void buildTo(IFolder folder) throws UnsupportedEncodingException, CoreException
+	public void buildTo(IFolder folder) throws CoreException, UnsupportedEncodingException
 	{
 		this.folder = folder;
 
-		HashSet<String> listType1 = new HashSet<String>();
-		HashSet<Class> listTypes2 = new HashSet<Class>();
-
-		HashSet<String> mapType1 = new HashSet<String>();
-		HashMap<String, HashSet<String[]>> mapType2 = new HashMap<String, HashSet<String[]>>();
+		HashSet<String> nativeListType = new HashSet<String>();
+		HashSet<Class> extendListType = new HashSet<Class>();
+		HashSet<Enum> enumListType = new HashSet<Enum>();
+		HashMap<String, HashSet<String[]>> indexListType = new HashMap<String, HashSet<String[]>>();
 
 		// 计算需要列表类型和字典类型
 		for (Class type : classTable.getAllClass())
@@ -92,34 +90,38 @@ public class UnitCodeBuilder
 				{
 					if (field.isExtendType())
 					{
-						if (field.indexKeys != null)
+						if (field.hasIndex())
 						{
-							if (!mapType2.containsKey(field.type))
+							if (!indexListType.containsKey(field.type))
 							{
-								mapType2.put(field.type, new HashSet<String[]>());
+								indexListType.put(field.type, new HashSet<String[]>());
 							}
-							mapType2.get(field.type).add(field.indexKeys);
+							indexListType.get(field.type).add(field.indexKeys);
 						}
 						else
 						{
-							listTypes2.add(classTable.getClass(field.type));
+							extendListType.add(classTable.getClass(field.type));
 						}
+					}
+					else if (field.isEnumType())
+					{
+						enumListType.add(classTable.getEnum(field.type));
 					}
 					else
 					{
-						if (field.indexKeys != null)
-						{
-							mapType1.add(field.type);
-						}
-						else
-						{
-							listType1.add(field.type);
-						}
+						nativeListType.add(field.type);
 					}
 				}
-				else if (field.slice && !field.isExtendType())
+				else if (field.slice)
 				{
-					listType1.add(field.type);
+					if (field.isEnumType())
+					{
+						enumListType.add(classTable.getEnum(field.type));
+					}
+					else if (field.isBaseType())
+					{
+						nativeListType.add(field.type);
+					}
 				}
 			}
 		}
@@ -134,21 +136,27 @@ public class UnitCodeBuilder
 		writeByteFileClass();
 
 		// 基础列表类
-		for (String type : listType1)
+		for (String type : nativeListType)
 		{
 			writeListType(type);
 		}
 
 		// 自定义列表类
-		for (Class type : listTypes2)
+		for (Class type : extendListType)
+		{
+			writeListType(type);
+		}
+
+		// 自定义枚举弄表
+		for (Enum type : enumListType)
 		{
 			writeListType(type);
 		}
 
 		// 自定义字典类
-		for (String type : mapType2.keySet())
+		for (String type : indexListType.keySet())
 		{
-			String[][] keys = mapType2.get(type).toArray(new String[][] {});
+			String[][] keys = indexListType.get(type).toArray(new String[][] {});
 			Arrays.sort(keys, new Comparator<String[]>()
 			{
 				public int compare(String[] o1, String[] o2)
@@ -176,6 +184,12 @@ public class UnitCodeBuilder
 			{
 				writeMapType(classTable.getClass(type), i, keys[i]);
 			}
+		}
+
+		// 自定义枚举
+		for (Enum type : classTable.getAllEnum())
+		{
+			writeEnumClass(type);
 		}
 
 		// 自定义类
@@ -380,7 +394,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\tprivate var _pageBeginLists:Vector.<Vector.<int>>=new Vector.<Vector.<int>>();\n"));
 		sb.append(String.format("\t\tprivate var _pageEndLists:Vector.<Vector.<int>>=new Vector.<Vector.<int>>();\n"));
 		sb.append(String.format("\t\tprivate var _pools:Dictionary=new Dictionary();\n"));
-		sb.append(String.format("\t\tprivate var _roots:Dictionary=new Dictionary();\n"));
+		sb.append(String.format("\t\tprivate var _root:Object;\n"));
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
@@ -435,11 +449,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\t\t_pools[typeID]=new Dictionary();\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\t\n"));
-		sb.append(String.format("\t\t\twhile(bytes.bytesAvailable>0)\n"));
-		sb.append(String.format("\t\t\t{\n"));
-		sb.append(String.format("\t\t\t\tvar tid:int=bytes.readInt();\n"));
-		sb.append(String.format("\t\t\t\t_roots[tid]=readObject(tid,bytes);\n"));
-		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\t_root=readObject(bytes.readInt(),bytes);\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
@@ -532,14 +542,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 根节点对象\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprotected function getRoot(typeID:int):*\n"));
+		sb.append(String.format("\t\tprotected function get root():*\n"));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tif(!_inited)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\tinitRange();\n"));
 		sb.append(String.format("\t\t\t\t_inited=true;\n"));
 		sb.append(String.format("\t\t\t}\n"));
-		sb.append(String.format("\t\t\treturn _roots[typeID];\n"));
+		sb.append(String.format("\t\t\treturn _root;\n"));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -661,6 +671,65 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.name));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", classTable.getClassID(type.name)));
+		sb.append(String.format("\t\t}\n"));
+
+		sb.append(String.format("\t}\n"));
+
+		sb.append(String.format("}\n"));
+
+		writeByteToFile(folder, currPack, typeName, sb.toString());
+
+		// 记录List类型
+		listTypeNameTable.put(type.name, typeName);
+	}
+
+	/**
+	 * 输出自定义枚举列表类
+	 * 
+	 * @param folder
+	 * @param type
+	 * @throws CoreException
+	 * @throws UnsupportedEncodingException
+	 */
+	private void writeListType(Enum type) throws CoreException, UnsupportedEncodingException
+	{
+		StringBuilder sb = new StringBuilder();
+
+		String typeName = type.name + "List";
+
+		sb.append(String.format("package %s\n", currPack));
+		sb.append(String.format("{\n"));
+
+		sb.append(String.format("\tpublic class %s\n", typeName));
+		sb.append(String.format("\t{\n"));
+
+		sb.append(String.format("\t\tprivate var _indexList:Vector.<int>;\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 构造函数\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function %s(indexList:Vector.<int>)\n", typeName));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\t_indexList=indexList;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 列表长度\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function get length():int\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn _indexList.length;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 按索引获取\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function getAt(index:int):%s\n", type.name));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn %s.get%s(_indexList[index]);\n", type.name, type.name));
 		sb.append(String.format("\t\t}\n"));
 
 		sb.append(String.format("\t}\n"));
@@ -819,6 +888,101 @@ public class UnitCodeBuilder
 	}
 
 	/**
+	 * 输出自定义枚举
+	 * 
+	 * @param type
+	 * @throws UnsupportedEncodingException
+	 * @throws CoreException
+	 */
+	private void writeEnumClass(Enum type) throws UnsupportedEncodingException, CoreException
+	{
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(String.format("package %s\n", currPack));
+		sb.append(String.format("{\n"));
+
+		if (type.comment != null)
+		{
+			sb.append(String.format("%s", formatComment(type.comment, "\t")));
+		}
+		sb.append(String.format("\tpublic class %s\n", type.name));
+		sb.append(String.format("\t{\n"));
+
+		// 静态成员
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 未知\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tprivate static const __unknow__:%s = new %s(0);\n", type.name, type.name));
+		sb.append(String.format("\t\t\n"));
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+
+			if (field.comment != null)
+			{
+				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
+			}
+			sb.append(String.format("\t\tpublic static const %s:%s = new %s(%s);\n", field.name, type.name, type.name, field.order));
+			sb.append(String.format("\t\t\n"));
+		}
+		sb.append(String.format("\t\t\n"));
+
+		//
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 查找枚举\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic static function get%s(__id__:int):%s\n", type.name, type.name));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tswitch(__id__)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+			sb.append(String.format("\t\t\t\tcase %s : return %s;break;\n", field.order, field.name));
+		}
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn __unknow__;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+		sb.append(String.format("\t\t\n"));
+
+		// 私有变量
+		sb.append(String.format("\t\tprivate var _id:int;\n"));
+		sb.append(String.format("\t\t\n"));
+
+		// 构造函数
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 构造函数\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function %s(id:int)\n", type.name));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\t_id=id;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		// 字段列表
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+
+			if (field.comment != null)
+			{
+				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
+			}
+			sb.append(String.format("\t\tpublic function is%s():Boolean\n", field.name.substring(0, 1).toUpperCase() + field.name.substring(1)));
+			sb.append(String.format("\t\t{\n"));
+			sb.append(String.format("\t\t\treturn _id==%s;\n", field.order));
+			sb.append(String.format("\t\t}\n"));
+			sb.append(String.format("\t\t\n"));
+		}
+
+		sb.append(String.format("\t}\n"));
+		sb.append(String.format("}"));
+
+		writeByteToFile(folder, currPack, type.name, sb.toString());
+	}
+
+	/**
 	 * 输出自定义类
 	 * 
 	 * @param classTable
@@ -848,15 +1012,19 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\n"));
 		for (ClassField field : type.fields)
 		{
-			if (field.repeted && field.indexKeys != null)
+			if (field.repeted && field.hasIndex() && field.isExtendType())
 			{
 				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
 			}
-			else if (field.repeted && field.indexKeys == null)
+			else if (field.repeted && !field.isEnumType())
 			{
 				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
 			}
-			else if (field.slice && !field.isExtendType())
+			else if ((field.repeted || field.slice) && field.isEnumType())
+			{
+				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
+			}
+			else if (field.slice && field.isBaseType())
 			{
 				sb.append(String.format("\t\tprivate var _%sKind:%s;\n", field.name, getFieldAsTypeName(field)));
 			}
@@ -880,7 +1048,7 @@ public class UnitCodeBuilder
 		{
 			sb.append(String.format("\t\t\t\n"));
 			sb.append(String.format("\t\t\t//%s\n", field.name));
-			if (field.repeted && field.indexKeys != null)
+			if (field.repeted && field.hasIndex() && field.isExtendType())
 			{
 				sb.append(String.format("\t\t\tvar %s_list:Vector.<int>=new Vector.<int>();\n", field.name));
 				sb.append(String.format("\t\t\tvar %s_length:int=bytes.readInt();\n", field.name));
@@ -895,7 +1063,7 @@ public class UnitCodeBuilder
 				sb.append(String.format("\t\t\t_%sKind=new %s(pool,%s_length,%s_list);\n", field.name, getFieldAsTypeName(field), field.name, field.name));
 				sb.append(String.format("\t\t\tbytes.position=pos;\n"));
 			}
-			else if (field.repeted && field.indexKeys == null)
+			else if (field.repeted && !field.isEnumType())
 			{
 				sb.append(String.format("\t\t\tvar %s_list:Vector.<int>=new Vector.<int>();\n", field.name));
 				sb.append(String.format("\t\t\tvar %s_length:int=bytes.readInt();\n", field.name));
@@ -907,7 +1075,19 @@ public class UnitCodeBuilder
 				sb.append(String.format("\t\t\t_%sKind=new %s(pool,%s_list);\n", field.name, getFieldAsTypeName(field), field.name));
 				sb.append(String.format("\t\t\tbytes.position=pos;\n"));
 			}
-			else if (field.slice && !field.isExtendType())
+			else if ((field.repeted || field.slice) && field.isEnumType())
+			{
+				sb.append(String.format("\t\t\tvar %s_list:Vector.<int>=new Vector.<int>();\n", field.name));
+				sb.append(String.format("\t\t\tvar %s_length:int=bytes.readInt();\n", field.name));
+				sb.append(String.format("\t\t\tfor(var %s_i:int=0;%s_i<%s_length;%s_i++)\n", field.name, field.name, field.name, field.name));
+				sb.append(String.format("\t\t\t{\n"));
+				sb.append(String.format("\t\t\t\t%s_list.push(bytes.readInt());\n", field.name));
+				sb.append(String.format("\t\t\t}\n"));
+				sb.append(String.format("\t\t\tpos=bytes.position;\n"));
+				sb.append(String.format("\t\t\t_%sKind=new %s(%s_list);\n", field.name, getFieldAsTypeName(field), field.name));
+				sb.append(String.format("\t\t\tbytes.position=pos;\n"));
+			}
+			else if (field.slice && field.isBaseType())
 			{
 				sb.append(String.format("\t\t\tvar %s_list:Vector.<int>=new Vector.<int>();\n", field.name));
 				sb.append(String.format("\t\t\tvar %s_length:int=bytes.readInt();\n", field.name));
@@ -936,17 +1116,25 @@ public class UnitCodeBuilder
 			}
 			sb.append(String.format("\t\tpublic function get %s():%s\n", field.name, getFieldAsTypeName(field)));
 			sb.append(String.format("\t\t{\n"));
-			if (field.repeted && field.indexKeys == null)
+			if (field.repeted && field.hasIndex() && field.isExtendType())
 			{
 				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
 			}
-			else if (field.repeted && field.indexKeys != null)
+			else if (field.repeted && !field.isEnumType())
 			{
 				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
 			}
-			else if (field.slice && !field.isExtendType())
+			else if ((field.repeted || field.slice) && field.isEnumType())
 			{
 				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+			}
+			else if (field.slice && field.isBaseType())
+			{
+				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+			}
+			else if (field.isEnumType())
+			{
+				sb.append(String.format("\t\t\treturn %s.get%s(_%sKind);\n", field.type, field.type, field.name));
 			}
 			else
 			{
@@ -1026,25 +1214,25 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 获取单例\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprivate static function get instance():%s\n", typeName));
+		sb.append(String.format("\t\tprivate static function get instance():%s\n", classTable.getMainClass().name));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\tif(!_instance)\n", fileName));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\t_instance=new %s();\n", typeName));
 		sb.append(String.format("\t\t\t}\n"));
-		sb.append(String.format("\t\t\treturn _instance;\n", fileName));
+		sb.append(String.format("\t\t\treturn _instance.root;\n", fileName));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
-		for (Class clazz : classTable.getAllMainClass())
+		for (ClassField field : classTable.getMainClass().fields)
 		{
-			if (clazz.comment != null)
+			if (field.comment != null)
 			{
-				sb.append(String.format("%s", formatComment(clazz.comment, "\t\t")));
+				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
 			}
-			sb.append(String.format("\t\tpublic static function get %s():%s\n", clazz.name.substring(0, 1).toLowerCase() + clazz.name.substring(1), clazz.name));
+			sb.append(String.format("\t\tpublic static function get %s():%s\n", field.name, getFieldAsTypeName(field)));
 			sb.append(String.format("\t\t{\n"));
-			sb.append(String.format("\t\t\treturn instance.getRoot(%s);\n", classTable.getClassID(clazz.name)));
+			sb.append(String.format("\t\t\treturn instance.%s;\n", field.name));
 			sb.append(String.format("\t\t}\n"));
 			sb.append(String.format("\t\t\n"));
 		}
@@ -1108,23 +1296,36 @@ public class UnitCodeBuilder
 	{
 		if (field.repeted)
 		{
-			if (field.indexKeys == null)
+			if (field.isExtendType())
+			{
+				if (!field.hasIndex())
+				{
+					return getListTypeName(field.type);
+				}
+				else
+				{
+					return getMapTypeName(field.type, field.indexKeys);
+				}
+			}
+			else if (field.isEnumType())
 			{
 				return getListTypeName(field.type);
 			}
 			else
 			{
-				return getMapTypeName(field.type, field.indexKeys);
+				return getListTypeName(field.type);
 			}
 		}
-		else if (field.slice && !field.isExtendType())
+
+		if (field.slice)
 		{
-			return getListTypeName(field.type);
+			if (field.isBaseType() || field.isEnumType())
+			{
+				return getListTypeName(field.type);
+			}
 		}
-		else
-		{
-			return field.type;
-		}
+
+		return field.type;
 	}
 
 	/**

@@ -6,7 +6,20 @@
  */
 package org.chw.game.cfg.impl;
 
-import org.chw.game.cfg.*;
+import org.chw.game.cfg.CfgFactory;
+import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
+import org.chw.game.cfg.Field;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.InputDef;
+import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.OtherComent;
+import org.chw.game.cfg.PackDef;
+import org.chw.game.cfg.SliceMeta;
+import org.chw.game.cfg.Type;
+import org.chw.game.cfg.XML2;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +91,8 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.LIST_META: return createListMeta();
       case CfgPackage.SLICE_META: return createSliceMeta();
       case CfgPackage.FIELD_META_KEY: return createFieldMetaKey();
+      case CfgPackage.ENUM: return createEnum();
+      case CfgPackage.ENUM_FIELD: return createEnumField();
       case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -192,6 +207,28 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     FieldMetaKeyImpl fieldMetaKey = new FieldMetaKeyImpl();
     return fieldMetaKey;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.chw.game.cfg.Enum createEnum()
+  {
+    EnumImpl enum_ = new EnumImpl();
+    return enum_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EnumField createEnumField()
+  {
+    EnumFieldImpl enumField = new EnumFieldImpl();
+    return enumField;
   }
 
   /**

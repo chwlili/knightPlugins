@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext" name="org.chw.game.Cfg" definesHiddenTokens="true" hiddenTokens="//@rules.41">
+<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext" name="org.chw.game.Cfg" definesHiddenTokens="true" hiddenTokens="//@rules.44">
   <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
     <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   </metamodelDeclarations>
@@ -39,8 +39,11 @@
         <elements xsi:type="xtext:Assignment" predicated="true" feature="types" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.3"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" predicated="true" feature="enums" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="comm" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
         </elements>
       </elements>
     </alternatives>
@@ -51,15 +54,15 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Assignment" cardinality="*" feature="comment" operator="+=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="inputCHAR" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.28"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="url" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.41"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.25"/>
+      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.27"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="PackDef">
@@ -68,15 +71,15 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Assignment" cardinality="*" feature="comment" operator="+=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="packCHAR" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.36"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.39"/>
       </elements>
       <elements xsi:type="xtext:Assignment" cardinality="?" feature="pack" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.15"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.25"/>
+      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.27"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Type">
@@ -85,27 +88,27 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Assignment" cardinality="?" feature="comment" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
       </elements>
       <elements xsi:type="xtext:Assignment" cardinality="?" feature="enter" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.28"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.30"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.19"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.21"/>
       <elements xsi:type="xtext:Alternatives" cardinality="*">
         <elements xsi:type="xtext:Assignment" predicated="true" feature="fields" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.5"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="comm" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
         </elements>
       </elements>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.22"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Enter">
@@ -113,16 +116,16 @@
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//Enter"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.15"/>
-      <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.27"/>
-      </elements>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.17"/>
-      <elements xsi:type="xtext:Assignment" feature="rootPath" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+      <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.29"/>
       </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.19"/>
+      <elements xsi:type="xtext:Assignment" feature="rootPath" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.41"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.20"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.18"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.16"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Field">
@@ -131,7 +134,7 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Assignment" cardinality="?" feature="comment" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.11"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
       </elements>
       <elements xsi:type="xtext:Alternatives" cardinality="*">
         <elements xsi:type="xtext:Assignment" feature="meta" operator="+=">
@@ -145,13 +148,13 @@
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.6"/>
       </elements>
       <elements xsi:type="xtext:Assignment" feature="fieldName" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.23"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.25"/>
       <elements xsi:type="xtext:Assignment" feature="nodePath" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.41"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.25"/>
+      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.27"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="FieldType">
@@ -159,7 +162,7 @@
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//FieldType"/>
     </type>
     <alternatives xsi:type="xtext:Assignment" feature="type" operator="=">
-      <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="ListMeta">
@@ -167,26 +170,26 @@
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//ListMeta"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.15"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.17"/>
       <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.34"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.37"/>
       </elements>
       <elements xsi:type="xtext:Group" cardinality="?">
-        <elements xsi:type="xtext:RuleCall" rule="//@rules.17"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.19"/>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Assignment" feature="params" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.9"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:RuleCall" rule="//@rules.24"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
             <elements xsi:type="xtext:Assignment" feature="params" operator="+=">
               <terminal xsi:type="xtext:RuleCall" rule="//@rules.9"/>
             </elements>
           </elements>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="//@rules.18"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.20"/>
       </elements>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.16"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.18"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="SliceMeta">
@@ -194,16 +197,16 @@
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//SliceMeta"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.15"/>
-      <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-      </elements>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.17"/>
-      <elements xsi:type="xtext:Assignment" feature="sliceChar" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.38"/>
       </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.19"/>
+      <elements xsi:type="xtext:Assignment" feature="sliceChar" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.41"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.20"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.18"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.16"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="FieldMetaKey">
@@ -211,27 +214,71 @@
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//FieldMetaKey"/>
     </type>
     <alternatives xsi:type="xtext:Assignment" feature="fieldName" operator="=">
-      <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Enum">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//Enum"/>
+    </type>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="comment" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="prefix" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.21"/>
+      <elements xsi:type="xtext:Alternatives" cardinality="*">
+        <elements xsi:type="xtext:Assignment" predicated="true" feature="fields" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="comm" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.22"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EnumField">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//EnumField"/>
+    </type>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="comment" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="fieldName" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.25"/>
+      <elements xsi:type="xtext:Assignment" feature="fieldValue" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.41"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.27"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="TypeComment">
     <type metamodel="//@metamodelDeclarations.0">
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
-    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.40"/>
+    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.43"/>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="FieldComment">
     <type metamodel="//@metamodelDeclarations.0">
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
-    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.40"/>
+    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.43"/>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="OtherComent">
     <type metamodel="//@metamodelDeclarations.1">
       <classifier xsi:type="ecore:EClass" href="http://www.chw.org/game/Cfg#//OtherComent"/>
     </type>
     <alternatives xsi:type="xtext:Assignment" feature="comm" operator="=">
-      <terminal xsi:type="xtext:RuleCall" rule="//@rules.40"/>
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.43"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="PackName">
@@ -239,10 +286,10 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.16"/>
       <elements xsi:type="xtext:Group" cardinality="*">
         <elements xsi:type="xtext:Keyword" value="."/>
-        <elements xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.16"/>
       </elements>
     </alternatives>
   </rules>
@@ -251,8 +298,6 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.27"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.28"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.29"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.30"/>
@@ -261,7 +306,10 @@
       <elements xsi:type="xtext:RuleCall" rule="//@rules.33"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.34"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.36"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.37"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.40"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="C_BRACKET_L">
@@ -347,6 +395,12 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Keyword" value="type"/>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="C_ENUM">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </type>
+    <alternatives xsi:type="xtext:Keyword" value="enum"/>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="C_INT">
     <type metamodel="//@metamodelDeclarations.0">
@@ -458,7 +512,7 @@
       <elements xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="/*"/>
         <elements xsi:type="xtext:UntilToken">
-          <terminal xsi:type="xtext:RuleCall" rule="//@rules.39"/>
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.42"/>
         </elements>
       </elements>
       <elements xsi:type="xtext:Group">

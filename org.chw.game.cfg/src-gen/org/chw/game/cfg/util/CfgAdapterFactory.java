@@ -6,7 +6,19 @@
  */
 package org.chw.game.cfg.util;
 
-import org.chw.game.cfg.*;
+import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
+import org.chw.game.cfg.Field;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.InputDef;
+import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.OtherComent;
+import org.chw.game.cfg.PackDef;
+import org.chw.game.cfg.SliceMeta;
+import org.chw.game.cfg.Type;
+import org.chw.game.cfg.XML2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -127,6 +139,16 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
       public Adapter caseFieldMetaKey(FieldMetaKey object)
       {
         return createFieldMetaKeyAdapter();
+      }
+      @Override
+      public Adapter caseEnum(org.chw.game.cfg.Enum object)
+      {
+        return createEnumAdapter();
+      }
+      @Override
+      public Adapter caseEnumField(EnumField object)
+      {
+        return createEnumFieldAdapter();
       }
       @Override
       public Adapter caseOtherComent(OtherComent object)
@@ -301,6 +323,36 @@ public class CfgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createFieldMetaKeyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.Enum <em>Enum</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.Enum
+   * @generated
+   */
+  public Adapter createEnumAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.chw.game.cfg.EnumField <em>Enum Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.chw.game.cfg.EnumField
+   * @generated
+   */
+  public Adapter createEnumFieldAdapter()
   {
     return null;
   }

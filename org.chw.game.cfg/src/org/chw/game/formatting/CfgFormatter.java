@@ -42,14 +42,24 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setLinewrap().before(grammarAccess.getSliceMetaRule());
 		c.setLinewrap().after(grammarAccess.getSliceMetaRule());
 
-		// c.setLinewrap().before(grammarAccess.getOtherComentRule());
+		c.setLinewrap().before(grammarAccess.getOtherComentRule());
 		c.setLinewrap(2).after(grammarAccess.getOtherComentRule());
 
+		//type
 		c.setLinewrap(2).after(grammarAccess.getTypeRule());
-
+		
+		//typeField
 		c.setLinewrap().before(grammarAccess.getFieldRule());
 		c.setLinewrap(2).after(grammarAccess.getFieldRule());
 
+		//enum
+		c.setLinewrap(2).after(grammarAccess.getEnumRule());
+		
+		//enumField
+		c.setLinewrap().before(grammarAccess.getEnumFieldRule());
+		c.setLinewrap(2).after(grammarAccess.getEnumFieldRule());
+
+		//Main Meta
 		c.setLinewrap().after(grammarAccess.getEnterRule());
 
 		c.setLinewrap().before(grammarAccess.getC_BRACE_LRule());

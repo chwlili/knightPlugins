@@ -211,19 +211,42 @@ ruleType
 
 )
 )
+    |((
+(
+ruleEnum
+)
+)=>
+(
+		{ 
+	        newCompositeNode(grammarAccess.getXML2Access().getEnumsEnumParserRuleCall_1_1_0()); 
+	    }
+		lv_enums_7_0=ruleEnum		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
+	        }
+       		add(
+       			$current, 
+       			"enums",
+        		lv_enums_7_0, 
+        		"Enum");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getXML2Access().getCommOtherComentParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getXML2Access().getCommOtherComentParserRuleCall_1_2_0()); 
 	    }
-		lv_comm_7_0=ruleOtherComent		{
+		lv_comm_8_0=ruleOtherComent		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getXML2Rule());
 	        }
        		add(
        			$current, 
        			"comm",
-        		lv_comm_7_0, 
+        		lv_comm_8_0, 
         		"OtherComent");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -993,6 +1016,213 @@ ruleFieldMetaKey returns [EObject current=null]
 
 
 
+// Entry rule entryRuleEnum
+entryRuleEnum returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEnumRule()); }
+	 iv_ruleEnum=ruleEnum 
+	 { $current=$iv_ruleEnum.current; } 
+	 EOF 
+;
+
+// Rule Enum
+ruleEnum returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumAccess().getCommentTypeCommentParserRuleCall_0_0()); 
+	    }
+		lv_comment_0_0=ruleTypeComment		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumRule());
+	        }
+       		set(
+       			$current, 
+       			"comment",
+        		lv_comment_0_0, 
+        		"TypeComment");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
+		lv_prefix_1_0=RULE_C_ENUM
+		{
+			newLeafNode(lv_prefix_1_0, grammarAccess.getEnumAccess().getPrefixC_ENUMTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEnumRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"prefix",
+        		lv_prefix_1_0, 
+        		"C_ENUM");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumAccess().getNameTypeNameParserRuleCall_2_0()); 
+	    }
+		lv_name_2_0=ruleTypeName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_2_0, 
+        		"TypeName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)this_C_BRACE_L_3=RULE_C_BRACE_L
+    { 
+    newLeafNode(this_C_BRACE_L_3, grammarAccess.getEnumAccess().getC_BRACE_LTerminalRuleCall_3()); 
+    }
+(((
+(
+ruleEnumField
+)
+)=>
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumAccess().getFieldsEnumFieldParserRuleCall_4_0_0()); 
+	    }
+		lv_fields_4_0=ruleEnumField		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumRule());
+	        }
+       		add(
+       			$current, 
+       			"fields",
+        		lv_fields_4_0, 
+        		"EnumField");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumAccess().getCommOtherComentParserRuleCall_4_1_0()); 
+	    }
+		lv_comm_5_0=ruleOtherComent		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumRule());
+	        }
+       		add(
+       			$current, 
+       			"comm",
+        		lv_comm_5_0, 
+        		"OtherComent");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*this_C_BRACE_R_6=RULE_C_BRACE_R
+    { 
+    newLeafNode(this_C_BRACE_R_6, grammarAccess.getEnumAccess().getC_BRACE_RTerminalRuleCall_5()); 
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleEnumField
+entryRuleEnumField returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEnumFieldRule()); }
+	 iv_ruleEnumField=ruleEnumField 
+	 { $current=$iv_ruleEnumField.current; } 
+	 EOF 
+;
+
+// Rule EnumField
+ruleEnumField returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumFieldAccess().getCommentFieldCommentParserRuleCall_0_0()); 
+	    }
+		lv_comment_0_0=ruleFieldComment		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumFieldRule());
+	        }
+       		set(
+       			$current, 
+       			"comment",
+        		lv_comment_0_0, 
+        		"FieldComment");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumFieldAccess().getFieldNameTypeNameParserRuleCall_1_0()); 
+	    }
+		lv_fieldName_1_0=ruleTypeName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumFieldRule());
+	        }
+       		set(
+       			$current, 
+       			"fieldName",
+        		lv_fieldName_1_0, 
+        		"TypeName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)this_C_EQUALS_2=RULE_C_EQUALS
+    { 
+    newLeafNode(this_C_EQUALS_2, grammarAccess.getEnumFieldAccess().getC_EQUALSTerminalRuleCall_2()); 
+    }
+(
+(
+		lv_fieldValue_3_0=RULE_STRING
+		{
+			newLeafNode(lv_fieldValue_3_0, grammarAccess.getEnumFieldAccess().getFieldValueSTRINGTerminalRuleCall_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEnumFieldRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"fieldValue",
+        		lv_fieldValue_3_0, 
+        		"STRING");
+	    }
+
+)
+)(this_C_SEMICOLON_4=RULE_C_SEMICOLON
+    { 
+    newLeafNode(this_C_SEMICOLON_4, grammarAccess.getEnumFieldAccess().getC_SEMICOLONTerminalRuleCall_4()); 
+    }
+)?)
+;
+
+
+
+
+
 // Entry rule entryRuleTypeComment
 entryRuleTypeComment returns [String current=null] 
 	:
@@ -1175,68 +1405,76 @@ ruleTypeName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
     newLeafNode(this_C_TYPE_2, grammarAccess.getTypeNameAccess().getC_TYPETerminalRuleCall_2()); 
     }
 
-    |    this_C_INT_3=RULE_C_INT    {
-		$current.merge(this_C_INT_3);
+    |    this_C_ENUM_3=RULE_C_ENUM    {
+		$current.merge(this_C_ENUM_3);
     }
 
     { 
-    newLeafNode(this_C_INT_3, grammarAccess.getTypeNameAccess().getC_INTTerminalRuleCall_3()); 
+    newLeafNode(this_C_ENUM_3, grammarAccess.getTypeNameAccess().getC_ENUMTerminalRuleCall_3()); 
     }
 
-    |    this_C_UINT_4=RULE_C_UINT    {
-		$current.merge(this_C_UINT_4);
-    }
-
-    { 
-    newLeafNode(this_C_UINT_4, grammarAccess.getTypeNameAccess().getC_UINTTerminalRuleCall_4()); 
-    }
-
-    |    this_C_BOOL_5=RULE_C_BOOL    {
-		$current.merge(this_C_BOOL_5);
+    |    this_C_INT_4=RULE_C_INT    {
+		$current.merge(this_C_INT_4);
     }
 
     { 
-    newLeafNode(this_C_BOOL_5, grammarAccess.getTypeNameAccess().getC_BOOLTerminalRuleCall_5()); 
+    newLeafNode(this_C_INT_4, grammarAccess.getTypeNameAccess().getC_INTTerminalRuleCall_4()); 
     }
 
-    |    this_C_NUMBER_6=RULE_C_NUMBER    {
-		$current.merge(this_C_NUMBER_6);
-    }
-
-    { 
-    newLeafNode(this_C_NUMBER_6, grammarAccess.getTypeNameAccess().getC_NUMBERTerminalRuleCall_6()); 
-    }
-
-    |    this_C_STRING_7=RULE_C_STRING    {
-		$current.merge(this_C_STRING_7);
+    |    this_C_UINT_5=RULE_C_UINT    {
+		$current.merge(this_C_UINT_5);
     }
 
     { 
-    newLeafNode(this_C_STRING_7, grammarAccess.getTypeNameAccess().getC_STRINGTerminalRuleCall_7()); 
+    newLeafNode(this_C_UINT_5, grammarAccess.getTypeNameAccess().getC_UINTTerminalRuleCall_5()); 
     }
 
-    |    this_C_LIST_8=RULE_C_LIST    {
-		$current.merge(this_C_LIST_8);
-    }
-
-    { 
-    newLeafNode(this_C_LIST_8, grammarAccess.getTypeNameAccess().getC_LISTTerminalRuleCall_8()); 
-    }
-
-    |    this_C_SLICE_9=RULE_C_SLICE    {
-		$current.merge(this_C_SLICE_9);
+    |    this_C_BOOL_6=RULE_C_BOOL    {
+		$current.merge(this_C_BOOL_6);
     }
 
     { 
-    newLeafNode(this_C_SLICE_9, grammarAccess.getTypeNameAccess().getC_SLICETerminalRuleCall_9()); 
+    newLeafNode(this_C_BOOL_6, grammarAccess.getTypeNameAccess().getC_BOOLTerminalRuleCall_6()); 
     }
 
-    |    this_NAME_10=RULE_NAME    {
-		$current.merge(this_NAME_10);
+    |    this_C_NUMBER_7=RULE_C_NUMBER    {
+		$current.merge(this_C_NUMBER_7);
     }
 
     { 
-    newLeafNode(this_NAME_10, grammarAccess.getTypeNameAccess().getNAMETerminalRuleCall_10()); 
+    newLeafNode(this_C_NUMBER_7, grammarAccess.getTypeNameAccess().getC_NUMBERTerminalRuleCall_7()); 
+    }
+
+    |    this_C_STRING_8=RULE_C_STRING    {
+		$current.merge(this_C_STRING_8);
+    }
+
+    { 
+    newLeafNode(this_C_STRING_8, grammarAccess.getTypeNameAccess().getC_STRINGTerminalRuleCall_8()); 
+    }
+
+    |    this_C_LIST_9=RULE_C_LIST    {
+		$current.merge(this_C_LIST_9);
+    }
+
+    { 
+    newLeafNode(this_C_LIST_9, grammarAccess.getTypeNameAccess().getC_LISTTerminalRuleCall_9()); 
+    }
+
+    |    this_C_SLICE_10=RULE_C_SLICE    {
+		$current.merge(this_C_SLICE_10);
+    }
+
+    { 
+    newLeafNode(this_C_SLICE_10, grammarAccess.getTypeNameAccess().getC_SLICETerminalRuleCall_10()); 
+    }
+
+    |    this_NAME_11=RULE_NAME    {
+		$current.merge(this_NAME_11);
+    }
+
+    { 
+    newLeafNode(this_NAME_11, grammarAccess.getTypeNameAccess().getNAMETerminalRuleCall_11()); 
     }
 )
     ;
@@ -1272,6 +1510,8 @@ RULE_C_INPUT : 'input';
 RULE_C_MAIN : 'Main';
 
 RULE_C_TYPE : 'type';
+
+RULE_C_ENUM : 'enum';
 
 RULE_C_INT : 'int';
 

@@ -117,6 +117,24 @@ public interface CfgFactory extends EFactory
   FieldMetaKey createFieldMetaKey();
 
   /**
+   * Returns a new object of class '<em>Enum</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Enum</em>'.
+   * @generated
+   */
+  Enum createEnum();
+
+  /**
+   * Returns a new object of class '<em>Enum Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Enum Field</em>'.
+   * @generated
+   */
+  EnumField createEnumField();
+
+  /**
    * Returns a new object of class '<em>Other Coment</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

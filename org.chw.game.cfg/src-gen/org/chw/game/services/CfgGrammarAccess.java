@@ -38,19 +38,21 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Assignment cTypesAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
 		private final RuleCall cTypesTypeParserRuleCall_1_0_0 = (RuleCall)cTypesAssignment_1_0.eContents().get(0);
-		private final Assignment cCommAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cCommOtherComentParserRuleCall_1_1_0 = (RuleCall)cCommAssignment_1_1.eContents().get(0);
+		private final Assignment cEnumsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cEnumsEnumParserRuleCall_1_1_0 = (RuleCall)cEnumsAssignment_1_1.eContents().get(0);
+		private final Assignment cCommAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
+		private final RuleCall cCommOtherComentParserRuleCall_1_2_0 = (RuleCall)cCommAssignment_1_2.eContents().get(0);
 		
 		//XML2:
 		//
-		//	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type |
+		//	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type | =>
 		//
-		//	comm+=OtherComent)*;
+		//	enums+=Enum | comm+=OtherComent)*;
 		public ParserRule getRule() { return rule; }
 
-		//(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type |
+		//(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type | =>
 		//
-		//comm+=OtherComent)*
+		//enums+=Enum | comm+=OtherComent)*
 		public Group getGroup() { return cGroup; }
 
 		//input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef
@@ -98,7 +100,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//InputDef
 		public RuleCall getInputInputDefParserRuleCall_0_3_0() { return cInputInputDefParserRuleCall_0_3_0; }
 
-		//(=> types+=Type | comm+=OtherComent)*
+		//(=> types+=Type | => enums+=Enum | comm+=OtherComent)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//=> types+=Type
@@ -107,11 +109,17 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//Type
 		public RuleCall getTypesTypeParserRuleCall_1_0_0() { return cTypesTypeParserRuleCall_1_0_0; }
 
+		//=> enums+=Enum
+		public Assignment getEnumsAssignment_1_1() { return cEnumsAssignment_1_1; }
+
+		//Enum
+		public RuleCall getEnumsEnumParserRuleCall_1_1_0() { return cEnumsEnumParserRuleCall_1_1_0; }
+
 		//comm+=OtherComent
-		public Assignment getCommAssignment_1_1() { return cCommAssignment_1_1; }
+		public Assignment getCommAssignment_1_2() { return cCommAssignment_1_2; }
 
 		//OtherComent
-		public RuleCall getCommOtherComentParserRuleCall_1_1_0() { return cCommOtherComentParserRuleCall_1_1_0; }
+		public RuleCall getCommOtherComentParserRuleCall_1_2_0() { return cCommOtherComentParserRuleCall_1_2_0; }
 	}
 
 	public class InputDefElements extends AbstractParserRuleElementFinder {
@@ -543,6 +551,116 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getFieldNameTypeNameParserRuleCall_0() { return cFieldNameTypeNameParserRuleCall_0; }
 	}
 
+	public class EnumElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Enum");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCommentTypeCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
+		private final Assignment cPrefixAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPrefixC_ENUMTerminalRuleCall_1_0 = (RuleCall)cPrefixAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameTypeNameParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cC_BRACE_LTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Assignment cFieldsAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
+		private final RuleCall cFieldsEnumFieldParserRuleCall_4_0_0 = (RuleCall)cFieldsAssignment_4_0.eContents().get(0);
+		private final Assignment cCommAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
+		private final RuleCall cCommOtherComentParserRuleCall_4_1_0 = (RuleCall)cCommAssignment_4_1.eContents().get(0);
+		private final RuleCall cC_BRACE_RTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		
+		//Enum:
+		//
+		//	comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L (=> fields+=EnumField | comm+=OtherComent)* C_BRACE_R;
+		public ParserRule getRule() { return rule; }
+
+		//comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L (=> fields+=EnumField | comm+=OtherComent)* C_BRACE_R
+		public Group getGroup() { return cGroup; }
+
+		//comment=TypeComment?
+		public Assignment getCommentAssignment_0() { return cCommentAssignment_0; }
+
+		//TypeComment
+		public RuleCall getCommentTypeCommentParserRuleCall_0_0() { return cCommentTypeCommentParserRuleCall_0_0; }
+
+		//prefix=C_ENUM
+		public Assignment getPrefixAssignment_1() { return cPrefixAssignment_1; }
+
+		//C_ENUM
+		public RuleCall getPrefixC_ENUMTerminalRuleCall_1_0() { return cPrefixC_ENUMTerminalRuleCall_1_0; }
+
+		//name=TypeName
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//TypeName
+		public RuleCall getNameTypeNameParserRuleCall_2_0() { return cNameTypeNameParserRuleCall_2_0; }
+
+		//C_BRACE_L
+		public RuleCall getC_BRACE_LTerminalRuleCall_3() { return cC_BRACE_LTerminalRuleCall_3; }
+
+		//(=> fields+=EnumField | comm+=OtherComent)*
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+
+		//=> fields+=EnumField
+		public Assignment getFieldsAssignment_4_0() { return cFieldsAssignment_4_0; }
+
+		//EnumField
+		public RuleCall getFieldsEnumFieldParserRuleCall_4_0_0() { return cFieldsEnumFieldParserRuleCall_4_0_0; }
+
+		//comm+=OtherComent
+		public Assignment getCommAssignment_4_1() { return cCommAssignment_4_1; }
+
+		//OtherComent
+		public RuleCall getCommOtherComentParserRuleCall_4_1_0() { return cCommOtherComentParserRuleCall_4_1_0; }
+
+		//C_BRACE_R
+		public RuleCall getC_BRACE_RTerminalRuleCall_5() { return cC_BRACE_RTerminalRuleCall_5; }
+	}
+
+	public class EnumFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EnumField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCommentFieldCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
+		private final Assignment cFieldNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cFieldNameTypeNameParserRuleCall_1_0 = (RuleCall)cFieldNameAssignment_1.eContents().get(0);
+		private final RuleCall cC_EQUALSTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Assignment cFieldValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFieldValueSTRINGTerminalRuleCall_3_0 = (RuleCall)cFieldValueAssignment_3.eContents().get(0);
+		private final RuleCall cC_SEMICOLONTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
+		
+		//EnumField:
+		//
+		//	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+		public ParserRule getRule() { return rule; }
+
+		//comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?
+		public Group getGroup() { return cGroup; }
+
+		//comment=FieldComment?
+		public Assignment getCommentAssignment_0() { return cCommentAssignment_0; }
+
+		//FieldComment
+		public RuleCall getCommentFieldCommentParserRuleCall_0_0() { return cCommentFieldCommentParserRuleCall_0_0; }
+
+		//fieldName=TypeName
+		public Assignment getFieldNameAssignment_1() { return cFieldNameAssignment_1; }
+
+		//TypeName
+		public RuleCall getFieldNameTypeNameParserRuleCall_1_0() { return cFieldNameTypeNameParserRuleCall_1_0; }
+
+		//C_EQUALS
+		public RuleCall getC_EQUALSTerminalRuleCall_2() { return cC_EQUALSTerminalRuleCall_2; }
+
+		//fieldValue=STRING
+		public Assignment getFieldValueAssignment_3() { return cFieldValueAssignment_3; }
+
+		//STRING
+		public RuleCall getFieldValueSTRINGTerminalRuleCall_3_0() { return cFieldValueSTRINGTerminalRuleCall_3_0; }
+
+		//C_SEMICOLON?
+		public RuleCall getC_SEMICOLONTerminalRuleCall_4() { return cC_SEMICOLONTerminalRuleCall_4; }
+	}
+
 	public class TypeCommentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeComment");
 		private final RuleCall cCOMMENTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
@@ -621,21 +739,22 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cC_INPUTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cC_MAINTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cC_TYPETerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cC_INTTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cC_UINTTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cC_BOOLTerminalRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cC_NUMBERTerminalRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cC_STRINGTerminalRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cC_LISTTerminalRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cC_SLICETerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cNAMETerminalRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cC_ENUMTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cC_INTTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cC_UINTTerminalRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cC_BOOLTerminalRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cC_NUMBERTerminalRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cC_STRINGTerminalRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cC_LISTTerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cC_SLICETerminalRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cNAMETerminalRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
 		
 		//TypeName:
 		//
-		//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+		//	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 		public ParserRule getRule() { return rule; }
 
-		//C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME
+		//C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//C_INPUT
@@ -647,29 +766,32 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_TYPE
 		public RuleCall getC_TYPETerminalRuleCall_2() { return cC_TYPETerminalRuleCall_2; }
 
+		//C_ENUM
+		public RuleCall getC_ENUMTerminalRuleCall_3() { return cC_ENUMTerminalRuleCall_3; }
+
 		//C_INT
-		public RuleCall getC_INTTerminalRuleCall_3() { return cC_INTTerminalRuleCall_3; }
+		public RuleCall getC_INTTerminalRuleCall_4() { return cC_INTTerminalRuleCall_4; }
 
 		//C_UINT
-		public RuleCall getC_UINTTerminalRuleCall_4() { return cC_UINTTerminalRuleCall_4; }
+		public RuleCall getC_UINTTerminalRuleCall_5() { return cC_UINTTerminalRuleCall_5; }
 
 		//C_BOOL
-		public RuleCall getC_BOOLTerminalRuleCall_5() { return cC_BOOLTerminalRuleCall_5; }
+		public RuleCall getC_BOOLTerminalRuleCall_6() { return cC_BOOLTerminalRuleCall_6; }
 
 		//C_NUMBER
-		public RuleCall getC_NUMBERTerminalRuleCall_6() { return cC_NUMBERTerminalRuleCall_6; }
+		public RuleCall getC_NUMBERTerminalRuleCall_7() { return cC_NUMBERTerminalRuleCall_7; }
 
 		//C_STRING
-		public RuleCall getC_STRINGTerminalRuleCall_7() { return cC_STRINGTerminalRuleCall_7; }
+		public RuleCall getC_STRINGTerminalRuleCall_8() { return cC_STRINGTerminalRuleCall_8; }
 
 		//C_LIST
-		public RuleCall getC_LISTTerminalRuleCall_8() { return cC_LISTTerminalRuleCall_8; }
+		public RuleCall getC_LISTTerminalRuleCall_9() { return cC_LISTTerminalRuleCall_9; }
 
 		//C_SLICE
-		public RuleCall getC_SLICETerminalRuleCall_9() { return cC_SLICETerminalRuleCall_9; }
+		public RuleCall getC_SLICETerminalRuleCall_10() { return cC_SLICETerminalRuleCall_10; }
 
 		//NAME
-		public RuleCall getNAMETerminalRuleCall_10() { return cNAMETerminalRuleCall_10; }
+		public RuleCall getNAMETerminalRuleCall_11() { return cNAMETerminalRuleCall_11; }
 	}
 	
 	
@@ -683,6 +805,8 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private ListMetaElements pListMeta;
 	private SliceMetaElements pSliceMeta;
 	private FieldMetaKeyElements pFieldMetaKey;
+	private EnumElements pEnum;
+	private EnumFieldElements pEnumField;
 	private TypeCommentElements pTypeComment;
 	private FieldCommentElements pFieldComment;
 	private OtherComentElements pOtherComent;
@@ -702,6 +826,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tC_INPUT;
 	private TerminalRule tC_MAIN;
 	private TerminalRule tC_TYPE;
+	private TerminalRule tC_ENUM;
 	private TerminalRule tC_INT;
 	private TerminalRule tC_UINT;
 	private TerminalRule tC_BOOL;
@@ -748,9 +873,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//XML2:
 	//
-	//	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type |
+	//	(input=InputDef pack=PackDef | pack=PackDef input=InputDef | pack=PackDef | input=InputDef) (=> types+=Type | =>
 	//
-	//	comm+=OtherComent)*;
+	//	enums+=Enum | comm+=OtherComent)*;
 	public XML2Elements getXML2Access() {
 		return (pXML2 != null) ? pXML2 : (pXML2 = new XML2Elements());
 	}
@@ -862,6 +987,28 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		return getFieldMetaKeyAccess().getRule();
 	}
 
+	//Enum:
+	//
+	//	comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L (=> fields+=EnumField | comm+=OtherComent)* C_BRACE_R;
+	public EnumElements getEnumAccess() {
+		return (pEnum != null) ? pEnum : (pEnum = new EnumElements());
+	}
+	
+	public ParserRule getEnumRule() {
+		return getEnumAccess().getRule();
+	}
+
+	//EnumField:
+	//
+	//	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+	public EnumFieldElements getEnumFieldAccess() {
+		return (pEnumField != null) ? pEnumField : (pEnumField = new EnumFieldElements());
+	}
+	
+	public ParserRule getEnumFieldRule() {
+		return getEnumFieldAccess().getRule();
+	}
+
 	//TypeComment:
 	//
 	//	COMMENT;
@@ -908,7 +1055,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeName:
 	//
-	//	C_INPUT | C_MAIN | C_TYPE | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+	//	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
 	public TypeNameElements getTypeNameAccess() {
 		return (pTypeName != null) ? pTypeName : (pTypeName = new TypeNameElements());
 	}
@@ -1013,6 +1160,13 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	//	"type";
 	public TerminalRule getC_TYPERule() {
 		return (tC_TYPE != null) ? tC_TYPE : (tC_TYPE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_TYPE"));
+	} 
+
+	//terminal C_ENUM:
+	//
+	//	"enum";
+	public TerminalRule getC_ENUMRule() {
+		return (tC_ENUM != null) ? tC_ENUM : (tC_ENUM = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_ENUM"));
 	} 
 
 	//terminal C_INT:

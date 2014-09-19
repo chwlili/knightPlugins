@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
@@ -38,6 +39,18 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case CfgPackage.ENTER:
 				if(context == grammarAccess.getEnterRule()) {
 					sequence_Enter(context, (Enter) semanticObject); 
+					return; 
+				}
+				else break;
+			case CfgPackage.ENUM:
+				if(context == grammarAccess.getEnumRule()) {
+					sequence_Enum(context, (org.chw.game.cfg.Enum) semanticObject); 
+					return; 
+				}
+				else break;
+			case CfgPackage.ENUM_FIELD:
+				if(context == grammarAccess.getEnumFieldRule()) {
+					sequence_EnumField(context, (EnumField) semanticObject); 
 					return; 
 				}
 				else break;
@@ -121,6 +134,24 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		feeder.accept(grammarAccess.getEnterAccess().getPrefixC_MAINTerminalRuleCall_1_0(), semanticObject.getPrefix());
 		feeder.accept(grammarAccess.getEnterAccess().getRootPathSTRINGTerminalRuleCall_3_0(), semanticObject.getRootPath());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (comment=FieldComment? fieldName=TypeName fieldValue=STRING)
+	 */
+	protected void sequence_EnumField(EObject context, EnumField semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (comment=TypeComment? prefix=C_ENUM name=TypeName (fields+=EnumField | comm+=OtherComent)*)
+	 */
+	protected void sequence_Enum(EObject context, org.chw.game.cfg.Enum semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -238,7 +269,10 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (((input=InputDef pack=PackDef) | (pack=PackDef input=InputDef) | pack=PackDef | input=InputDef) (types+=Type | comm+=OtherComent)*)
+	 *     (
+	 *         ((input=InputDef pack=PackDef) | (pack=PackDef input=InputDef) | pack=PackDef | input=InputDef) 
+	 *         (types+=Type | enums+=Enum | comm+=OtherComent)*
+	 *     )
 	 */
 	protected void sequence_XML2(EObject context, XML2 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

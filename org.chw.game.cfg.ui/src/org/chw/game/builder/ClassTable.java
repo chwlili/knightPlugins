@@ -2,6 +2,7 @@ package org.chw.game.builder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
@@ -17,8 +18,10 @@ public class ClassTable
 {
 	private String packName = "";
 	private String inputFile = null;
-	private ArrayList<Class> mainClass = new ArrayList<Class>();
+
+	private Class mainClass;
 	private HashMap<String, Class> name2Class = new HashMap<String, Class>();
+	private HashMap<String, Enum> name2Enum = new HashMap<String, Enum>();
 
 	/**
 	 * 构造函数
@@ -51,6 +54,16 @@ public class ClassTable
 	}
 
 	/**
+	 * 获取主类
+	 * 
+	 * @return
+	 */
+	public Class getMainClass()
+	{
+		return mainClass;
+	}
+
+	/**
 	 * 获取所有类
 	 * 
 	 * @return
@@ -61,13 +74,13 @@ public class ClassTable
 	}
 
 	/**
-	 * 获取所有主类
+	 * 获取所有枚举
 	 * 
 	 * @return
 	 */
-	public Class[] getAllMainClass()
+	public Enum[] getAllEnum()
 	{
-		return mainClass.toArray(new Class[] {});
+		return name2Enum.values().toArray(new Enum[] {});
 	}
 
 	/**
@@ -79,6 +92,17 @@ public class ClassTable
 	public Class getClass(String name)
 	{
 		return name2Class.get(name);
+	}
+
+	/**
+	 * 获取枚举
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Enum getEnum(String name)
+	{
+		return name2Enum.get(name);
 	}
 
 	/**
@@ -125,6 +149,28 @@ public class ClassTable
 	}
 
 	/**
+	 * 是否为扩展类型
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private boolean isExtendType(String name)
+	{
+		return name2Class.containsKey(name);
+	}
+
+	/**
+	 * 是否为枚举类型
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private boolean isEnumType(String name)
+	{
+		return name2Enum.containsKey(name);
+	}
+
+	/**
 	 * 初始化所有类型
 	 */
 	private void open(XML2 root)
@@ -135,7 +181,7 @@ public class ClassTable
 			return;
 		}
 
-		mainClass = new ArrayList<Class>();
+		mainClass = null;
 		name2Class = new HashMap<String, Class>();
 
 		packName = "";
@@ -150,12 +196,44 @@ public class ClassTable
 			inputFile = xml2.getInput().getUrl();
 		}
 
+		HashSet<String> typeNames = new HashSet<String>();
+
+		for (org.chw.game.cfg.Enum type : xml2.getEnums())
+		{
+			String enumComm = type.getComment();
+			String enumName = type.getName();
+			EnumField[] enumFields = null;
+
+			if (typeNames.contains(enumName))
+			{
+				continue;
+			}
+
+			ArrayList<EnumField> fields = new ArrayList<EnumField>();
+			for (org.chw.game.cfg.EnumField field : type.getFields())
+			{
+				fields.add(new EnumField(field.getComment(), field.getFieldName(), field.getFieldValue(), fields.size() + 1));
+			}
+			enumFields = fields.toArray(new EnumField[] {});
+
+			Enum clazz = new Enum(enumComm, enumName, enumFields);
+
+			name2Enum.put(enumName, clazz);
+
+			typeNames.add(enumName);
+		}
+
 		int order = 1;
 		for (Type type : xml2.getTypes())
 		{
 			String typeComm = type.getComment();
 			String typeName = type.getName();
 			String rootXPath = null;
+
+			if (typeNames.contains(typeName))
+			{
+				continue;
+			}
 
 			Enter enter = type.getEnter();
 			if (enter != null)
@@ -167,6 +245,8 @@ public class ClassTable
 				}
 			}
 
+			HashSet<String> fieldNames = new HashSet<String>();
+
 			ArrayList<ClassField> fieldDefs = new ArrayList<ClassField>();
 			for (Field field : type.getFields())
 			{
@@ -174,12 +254,28 @@ public class ClassTable
 				String fieldComm = field.getComment();
 				String fieldXPath = field.getNodePath();
 				String fieldType = field.getType().getType();
+				int fieldTypeKind = 3;
 				boolean fieldList = false;
 				String[] indexList = null;
 				boolean sliceList = false;
 				String sliceChar = null;
 
+				if (fieldNames.contains(fieldName))
+				{
+					continue;
+				}
+
 				boolean isBase = isBaseType(fieldType);
+				boolean isEnum = isEnumType(fieldType);
+
+				if (isBase)
+				{
+					fieldTypeKind = 1;
+				}
+				else if (isEnum)
+				{
+					fieldTypeKind = 2;
+				}
 
 				EList<EObject> fieldMetas = field.getMeta();
 				EObject fieldMeta = fieldMetas != null && fieldMetas.size() > 0 ? fieldMetas.get(fieldMetas.size() - 1) : null;
@@ -189,7 +285,7 @@ public class ClassTable
 
 					fieldList = true;
 
-					if (!isBase)
+					if (!isBase && !isEnum)
 					{
 						ArrayList<String> keys = null;
 						EList<FieldMetaKey> params = meta.getParams();
@@ -215,27 +311,28 @@ public class ClassTable
 				else if (fieldMeta instanceof SliceMeta)
 				{
 					SliceMeta meta = (SliceMeta) fieldMeta;
-					if (isBase)
+					if (isBase || isEnum)
 					{
 						sliceList = true;
 						sliceChar = meta.getSliceChar();
 					}
 				}
 
-				if (fieldType != "")
-				{
-					fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldList, indexList, sliceList, sliceChar));
-				}
+				fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldTypeKind, fieldList, indexList, sliceList, sliceChar));
+
+				fieldNames.add(fieldType);
 			}
 
 			Class clazz = new Class(rootXPath, typeName, typeComm, order, fieldDefs.toArray(new ClassField[] {}));
 			order++;
 
 			name2Class.put(typeName, clazz);
-			if (rootXPath != null)
+			if (rootXPath != null && mainClass == null)
 			{
-				mainClass.add(clazz);
+				mainClass = clazz;
 			}
+
+			typeNames.add(typeName);
 		}
 	}
 }

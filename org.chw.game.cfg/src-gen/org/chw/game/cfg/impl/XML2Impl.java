@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getTypes <em>Types</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getEnums <em>Enums</em>}</li>
  *   <li>{@link org.chw.game.cfg.impl.XML2Impl#getComm <em>Comm</em>}</li>
  * </ul>
  * </p>
@@ -76,6 +77,16 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * @ordered
    */
   protected EList<Type> types;
+
+  /**
+   * The cached value of the '{@link #getEnums() <em>Enums</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnums()
+   * @generated
+   * @ordered
+   */
+  protected EList<org.chw.game.cfg.Enum> enums;
 
   /**
    * The cached value of the '{@link #getComm() <em>Comm</em>}' containment reference list.
@@ -223,6 +234,20 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<org.chw.game.cfg.Enum> getEnums()
+  {
+    if (enums == null)
+    {
+      enums = new EObjectContainmentEList<org.chw.game.cfg.Enum>(org.chw.game.cfg.Enum.class, this, CfgPackage.XML2__ENUMS);
+    }
+    return enums;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<OtherComent> getComm()
   {
     if (comm == null)
@@ -248,6 +273,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
         return basicSetPack(null, msgs);
       case CfgPackage.XML2__TYPES:
         return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
+      case CfgPackage.XML2__ENUMS:
+        return ((InternalEList<?>)getEnums()).basicRemove(otherEnd, msgs);
       case CfgPackage.XML2__COMM:
         return ((InternalEList<?>)getComm()).basicRemove(otherEnd, msgs);
     }
@@ -270,6 +297,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
         return getPack();
       case CfgPackage.XML2__TYPES:
         return getTypes();
+      case CfgPackage.XML2__ENUMS:
+        return getEnums();
       case CfgPackage.XML2__COMM:
         return getComm();
     }
@@ -296,6 +325,10 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         getTypes().addAll((Collection<? extends Type>)newValue);
+        return;
+      case CfgPackage.XML2__ENUMS:
+        getEnums().clear();
+        getEnums().addAll((Collection<? extends org.chw.game.cfg.Enum>)newValue);
         return;
       case CfgPackage.XML2__COMM:
         getComm().clear();
@@ -324,6 +357,9 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
       case CfgPackage.XML2__TYPES:
         getTypes().clear();
         return;
+      case CfgPackage.XML2__ENUMS:
+        getEnums().clear();
+        return;
       case CfgPackage.XML2__COMM:
         getComm().clear();
         return;
@@ -347,6 +383,8 @@ public class XML2Impl extends MinimalEObjectImpl.Container implements XML2
         return pack != null;
       case CfgPackage.XML2__TYPES:
         return types != null && !types.isEmpty();
+      case CfgPackage.XML2__ENUMS:
+        return enums != null && !enums.isEmpty();
       case CfgPackage.XML2__COMM:
         return comm != null && !comm.isEmpty();
     }

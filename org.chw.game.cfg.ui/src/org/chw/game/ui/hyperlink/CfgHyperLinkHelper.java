@@ -1,6 +1,7 @@
 package org.chw.game.ui.hyperlink;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enum;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
@@ -86,6 +87,15 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 						if (def.getName().equals(type))
 						{
 							createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), def, acceptor);
+							return;
+						}
+					}
+					
+					for(Enum enumDef:model.getEnums())
+					{
+						if(enumDef.getName().equals(type))
+						{
+							createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), enumDef, acceptor);
 							return;
 						}
 					}

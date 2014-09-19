@@ -6,7 +6,19 @@
  */
 package org.chw.game.cfg.util;
 
-import org.chw.game.cfg.*;
+import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
+import org.chw.game.cfg.Field;
+import org.chw.game.cfg.FieldMetaKey;
+import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.InputDef;
+import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.OtherComent;
+import org.chw.game.cfg.PackDef;
+import org.chw.game.cfg.SliceMeta;
+import org.chw.game.cfg.Type;
+import org.chw.game.cfg.XML2;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -143,6 +155,20 @@ public class CfgSwitch<T> extends Switch<T>
       {
         FieldMetaKey fieldMetaKey = (FieldMetaKey)theEObject;
         T result = caseFieldMetaKey(fieldMetaKey);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CfgPackage.ENUM:
+      {
+        org.chw.game.cfg.Enum enum_ = (org.chw.game.cfg.Enum)theEObject;
+        T result = caseEnum(enum_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CfgPackage.ENUM_FIELD:
+      {
+        EnumField enumField = (EnumField)theEObject;
+        T result = caseEnumField(enumField);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -313,6 +339,38 @@ public class CfgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseFieldMetaKey(FieldMetaKey object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Enum</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Enum</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEnum(org.chw.game.cfg.Enum object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Enum Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Enum Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEnumField(EnumField object)
   {
     return null;
   }

@@ -1,5 +1,7 @@
 package org.chw.game.ui.textHover;
 
+import org.chw.game.cfg.Enum;
+import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
@@ -34,6 +36,14 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 		{
 			return true;
 		}
+		else if (o instanceof org.chw.game.cfg.Enum)
+		{
+			return true;
+		}
+		else if (o instanceof EnumField)
+		{
+			return true;
+		}
 		return false;
 	}
 
@@ -62,6 +72,14 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				{
 					return getFirstLine(fieldType);
 				}
+				else
+				{
+					Enum fieldEnum = getEnum(o.eResource(), typeName);
+					if (fieldEnum != null)
+					{
+						return getFirstLine(fieldEnum);
+					}
+				}
 			}
 		}
 		else if (o instanceof FieldMetaKey)
@@ -79,6 +97,14 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 					}
 				}
 			}
+		}
+		else if (o instanceof org.chw.game.cfg.Enum)
+		{
+			return "<b>" + ((Enum) o).getName() + "</b>";
+		}
+		else if (o instanceof EnumField)
+		{
+			return "<b>" + ((EnumField) o).getFieldName() + "</b>";
 		}
 		return "";
 	}
@@ -112,6 +138,14 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				{
 					return getDocumentation(fieldType);
 				}
+				else
+				{
+					Enum fieldEnum = getEnum(o.eResource(), typeName);
+					if (fieldEnum != null)
+					{
+						return getDocumentation(fieldEnum);
+					}
+				}
 			}
 		}
 		else if (o instanceof FieldMetaKey)
@@ -129,6 +163,14 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 					}
 				}
 			}
+		}
+		else if (o instanceof Enum)
+		{
+			comm = ((Enum) o).getComment();
+		}
+		else if (o instanceof EnumField)
+		{
+			comm = ((EnumField) o).getComment();
 		}
 
 		if (comm.isEmpty() == false)
@@ -173,6 +215,30 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 	private boolean isNativeType(String text)
 	{
 		return text.equals("Boolean") || text.equals("int") || text.equals("uint") || text.equals("Number") || text.equals("String");
+	}
+
+	private Enum getEnum(Resource resource, String typeName)
+	{
+		if (resource != null)
+		{
+			EList<EObject> list = resource.getContents();
+
+			if (list.size() > 0)
+			{
+				XML2 xml2 = (XML2) list.get(0);
+				if (xml2 != null)
+				{
+					for (Enum type : xml2.getEnums())
+					{
+						if (typeName.equals(type.getName()))
+						{
+							return type;
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private Type getType(Resource resource, String typeName)

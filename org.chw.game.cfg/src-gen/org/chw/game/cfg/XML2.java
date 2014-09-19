@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.chw.game.cfg.XML2#getInput <em>Input</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getPack <em>Pack</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getTypes <em>Types</em>}</li>
+ *   <li>{@link org.chw.game.cfg.XML2#getEnums <em>Enums</em>}</li>
  *   <li>{@link org.chw.game.cfg.XML2#getComm <em>Comm</em>}</li>
  * </ul>
  * </p>
@@ -98,6 +99,22 @@ public interface XML2 extends EObject
    * @generated
    */
   EList<Type> getTypes();
+
+  /**
+   * Returns the value of the '<em><b>Enums</b></em>' containment reference list.
+   * The list contents are of type {@link org.chw.game.cfg.Enum}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Enums</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Enums</em>' containment reference list.
+   * @see org.chw.game.cfg.CfgPackage#getXML2_Enums()
+   * @model containment="true"
+   * @generated
+   */
+  EList<org.chw.game.cfg.Enum> getEnums();
 
   /**
    * Returns the value of the '<em><b>Comm</b></em>' containment reference list.

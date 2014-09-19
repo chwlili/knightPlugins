@@ -13,6 +13,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/pack"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/types"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/enums"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//XML2/comm"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//InputDef">
@@ -57,6 +58,18 @@
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//FieldMetaKey">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMetaKey/fieldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//Enum">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enum/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enum/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enum/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Enum/fields"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Enum/comm"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//EnumField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldValue"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//OtherComent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//OtherComent/comm"/>

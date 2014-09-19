@@ -2,6 +2,7 @@ package org.chw.game.ui.highlight;
 
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.InputDef;
 import org.chw.game.cfg.ListMeta;
@@ -59,6 +60,42 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 				for (INode node : NodeModelUtils.findNodesForFeature(pack, CfgPackage.Literals.PACK_DEF__PACK_CHAR))
 				{
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
+				}
+			}
+
+			for (org.chw.game.cfg.Enum currEnum : model.getEnums())
+			{
+				for (INode node : NodeModelUtils.findNodesForFeature(currEnum, CfgPackage.Literals.ENUM__COMMENT))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+				}
+				for (INode node : NodeModelUtils.findNodesForFeature(currEnum, CfgPackage.Literals.ENUM__COMM))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+				}
+				for (INode node : NodeModelUtils.findNodesForFeature(currEnum, CfgPackage.Literals.ENUM__PREFIX))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
+				}
+				for (INode node : NodeModelUtils.findNodesForFeature(currEnum, CfgPackage.Literals.ENUM__NAME))
+				{
+					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Type_Name);
+				}
+
+				for (EnumField field : currEnum.getFields())
+				{
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.ENUM_FIELD__COMMENT))
+					{
+						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.COMMENT_ID);
+					}
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.ENUM_FIELD__FIELD_NAME))
+					{
+						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Name);
+					}
+					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.ENUM_FIELD__FIELD_VALUE))
+					{
+						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
+					}
 				}
 			}
 

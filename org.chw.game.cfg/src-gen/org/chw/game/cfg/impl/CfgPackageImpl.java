@@ -9,6 +9,7 @@ package org.chw.game.cfg.impl;
 import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
@@ -103,6 +104,20 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * @generated
    */
   private EClass fieldMetaKeyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass enumEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass enumFieldEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -219,9 +234,19 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getXML2_Comm()
+  public EReference getXML2_Enums()
   {
     return (EReference)xml2EClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getXML2_Comm()
+  {
+    return (EReference)xml2EClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -569,6 +594,106 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEnum()
+  {
+    return enumEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnum_Comment()
+  {
+    return (EAttribute)enumEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnum_Prefix()
+  {
+    return (EAttribute)enumEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnum_Name()
+  {
+    return (EAttribute)enumEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnum_Fields()
+  {
+    return (EReference)enumEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnum_Comm()
+  {
+    return (EReference)enumEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEnumField()
+  {
+    return enumFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnumField_Comment()
+  {
+    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnumField_FieldName()
+  {
+    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEnumField_FieldValue()
+  {
+    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getOtherComent()
   {
     return otherComentEClass;
@@ -618,6 +743,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     createEReference(xml2EClass, XML2__INPUT);
     createEReference(xml2EClass, XML2__PACK);
     createEReference(xml2EClass, XML2__TYPES);
+    createEReference(xml2EClass, XML2__ENUMS);
     createEReference(xml2EClass, XML2__COMM);
 
     inputDefEClass = createEClass(INPUT_DEF);
@@ -663,6 +789,18 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     fieldMetaKeyEClass = createEClass(FIELD_META_KEY);
     createEAttribute(fieldMetaKeyEClass, FIELD_META_KEY__FIELD_NAME);
 
+    enumEClass = createEClass(ENUM);
+    createEAttribute(enumEClass, ENUM__COMMENT);
+    createEAttribute(enumEClass, ENUM__PREFIX);
+    createEAttribute(enumEClass, ENUM__NAME);
+    createEReference(enumEClass, ENUM__FIELDS);
+    createEReference(enumEClass, ENUM__COMM);
+
+    enumFieldEClass = createEClass(ENUM_FIELD);
+    createEAttribute(enumFieldEClass, ENUM_FIELD__COMMENT);
+    createEAttribute(enumFieldEClass, ENUM_FIELD__FIELD_NAME);
+    createEAttribute(enumFieldEClass, ENUM_FIELD__FIELD_VALUE);
+
     otherComentEClass = createEClass(OTHER_COMENT);
     createEAttribute(otherComentEClass, OTHER_COMENT__COMM);
   }
@@ -702,6 +840,7 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
     initEReference(getXML2_Input(), this.getInputDef(), null, "input", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Pack(), this.getPackDef(), null, "pack", null, 0, 1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Types(), this.getType(), null, "types", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getXML2_Enums(), this.getEnum(), null, "enums", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getXML2_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, org.chw.game.cfg.XML2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputDefEClass, InputDef.class, "InputDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -746,6 +885,18 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     initEClass(fieldMetaKeyEClass, FieldMetaKey.class, "FieldMetaKey", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFieldMetaKey_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, FieldMetaKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(enumEClass, org.chw.game.cfg.Enum.class, "Enum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEnum_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, org.chw.game.cfg.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEnum_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, org.chw.game.cfg.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEnum_Name(), ecorePackage.getEString(), "name", null, 0, 1, org.chw.game.cfg.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnum_Fields(), this.getEnumField(), null, "fields", null, 0, -1, org.chw.game.cfg.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnum_Comm(), this.getOtherComent(), null, "comm", null, 0, -1, org.chw.game.cfg.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(enumFieldEClass, EnumField.class, "EnumField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEnumField_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEnumField_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEnumField_FieldValue(), ecorePackage.getEString(), "fieldValue", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(otherComentEClass, OtherComent.class, "OtherComent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getOtherComent_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, OtherComent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
