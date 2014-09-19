@@ -78,6 +78,11 @@ public class UnitConfigBuilder
 	 */
 	public void buildTo(IFolder folder, String filePackName, String fileName, boolean changed) throws IOException, CoreException, SAXException, ParserConfigurationException
 	{
+		if(classTable.getMainClass()==null)
+		{
+			return;
+		}
+		
 		// 确保输出目录已存在
 		if (filePackName == null)
 		{

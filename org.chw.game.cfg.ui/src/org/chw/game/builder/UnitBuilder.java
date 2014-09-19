@@ -169,7 +169,7 @@ public class UnitBuilder
 		IFolder xmlFolder = project.getFolder(project.getPersistentProperty(Xml2Nature.XML_DIR));
 
 		String filePath = classTable.getInputURL();
-		if (filePath != null)
+		if (filePath != null && classTable.getMainClass() != null)
 		{
 			IResource resource = xmlFolder.findMember(filePath);
 			if (resource != null && resource instanceof IFile)
