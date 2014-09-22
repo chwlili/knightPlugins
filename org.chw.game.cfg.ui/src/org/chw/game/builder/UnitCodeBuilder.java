@@ -909,11 +909,14 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t{\n"));
 
 		// 静态成员
-		sb.append(String.format("\t\t/**\n"));
-		sb.append(String.format("\t\t * 未知\n"));
-		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tprivate static const __unknow__:%s = new %s(0);\n", type.name, type.name));
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+			sb.append(String.format("\t\tprivate static const __%s__:%s = new %s(%s);\n", field.name, type.name, type.name, field.order));
+		}
 		sb.append(String.format("\t\t\n"));
+
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
@@ -922,7 +925,7 @@ public class UnitCodeBuilder
 			{
 				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
 			}
-			sb.append(String.format("\t\tpublic static const %s:%s = new %s(%s);\n", field.name, type.name, type.name, field.order));
+			sb.append(String.format("\t\tpublic static const %s:String = \"%s\";\n", field.name, field.value));
 			sb.append(String.format("\t\t\n"));
 		}
 		sb.append(String.format("\t\t\n"));
@@ -931,14 +934,33 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 查找枚举\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic static function get%s(__id__:int):%s\n", type.name, type.name));
+		sb.append(String.format("\t\tpublic static function get%s(id:int):%s\n", type.name, type.name));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\tswitch(__id__)\n"));
+		sb.append(String.format("\t\t\tswitch(id)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-			sb.append(String.format("\t\t\t\tcase %s : return %s;break;\n", field.order, field.name));
+			sb.append(String.format("\t\t\t\tcase %s : return __%s__;break;\n", field.order, field.name));
+		}
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn __unknow__;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+		sb.append(String.format("\t\t\n"));
+
+		//
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 创建枚举\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic static function new%s(value:String):%s\n", type.name, type.name));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tswitch(value)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+			sb.append(String.format("\t\t\t\tcase %s : return __%s__;break;\n", field.name, field.name));
 		}
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\treturn __unknow__;\n"));
@@ -957,6 +979,32 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\tpublic function %s(id:int)\n", type.name));
 		sb.append(String.format("\t\t{\n"));
 		sb.append(String.format("\t\t\t_id=id;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 序号\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function get id():int\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn _id;\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 值\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function get value():String\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tswitch(value)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		for (int i = 0; i < type.fields.length; i++)
+		{
+			EnumField field = type.fields[i];
+			sb.append(String.format("\t\t\t\tcase %s : return %s;break;\n", field.order, field.name));
+		}
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn null;\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
