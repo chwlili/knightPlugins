@@ -400,7 +400,7 @@ public class UnitInstanceBuilder
 				}
 				catch (NumberFormatException err)
 				{
-					fieldValue = 0;
+					fieldValue = 0.0f;
 				}
 			}
 			else if (field.meta.isString())
