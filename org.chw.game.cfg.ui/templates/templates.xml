@@ -3,6 +3,9 @@
 	<template autoinsert="true" context="org.chw.game.Cfg.Type" deleted="false" description="插入一个类型定义" enabled="true" id="type" name="类型定义">/**&#13; * ${comment}&#13; */&#13;type ${name}&#13;{&#13;	${cursor}&#13;}&#13;</template>
 	<template autoinsert="true" context="org.chw.game.Cfg.Type" deleted="false" description="插入一个起始类型" enabled="true" id="main" name="类型定义(起始)">/**&#13; * ${comment}&#13; */&#13;[Main("${xpath}")]&#13;type ${name}&#13;{&#13;	${cursor}&#13;}&#13;</template>
 	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个单值字段" enabled="true" id="singleField" name="单值字段">//${comment}&#13;${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;&#13;</template>
-	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值字段" enabled="true" id="listField" name="列表字段">//${comment}&#13;[List]&#13;${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值字段" enabled="true" id="multiField" name="多值字段">//${comment}&#13;[List]&#13;${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;&#13;</template>
 	<template autoinsert="true" context="org.chw.game.Cfg.Field" deleted="false" description="插入一个多值可索引字段" enabled="true" id="hashField" name="字典字段">//${comment}&#13;[List(${params})]&#13;${type:CrossReference(Field.type)} ${name} = "${xpath}" ;&#13;&#13;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.EnumField" deleted="false" description="插入一个枚举字段" enabled="true" name="枚举字段">//${comment}&#13;${name} = "${text}" ;</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.Enter" deleted="false" description="确定输出代码所处的包" enabled="true" name="包">package ${text} ;&#13;&#13;${cursor}</template>
+	<template autoinsert="true" context="org.chw.game.Cfg.InputDef" deleted="false" description="确定要解析的文件" enabled="true" name="输入文件">input "${text}";&#13;&#13;${cursor}</template>
 </templates>
