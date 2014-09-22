@@ -9,9 +9,12 @@ package org.chw.game.ide.proto.impl;
 import org.chw.game.ide.proto.MessageComplexField;
 import org.chw.game.ide.proto.ProtoPackage;
 import org.chw.game.ide.proto.Type;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**

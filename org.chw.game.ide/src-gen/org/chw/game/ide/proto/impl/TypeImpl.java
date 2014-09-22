@@ -8,6 +8,7 @@ package org.chw.game.ide.proto.impl;
 
 import org.chw.game.ide.proto.ProtoPackage;
 import org.chw.game.ide.proto.Type;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**

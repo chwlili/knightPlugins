@@ -4,7 +4,6 @@
 package org.chw.game.ide.parser.antlr;
 
 import java.io.InputStream;
-
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class ProtoAntlrTokenFileProvider implements IAntlrTokenFileProvider {

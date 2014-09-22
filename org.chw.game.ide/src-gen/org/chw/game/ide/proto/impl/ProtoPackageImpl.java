@@ -24,10 +24,12 @@ import org.chw.game.ide.proto.OptionInfo;
 import org.chw.game.ide.proto.ProtoFactory;
 import org.chw.game.ide.proto.ProtoPackage;
 import org.chw.game.ide.proto.Type;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
