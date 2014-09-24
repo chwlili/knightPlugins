@@ -199,7 +199,7 @@ public class UnitCodeBuilder
 		}
 
 		// 入口类
-		writePoolType();
+		// writePoolType();
 	}
 
 	/**
@@ -1040,6 +1040,8 @@ public class UnitCodeBuilder
 	 */
 	private void writeTypeClass(Class type) throws UnsupportedEncodingException, CoreException
 	{
+		boolean isMain = type == classTable.getMainClass();
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(String.format("package %s\n", currPack));
@@ -1052,7 +1054,7 @@ public class UnitCodeBuilder
 		{
 			sb.append(String.format("%s", formatComment(type.comment, "\t")));
 		}
-		sb.append(String.format("\tpublic class %s\n", type.name));
+		sb.append(String.format("\tpublic class %s %s\n", type.name, isMain ? "extends ByteFile" : ""));
 		sb.append(String.format("\t{\n"));
 
 		// 私有变量
@@ -1087,8 +1089,22 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 构造函数\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:ByteFile)\n", type.name));
-		sb.append(String.format("\t\t{\n"));
+		if (isMain)
+		{
+			sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:ByteFile)\n", type.name));
+			sb.append(String.format("\t\t{\n"));
+			sb.append(String.format("\t\t\tif(bytes==null)\n"));
+			sb.append(String.format("\t\t\t{\n"));
+			sb.append(String.format("\t\t\t\tbytes=getBytes();\n"));
+			sb.append(String.format("\t\t\t\tpool=this;\n"));
+			sb.append(String.format("\t\t\t}\n"));
+			sb.append(String.format("\t\t\t\n"));
+		}
+		else
+		{
+			sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:ByteFile)\n", type.name));
+			sb.append(String.format("\t\t{\n"));
+		}
 		sb.append(String.format("\t\t\t__pool__=pool;\n"));
 		sb.append(String.format("\t\t\t\n"));
 		sb.append(String.format("\t\t\tvar pos:int=bytes.position;\n"));
@@ -1155,6 +1171,61 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
+		//
+		if (isMain)
+		{
+			String fileName = "";
+			String filePath = classTable.getInputURL();
+			if (filePath != null)
+			{
+				String[] parts = filePath.split("\\\\|/");
+				fileName = parts[parts.length - 1];
+			}
+
+			sb.append(String.format("\t\t/**\n"));
+			sb.append(String.format("\t\t * 获取原始字节流\n"));
+			sb.append(String.format("\t\t */\n"));
+			sb.append(String.format("\t\tprotected override function getBytes():ByteStream\n"));
+			sb.append(String.format("\t\t{\n"));
+			sb.append(String.format("\t\t\treturn ConfigPool.getFile(\"%s\");\n", fileName));
+			sb.append(String.format("\t\t}\n"));
+			sb.append(String.format("\t\t\n"));
+
+			sb.append(String.format("\t\t/**\n"));
+			sb.append(String.format("\t\t * 读取对象\n"));
+			sb.append(String.format("\t\t */\n"));
+			sb.append(String.format("\t\tprotected override function readObject(typeID:int,bytes:ByteStream):*\n"));
+			sb.append(String.format("\t\t{\n"));
+			sb.append(String.format("\t\t\tswitch(typeID)\n"));
+			sb.append(String.format("\t\t\t{\n"));
+			for (Class curr : classTable.getAllClass())
+			{
+				sb.append(String.format("\t\t\t\tcase %s:\n", classTable.getClassID(curr.name)));
+				sb.append(String.format("\t\t\t\t\treturn new %s(bytes,this);\n", curr.name));
+				sb.append(String.format("\t\t\t\t\tbreak;\n"));
+			}
+			sb.append(String.format("\t\t\t}\n"));
+			sb.append(String.format("\t\t\treturn null;\n"));
+			sb.append(String.format("\t\t}\n"));
+			sb.append(String.format("\t\t\n"));
+
+			sb.append(String.format("\t\tprivate static var _instance:%s;\n", type.name));
+			sb.append(String.format("\t\t\n"));
+
+			sb.append(String.format("\t\t/**\n"));
+			sb.append(String.format("\t\t * 获取单例\n"));
+			sb.append(String.format("\t\t */\n"));
+			sb.append(String.format("\t\tprivate static function get instance():%s\n", classTable.getMainClass().name));
+			sb.append(String.format("\t\t{\n"));
+			sb.append(String.format("\t\t\tif(!_instance)\n"));
+			sb.append(String.format("\t\t\t{\n"));
+			sb.append(String.format("\t\t\t\t_instance=new %s(null,null);\n", type.name));
+			sb.append(String.format("\t\t\t}\n"));
+			sb.append(String.format("\t\t\treturn _instance.root;\n"));
+			sb.append(String.format("\t\t}\n"));
+			sb.append(String.format("\t\t\n"));
+		}
+
 		// 字段列表
 		for (ClassField field : type.fields)
 		{
@@ -1162,31 +1233,33 @@ public class UnitCodeBuilder
 			{
 				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
 			}
-			sb.append(String.format("\t\tpublic function get %s():%s\n", field.name, getFieldAsTypeName(field)));
+
+			sb.append(String.format("\t\tpublic %s function get %s():%s\n", isMain ? "static" : "", field.name, getFieldAsTypeName(field)));
 			sb.append(String.format("\t\t{\n"));
+			String fieldName = String.format("%s_%sKind", isMain ? "instance." : "", field.name);
 			if (field.repeted && field.hasIndex() && field.isExtendType())
 			{
-				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+				sb.append(String.format("\t\t\treturn %s;\n", fieldName));
 			}
 			else if (field.repeted && !field.isEnumType())
 			{
-				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+				sb.append(String.format("\t\t\treturn %s;\n", fieldName));
 			}
 			else if ((field.repeted || field.slice) && field.isEnumType())
 			{
-				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+				sb.append(String.format("\t\t\treturn %s;\n", fieldName));
 			}
 			else if (field.slice && field.isBaseType())
 			{
-				sb.append(String.format("\t\t\treturn _%sKind;\n", field.name));
+				sb.append(String.format("\t\t\treturn %s;\n", fieldName));
 			}
 			else if (field.isEnumType())
 			{
-				sb.append(String.format("\t\t\treturn %s.get%s(_%sKind);\n", field.type, field.type, field.name));
+				sb.append(String.format("\t\t\treturn %s.get%s(%s);\n", field.type, field.type, fieldName));
 			}
 			else
 			{
-				sb.append(String.format("\t\t\treturn __pool__.getValue(%s,_%sKind);\n", classTable.getClassID(field.type), field.name));
+				sb.append(String.format("\t\t\treturn %s__pool__.getValue(%s,%s);\n", isMain ? "instance." : "", classTable.getClassID(field.type), fieldName));
 			}
 			sb.append(String.format("\t\t}\n"));
 			sb.append(String.format("\t\t\n"));

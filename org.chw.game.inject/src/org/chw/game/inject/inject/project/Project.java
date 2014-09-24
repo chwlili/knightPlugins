@@ -1016,7 +1016,7 @@ public class Project
 			{
 				monitor.setTaskName("Êä³öÎÄ¼þ:" + module.getTypeQName());
 
-				ModuleType adapter = new ModuleType("", module.getPackName(), "$" + module.getTypeName() + "Creator", "public", "");
+				ModuleType adapter = new ModuleType("", module.getPackName(), "_" + module.getTypeName() + "Creator", "public", "");
 
 				moduleAdapters.put(module, adapter);
 

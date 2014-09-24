@@ -1227,7 +1227,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//terminal NAME:
 	//
-	//	("a".."z" | "A".."Z") ("a".."z" | "A".."Z" | "0".."9" | "_")*;
+	//	("a".."z" | "A".."Z" | "_" | "$") ("a".."z" | "A".."Z" | "0".."9" | "_" | "$")*;
 	public TerminalRule getNAMERule() {
 		return (tNAME != null) ? tNAME : (tNAME = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NAME"));
 	} 

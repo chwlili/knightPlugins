@@ -44,6 +44,11 @@ public class CfgValidator extends AbstractCfgValidator
 
 			if (type.getEnter() != null)
 			{
+				if (!type.getName().startsWith("$"))
+				{
+					error("主类的类名建议以$为前缀! 例如($" + type.getName() + ")", type, CfgPackage.Literals.TYPE__NAME);
+				}
+
 				if (mainType == null)
 				{
 					mainType = type.getName();

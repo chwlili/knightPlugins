@@ -78,11 +78,11 @@ public class UnitConfigBuilder
 	 */
 	public void buildTo(IFolder folder, String filePackName, String fileName, boolean changed) throws IOException, CoreException, SAXException, ParserConfigurationException
 	{
-		if(classTable.getMainClass()==null)
+		if (classTable.getMainClass() == null)
 		{
 			return;
 		}
-		
+
 		// 确保输出目录已存在
 		if (filePackName == null)
 		{
@@ -240,38 +240,6 @@ public class UnitConfigBuilder
 					parseInstance((Instance) field.value);
 				}
 			}
-		}
-
-		// 按引用次数排序ID
-		for (String typeName : typeName_ids.keySet())
-		{
-			HashSet<Integer> ids = typeName_ids.get(typeName);
-			Integer[] idArray = ids.toArray(new Integer[ids.size()]);
-			Arrays.sort(idArray, new Comparator<Integer>()
-			{
-				public int compare(Integer o1, Integer o2)
-				{
-					o1 = id_refCount.get(o1);
-					o2 = id_refCount.get(o2);
-					if (o1 > o2)
-					{
-						return -1;
-					}
-					else if (o1 < o2)
-					{
-						return 1;
-					}
-					return 0;
-				}
-			});
-
-			for (int i = 0; i < idArray.length; i++)
-			{
-				int id = idArray[i];
-				id_order.put(id, i + 1);
-			}
-
-			typeName_idArray.put(typeName, idArray);
 		}
 	}
 
@@ -644,6 +612,38 @@ public class UnitConfigBuilder
 	private byte[] build(Instance instance) throws IOException, SAXException, ParserConfigurationException, CoreException
 	{
 		parseInstance(instance);
+
+		// 按引用次数排序ID
+		for (String typeName : typeName_ids.keySet())
+		{
+			HashSet<Integer> ids = typeName_ids.get(typeName);
+			Integer[] idArray = ids.toArray(new Integer[ids.size()]);
+			Arrays.sort(idArray, new Comparator<Integer>()
+			{
+				public int compare(Integer o1, Integer o2)
+				{
+					o1 = id_refCount.get(o1);
+					o2 = id_refCount.get(o2);
+					if (o1 > o2)
+					{
+						return -1;
+					}
+					else if (o1 < o2)
+					{
+						return 1;
+					}
+					return 0;
+				}
+			});
+
+			for (int i = 0; i < idArray.length; i++)
+			{
+				int id = idArray[i];
+				id_order.put(id, i + 1);
+			}
+
+			typeName_idArray.put(typeName, idArray);
+		}
 
 		// debugs
 		// System.out.println(toDebugString(allInstance));

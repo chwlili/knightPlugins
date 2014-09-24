@@ -66,6 +66,10 @@ public class UnitInstanceBuilder
 
 		SAXParserFactory.newInstance().newSAXParser().parse(stream, new MyHandler());
 
+		if (instanceField.value == null)
+		{
+			return new Instance(mainClass);
+		}
 		return (Instance) instanceField.value;
 	}
 

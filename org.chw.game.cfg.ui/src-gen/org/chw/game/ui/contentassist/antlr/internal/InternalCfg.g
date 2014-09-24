@@ -3500,7 +3500,7 @@ RULE_C_SLICE : 'Slice';
 
 RULE_C_PACKAGE : 'package';
 
-RULE_NAME : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+RULE_NAME : ('a'..'z'|'A'..'Z'|'_'|'$') ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'$')*;
 
 RULE_STRING : '"' ~(('\r'|'\n'|'"'))* '"';
 

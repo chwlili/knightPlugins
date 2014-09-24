@@ -553,10 +553,10 @@ public class InternalCfgLexer extends Lexer {
         try {
             int _type = RULE_NAME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:11: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:13: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:11: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '$' )* )
+            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:13: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '$' )*
             {
-            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            if ( input.LA(1)=='$'||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
 
             }
@@ -565,13 +565,13 @@ public class InternalCfgLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:33: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:3503:41: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '$' )*
             loop1:
             do {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( ((LA1_0>='0' && LA1_0<='9')||(LA1_0>='A' && LA1_0<='Z')||LA1_0=='_'||(LA1_0>='a' && LA1_0<='z')) ) {
+                if ( (LA1_0=='$'||(LA1_0>='0' && LA1_0<='9')||(LA1_0>='A' && LA1_0<='Z')||LA1_0=='_'||(LA1_0>='a' && LA1_0<='z')) ) {
                     alt1=1;
                 }
 
@@ -580,7 +580,7 @@ public class InternalCfgLexer extends Lexer {
             	case 1 :
             	    // ../org.chw.game.cfg.ui/src-gen/org/chw/game/ui/contentassist/antlr/internal/InternalCfg.g:
             	    {
-            	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( input.LA(1)=='$'||(input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -1090,10 +1090,10 @@ public class InternalCfgLexer extends Lexer {
     static final String DFA7_minS =
         "\1\11\14\uffff\1\156\1\141\1\171\1\156\1\151\1\157\1\165\1\154"+
         "\1\151\1\141\4\uffff\1\160\1\151\1\160\1\165\1\156\1\157\1\155\1"+
-        "\162\1\151\1\163\1\143\1\165\1\60\1\156\1\145\1\155\1\164\1\154"+
-        "\1\142\1\151\1\143\1\164\1\153\1\164\1\uffff\4\60\2\145\1\156\1"+
-        "\145\1\60\1\141\1\60\4\uffff\1\141\1\162\1\147\1\60\1\uffff\1\147"+
-        "\1\uffff\1\156\2\60\1\uffff\1\145\1\60\2\uffff\1\60\2\uffff";
+        "\162\1\151\1\163\1\143\1\165\1\44\1\156\1\145\1\155\1\164\1\154"+
+        "\1\142\1\151\1\143\1\164\1\153\1\164\1\uffff\4\44\2\145\1\156\1"+
+        "\145\1\44\1\141\1\44\4\uffff\1\141\1\162\1\147\1\44\1\uffff\1\147"+
+        "\1\uffff\1\156\2\44\1\uffff\1\145\1\44\2\uffff\1\44\2\uffff";
     static final String DFA7_maxS =
         "\1\175\14\uffff\1\156\1\141\1\171\1\156\1\151\1\157\1\165\1\164"+
         "\1\151\1\141\4\uffff\1\164\1\151\1\160\1\165\1\156\1\157\1\155\1"+
@@ -1109,11 +1109,11 @@ public class InternalCfgLexer extends Lexer {
     static final String DFA7_specialS =
         "\125\uffff}>";
     static final String[] DFA7_transitionS = {
-            "\2\32\2\uffff\1\32\22\uffff\1\32\1\uffff\1\30\5\uffff\1\4\1"+
-            "\5\2\uffff\1\13\1\uffff\1\1\1\31\13\uffff\1\14\1\10\1\12\1\11"+
-            "\2\uffff\1\27\1\22\11\27\1\25\1\16\1\23\4\27\1\24\7\27\1\2\1"+
-            "\uffff\1\3\3\uffff\4\27\1\20\3\27\1\15\6\27\1\26\3\27\1\17\1"+
-            "\21\5\27\1\6\1\uffff\1\7",
+            "\2\32\2\uffff\1\32\22\uffff\1\32\1\uffff\1\30\1\uffff\1\27"+
+            "\3\uffff\1\4\1\5\2\uffff\1\13\1\uffff\1\1\1\31\13\uffff\1\14"+
+            "\1\10\1\12\1\11\2\uffff\1\27\1\22\11\27\1\25\1\16\1\23\4\27"+
+            "\1\24\7\27\1\2\1\uffff\1\3\1\uffff\1\27\1\uffff\4\27\1\20\3"+
+            "\27\1\15\6\27\1\26\3\27\1\17\1\21\5\27\1\6\1\uffff\1\7",
             "",
             "",
             "",
@@ -1152,7 +1152,8 @@ public class InternalCfgLexer extends Lexer {
             "\1\60",
             "\1\61",
             "\1\62",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "\1\64",
             "\1\65",
             "\1\66",
@@ -1165,17 +1166,23 @@ public class InternalCfgLexer extends Lexer {
             "\1\75",
             "\1\76",
             "",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "\1\103",
             "\1\104",
             "\1\105",
             "\1\106",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "\1\110",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "",
             "",
             "",
@@ -1183,19 +1190,24 @@ public class InternalCfgLexer extends Lexer {
             "\1\112",
             "\1\113",
             "\1\114",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "",
             "\1\116",
             "",
             "\1\117",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "",
             "\1\122",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "",
             "",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\27\13\uffff\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32"+
+            "\27",
             "",
             ""
     };
