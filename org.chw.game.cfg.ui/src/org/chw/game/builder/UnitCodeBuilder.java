@@ -609,6 +609,34 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\treturn _pool.getValue(%s,_indexList[index]);\n", classTable.getClassID(type)));
 		sb.append(String.format("\t\t}\n"));
 
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 转换成Vector\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function toVector():Vector.<%s>\n", type));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tvar list:Vector.<%s>=new Vector.<%s>()\n", type, type));
+		sb.append(String.format("\t\t\tfor(var i:int=0;i<length;i++)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tlist.push(getAt(i));\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn list;\n"));
+		sb.append(String.format("\t\t}\n"));
+
+		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * 查找\n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tpublic function indexOf(value:%s):int\n", type));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tfor(var i:int=0;i<length;i++)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\tif(getAt(i)==value)\n"));
+		sb.append(String.format("\t\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\t\treturn i;\n"));
+		sb.append(String.format("\t\t\t\t}\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\treturn -1;\n"));
+		sb.append(String.format("\t\t}\n"));
+
 		sb.append(String.format("\t}\n"));
 
 		sb.append(String.format("}\n"));
@@ -896,6 +924,16 @@ public class UnitCodeBuilder
 	 */
 	private void writeEnumClass(Enum type) throws UnsupportedEncodingException, CoreException
 	{
+		String normalFieldName = "__unknow__";
+		for (EnumField field : type.fields)
+		{
+			if (field.normal)
+			{
+				normalFieldName = field.name;
+				break;
+			}
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(String.format("package %s\n", currPack));
@@ -908,24 +946,24 @@ public class UnitCodeBuilder
 		sb.append(String.format("\tpublic class %s\n", type.name));
 		sb.append(String.format("\t{\n"));
 
-		// 静态成员
-		sb.append(String.format("\t\tprivate static const __unknow__:%s = new %s(0);\n", type.name, type.name));
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-			sb.append(String.format("\t\tprivate static const __%s__:%s = new %s(%s);\n", field.name, type.name, type.name, field.order));
+			sb.append(String.format("\t\tprivate static const %sLiteral:String = \"%s\";\n", field.name, field.value));
 		}
 		sb.append(String.format("\t\t\n"));
 
+		// 静态成员
+		sb.append(String.format("\t\tprivate static const __unknow__:%s = new %s(0);\n", type.name, type.name));
+		sb.append(String.format("\t\t\n"));
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-
 			if (field.comment != null)
 			{
 				sb.append(String.format("%s", formatComment(field.comment, "\t\t")));
 			}
-			sb.append(String.format("\t\tpublic static const %s:String = \"%s\";\n", field.name, field.value));
+			sb.append(String.format("\t\tpublic static const %s:%s = new %s(%s);\n", field.name, type.name, type.name, field.order));
 			sb.append(String.format("\t\t\n"));
 		}
 		sb.append(String.format("\t\t\n"));
@@ -941,10 +979,10 @@ public class UnitCodeBuilder
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-			sb.append(String.format("\t\t\t\tcase %s : return __%s__;break;\n", field.order, field.name));
+			sb.append(String.format("\t\t\t\tcase %s : return %s;break;\n", field.order, field.name));
 		}
 		sb.append(String.format("\t\t\t}\n"));
-		sb.append(String.format("\t\t\treturn __unknow__;\n"));
+		sb.append(String.format("\t\t\treturn %s;\n", normalFieldName));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 		sb.append(String.format("\t\t\n"));
@@ -960,10 +998,10 @@ public class UnitCodeBuilder
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-			sb.append(String.format("\t\t\t\tcase %s : return __%s__;break;\n", field.name, field.name));
+			sb.append(String.format("\t\t\t\tcase %sLiteral : return %s;break;\n", field.name, field.name));
 		}
 		sb.append(String.format("\t\t\t}\n"));
-		sb.append(String.format("\t\t\treturn __unknow__;\n"));
+		sb.append(String.format("\t\t\treturn %s;\n", normalFieldName));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 		sb.append(String.format("\t\t\n"));
@@ -996,12 +1034,12 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tpublic function get value():String\n"));
 		sb.append(String.format("\t\t{\n"));
-		sb.append(String.format("\t\t\tswitch(value)\n"));
+		sb.append(String.format("\t\t\tswitch(id)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		for (int i = 0; i < type.fields.length; i++)
 		{
 			EnumField field = type.fields[i];
-			sb.append(String.format("\t\t\t\tcase %s : return %s;break;\n", field.order, field.name));
+			sb.append(String.format("\t\t\t\tcase %s : return %sLiteral;break;\n", field.order, field.name));
 		}
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\treturn null;\n"));
@@ -1091,7 +1129,7 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t */\n"));
 		if (isMain)
 		{
-			sb.append(String.format("\t\tpublic function %s(bytes:ByteStream,pool:ByteFile)\n", type.name));
+			sb.append(String.format("\t\tpublic function %s(bytes:ByteStream=null,pool:ByteFile=null)\n", type.name));
 			sb.append(String.format("\t\t{\n"));
 			sb.append(String.format("\t\t\tif(bytes==null)\n"));
 			sb.append(String.format("\t\t\t{\n"));

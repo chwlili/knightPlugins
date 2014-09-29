@@ -604,13 +604,22 @@ public interface CfgPackage extends EPackage
   int ENUM_FIELD__COMMENT = 0;
 
   /**
+   * The feature id for the '<em><b>Meta</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM_FIELD__META = 1;
+
+  /**
    * The feature id for the '<em><b>Field Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ENUM_FIELD__FIELD_NAME = 1;
+  int ENUM_FIELD__FIELD_NAME = 2;
 
   /**
    * The feature id for the '<em><b>Field Value</b></em>' attribute.
@@ -619,7 +628,7 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM_FIELD__FIELD_VALUE = 2;
+  int ENUM_FIELD__FIELD_VALUE = 3;
 
   /**
    * The number of structural features of the '<em>Enum Field</em>' class.
@@ -628,7 +637,35 @@ public interface CfgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM_FIELD_FEATURE_COUNT = 3;
+  int ENUM_FIELD_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.chw.game.cfg.impl.DefaultMetaImpl <em>Default Meta</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.chw.game.cfg.impl.DefaultMetaImpl
+   * @see org.chw.game.cfg.impl.CfgPackageImpl#getDefaultMeta()
+   * @generated
+   */
+  int DEFAULT_META = 12;
+
+  /**
+   * The feature id for the '<em><b>Prefix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEFAULT_META__PREFIX = 0;
+
+  /**
+   * The number of structural features of the '<em>Default Meta</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEFAULT_META_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.
@@ -638,7 +675,7 @@ public interface CfgPackage extends EPackage
    * @see org.chw.game.cfg.impl.CfgPackageImpl#getOtherComent()
    * @generated
    */
-  int OTHER_COMENT = 12;
+  int OTHER_COMENT = 13;
 
   /**
    * The feature id for the '<em><b>Comm</b></em>' attribute.
@@ -1176,6 +1213,17 @@ public interface CfgPackage extends EPackage
   EAttribute getEnumField_Comment();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.chw.game.cfg.EnumField#getMeta <em>Meta</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Meta</em>'.
+   * @see org.chw.game.cfg.EnumField#getMeta()
+   * @see #getEnumField()
+   * @generated
+   */
+  EReference getEnumField_Meta();
+
+  /**
    * Returns the meta object for the attribute '{@link org.chw.game.cfg.EnumField#getFieldName <em>Field Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1196,6 +1244,27 @@ public interface CfgPackage extends EPackage
    * @generated
    */
   EAttribute getEnumField_FieldValue();
+
+  /**
+   * Returns the meta object for class '{@link org.chw.game.cfg.DefaultMeta <em>Default Meta</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Default Meta</em>'.
+   * @see org.chw.game.cfg.DefaultMeta
+   * @generated
+   */
+  EClass getDefaultMeta();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.chw.game.cfg.DefaultMeta#getPrefix <em>Prefix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Prefix</em>'.
+   * @see org.chw.game.cfg.DefaultMeta#getPrefix()
+   * @see #getDefaultMeta()
+   * @generated
+   */
+  EAttribute getDefaultMeta_Prefix();
 
   /**
    * Returns the meta object for class '{@link org.chw.game.cfg.OtherComent <em>Other Coment</em>}'.
@@ -1650,6 +1719,14 @@ public interface CfgPackage extends EPackage
     EAttribute ENUM_FIELD__COMMENT = eINSTANCE.getEnumField_Comment();
 
     /**
+     * The meta object literal for the '<em><b>Meta</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ENUM_FIELD__META = eINSTANCE.getEnumField_Meta();
+
+    /**
      * The meta object literal for the '<em><b>Field Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1664,6 +1741,24 @@ public interface CfgPackage extends EPackage
      * @generated
      */
     EAttribute ENUM_FIELD__FIELD_VALUE = eINSTANCE.getEnumField_FieldValue();
+
+    /**
+     * The meta object literal for the '{@link org.chw.game.cfg.impl.DefaultMetaImpl <em>Default Meta</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.chw.game.cfg.impl.DefaultMetaImpl
+     * @see org.chw.game.cfg.impl.CfgPackageImpl#getDefaultMeta()
+     * @generated
+     */
+    EClass DEFAULT_META = eINSTANCE.getDefaultMeta();
+
+    /**
+     * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DEFAULT_META__PREFIX = eINSTANCE.getDefaultMeta_Prefix();
 
     /**
      * The meta object literal for the '{@link org.chw.game.cfg.impl.OtherComentImpl <em>Other Coment</em>}' class.

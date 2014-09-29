@@ -3,6 +3,7 @@ package org.chw.game.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
@@ -36,6 +37,12 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == CfgPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case CfgPackage.DEFAULT_META:
+				if(context == grammarAccess.getDefaultMetaRule()) {
+					sequence_DefaultMeta(context, (DefaultMeta) semanticObject); 
+					return; 
+				}
+				else break;
 			case CfgPackage.ENTER:
 				if(context == grammarAccess.getEnterRule()) {
 					sequence_Enter(context, (Enter) semanticObject); 
@@ -120,6 +127,22 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
+	 *     prefix=C_DEFAULT
+	 */
+	protected void sequence_DefaultMeta(EObject context, DefaultMeta semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CfgPackage.Literals.DEFAULT_META__PREFIX) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CfgPackage.Literals.DEFAULT_META__PREFIX));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getDefaultMetaAccess().getPrefixC_DEFAULTTerminalRuleCall_1_0(), semanticObject.getPrefix());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (prefix=C_MAIN rootPath=STRING)
 	 */
 	protected void sequence_Enter(EObject context, Enter semanticObject) {
@@ -139,7 +162,7 @@ public class CfgSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (comment=FieldComment? fieldName=TypeName fieldValue=STRING)
+	 *     (comment=FieldComment? meta=DefaultMeta? fieldName=TypeName fieldValue=STRING)
 	 */
 	protected void sequence_EnumField(EObject context, EnumField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

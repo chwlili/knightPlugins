@@ -7,6 +7,7 @@
 package org.chw.game.cfg.util;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
@@ -169,6 +170,13 @@ public class CfgSwitch<T> extends Switch<T>
       {
         EnumField enumField = (EnumField)theEObject;
         T result = caseEnumField(enumField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CfgPackage.DEFAULT_META:
+      {
+        DefaultMeta defaultMeta = (DefaultMeta)theEObject;
+        T result = caseDefaultMeta(defaultMeta);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -371,6 +379,22 @@ public class CfgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEnumField(EnumField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Default Meta</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Default Meta</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDefaultMeta(DefaultMeta object)
   {
     return null;
   }

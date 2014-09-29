@@ -8,6 +8,7 @@ package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
@@ -93,6 +94,7 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.FIELD_META_KEY: return createFieldMetaKey();
       case CfgPackage.ENUM: return createEnum();
       case CfgPackage.ENUM_FIELD: return createEnumField();
+      case CfgPackage.DEFAULT_META: return createDefaultMeta();
       case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -229,6 +231,17 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     EnumFieldImpl enumField = new EnumFieldImpl();
     return enumField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DefaultMeta createDefaultMeta()
+  {
+    DefaultMetaImpl defaultMeta = new DefaultMetaImpl();
+    return defaultMeta;
   }
 
   /**

@@ -40,7 +40,10 @@ Enum:
 	comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L ((=> fields+=EnumField) | comm+=OtherComent)* C_BRACE_R;
 
 EnumField:
-	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+	comment=FieldComment? meta=DefaultMeta? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+
+DefaultMeta:
+	C_BRACKET_L prefix=C_DEFAULT (C_PAREN_L C_PAREN_R)? C_BRACKET_R;
 
 TypeComment:
 	COMMENT;
@@ -55,7 +58,8 @@ PackName:
 	TypeName ('.' TypeName)*;
 
 TypeName:
-	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+	C_INPUT | C_MAIN | C_DEFAULT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE |
+	NAME;
 
 terminal C_BRACKET_L:
 	'[';
@@ -95,6 +99,9 @@ terminal C_INPUT:
 
 terminal C_MAIN:
 	'Main';
+
+terminal C_DEFAULT:
+	'Default';
 
 terminal C_TYPE:
 	'type';

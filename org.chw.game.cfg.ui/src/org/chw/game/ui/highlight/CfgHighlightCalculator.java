@@ -1,6 +1,7 @@
 package org.chw.game.ui.highlight;
 
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
@@ -95,6 +96,12 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 					for (INode node : NodeModelUtils.findNodesForFeature(field, CfgPackage.Literals.ENUM_FIELD__FIELD_VALUE))
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
+					}
+					
+					DefaultMeta meta=field.getMeta();
+					for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.DEFAULT_META__PREFIX))
+					{
+						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
 					}
 				}
 			}

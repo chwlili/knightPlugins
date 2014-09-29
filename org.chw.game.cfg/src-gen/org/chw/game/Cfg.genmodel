@@ -68,8 +68,12 @@
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//EnumField">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//EnumField/meta"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//DefaultMeta">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//DefaultMeta/prefix"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//OtherComent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//OtherComent/comm"/>

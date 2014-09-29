@@ -23,16 +23,22 @@ public class EnumField
 	public final int order;
 
 	/**
+	 * 默认字段
+	 */
+	public final boolean normal;
+
+	/**
 	 * 构造函数
 	 * 
 	 * @param name
 	 * @param value
 	 */
-	public EnumField(String comment, String name, String value, int order)
+	public EnumField(String comment, String name, String value, boolean normal, int order)
 	{
 		this.comment = comment;
 		this.name = name;
 		this.value = value;
+		this.normal = normal;
 		this.order = order;
 	}
 }

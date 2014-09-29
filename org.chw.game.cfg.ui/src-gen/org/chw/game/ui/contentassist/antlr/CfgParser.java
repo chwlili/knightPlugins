@@ -58,6 +58,8 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSliceMetaAccess().getGroup(), "rule__SliceMeta__Group__0");
 					put(grammarAccess.getEnumAccess().getGroup(), "rule__Enum__Group__0");
 					put(grammarAccess.getEnumFieldAccess().getGroup(), "rule__EnumField__Group__0");
+					put(grammarAccess.getDefaultMetaAccess().getGroup(), "rule__DefaultMeta__Group__0");
+					put(grammarAccess.getDefaultMetaAccess().getGroup_2(), "rule__DefaultMeta__Group_2__0");
 					put(grammarAccess.getPackNameAccess().getGroup(), "rule__PackName__Group__0");
 					put(grammarAccess.getPackNameAccess().getGroup_1(), "rule__PackName__Group_1__0");
 					put(grammarAccess.getXML2Access().getInputAssignment_0_0_0(), "rule__XML2__InputAssignment_0_0_0");
@@ -102,8 +104,10 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEnumAccess().getFieldsAssignment_4_0(), "rule__Enum__FieldsAssignment_4_0");
 					put(grammarAccess.getEnumAccess().getCommAssignment_4_1(), "rule__Enum__CommAssignment_4_1");
 					put(grammarAccess.getEnumFieldAccess().getCommentAssignment_0(), "rule__EnumField__CommentAssignment_0");
-					put(grammarAccess.getEnumFieldAccess().getFieldNameAssignment_1(), "rule__EnumField__FieldNameAssignment_1");
-					put(grammarAccess.getEnumFieldAccess().getFieldValueAssignment_3(), "rule__EnumField__FieldValueAssignment_3");
+					put(grammarAccess.getEnumFieldAccess().getMetaAssignment_1(), "rule__EnumField__MetaAssignment_1");
+					put(grammarAccess.getEnumFieldAccess().getFieldNameAssignment_2(), "rule__EnumField__FieldNameAssignment_2");
+					put(grammarAccess.getEnumFieldAccess().getFieldValueAssignment_4(), "rule__EnumField__FieldValueAssignment_4");
+					put(grammarAccess.getDefaultMetaAccess().getPrefixAssignment_1(), "rule__DefaultMeta__PrefixAssignment_1");
 					put(grammarAccess.getOtherComentAccess().getCommAssignment(), "rule__OtherComent__CommAssignment");
 				}
 			};

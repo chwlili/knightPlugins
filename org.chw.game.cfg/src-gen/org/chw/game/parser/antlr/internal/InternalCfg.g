@@ -1175,30 +1175,48 @@ ruleEnumField returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEnumFieldAccess().getFieldNameTypeNameParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getEnumFieldAccess().getMetaDefaultMetaParserRuleCall_1_0()); 
 	    }
-		lv_fieldName_1_0=ruleTypeName		{
+		lv_meta_1_0=ruleDefaultMeta		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEnumFieldRule());
+	        }
+       		set(
+       			$current, 
+       			"meta",
+        		lv_meta_1_0, 
+        		"DefaultMeta");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEnumFieldAccess().getFieldNameTypeNameParserRuleCall_2_0()); 
+	    }
+		lv_fieldName_2_0=ruleTypeName		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEnumFieldRule());
 	        }
        		set(
        			$current, 
        			"fieldName",
-        		lv_fieldName_1_0, 
+        		lv_fieldName_2_0, 
         		"TypeName");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)this_C_EQUALS_2=RULE_C_EQUALS
+)this_C_EQUALS_3=RULE_C_EQUALS
     { 
-    newLeafNode(this_C_EQUALS_2, grammarAccess.getEnumFieldAccess().getC_EQUALSTerminalRuleCall_2()); 
+    newLeafNode(this_C_EQUALS_3, grammarAccess.getEnumFieldAccess().getC_EQUALSTerminalRuleCall_3()); 
     }
 (
 (
-		lv_fieldValue_3_0=RULE_STRING
+		lv_fieldValue_4_0=RULE_STRING
 		{
-			newLeafNode(lv_fieldValue_3_0, grammarAccess.getEnumFieldAccess().getFieldValueSTRINGTerminalRuleCall_3_0()); 
+			newLeafNode(lv_fieldValue_4_0, grammarAccess.getEnumFieldAccess().getFieldValueSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1207,16 +1225,71 @@ ruleEnumField returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"fieldValue",
-        		lv_fieldValue_3_0, 
+        		lv_fieldValue_4_0, 
         		"STRING");
 	    }
 
 )
-)(this_C_SEMICOLON_4=RULE_C_SEMICOLON
+)(this_C_SEMICOLON_5=RULE_C_SEMICOLON
     { 
-    newLeafNode(this_C_SEMICOLON_4, grammarAccess.getEnumFieldAccess().getC_SEMICOLONTerminalRuleCall_4()); 
+    newLeafNode(this_C_SEMICOLON_5, grammarAccess.getEnumFieldAccess().getC_SEMICOLONTerminalRuleCall_5()); 
     }
 )?)
+;
+
+
+
+
+
+// Entry rule entryRuleDefaultMeta
+entryRuleDefaultMeta returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getDefaultMetaRule()); }
+	 iv_ruleDefaultMeta=ruleDefaultMeta 
+	 { $current=$iv_ruleDefaultMeta.current; } 
+	 EOF 
+;
+
+// Rule DefaultMeta
+ruleDefaultMeta returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(this_C_BRACKET_L_0=RULE_C_BRACKET_L
+    { 
+    newLeafNode(this_C_BRACKET_L_0, grammarAccess.getDefaultMetaAccess().getC_BRACKET_LTerminalRuleCall_0()); 
+    }
+(
+(
+		lv_prefix_1_0=RULE_C_DEFAULT
+		{
+			newLeafNode(lv_prefix_1_0, grammarAccess.getDefaultMetaAccess().getPrefixC_DEFAULTTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getDefaultMetaRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"prefix",
+        		lv_prefix_1_0, 
+        		"C_DEFAULT");
+	    }
+
+)
+)(this_C_PAREN_L_2=RULE_C_PAREN_L
+    { 
+    newLeafNode(this_C_PAREN_L_2, grammarAccess.getDefaultMetaAccess().getC_PAREN_LTerminalRuleCall_2_0()); 
+    }
+this_C_PAREN_R_3=RULE_C_PAREN_R
+    { 
+    newLeafNode(this_C_PAREN_R_3, grammarAccess.getDefaultMetaAccess().getC_PAREN_RTerminalRuleCall_2_1()); 
+    }
+)?this_C_BRACKET_R_4=RULE_C_BRACKET_R
+    { 
+    newLeafNode(this_C_BRACKET_R_4, grammarAccess.getDefaultMetaAccess().getC_BRACKET_RTerminalRuleCall_3()); 
+    }
+)
 ;
 
 
@@ -1397,84 +1470,92 @@ ruleTypeName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
     newLeafNode(this_C_MAIN_1, grammarAccess.getTypeNameAccess().getC_MAINTerminalRuleCall_1()); 
     }
 
-    |    this_C_TYPE_2=RULE_C_TYPE    {
-		$current.merge(this_C_TYPE_2);
+    |    this_C_DEFAULT_2=RULE_C_DEFAULT    {
+		$current.merge(this_C_DEFAULT_2);
     }
 
     { 
-    newLeafNode(this_C_TYPE_2, grammarAccess.getTypeNameAccess().getC_TYPETerminalRuleCall_2()); 
+    newLeafNode(this_C_DEFAULT_2, grammarAccess.getTypeNameAccess().getC_DEFAULTTerminalRuleCall_2()); 
     }
 
-    |    this_C_ENUM_3=RULE_C_ENUM    {
-		$current.merge(this_C_ENUM_3);
-    }
-
-    { 
-    newLeafNode(this_C_ENUM_3, grammarAccess.getTypeNameAccess().getC_ENUMTerminalRuleCall_3()); 
-    }
-
-    |    this_C_INT_4=RULE_C_INT    {
-		$current.merge(this_C_INT_4);
+    |    this_C_TYPE_3=RULE_C_TYPE    {
+		$current.merge(this_C_TYPE_3);
     }
 
     { 
-    newLeafNode(this_C_INT_4, grammarAccess.getTypeNameAccess().getC_INTTerminalRuleCall_4()); 
+    newLeafNode(this_C_TYPE_3, grammarAccess.getTypeNameAccess().getC_TYPETerminalRuleCall_3()); 
     }
 
-    |    this_C_UINT_5=RULE_C_UINT    {
-		$current.merge(this_C_UINT_5);
-    }
-
-    { 
-    newLeafNode(this_C_UINT_5, grammarAccess.getTypeNameAccess().getC_UINTTerminalRuleCall_5()); 
-    }
-
-    |    this_C_BOOL_6=RULE_C_BOOL    {
-		$current.merge(this_C_BOOL_6);
+    |    this_C_ENUM_4=RULE_C_ENUM    {
+		$current.merge(this_C_ENUM_4);
     }
 
     { 
-    newLeafNode(this_C_BOOL_6, grammarAccess.getTypeNameAccess().getC_BOOLTerminalRuleCall_6()); 
+    newLeafNode(this_C_ENUM_4, grammarAccess.getTypeNameAccess().getC_ENUMTerminalRuleCall_4()); 
     }
 
-    |    this_C_NUMBER_7=RULE_C_NUMBER    {
-		$current.merge(this_C_NUMBER_7);
-    }
-
-    { 
-    newLeafNode(this_C_NUMBER_7, grammarAccess.getTypeNameAccess().getC_NUMBERTerminalRuleCall_7()); 
-    }
-
-    |    this_C_STRING_8=RULE_C_STRING    {
-		$current.merge(this_C_STRING_8);
+    |    this_C_INT_5=RULE_C_INT    {
+		$current.merge(this_C_INT_5);
     }
 
     { 
-    newLeafNode(this_C_STRING_8, grammarAccess.getTypeNameAccess().getC_STRINGTerminalRuleCall_8()); 
+    newLeafNode(this_C_INT_5, grammarAccess.getTypeNameAccess().getC_INTTerminalRuleCall_5()); 
     }
 
-    |    this_C_LIST_9=RULE_C_LIST    {
-		$current.merge(this_C_LIST_9);
-    }
-
-    { 
-    newLeafNode(this_C_LIST_9, grammarAccess.getTypeNameAccess().getC_LISTTerminalRuleCall_9()); 
-    }
-
-    |    this_C_SLICE_10=RULE_C_SLICE    {
-		$current.merge(this_C_SLICE_10);
+    |    this_C_UINT_6=RULE_C_UINT    {
+		$current.merge(this_C_UINT_6);
     }
 
     { 
-    newLeafNode(this_C_SLICE_10, grammarAccess.getTypeNameAccess().getC_SLICETerminalRuleCall_10()); 
+    newLeafNode(this_C_UINT_6, grammarAccess.getTypeNameAccess().getC_UINTTerminalRuleCall_6()); 
     }
 
-    |    this_NAME_11=RULE_NAME    {
-		$current.merge(this_NAME_11);
+    |    this_C_BOOL_7=RULE_C_BOOL    {
+		$current.merge(this_C_BOOL_7);
     }
 
     { 
-    newLeafNode(this_NAME_11, grammarAccess.getTypeNameAccess().getNAMETerminalRuleCall_11()); 
+    newLeafNode(this_C_BOOL_7, grammarAccess.getTypeNameAccess().getC_BOOLTerminalRuleCall_7()); 
+    }
+
+    |    this_C_NUMBER_8=RULE_C_NUMBER    {
+		$current.merge(this_C_NUMBER_8);
+    }
+
+    { 
+    newLeafNode(this_C_NUMBER_8, grammarAccess.getTypeNameAccess().getC_NUMBERTerminalRuleCall_8()); 
+    }
+
+    |    this_C_STRING_9=RULE_C_STRING    {
+		$current.merge(this_C_STRING_9);
+    }
+
+    { 
+    newLeafNode(this_C_STRING_9, grammarAccess.getTypeNameAccess().getC_STRINGTerminalRuleCall_9()); 
+    }
+
+    |    this_C_LIST_10=RULE_C_LIST    {
+		$current.merge(this_C_LIST_10);
+    }
+
+    { 
+    newLeafNode(this_C_LIST_10, grammarAccess.getTypeNameAccess().getC_LISTTerminalRuleCall_10()); 
+    }
+
+    |    this_C_SLICE_11=RULE_C_SLICE    {
+		$current.merge(this_C_SLICE_11);
+    }
+
+    { 
+    newLeafNode(this_C_SLICE_11, grammarAccess.getTypeNameAccess().getC_SLICETerminalRuleCall_11()); 
+    }
+
+    |    this_NAME_12=RULE_NAME    {
+		$current.merge(this_NAME_12);
+    }
+
+    { 
+    newLeafNode(this_NAME_12, grammarAccess.getTypeNameAccess().getNAMETerminalRuleCall_12()); 
     }
 )
     ;
@@ -1508,6 +1589,8 @@ RULE_C_SEMICOLON : ';';
 RULE_C_INPUT : 'input';
 
 RULE_C_MAIN : 'Main';
+
+RULE_C_DEFAULT : 'Default';
 
 RULE_C_TYPE : 'type';
 

@@ -621,19 +621,21 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cCommentFieldCommentParserRuleCall_0_0 = (RuleCall)cCommentAssignment_0.eContents().get(0);
-		private final Assignment cFieldNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cFieldNameTypeNameParserRuleCall_1_0 = (RuleCall)cFieldNameAssignment_1.eContents().get(0);
-		private final RuleCall cC_EQUALSTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
-		private final Assignment cFieldValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFieldValueSTRINGTerminalRuleCall_3_0 = (RuleCall)cFieldValueAssignment_3.eContents().get(0);
-		private final RuleCall cC_SEMICOLONTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
+		private final Assignment cMetaAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cMetaDefaultMetaParserRuleCall_1_0 = (RuleCall)cMetaAssignment_1.eContents().get(0);
+		private final Assignment cFieldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFieldNameTypeNameParserRuleCall_2_0 = (RuleCall)cFieldNameAssignment_2.eContents().get(0);
+		private final RuleCall cC_EQUALSTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Assignment cFieldValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cFieldValueSTRINGTerminalRuleCall_4_0 = (RuleCall)cFieldValueAssignment_4.eContents().get(0);
+		private final RuleCall cC_SEMICOLONTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
 		
 		//EnumField:
 		//
-		//	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+		//	comment=FieldComment? meta=DefaultMeta? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
 		public ParserRule getRule() { return rule; }
 
-		//comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?
+		//comment=FieldComment? meta=DefaultMeta? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?
 		public Group getGroup() { return cGroup; }
 
 		//comment=FieldComment?
@@ -642,23 +644,70 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//FieldComment
 		public RuleCall getCommentFieldCommentParserRuleCall_0_0() { return cCommentFieldCommentParserRuleCall_0_0; }
 
+		//meta=DefaultMeta?
+		public Assignment getMetaAssignment_1() { return cMetaAssignment_1; }
+
+		//DefaultMeta
+		public RuleCall getMetaDefaultMetaParserRuleCall_1_0() { return cMetaDefaultMetaParserRuleCall_1_0; }
+
 		//fieldName=TypeName
-		public Assignment getFieldNameAssignment_1() { return cFieldNameAssignment_1; }
+		public Assignment getFieldNameAssignment_2() { return cFieldNameAssignment_2; }
 
 		//TypeName
-		public RuleCall getFieldNameTypeNameParserRuleCall_1_0() { return cFieldNameTypeNameParserRuleCall_1_0; }
+		public RuleCall getFieldNameTypeNameParserRuleCall_2_0() { return cFieldNameTypeNameParserRuleCall_2_0; }
 
 		//C_EQUALS
-		public RuleCall getC_EQUALSTerminalRuleCall_2() { return cC_EQUALSTerminalRuleCall_2; }
+		public RuleCall getC_EQUALSTerminalRuleCall_3() { return cC_EQUALSTerminalRuleCall_3; }
 
 		//fieldValue=STRING
-		public Assignment getFieldValueAssignment_3() { return cFieldValueAssignment_3; }
+		public Assignment getFieldValueAssignment_4() { return cFieldValueAssignment_4; }
 
 		//STRING
-		public RuleCall getFieldValueSTRINGTerminalRuleCall_3_0() { return cFieldValueSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getFieldValueSTRINGTerminalRuleCall_4_0() { return cFieldValueSTRINGTerminalRuleCall_4_0; }
 
 		//C_SEMICOLON?
-		public RuleCall getC_SEMICOLONTerminalRuleCall_4() { return cC_SEMICOLONTerminalRuleCall_4; }
+		public RuleCall getC_SEMICOLONTerminalRuleCall_5() { return cC_SEMICOLONTerminalRuleCall_5; }
+	}
+
+	public class DefaultMetaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DefaultMeta");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cC_BRACKET_LTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cPrefixAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPrefixC_DEFAULTTerminalRuleCall_1_0 = (RuleCall)cPrefixAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final RuleCall cC_PAREN_LTerminalRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final RuleCall cC_PAREN_RTerminalRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final RuleCall cC_BRACKET_RTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		
+		//DefaultMeta:
+		//
+		//	C_BRACKET_L prefix=C_DEFAULT (C_PAREN_L C_PAREN_R)? C_BRACKET_R;
+		public ParserRule getRule() { return rule; }
+
+		//C_BRACKET_L prefix=C_DEFAULT (C_PAREN_L C_PAREN_R)? C_BRACKET_R
+		public Group getGroup() { return cGroup; }
+
+		//C_BRACKET_L
+		public RuleCall getC_BRACKET_LTerminalRuleCall_0() { return cC_BRACKET_LTerminalRuleCall_0; }
+
+		//prefix=C_DEFAULT
+		public Assignment getPrefixAssignment_1() { return cPrefixAssignment_1; }
+
+		//C_DEFAULT
+		public RuleCall getPrefixC_DEFAULTTerminalRuleCall_1_0() { return cPrefixC_DEFAULTTerminalRuleCall_1_0; }
+
+		//(C_PAREN_L C_PAREN_R)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//C_PAREN_L
+		public RuleCall getC_PAREN_LTerminalRuleCall_2_0() { return cC_PAREN_LTerminalRuleCall_2_0; }
+
+		//C_PAREN_R
+		public RuleCall getC_PAREN_RTerminalRuleCall_2_1() { return cC_PAREN_RTerminalRuleCall_2_1; }
+
+		//C_BRACKET_R
+		public RuleCall getC_BRACKET_RTerminalRuleCall_3() { return cC_BRACKET_RTerminalRuleCall_3; }
 	}
 
 	public class TypeCommentElements extends AbstractParserRuleElementFinder {
@@ -738,23 +787,26 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cC_INPUTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cC_MAINTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cC_TYPETerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cC_ENUMTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cC_INTTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cC_UINTTerminalRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cC_BOOLTerminalRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cC_NUMBERTerminalRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cC_STRINGTerminalRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cC_LISTTerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cC_SLICETerminalRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
-		private final RuleCall cNAMETerminalRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cC_DEFAULTTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cC_TYPETerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cC_ENUMTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cC_INTTerminalRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cC_UINTTerminalRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cC_BOOLTerminalRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cC_NUMBERTerminalRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cC_STRINGTerminalRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cC_LISTTerminalRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cC_SLICETerminalRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cNAMETerminalRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		
 		//TypeName:
 		//
-		//	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+		//	C_INPUT | C_MAIN | C_DEFAULT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE |
+		//
+		//	NAME;
 		public ParserRule getRule() { return rule; }
 
-		//C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME
+		//C_INPUT | C_MAIN | C_DEFAULT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//C_INPUT
@@ -763,35 +815,38 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 		//C_MAIN
 		public RuleCall getC_MAINTerminalRuleCall_1() { return cC_MAINTerminalRuleCall_1; }
 
+		//C_DEFAULT
+		public RuleCall getC_DEFAULTTerminalRuleCall_2() { return cC_DEFAULTTerminalRuleCall_2; }
+
 		//C_TYPE
-		public RuleCall getC_TYPETerminalRuleCall_2() { return cC_TYPETerminalRuleCall_2; }
+		public RuleCall getC_TYPETerminalRuleCall_3() { return cC_TYPETerminalRuleCall_3; }
 
 		//C_ENUM
-		public RuleCall getC_ENUMTerminalRuleCall_3() { return cC_ENUMTerminalRuleCall_3; }
+		public RuleCall getC_ENUMTerminalRuleCall_4() { return cC_ENUMTerminalRuleCall_4; }
 
 		//C_INT
-		public RuleCall getC_INTTerminalRuleCall_4() { return cC_INTTerminalRuleCall_4; }
+		public RuleCall getC_INTTerminalRuleCall_5() { return cC_INTTerminalRuleCall_5; }
 
 		//C_UINT
-		public RuleCall getC_UINTTerminalRuleCall_5() { return cC_UINTTerminalRuleCall_5; }
+		public RuleCall getC_UINTTerminalRuleCall_6() { return cC_UINTTerminalRuleCall_6; }
 
 		//C_BOOL
-		public RuleCall getC_BOOLTerminalRuleCall_6() { return cC_BOOLTerminalRuleCall_6; }
+		public RuleCall getC_BOOLTerminalRuleCall_7() { return cC_BOOLTerminalRuleCall_7; }
 
 		//C_NUMBER
-		public RuleCall getC_NUMBERTerminalRuleCall_7() { return cC_NUMBERTerminalRuleCall_7; }
+		public RuleCall getC_NUMBERTerminalRuleCall_8() { return cC_NUMBERTerminalRuleCall_8; }
 
 		//C_STRING
-		public RuleCall getC_STRINGTerminalRuleCall_8() { return cC_STRINGTerminalRuleCall_8; }
+		public RuleCall getC_STRINGTerminalRuleCall_9() { return cC_STRINGTerminalRuleCall_9; }
 
 		//C_LIST
-		public RuleCall getC_LISTTerminalRuleCall_9() { return cC_LISTTerminalRuleCall_9; }
+		public RuleCall getC_LISTTerminalRuleCall_10() { return cC_LISTTerminalRuleCall_10; }
 
 		//C_SLICE
-		public RuleCall getC_SLICETerminalRuleCall_10() { return cC_SLICETerminalRuleCall_10; }
+		public RuleCall getC_SLICETerminalRuleCall_11() { return cC_SLICETerminalRuleCall_11; }
 
 		//NAME
-		public RuleCall getNAMETerminalRuleCall_11() { return cNAMETerminalRuleCall_11; }
+		public RuleCall getNAMETerminalRuleCall_12() { return cNAMETerminalRuleCall_12; }
 	}
 	
 	
@@ -807,6 +862,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private FieldMetaKeyElements pFieldMetaKey;
 	private EnumElements pEnum;
 	private EnumFieldElements pEnumField;
+	private DefaultMetaElements pDefaultMeta;
 	private TypeCommentElements pTypeComment;
 	private FieldCommentElements pFieldComment;
 	private OtherComentElements pOtherComent;
@@ -825,6 +881,7 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tC_SEMICOLON;
 	private TerminalRule tC_INPUT;
 	private TerminalRule tC_MAIN;
+	private TerminalRule tC_DEFAULT;
 	private TerminalRule tC_TYPE;
 	private TerminalRule tC_ENUM;
 	private TerminalRule tC_INT;
@@ -1000,13 +1057,24 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//EnumField:
 	//
-	//	comment=FieldComment? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+	//	comment=FieldComment? meta=DefaultMeta? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
 	public EnumFieldElements getEnumFieldAccess() {
 		return (pEnumField != null) ? pEnumField : (pEnumField = new EnumFieldElements());
 	}
 	
 	public ParserRule getEnumFieldRule() {
 		return getEnumFieldAccess().getRule();
+	}
+
+	//DefaultMeta:
+	//
+	//	C_BRACKET_L prefix=C_DEFAULT (C_PAREN_L C_PAREN_R)? C_BRACKET_R;
+	public DefaultMetaElements getDefaultMetaAccess() {
+		return (pDefaultMeta != null) ? pDefaultMeta : (pDefaultMeta = new DefaultMetaElements());
+	}
+	
+	public ParserRule getDefaultMetaRule() {
+		return getDefaultMetaAccess().getRule();
 	}
 
 	//TypeComment:
@@ -1055,7 +1123,9 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeName:
 	//
-	//	C_INPUT | C_MAIN | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE | NAME;
+	//	C_INPUT | C_MAIN | C_DEFAULT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE |
+	//
+	//	NAME;
 	public TypeNameElements getTypeNameAccess() {
 		return (pTypeName != null) ? pTypeName : (pTypeName = new TypeNameElements());
 	}
@@ -1153,6 +1223,13 @@ public class CfgGrammarAccess extends AbstractGrammarElementFinder {
 	//	"Main";
 	public TerminalRule getC_MAINRule() {
 		return (tC_MAIN != null) ? tC_MAIN : (tC_MAIN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_MAIN"));
+	} 
+
+	//terminal C_DEFAULT:
+	//
+	//	"Default";
+	public TerminalRule getC_DEFAULTRule() {
+		return (tC_DEFAULT != null) ? tC_DEFAULT : (tC_DEFAULT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "C_DEFAULT"));
 	} 
 
 	//terminal C_TYPE:

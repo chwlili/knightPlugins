@@ -223,7 +223,6 @@ public class OutputOptionPage extends PropertyPage
 
 				shell.getDisplay().timerExec(50, new Runnable()
 				{
-					@Override
 					public void run()
 					{
 						MessageDialog win = new MessageDialog(shell, "输出选项已改变", null, "输出选项已改变，是否重新生成？", WARNING, new String[] { "是", "否" }, 0);
@@ -231,7 +230,6 @@ public class OutputOptionPage extends PropertyPage
 						{
 							Job job = new Job("重新生成项目")
 							{
-								@Override
 								protected IStatus run(IProgressMonitor monitor)
 								{
 									try

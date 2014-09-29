@@ -135,6 +135,15 @@ public interface CfgFactory extends EFactory
   EnumField createEnumField();
 
   /**
+   * Returns a new object of class '<em>Default Meta</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Default Meta</em>'.
+   * @generated
+   */
+  DefaultMeta createDefaultMeta();
+
+  /**
    * Returns a new object of class '<em>Other Coment</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

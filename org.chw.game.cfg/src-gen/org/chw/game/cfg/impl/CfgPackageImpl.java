@@ -8,6 +8,7 @@ package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
+import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
@@ -118,6 +119,13 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * @generated
    */
   private EClass enumFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass defaultMetaEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -674,9 +682,19 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getEnumField_Meta()
+  {
+    return (EReference)enumFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getEnumField_FieldName()
   {
-    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -686,7 +704,27 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
    */
   public EAttribute getEnumField_FieldValue()
   {
-    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)enumFieldEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDefaultMeta()
+  {
+    return defaultMetaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDefaultMeta_Prefix()
+  {
+    return (EAttribute)defaultMetaEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -798,8 +836,12 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     enumFieldEClass = createEClass(ENUM_FIELD);
     createEAttribute(enumFieldEClass, ENUM_FIELD__COMMENT);
+    createEReference(enumFieldEClass, ENUM_FIELD__META);
     createEAttribute(enumFieldEClass, ENUM_FIELD__FIELD_NAME);
     createEAttribute(enumFieldEClass, ENUM_FIELD__FIELD_VALUE);
+
+    defaultMetaEClass = createEClass(DEFAULT_META);
+    createEAttribute(defaultMetaEClass, DEFAULT_META__PREFIX);
 
     otherComentEClass = createEClass(OTHER_COMENT);
     createEAttribute(otherComentEClass, OTHER_COMENT__COMM);
@@ -895,8 +937,12 @@ public class CfgPackageImpl extends EPackageImpl implements CfgPackage
 
     initEClass(enumFieldEClass, EnumField.class, "EnumField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEnumField_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnumField_Meta(), this.getDefaultMeta(), null, "meta", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEnumField_FieldName(), ecorePackage.getEString(), "fieldName", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEnumField_FieldValue(), ecorePackage.getEString(), "fieldValue", null, 0, 1, EnumField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(defaultMetaEClass, DefaultMeta.class, "DefaultMeta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDefaultMeta_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, DefaultMeta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(otherComentEClass, OtherComent.class, "OtherComent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getOtherComent_Comm(), ecorePackage.getEString(), "comm", null, 0, 1, OtherComent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
