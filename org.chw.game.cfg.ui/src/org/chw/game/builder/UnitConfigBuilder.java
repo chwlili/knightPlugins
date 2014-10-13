@@ -958,6 +958,8 @@ public class UnitConfigBuilder
 
 		public void writeVarInt(int value) throws IOException
 		{
+			value=encodeZigZag32(value);
+			
 			while (true)
 			{
 				if ((value & ~0x7F) == 0)
@@ -972,5 +974,10 @@ public class UnitConfigBuilder
 				}
 			}
 		}
+
+        private int encodeZigZag32(int n)
+        {
+            return (n<<1)^(n>>31);
+        }
 	}
 }

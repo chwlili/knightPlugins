@@ -309,6 +309,16 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\n"));
 
 		sb.append(String.format("\t\t/**\n"));
+		sb.append(String.format("\t\t * ZigZag32Ω‚¬Î\n"));
+		sb.append(String.format("\t\t * \n"));
+		sb.append(String.format("\t\t */\n"));
+		sb.append(String.format("\t\tprivate function decodeZigZag32(n:uint):int\n"));
+		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\treturn (n>>>1) ^ -(n & 1);\n"));
+		sb.append(String.format("\t\t}\n"));
+		sb.append(String.format("\t\t\n"));
+
+		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * ∂¡»°INT\n"));
 		sb.append(String.format("\t\t */\n"));
 		sb.append(String.format("\t\tpublic function readInt():int\n"));
@@ -319,25 +329,25 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\t\n"));
 		sb.append(String.format("\t\t\tvar i:int=0;\n"));
 		sb.append(String.format("\t\t\tvar left:int=0;\n"));
-		sb.append(String.format("\t\t\twhile(i<5)\n"));
+		sb.append(String.format("\t\t\twhile(i<5 && _bytes.bytesAvailable>0)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\tbyte=_bytes.readUnsignedByte();\n"));
 		sb.append(String.format("\t\t\t\tlow|=(byte&0x7F)<<left;\n"));
 		sb.append(String.format("\t\t\t\tif(byte<0x80)\n"));
 		sb.append(String.format("\t\t\t\t{\n"));
-		sb.append(String.format("\t\t\t\t\treturn low;\n"));
+		sb.append(String.format("\t\t\t\t\treturn decodeZigZag32(low);\n"));
 		sb.append(String.format("\t\t\t\t}\n"));
 		sb.append(String.format("\t\t\t\t\n"));
 		sb.append(String.format("\t\t\t\ti++;\n"));
 		sb.append(String.format("\t\t\t\tleft+=7;\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\t\n"));
-		sb.append(String.format("\t\t\twhile(byte>=0x80)\n"));
+		sb.append(String.format("\t\t\twhile(byte>=0x80 && _bytes.bytesAvailable>0)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\tbyte=_bytes.readUnsignedByte();\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\t\n"));
-		sb.append(String.format("\t\t\treturn low;\n"));
+		sb.append(String.format("\t\t\treturn decodeZigZag32(low);\n"));
 		sb.append(String.format("\t\t}\n"));
 		sb.append(String.format("\t\t\n"));
 
