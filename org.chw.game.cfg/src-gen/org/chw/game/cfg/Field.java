@@ -60,7 +60,7 @@ public interface Field extends EObject
 
   /**
    * Returns the value of the '<em><b>Meta</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * The list contents are of type {@link org.chw.game.cfg.Meta}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Meta</em>' containment reference list isn't clear,
@@ -72,7 +72,7 @@ public interface Field extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<EObject> getMeta();
+  EList<Meta> getMeta();
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' containment reference.

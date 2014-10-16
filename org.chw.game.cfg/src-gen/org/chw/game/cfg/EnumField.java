@@ -6,6 +6,8 @@
  */
 package org.chw.game.cfg;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -56,30 +58,20 @@ public interface EnumField extends EObject
   void setComment(String value);
 
   /**
-   * Returns the value of the '<em><b>Meta</b></em>' containment reference.
+   * Returns the value of the '<em><b>Meta</b></em>' containment reference list.
+   * The list contents are of type {@link org.chw.game.cfg.Meta}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Meta</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Meta</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Meta</em>' containment reference.
-   * @see #setMeta(DefaultMeta)
+   * @return the value of the '<em>Meta</em>' containment reference list.
    * @see org.chw.game.cfg.CfgPackage#getEnumField_Meta()
    * @model containment="true"
    * @generated
    */
-  DefaultMeta getMeta();
-
-  /**
-   * Sets the value of the '{@link org.chw.game.cfg.EnumField#getMeta <em>Meta</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Meta</em>' containment reference.
-   * @see #getMeta()
-   * @generated
-   */
-  void setMeta(DefaultMeta value);
+  EList<Meta> getMeta();
 
   /**
    * Returns the value of the '<em><b>Field Name</b></em>' attribute.

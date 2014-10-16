@@ -1,17 +1,13 @@
 package org.chw.game.ui.highlight;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.DefaultMeta;
-import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.InputDef;
-import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.Meta;
 import org.chw.game.cfg.PackDef;
-import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
@@ -97,11 +93,16 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 					{
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
 					}
-					
-					DefaultMeta meta=field.getMeta();
-					for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.DEFAULT_META__PREFIX))
+					for (Meta meta : field.getMeta())
 					{
-						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
+						for (INode prev : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PREFIX))
+						{
+							acceptor.addPosition(prev.getOffset(), prev.getLength(), CfgHighlight.KEYWORD_ID);
+						}
+						for (INode param : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PARAMS))
+						{
+							acceptor.addPosition(param.getOffset(), param.getLength(), CfgHighlight.STRING_ID);
+						}
 					}
 				}
 			}
@@ -125,16 +126,15 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 					acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Type_Name);
 				}
 
-				Enter enter = type.getEnter();
-				if (enter != null)
+				for (Meta meta : type.getMeta())
 				{
-					for (INode node : NodeModelUtils.findNodesForFeature(enter, CfgPackage.Literals.ENTER__PREFIX))
+					for (INode prev : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PREFIX))
 					{
-						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
+						acceptor.addPosition(prev.getOffset(), prev.getLength(), CfgHighlight.KEYWORD_ID);
 					}
-					for (INode node : NodeModelUtils.findNodesForFeature(enter, CfgPackage.Literals.ENTER__ROOT_PATH))
+					for (INode param : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PARAMS))
 					{
-						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
+						acceptor.addPosition(param.getOffset(), param.getLength(), CfgHighlight.STRING_ID);
 					}
 				}
 
@@ -158,31 +158,15 @@ public class CfgHighlightCalculator implements ISemanticHighlightingCalculator
 						acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Path);
 					}
 
-					for (EObject obj : field.getMeta())
+					for (Meta meta : field.getMeta())
 					{
-						if (obj instanceof ListMeta)
+						for (INode prev : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PREFIX))
 						{
-							ListMeta meta = (ListMeta) obj;
-							for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.LIST_META__PREFIX))
-							{
-								acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
-							}
-							for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.LIST_META__PARAMS))
-							{
-								acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.Field_Param);
-							}
+							acceptor.addPosition(prev.getOffset(), prev.getLength(), CfgHighlight.KEYWORD_ID);
 						}
-						else if (obj instanceof SliceMeta)
+						for (INode param : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.META__PARAMS))
 						{
-							SliceMeta meta = (SliceMeta) obj;
-							for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.SLICE_META__PREFIX))
-							{
-								acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.KEYWORD_ID);
-							}
-							for (INode node : NodeModelUtils.findNodesForFeature(meta, CfgPackage.Literals.SLICE_META__SLICE_CHAR))
-							{
-								acceptor.addPosition(node.getOffset(), node.getLength(), CfgHighlight.STRING_ID);
-							}
+							acceptor.addPosition(param.getOffset(), param.getLength(), CfgHighlight.STRING_ID);
 						}
 					}
 				}

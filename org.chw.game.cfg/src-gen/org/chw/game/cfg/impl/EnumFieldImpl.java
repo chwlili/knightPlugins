@@ -6,18 +6,25 @@
  */
 package org.chw.game.cfg.impl;
 
+import java.util.Collection;
+
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.DefaultMeta;
 import org.chw.game.cfg.EnumField;
+import org.chw.game.cfg.Meta;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,14 +65,14 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
   protected String comment = COMMENT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getMeta() <em>Meta</em>}' containment reference.
+   * The cached value of the '{@link #getMeta() <em>Meta</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getMeta()
    * @generated
    * @ordered
    */
-  protected DefaultMeta meta;
+  protected EList<Meta> meta;
 
   /**
    * The default value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
@@ -156,47 +163,13 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
    * <!-- end-user-doc -->
    * @generated
    */
-  public DefaultMeta getMeta()
+  public EList<Meta> getMeta()
   {
+    if (meta == null)
+    {
+      meta = new EObjectContainmentEList<Meta>(Meta.class, this, CfgPackage.ENUM_FIELD__META);
+    }
     return meta;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetMeta(DefaultMeta newMeta, NotificationChain msgs)
-  {
-    DefaultMeta oldMeta = meta;
-    meta = newMeta;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CfgPackage.ENUM_FIELD__META, oldMeta, newMeta);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setMeta(DefaultMeta newMeta)
-  {
-    if (newMeta != meta)
-    {
-      NotificationChain msgs = null;
-      if (meta != null)
-        msgs = ((InternalEObject)meta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CfgPackage.ENUM_FIELD__META, null, msgs);
-      if (newMeta != null)
-        msgs = ((InternalEObject)newMeta).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CfgPackage.ENUM_FIELD__META, null, msgs);
-      msgs = basicSetMeta(newMeta, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.ENUM_FIELD__META, newMeta, newMeta));
   }
 
   /**
@@ -256,7 +229,7 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
     switch (featureID)
     {
       case CfgPackage.ENUM_FIELD__META:
-        return basicSetMeta(null, msgs);
+        return ((InternalEList<?>)getMeta()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -288,6 +261,7 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -297,7 +271,8 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
         setComment((String)newValue);
         return;
       case CfgPackage.ENUM_FIELD__META:
-        setMeta((DefaultMeta)newValue);
+        getMeta().clear();
+        getMeta().addAll((Collection<? extends Meta>)newValue);
         return;
       case CfgPackage.ENUM_FIELD__FIELD_NAME:
         setFieldName((String)newValue);
@@ -323,7 +298,7 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
         setComment(COMMENT_EDEFAULT);
         return;
       case CfgPackage.ENUM_FIELD__META:
-        setMeta((DefaultMeta)null);
+        getMeta().clear();
         return;
       case CfgPackage.ENUM_FIELD__FIELD_NAME:
         setFieldName(FIELD_NAME_EDEFAULT);
@@ -348,7 +323,7 @@ public class EnumFieldImpl extends MinimalEObjectImpl.Container implements EnumF
       case CfgPackage.ENUM_FIELD__COMMENT:
         return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
       case CfgPackage.ENUM_FIELD__META:
-        return meta != null;
+        return meta != null && !meta.isEmpty();
       case CfgPackage.ENUM_FIELD__FIELD_NAME:
         return FIELD_NAME_EDEFAULT == null ? fieldName != null : !FIELD_NAME_EDEFAULT.equals(fieldName);
       case CfgPackage.ENUM_FIELD__FIELD_VALUE:

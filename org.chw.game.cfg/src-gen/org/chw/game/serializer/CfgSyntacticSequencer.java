@@ -18,21 +18,19 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CfgGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_DefaultMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_1__q;
 	protected AbstractElementAlias match_EnumField_C_SEMICOLONTerminalRuleCall_5_q;
 	protected AbstractElementAlias match_Field_C_SEMICOLONTerminalRuleCall_6_q;
 	protected AbstractElementAlias match_InputDef_C_SEMICOLONTerminalRuleCall_3_q;
-	protected AbstractElementAlias match_ListMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q;
+	protected AbstractElementAlias match_Meta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q;
 	protected AbstractElementAlias match_PackDef_C_SEMICOLONTerminalRuleCall_3_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CfgGrammarAccess) access;
-		match_DefaultMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDefaultMetaAccess().getC_PAREN_LTerminalRuleCall_2_0()), new TokenAlias(false, false, grammarAccess.getDefaultMetaAccess().getC_PAREN_RTerminalRuleCall_2_1()));
 		match_EnumField_C_SEMICOLONTerminalRuleCall_5_q = new TokenAlias(false, true, grammarAccess.getEnumFieldAccess().getC_SEMICOLONTerminalRuleCall_5());
 		match_Field_C_SEMICOLONTerminalRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getFieldAccess().getC_SEMICOLONTerminalRuleCall_6());
 		match_InputDef_C_SEMICOLONTerminalRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getInputDefAccess().getC_SEMICOLONTerminalRuleCall_3());
-		match_ListMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getListMetaAccess().getC_PAREN_LTerminalRuleCall_2_0()), new TokenAlias(false, false, grammarAccess.getListMetaAccess().getC_PAREN_RTerminalRuleCall_2_2()));
+		match_Meta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getMetaAccess().getC_PAREN_LTerminalRuleCall_2_0()), new TokenAlias(false, false, grammarAccess.getMetaAccess().getC_PAREN_RTerminalRuleCall_2_2()));
 		match_PackDef_C_SEMICOLONTerminalRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getPackDefAccess().getC_SEMICOLONTerminalRuleCall_3());
 	}
 	
@@ -155,30 +153,20 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_DefaultMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_1__q.equals(syntax))
-				emit_DefaultMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_EnumField_C_SEMICOLONTerminalRuleCall_5_q.equals(syntax))
+			if(match_EnumField_C_SEMICOLONTerminalRuleCall_5_q.equals(syntax))
 				emit_EnumField_C_SEMICOLONTerminalRuleCall_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Field_C_SEMICOLONTerminalRuleCall_6_q.equals(syntax))
 				emit_Field_C_SEMICOLONTerminalRuleCall_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_InputDef_C_SEMICOLONTerminalRuleCall_3_q.equals(syntax))
 				emit_InputDef_C_SEMICOLONTerminalRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ListMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q.equals(syntax))
-				emit_ListMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Meta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q.equals(syntax))
+				emit_Meta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_PackDef_C_SEMICOLONTerminalRuleCall_3_q.equals(syntax))
 				emit_PackDef_C_SEMICOLONTerminalRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
-	/**
-	 * Syntax:
-	 *     (C_PAREN_L C_PAREN_R)?
-	 */
-	protected void emit_DefaultMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
 	/**
 	 * Syntax:
 	 *     C_SEMICOLON?
@@ -207,7 +195,7 @@ public class CfgSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * Syntax:
 	 *     (C_PAREN_L C_PAREN_R)?
 	 */
-	protected void emit_ListMeta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Meta___C_PAREN_LTerminalRuleCall_2_0_C_PAREN_RTerminalRuleCall_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

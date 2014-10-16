@@ -6,9 +6,8 @@ import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enum;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
-import org.chw.game.cfg.ListMeta;
-import org.chw.game.cfg.SliceMeta;
+import org.chw.game.cfg.Meta;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -42,20 +41,23 @@ public class CfgValidator extends AbstractCfgValidator
 				}
 			}
 
-			if (type.getEnter() != null)
+			for (Meta meta : type.getMeta())
 			{
-				if (!type.getName().startsWith("$"))
+				if (meta.getPrefix().equals("Main"))
 				{
-					error("主类的类名建议以$为前缀! 例如($" + type.getName() + ")", type, CfgPackage.Literals.TYPE__NAME);
-				}
+					if (!type.getName().startsWith("$"))
+					{
+						error("主类的类名建议以$为前缀! 例如($" + type.getName() + ")", type, CfgPackage.Literals.TYPE__NAME);
+					}
 
-				if (mainType == null)
-				{
-					mainType = type.getName();
-				}
-				else
-				{
-					error("此元数据将被忽略，因为同一个文件中只能一个主类!", type.getEnter(), CfgPackage.Literals.ENTER__PREFIX);
+					if (mainType == null)
+					{
+						mainType = type.getName();
+					}
+					else
+					{
+						error("此元数据将被忽略，因为同一个文件中只能一个主类!", meta, CfgPackage.Literals.META__PREFIX);
+					}
 				}
 			}
 		}
@@ -233,57 +235,74 @@ public class CfgValidator extends AbstractCfgValidator
 			error("未找到 \"" + typeName + "\" 的定义", field, CfgPackage.Literals.FIELD__TYPE);
 		}
 
-		EObject fieldMeta = null;
+		Meta listMeta = null;
+		Meta langMeta = null;
 
 		// 除最后一个元数据外所有都标记为无效
-		EList<EObject> fieldMetas = field.getMeta();
+		boolean hasList = false;
+		boolean hasLang = false;
+		EList<Meta> fieldMetas = field.getMeta();
 		if (fieldMetas != null && fieldMetas.size() > 0)
 		{
-			if (fieldMetas.size() > 1)
+			for (int i = fieldMetas.size() - 1; i >= 0; i--)
 			{
-				for (int i = 0; i < fieldMetas.size() - 1; i++)
+				Meta meta = fieldMetas.get(i);
+
+				boolean isList = meta.getPrefix().equals("List") || meta.getPrefix().equals("Slice");
+				boolean isLang = meta.getPrefix().equals("Lang");
+
+				if (isList)
 				{
-					EObject currMeta = fieldMetas.get(i);
-					if (currMeta instanceof ListMeta)
+					if (!hasList)
 					{
-						error("此元数据将被忽略！", fieldMetas.get(i), CfgPackage.Literals.LIST_META__PREFIX);
+						hasList = true;
+						listMeta = meta;
 					}
-					else if (currMeta instanceof SliceMeta)
+					else
 					{
-						error("此元数据将被忽略！", fieldMetas.get(i), CfgPackage.Literals.SLICE_META__PREFIX);
+						error("此元数据将被忽略！", meta, CfgPackage.Literals.META__PREFIX);
+					}
+				}
+				else if (isLang)
+				{
+					if (!hasLang)
+					{
+						hasLang = true;
+						langMeta = meta;
+					}
+					else
+					{
+						error("此元数据将被忽略！", meta, CfgPackage.Literals.META__PREFIX);
 					}
 				}
 			}
-
-			fieldMeta = fieldMetas.get(fieldMetas.size() - 1);
 		}
 
 		// 如果是最后一个元数据是Slice标记，检查数据类型是否为原生、枚举
-		if (fieldMeta instanceof SliceMeta)
+		if (listMeta.getPrefix().equals("Slice"))
 		{
 			if (!isNative && !isEnum)
 			{
-				error("\"" + typeName + "\" 不是原生类型也不是枚举,此元数据只能用于原生类型和枚举！", fieldMeta, CfgPackage.Literals.SLICE_META__PREFIX);
+				error("\"" + typeName + "\" 不是原生类型也不是枚举,此元数据只能用于原生类型和枚举！", listMeta, CfgPackage.Literals.META__PREFIX);
 			}
 		}
 
 		// 如果最后一个元数据是List标记
-		if (fieldMeta instanceof ListMeta)
+		if (listMeta.getPrefix().equals("List"))
 		{
-			ListMeta meta = (ListMeta) fieldMeta;
-			if (meta.getParams().size() > 0)
+			if (listMeta.getParams().size() > 0)
 			{
 				HashSet<String> keySet = new HashSet<String>();
 
-				for (FieldMetaKey key : meta.getParams())
+				for (MetaParam key : listMeta.getParams())
 				{
 					if (isNative)
 					{
-						error("\"" + typeName + "\" 是原生类型,不支持索引键！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+						error("\"" + typeName + "\" 是原生类型,不支持索引键！", key, CfgPackage.Literals.META_PARAM__FIELD_NAME);
 					}
 					else if (isEnum)
 					{
-						error("\"" + typeName + "\" 是枚举类型,不支持索引键！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+						error("\"" + typeName + "\" 是枚举类型,不支持索引键！", key, CfgPackage.Literals.META_PARAM__FIELD_NAME);
 					}
 					else
 					{
@@ -303,17 +322,17 @@ public class CfgValidator extends AbstractCfgValidator
 
 							if (!finded)
 							{
-								error(typeName + "没有定义名为\"" + indexKey + "\"的字段！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+								error(typeName + "没有定义名为\"" + indexKey + "\"的字段！", key, CfgPackage.Literals.META_PARAM__FIELD_NAME);
 							}
 						}
 						else
 						{
-							error(typeName + "未找到，索引键\"" + indexKey + "\"无效！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+							error(typeName + "未找到，索引键\"" + indexKey + "\"无效！", key, CfgPackage.Literals.META_PARAM__FIELD_NAME);
 						}
 
 						if (keySet.contains(indexKey))
 						{
-							error("重复的索引键！", key, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME);
+							error("重复的索引键！", key, CfgPackage.Literals.META_PARAM__FIELD_NAME);
 						}
 						keySet.add(indexKey);
 					}

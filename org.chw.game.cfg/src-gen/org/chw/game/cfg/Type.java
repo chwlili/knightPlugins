@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.chw.game.cfg.Type#getComment <em>Comment</em>}</li>
- *   <li>{@link org.chw.game.cfg.Type#getEnter <em>Enter</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Type#getMeta <em>Meta</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getName <em>Name</em>}</li>
  *   <li>{@link org.chw.game.cfg.Type#getFields <em>Fields</em>}</li>
@@ -60,30 +60,20 @@ public interface Type extends EObject
   void setComment(String value);
 
   /**
-   * Returns the value of the '<em><b>Enter</b></em>' containment reference.
+   * Returns the value of the '<em><b>Meta</b></em>' containment reference list.
+   * The list contents are of type {@link org.chw.game.cfg.Meta}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Enter</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Meta</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Enter</em>' containment reference.
-   * @see #setEnter(Enter)
-   * @see org.chw.game.cfg.CfgPackage#getType_Enter()
+   * @return the value of the '<em>Meta</em>' containment reference list.
+   * @see org.chw.game.cfg.CfgPackage#getType_Meta()
    * @model containment="true"
    * @generated
    */
-  Enter getEnter();
-
-  /**
-   * Sets the value of the '{@link org.chw.game.cfg.Type#getEnter <em>Enter</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Enter</em>' containment reference.
-   * @see #getEnter()
-   * @generated
-   */
-  void setEnter(Enter value);
+  EList<Meta> getMeta();
 
   /**
    * Returns the value of the '<em><b>Prefix</b></em>' attribute.

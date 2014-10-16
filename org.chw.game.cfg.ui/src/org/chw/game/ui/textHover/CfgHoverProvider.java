@@ -3,8 +3,8 @@ package org.chw.game.ui.textHover;
 import org.chw.game.cfg.Enum;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
@@ -32,7 +32,7 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 		{
 			return true;
 		}
-		else if (o instanceof FieldMetaKey)
+		else if (o instanceof MetaParam)
 		{
 			return true;
 		}
@@ -82,9 +82,9 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				}
 			}
 		}
-		else if (o instanceof FieldMetaKey)
+		else if (o instanceof MetaParam)
 		{
-			FieldMetaKey param = (FieldMetaKey) o;
+			MetaParam param = (MetaParam) o;
 			Field parentField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
 			Type type = getType(param.eResource(), parentField.getType().getType());
 			if (type != null)
@@ -148,9 +148,9 @@ public class CfgHoverProvider extends DefaultEObjectHoverProvider implements IEO
 				}
 			}
 		}
-		else if (o instanceof FieldMetaKey)
+		else if (o instanceof MetaParam)
 		{
-			FieldMetaKey param = (FieldMetaKey) o;
+			MetaParam param = (MetaParam) o;
 			Field parentField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
 			Type type = getType(param.eResource(), parentField.getType().getType());
 			if (type != null)

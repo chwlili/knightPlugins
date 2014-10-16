@@ -8,17 +8,14 @@ package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgFactory;
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.DefaultMeta;
-import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.InputDef;
-import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.Meta;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
-import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 
@@ -86,15 +83,12 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
       case CfgPackage.INPUT_DEF: return createInputDef();
       case CfgPackage.PACK_DEF: return createPackDef();
       case CfgPackage.TYPE: return createType();
-      case CfgPackage.ENTER: return createEnter();
       case CfgPackage.FIELD: return createField();
       case CfgPackage.FIELD_TYPE: return createFieldType();
-      case CfgPackage.LIST_META: return createListMeta();
-      case CfgPackage.SLICE_META: return createSliceMeta();
-      case CfgPackage.FIELD_META_KEY: return createFieldMetaKey();
       case CfgPackage.ENUM: return createEnum();
       case CfgPackage.ENUM_FIELD: return createEnumField();
-      case CfgPackage.DEFAULT_META: return createDefaultMeta();
+      case CfgPackage.META: return createMeta();
+      case CfgPackage.META_PARAM: return createMetaParam();
       case CfgPackage.OTHER_COMENT: return createOtherComent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -150,17 +144,6 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Enter createEnter()
-  {
-    EnterImpl enter = new EnterImpl();
-    return enter;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Field createField()
   {
     FieldImpl field = new FieldImpl();
@@ -176,39 +159,6 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
   {
     FieldTypeImpl fieldType = new FieldTypeImpl();
     return fieldType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ListMeta createListMeta()
-  {
-    ListMetaImpl listMeta = new ListMetaImpl();
-    return listMeta;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SliceMeta createSliceMeta()
-  {
-    SliceMetaImpl sliceMeta = new SliceMetaImpl();
-    return sliceMeta;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FieldMetaKey createFieldMetaKey()
-  {
-    FieldMetaKeyImpl fieldMetaKey = new FieldMetaKeyImpl();
-    return fieldMetaKey;
   }
 
   /**
@@ -238,10 +188,21 @@ public class CfgFactoryImpl extends EFactoryImpl implements CfgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public DefaultMeta createDefaultMeta()
+  public Meta createMeta()
   {
-    DefaultMetaImpl defaultMeta = new DefaultMetaImpl();
-    return defaultMeta;
+    MetaImpl meta = new MetaImpl();
+    return meta;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MetaParam createMetaParam()
+  {
+    MetaParamImpl metaParam = new MetaParamImpl();
+    return metaParam;
   }
 
   /**

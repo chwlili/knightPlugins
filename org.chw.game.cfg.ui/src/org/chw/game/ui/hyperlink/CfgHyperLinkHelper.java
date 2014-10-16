@@ -3,8 +3,8 @@ package org.chw.game.ui.hyperlink;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Enum;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.ecore.EObject;
@@ -42,10 +42,10 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 			return;
 		}
 
-		if (emfNode instanceof FieldMetaKey)
+		if (emfNode instanceof MetaParam)
 		{
-			FieldMetaKey param = (FieldMetaKey) emfNode;
-			for (INode leaf : NodeModelUtils.findNodesForFeature(param, CfgPackage.Literals.FIELD_META_KEY__FIELD_NAME))
+			MetaParam param = (MetaParam) emfNode;
+			for (INode leaf : NodeModelUtils.findNodesForFeature(param, CfgPackage.Literals.META_PARAM__FIELD_NAME))
 			{
 				Field currField = (Field) NodeModelUtils.findActualNodeFor(param).getParent().getParent().getSemanticElement();
 				String typeName = currField.getType().getType();
@@ -90,10 +90,10 @@ public class CfgHyperLinkHelper extends TypeAwareHyperlinkHelper
 							return;
 						}
 					}
-					
-					for(Enum enumDef:model.getEnums())
+
+					for (Enum enumDef : model.getEnums())
 					{
-						if(enumDef.getName().equals(type))
+						if (enumDef.getName().equals(type))
 						{
 							createHyperlinksTo(resource, new Region(leaf.getOffset(), leaf.getLength()), enumDef, acceptor);
 							return;

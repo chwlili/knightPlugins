@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
-import org.chw.game.cfg.ListMeta;
-import org.chw.game.cfg.SliceMeta;
+import org.chw.game.cfg.Meta;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 public class ClassTable
 {
@@ -154,6 +151,7 @@ public class ClassTable
 	 * @param name
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private boolean isExtendType(String name)
 	{
 		return name2Class.containsKey(name);
@@ -235,13 +233,24 @@ public class ClassTable
 				continue;
 			}
 
-			Enter enter = type.getEnter();
-			if (enter != null)
+			for (Meta meta : type.getMeta())
 			{
-				rootXPath = enter.getRootPath();
-				if (rootXPath.charAt(0) != '/')
+				EList<MetaParam> params = meta.getParams();
+				if (params.size() > 0)
 				{
-					rootXPath = "/" + rootXPath;
+					rootXPath = params.get(0).getFieldName();
+					if (rootXPath.charAt(0) == '"')
+					{
+						rootXPath = rootXPath.substring(1);
+					}
+					if (rootXPath.charAt(rootXPath.length() - 1) == '"')
+					{
+						rootXPath = rootXPath.substring(0, rootXPath.length() - 1);
+					}
+					if (rootXPath.charAt(0) != '/')
+					{
+						rootXPath = "/" + rootXPath;
+					}
 				}
 			}
 
@@ -277,27 +286,50 @@ public class ClassTable
 					fieldTypeKind = 2;
 				}
 
-				EList<EObject> fieldMetas = field.getMeta();
-				EObject fieldMeta = fieldMetas != null && fieldMetas.size() > 0 ? fieldMetas.get(fieldMetas.size() - 1) : null;
-				if (fieldMeta instanceof ListMeta)
+				Meta listMeta = null;
+				Meta langMeta = null;
+				for (Meta meta : field.getMeta())
 				{
-					ListMeta meta = (ListMeta) fieldMeta;
+					if (meta.getPrefix().equals("List") || meta.getPrefix().equals("Slice"))
+					{
+						listMeta = meta;
+					}
+					else if (meta.getPrefix().equals("Lang"))
+					{
+						langMeta = meta;
+					}
+				}
+
+				if (listMeta != null && listMeta.getPrefix().equals("List"))
+				{
+					Meta meta = listMeta;
 
 					fieldList = true;
 
 					if (!isBase && !isEnum)
 					{
 						ArrayList<String> keys = null;
-						EList<FieldMetaKey> params = meta.getParams();
+						EList<MetaParam> params = meta.getParams();
 						if (params != null)
 						{
 							keys = new ArrayList<String>();
-							for (FieldMetaKey param : params)
+							for (MetaParam param : params)
 							{
 								String paramName = param.getFieldName();
-								if (paramName != null && paramName.isEmpty() == false)
+								if (paramName != null)
 								{
-									keys.add(paramName);
+									if (paramName.charAt(0) == '"')
+									{
+										paramName = paramName.substring(1);
+									}
+									if (paramName.charAt(paramName.length() - 1) == '"')
+									{
+										paramName = paramName.substring(0, paramName.length() - 1);
+									}
+									if (!paramName.isEmpty())
+									{
+										keys.add(paramName);
+									}
 								}
 							}
 						}
@@ -308,17 +340,17 @@ public class ClassTable
 						}
 					}
 				}
-				else if (fieldMeta instanceof SliceMeta)
+				else if (listMeta != null && listMeta.getPrefix().equals("Slice"))
 				{
-					SliceMeta meta = (SliceMeta) fieldMeta;
+					Meta meta = listMeta;
 					if (isBase || isEnum)
 					{
 						sliceList = true;
-						sliceChar = meta.getSliceChar();
+						sliceChar = meta.getParams().get(0).getFieldName();
 					}
 				}
 
-				fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldTypeKind, fieldList, indexList, sliceList, sliceChar));
+				fieldDefs.add(new ClassField(fieldXPath, fieldName, fieldComm, fieldType, fieldTypeKind, fieldList, indexList, sliceList, sliceChar, langMeta != null));
 
 				fieldNames.add(fieldType);
 			}

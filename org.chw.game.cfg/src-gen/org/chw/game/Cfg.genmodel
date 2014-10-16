@@ -28,15 +28,11 @@
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Type">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/comment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/enter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/meta"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/prefix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Type/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/fields"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Type/comm"/>
-    </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//Enter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enter/prefix"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enter/rootPath"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Field">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Field/comment"/>
@@ -47,17 +43,6 @@
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//FieldType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldType/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//ListMeta">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//ListMeta/prefix"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//ListMeta/params"/>
-    </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//SliceMeta">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//SliceMeta/prefix"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//SliceMeta/sliceChar"/>
-    </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//FieldMetaKey">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//FieldMetaKey/fieldName"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//Enum">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Enum/comment"/>
@@ -72,8 +57,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//EnumField/fieldValue"/>
     </genClasses>
-    <genClasses ecoreClass="Cfg.ecore#//DefaultMeta">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//DefaultMeta/prefix"/>
+    <genClasses ecoreClass="Cfg.ecore#//Meta">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//Meta/prefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cfg.ecore#//Meta/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Cfg.ecore#//MetaParam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//MetaParam/fieldName"/>
     </genClasses>
     <genClasses ecoreClass="Cfg.ecore#//OtherComent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cfg.ecore#//OtherComent/comm"/>

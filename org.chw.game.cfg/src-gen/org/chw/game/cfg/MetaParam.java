@@ -10,21 +10,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Field Meta Key</b></em>'.
+ * A representation of the model object '<em><b>Meta Param</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.FieldMetaKey#getFieldName <em>Field Name</em>}</li>
+ *   <li>{@link org.chw.game.cfg.MetaParam#getFieldName <em>Field Name</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.chw.game.cfg.CfgPackage#getFieldMetaKey()
+ * @see org.chw.game.cfg.CfgPackage#getMetaParam()
  * @model
  * @generated
  */
-public interface FieldMetaKey extends EObject
+public interface MetaParam extends EObject
 {
   /**
    * Returns the value of the '<em><b>Field Name</b></em>' attribute.
@@ -36,14 +36,14 @@ public interface FieldMetaKey extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Field Name</em>' attribute.
    * @see #setFieldName(String)
-   * @see org.chw.game.cfg.CfgPackage#getFieldMetaKey_FieldName()
+   * @see org.chw.game.cfg.CfgPackage#getMetaParam_FieldName()
    * @model
    * @generated
    */
   String getFieldName();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.FieldMetaKey#getFieldName <em>Field Name</em>}' attribute.
+   * Sets the value of the '{@link org.chw.game.cfg.MetaParam#getFieldName <em>Field Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Field Name</em>' attribute.
@@ -52,4 +52,4 @@ public interface FieldMetaKey extends EObject
    */
   void setFieldName(String value);
 
-} // FieldMetaKey
+} // MetaParam

@@ -7,7 +7,7 @@
 package org.chw.game.cfg.impl;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.DefaultMeta;
+import org.chw.game.cfg.MetaParam;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -18,45 +18,45 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Default Meta</b></em>'.
+ * An implementation of the model object '<em><b>Meta Param</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.DefaultMetaImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.MetaParamImpl#getFieldName <em>Field Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements DefaultMeta
+public class MetaParamImpl extends MinimalEObjectImpl.Container implements MetaParam
 {
   /**
-   * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+   * The default value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPrefix()
+   * @see #getFieldName()
    * @generated
    * @ordered
    */
-  protected static final String PREFIX_EDEFAULT = null;
+  protected static final String FIELD_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+   * The cached value of the '{@link #getFieldName() <em>Field Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPrefix()
+   * @see #getFieldName()
    * @generated
    * @ordered
    */
-  protected String prefix = PREFIX_EDEFAULT;
+  protected String fieldName = FIELD_NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected DefaultMetaImpl()
+  protected MetaParamImpl()
   {
     super();
   }
@@ -69,7 +69,7 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.DEFAULT_META;
+    return CfgPackage.Literals.META_PARAM;
   }
 
   /**
@@ -77,9 +77,9 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getPrefix()
+  public String getFieldName()
   {
-    return prefix;
+    return fieldName;
   }
 
   /**
@@ -87,12 +87,12 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPrefix(String newPrefix)
+  public void setFieldName(String newFieldName)
   {
-    String oldPrefix = prefix;
-    prefix = newPrefix;
+    String oldFieldName = fieldName;
+    fieldName = newFieldName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.DEFAULT_META__PREFIX, oldPrefix, prefix));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.META_PARAM__FIELD_NAME, oldFieldName, fieldName));
   }
 
   /**
@@ -105,8 +105,8 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
   {
     switch (featureID)
     {
-      case CfgPackage.DEFAULT_META__PREFIX:
-        return getPrefix();
+      case CfgPackage.META_PARAM__FIELD_NAME:
+        return getFieldName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,8 +121,8 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
   {
     switch (featureID)
     {
-      case CfgPackage.DEFAULT_META__PREFIX:
-        setPrefix((String)newValue);
+      case CfgPackage.META_PARAM__FIELD_NAME:
+        setFieldName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,8 +138,8 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
   {
     switch (featureID)
     {
-      case CfgPackage.DEFAULT_META__PREFIX:
-        setPrefix(PREFIX_EDEFAULT);
+      case CfgPackage.META_PARAM__FIELD_NAME:
+        setFieldName(FIELD_NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -155,8 +155,8 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
   {
     switch (featureID)
     {
-      case CfgPackage.DEFAULT_META__PREFIX:
-        return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
+      case CfgPackage.META_PARAM__FIELD_NAME:
+        return FIELD_NAME_EDEFAULT == null ? fieldName != null : !FIELD_NAME_EDEFAULT.equals(fieldName);
     }
     return super.eIsSet(featureID);
   }
@@ -172,10 +172,10 @@ public class DefaultMetaImpl extends MinimalEObjectImpl.Container implements Def
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (prefix: ");
-    result.append(prefix);
+    result.append(" (fieldName: ");
+    result.append(fieldName);
     result.append(')');
     return result.toString();
   }
 
-} //DefaultMetaImpl
+} //MetaParamImpl

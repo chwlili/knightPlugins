@@ -63,15 +63,6 @@ public interface CfgFactory extends EFactory
   Type createType();
 
   /**
-   * Returns a new object of class '<em>Enter</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enter</em>'.
-   * @generated
-   */
-  Enter createEnter();
-
-  /**
    * Returns a new object of class '<em>Field</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -88,33 +79,6 @@ public interface CfgFactory extends EFactory
    * @generated
    */
   FieldType createFieldType();
-
-  /**
-   * Returns a new object of class '<em>List Meta</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>List Meta</em>'.
-   * @generated
-   */
-  ListMeta createListMeta();
-
-  /**
-   * Returns a new object of class '<em>Slice Meta</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Slice Meta</em>'.
-   * @generated
-   */
-  SliceMeta createSliceMeta();
-
-  /**
-   * Returns a new object of class '<em>Field Meta Key</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Field Meta Key</em>'.
-   * @generated
-   */
-  FieldMetaKey createFieldMetaKey();
 
   /**
    * Returns a new object of class '<em>Enum</em>'.
@@ -135,13 +99,22 @@ public interface CfgFactory extends EFactory
   EnumField createEnumField();
 
   /**
-   * Returns a new object of class '<em>Default Meta</em>'.
+   * Returns a new object of class '<em>Meta</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Default Meta</em>'.
+   * @return a new object of class '<em>Meta</em>'.
    * @generated
    */
-  DefaultMeta createDefaultMeta();
+  Meta createMeta();
+
+  /**
+   * Returns a new object of class '<em>Meta Param</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Meta Param</em>'.
+   * @generated
+   */
+  MetaParam createMetaParam();
 
   /**
    * Returns a new object of class '<em>Other Coment</em>'.

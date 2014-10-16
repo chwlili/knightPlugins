@@ -3,12 +3,11 @@
  */
 package org.chw.game.ui;
 
+import org.chw.game.ui.internal.CfgActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
-
-import org.chw.game.ui.internal.CfgActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly

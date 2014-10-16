@@ -11,6 +11,7 @@ import java.util.Collection;
 import org.chw.game.cfg.CfgPackage;
 import org.chw.game.cfg.Field;
 import org.chw.game.cfg.FieldType;
+import org.chw.game.cfg.Meta;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -18,7 +19,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -74,7 +74,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * @generated
    * @ordered
    */
-  protected EList<EObject> meta;
+  protected EList<Meta> meta;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -175,11 +175,11 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getMeta()
+  public EList<Meta> getMeta()
   {
     if (meta == null)
     {
-      meta = new EObjectContainmentEList<EObject>(EObject.class, this, CfgPackage.FIELD__META);
+      meta = new EObjectContainmentEList<Meta>(Meta.class, this, CfgPackage.FIELD__META);
     }
     return meta;
   }
@@ -336,7 +336,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         return;
       case CfgPackage.FIELD__META:
         getMeta().clear();
-        getMeta().addAll((Collection<? extends EObject>)newValue);
+        getMeta().addAll((Collection<? extends Meta>)newValue);
         return;
       case CfgPackage.FIELD__TYPE:
         setType((FieldType)newValue);

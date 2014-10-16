@@ -12,22 +12,22 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>List Meta</b></em>'.
+ * A representation of the model object '<em><b>Meta</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.chw.game.cfg.ListMeta#getPrefix <em>Prefix</em>}</li>
- *   <li>{@link org.chw.game.cfg.ListMeta#getParams <em>Params</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Meta#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.Meta#getParams <em>Params</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.chw.game.cfg.CfgPackage#getListMeta()
+ * @see org.chw.game.cfg.CfgPackage#getMeta()
  * @model
  * @generated
  */
-public interface ListMeta extends EObject
+public interface Meta extends EObject
 {
   /**
    * Returns the value of the '<em><b>Prefix</b></em>' attribute.
@@ -39,14 +39,14 @@ public interface ListMeta extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Prefix</em>' attribute.
    * @see #setPrefix(String)
-   * @see org.chw.game.cfg.CfgPackage#getListMeta_Prefix()
+   * @see org.chw.game.cfg.CfgPackage#getMeta_Prefix()
    * @model
    * @generated
    */
   String getPrefix();
 
   /**
-   * Sets the value of the '{@link org.chw.game.cfg.ListMeta#getPrefix <em>Prefix</em>}' attribute.
+   * Sets the value of the '{@link org.chw.game.cfg.Meta#getPrefix <em>Prefix</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Prefix</em>' attribute.
@@ -57,7 +57,7 @@ public interface ListMeta extends EObject
 
   /**
    * Returns the value of the '<em><b>Params</b></em>' containment reference list.
-   * The list contents are of type {@link org.chw.game.cfg.FieldMetaKey}.
+   * The list contents are of type {@link org.chw.game.cfg.MetaParam}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Params</em>' containment reference list isn't clear,
@@ -65,10 +65,10 @@ public interface ListMeta extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Params</em>' containment reference list.
-   * @see org.chw.game.cfg.CfgPackage#getListMeta_Params()
+   * @see org.chw.game.cfg.CfgPackage#getMeta_Params()
    * @model containment="true"
    * @generated
    */
-  EList<FieldMetaKey> getParams();
+  EList<MetaParam> getParams();
 
-} // ListMeta
+} // Meta

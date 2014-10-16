@@ -4,18 +4,17 @@
 package org.chw.game.ui.contentassist.antlr;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.antlr.runtime.RecognitionException;
+import org.chw.game.services.CfgGrammarAccess;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.AbstractContentAssistParser;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.FollowElement;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.AbstractInternalContentAssistParser;
 
 import com.google.inject.Inject;
-
-import org.chw.game.services.CfgGrammarAccess;
 
 public class CfgParser extends AbstractContentAssistParser {
 	
@@ -40,8 +39,8 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getXML2Access().getAlternatives_0(), "rule__XML2__Alternatives_0");
 					put(grammarAccess.getXML2Access().getAlternatives_1(), "rule__XML2__Alternatives_1");
 					put(grammarAccess.getTypeAccess().getAlternatives_5(), "rule__Type__Alternatives_5");
-					put(grammarAccess.getFieldAccess().getAlternatives_1(), "rule__Field__Alternatives_1");
 					put(grammarAccess.getEnumAccess().getAlternatives_4(), "rule__Enum__Alternatives_4");
+					put(grammarAccess.getMetaParamAccess().getAlternatives(), "rule__MetaParam__Alternatives");
 					put(grammarAccess.getTypeNameAccess().getAlternatives(), "rule__TypeName__Alternatives");
 					put(grammarAccess.getXML2Access().getGroup(), "rule__XML2__Group__0");
 					put(grammarAccess.getXML2Access().getGroup_0_0(), "rule__XML2__Group_0_0__0");
@@ -49,17 +48,13 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInputDefAccess().getGroup(), "rule__InputDef__Group__0");
 					put(grammarAccess.getPackDefAccess().getGroup(), "rule__PackDef__Group__0");
 					put(grammarAccess.getTypeAccess().getGroup(), "rule__Type__Group__0");
-					put(grammarAccess.getEnterAccess().getGroup(), "rule__Enter__Group__0");
 					put(grammarAccess.getFieldAccess().getGroup(), "rule__Field__Group__0");
-					put(grammarAccess.getListMetaAccess().getGroup(), "rule__ListMeta__Group__0");
-					put(grammarAccess.getListMetaAccess().getGroup_2(), "rule__ListMeta__Group_2__0");
-					put(grammarAccess.getListMetaAccess().getGroup_2_1(), "rule__ListMeta__Group_2_1__0");
-					put(grammarAccess.getListMetaAccess().getGroup_2_1_1(), "rule__ListMeta__Group_2_1_1__0");
-					put(grammarAccess.getSliceMetaAccess().getGroup(), "rule__SliceMeta__Group__0");
 					put(grammarAccess.getEnumAccess().getGroup(), "rule__Enum__Group__0");
 					put(grammarAccess.getEnumFieldAccess().getGroup(), "rule__EnumField__Group__0");
-					put(grammarAccess.getDefaultMetaAccess().getGroup(), "rule__DefaultMeta__Group__0");
-					put(grammarAccess.getDefaultMetaAccess().getGroup_2(), "rule__DefaultMeta__Group_2__0");
+					put(grammarAccess.getMetaAccess().getGroup(), "rule__Meta__Group__0");
+					put(grammarAccess.getMetaAccess().getGroup_2(), "rule__Meta__Group_2__0");
+					put(grammarAccess.getMetaAccess().getGroup_2_1(), "rule__Meta__Group_2_1__0");
+					put(grammarAccess.getMetaAccess().getGroup_2_1_1(), "rule__Meta__Group_2_1_1__0");
 					put(grammarAccess.getPackNameAccess().getGroup(), "rule__PackName__Group__0");
 					put(grammarAccess.getPackNameAccess().getGroup_1(), "rule__PackName__Group_1__0");
 					put(grammarAccess.getXML2Access().getInputAssignment_0_0_0(), "rule__XML2__InputAssignment_0_0_0");
@@ -78,26 +73,17 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPackDefAccess().getPackCHARAssignment_1(), "rule__PackDef__PackCHARAssignment_1");
 					put(grammarAccess.getPackDefAccess().getPackAssignment_2(), "rule__PackDef__PackAssignment_2");
 					put(grammarAccess.getTypeAccess().getCommentAssignment_0(), "rule__Type__CommentAssignment_0");
-					put(grammarAccess.getTypeAccess().getEnterAssignment_1(), "rule__Type__EnterAssignment_1");
+					put(grammarAccess.getTypeAccess().getMetaAssignment_1(), "rule__Type__MetaAssignment_1");
 					put(grammarAccess.getTypeAccess().getPrefixAssignment_2(), "rule__Type__PrefixAssignment_2");
 					put(grammarAccess.getTypeAccess().getNameAssignment_3(), "rule__Type__NameAssignment_3");
 					put(grammarAccess.getTypeAccess().getFieldsAssignment_5_0(), "rule__Type__FieldsAssignment_5_0");
 					put(grammarAccess.getTypeAccess().getCommAssignment_5_1(), "rule__Type__CommAssignment_5_1");
-					put(grammarAccess.getEnterAccess().getPrefixAssignment_1(), "rule__Enter__PrefixAssignment_1");
-					put(grammarAccess.getEnterAccess().getRootPathAssignment_3(), "rule__Enter__RootPathAssignment_3");
 					put(grammarAccess.getFieldAccess().getCommentAssignment_0(), "rule__Field__CommentAssignment_0");
-					put(grammarAccess.getFieldAccess().getMetaAssignment_1_0(), "rule__Field__MetaAssignment_1_0");
-					put(grammarAccess.getFieldAccess().getMetaAssignment_1_1(), "rule__Field__MetaAssignment_1_1");
+					put(grammarAccess.getFieldAccess().getMetaAssignment_1(), "rule__Field__MetaAssignment_1");
 					put(grammarAccess.getFieldAccess().getTypeAssignment_2(), "rule__Field__TypeAssignment_2");
 					put(grammarAccess.getFieldAccess().getFieldNameAssignment_3(), "rule__Field__FieldNameAssignment_3");
 					put(grammarAccess.getFieldAccess().getNodePathAssignment_5(), "rule__Field__NodePathAssignment_5");
 					put(grammarAccess.getFieldTypeAccess().getTypeAssignment(), "rule__FieldType__TypeAssignment");
-					put(grammarAccess.getListMetaAccess().getPrefixAssignment_1(), "rule__ListMeta__PrefixAssignment_1");
-					put(grammarAccess.getListMetaAccess().getParamsAssignment_2_1_0(), "rule__ListMeta__ParamsAssignment_2_1_0");
-					put(grammarAccess.getListMetaAccess().getParamsAssignment_2_1_1_1(), "rule__ListMeta__ParamsAssignment_2_1_1_1");
-					put(grammarAccess.getSliceMetaAccess().getPrefixAssignment_1(), "rule__SliceMeta__PrefixAssignment_1");
-					put(grammarAccess.getSliceMetaAccess().getSliceCharAssignment_3(), "rule__SliceMeta__SliceCharAssignment_3");
-					put(grammarAccess.getFieldMetaKeyAccess().getFieldNameAssignment(), "rule__FieldMetaKey__FieldNameAssignment");
 					put(grammarAccess.getEnumAccess().getCommentAssignment_0(), "rule__Enum__CommentAssignment_0");
 					put(grammarAccess.getEnumAccess().getPrefixAssignment_1(), "rule__Enum__PrefixAssignment_1");
 					put(grammarAccess.getEnumAccess().getNameAssignment_2(), "rule__Enum__NameAssignment_2");
@@ -107,7 +93,11 @@ public class CfgParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEnumFieldAccess().getMetaAssignment_1(), "rule__EnumField__MetaAssignment_1");
 					put(grammarAccess.getEnumFieldAccess().getFieldNameAssignment_2(), "rule__EnumField__FieldNameAssignment_2");
 					put(grammarAccess.getEnumFieldAccess().getFieldValueAssignment_4(), "rule__EnumField__FieldValueAssignment_4");
-					put(grammarAccess.getDefaultMetaAccess().getPrefixAssignment_1(), "rule__DefaultMeta__PrefixAssignment_1");
+					put(grammarAccess.getMetaAccess().getPrefixAssignment_1(), "rule__Meta__PrefixAssignment_1");
+					put(grammarAccess.getMetaAccess().getParamsAssignment_2_1_0(), "rule__Meta__ParamsAssignment_2_1_0");
+					put(grammarAccess.getMetaAccess().getParamsAssignment_2_1_1_1(), "rule__Meta__ParamsAssignment_2_1_1_1");
+					put(grammarAccess.getMetaParamAccess().getFieldNameAssignment_0(), "rule__MetaParam__FieldNameAssignment_0");
+					put(grammarAccess.getMetaParamAccess().getFieldNameAssignment_1(), "rule__MetaParam__FieldNameAssignment_1");
 					put(grammarAccess.getOtherComentAccess().getCommAssignment(), "rule__OtherComent__CommAssignment");
 				}
 			};

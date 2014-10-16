@@ -13,37 +13,29 @@ PackDef:
 	comment+=OtherComent* packCHAR=C_PACKAGE pack=PackName? C_SEMICOLON?;
 
 Type:
-	comment=TypeComment? enter=Enter? prefix=C_TYPE name=TypeName C_BRACE_L ((=> fields+=Field) | comm+=OtherComent)*
+	comment=TypeComment? meta+=Meta? prefix=C_TYPE name=TypeName C_BRACE_L ((=> fields+=Field) | comm+=OtherComent)*
 	C_BRACE_R;
 
-Enter:
-	C_BRACKET_L prefix=C_MAIN C_PAREN_L rootPath=STRING C_PAREN_R C_BRACKET_R;
-
 Field:
-	comment=FieldComment? (meta+=ListMeta | meta+=SliceMeta)* type=FieldType fieldName=TypeName C_EQUALS
+	comment=FieldComment? meta+=Meta* type=FieldType fieldName=TypeName
+	C_EQUALS
 	nodePath=STRING
 	C_SEMICOLON?;
 
 FieldType:
 	type=TypeName;
 
-ListMeta:
-	C_BRACKET_L prefix=C_LIST (C_PAREN_L (params+=FieldMetaKey (C_COMMA params+=FieldMetaKey)*)? C_PAREN_R)? C_BRACKET_R;
-
-SliceMeta:
-	C_BRACKET_L prefix=C_SLICE C_PAREN_L sliceChar=STRING C_PAREN_R C_BRACKET_R;
-
-FieldMetaKey:
-	fieldName=TypeName;
-
 Enum:
 	comment=TypeComment? prefix=C_ENUM name=TypeName C_BRACE_L ((=> fields+=EnumField) | comm+=OtherComent)* C_BRACE_R;
 
 EnumField:
-	comment=FieldComment? meta=DefaultMeta? fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
+	comment=FieldComment? meta+=Meta* fieldName=TypeName C_EQUALS fieldValue=STRING C_SEMICOLON?;
 
-DefaultMeta:
-	C_BRACKET_L prefix=C_DEFAULT (C_PAREN_L C_PAREN_R)? C_BRACKET_R;
+Meta:
+	C_BRACKET_L prefix=TypeName (C_PAREN_L (params+=MetaParam (C_COMMA params+=MetaParam)*)? C_PAREN_R)? C_BRACKET_R;
+
+MetaParam:
+	fieldName=TypeName | fieldName=STRING;
 
 TypeComment:
 	COMMENT;
@@ -58,8 +50,7 @@ PackName:
 	TypeName ('.' TypeName)*;
 
 TypeName:
-	C_INPUT | C_MAIN | C_DEFAULT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | C_LIST | C_SLICE |
-	NAME;
+	C_INPUT | C_TYPE | C_ENUM | C_INT | C_UINT | C_BOOL | C_NUMBER | C_STRING | NAME;
 
 terminal C_BRACKET_L:
 	'[';
@@ -97,12 +88,6 @@ terminal C_SEMICOLON:
 terminal C_INPUT:
 	'input';
 
-terminal C_MAIN:
-	'Main';
-
-terminal C_DEFAULT:
-	'Default';
-
 terminal C_TYPE:
 	'type';
 
@@ -123,12 +108,6 @@ terminal C_NUMBER:
 
 terminal C_STRING:
 	'String';
-
-terminal C_LIST:
-	'List';
-
-terminal C_SLICE:
-	'Slice';
 
 terminal C_PACKAGE:
 	'package';

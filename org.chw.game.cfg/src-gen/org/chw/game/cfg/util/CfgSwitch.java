@@ -7,17 +7,14 @@
 package org.chw.game.cfg.util;
 
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.DefaultMeta;
-import org.chw.game.cfg.Enter;
 import org.chw.game.cfg.EnumField;
 import org.chw.game.cfg.Field;
-import org.chw.game.cfg.FieldMetaKey;
 import org.chw.game.cfg.FieldType;
 import org.chw.game.cfg.InputDef;
-import org.chw.game.cfg.ListMeta;
+import org.chw.game.cfg.Meta;
+import org.chw.game.cfg.MetaParam;
 import org.chw.game.cfg.OtherComent;
 import org.chw.game.cfg.PackDef;
-import org.chw.game.cfg.SliceMeta;
 import org.chw.game.cfg.Type;
 import org.chw.game.cfg.XML2;
 
@@ -117,13 +114,6 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.ENTER:
-      {
-        Enter enter = (Enter)theEObject;
-        T result = caseEnter(enter);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CfgPackage.FIELD:
       {
         Field field = (Field)theEObject;
@@ -135,27 +125,6 @@ public class CfgSwitch<T> extends Switch<T>
       {
         FieldType fieldType = (FieldType)theEObject;
         T result = caseFieldType(fieldType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CfgPackage.LIST_META:
-      {
-        ListMeta listMeta = (ListMeta)theEObject;
-        T result = caseListMeta(listMeta);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CfgPackage.SLICE_META:
-      {
-        SliceMeta sliceMeta = (SliceMeta)theEObject;
-        T result = caseSliceMeta(sliceMeta);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CfgPackage.FIELD_META_KEY:
-      {
-        FieldMetaKey fieldMetaKey = (FieldMetaKey)theEObject;
-        T result = caseFieldMetaKey(fieldMetaKey);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -173,10 +142,17 @@ public class CfgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CfgPackage.DEFAULT_META:
+      case CfgPackage.META:
       {
-        DefaultMeta defaultMeta = (DefaultMeta)theEObject;
-        T result = caseDefaultMeta(defaultMeta);
+        Meta meta = (Meta)theEObject;
+        T result = caseMeta(meta);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CfgPackage.META_PARAM:
+      {
+        MetaParam metaParam = (MetaParam)theEObject;
+        T result = caseMetaParam(metaParam);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -256,22 +232,6 @@ public class CfgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Enter</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Enter</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEnter(Enter object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Field</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -299,54 +259,6 @@ public class CfgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseFieldType(FieldType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>List Meta</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>List Meta</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseListMeta(ListMeta object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Slice Meta</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Slice Meta</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSliceMeta(SliceMeta object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Field Meta Key</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Field Meta Key</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFieldMetaKey(FieldMetaKey object)
   {
     return null;
   }
@@ -384,17 +296,33 @@ public class CfgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Default Meta</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Meta</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Default Meta</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Meta</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseDefaultMeta(DefaultMeta object)
+  public T caseMeta(Meta object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Meta Param</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Meta Param</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMetaParam(MetaParam object)
   {
     return null;
   }

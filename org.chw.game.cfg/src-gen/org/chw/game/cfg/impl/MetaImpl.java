@@ -6,31 +6,41 @@
  */
 package org.chw.game.cfg.impl;
 
+import java.util.Collection;
+
 import org.chw.game.cfg.CfgPackage;
-import org.chw.game.cfg.Enter;
+import org.chw.game.cfg.Meta;
+import org.chw.game.cfg.MetaParam;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Enter</b></em>'.
+ * An implementation of the model object '<em><b>Meta</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.chw.game.cfg.impl.EnterImpl#getPrefix <em>Prefix</em>}</li>
- *   <li>{@link org.chw.game.cfg.impl.EnterImpl#getRootPath <em>Root Path</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.MetaImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link org.chw.game.cfg.impl.MetaImpl#getParams <em>Params</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
+public class MetaImpl extends MinimalEObjectImpl.Container implements Meta
 {
   /**
    * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -53,31 +63,21 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
   protected String prefix = PREFIX_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getRootPath() <em>Root Path</em>}' attribute.
+   * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRootPath()
+   * @see #getParams()
    * @generated
    * @ordered
    */
-  protected static final String ROOT_PATH_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getRootPath() <em>Root Path</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRootPath()
-   * @generated
-   * @ordered
-   */
-  protected String rootPath = ROOT_PATH_EDEFAULT;
+  protected EList<MetaParam> params;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected EnterImpl()
+  protected MetaImpl()
   {
     super();
   }
@@ -90,7 +90,7 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
   @Override
   protected EClass eStaticClass()
   {
-    return CfgPackage.Literals.ENTER;
+    return CfgPackage.Literals.META;
   }
 
   /**
@@ -113,7 +113,7 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
     String oldPrefix = prefix;
     prefix = newPrefix;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.ENTER__PREFIX, oldPrefix, prefix));
+      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.META__PREFIX, oldPrefix, prefix));
   }
 
   /**
@@ -121,9 +121,13 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getRootPath()
+  public EList<MetaParam> getParams()
   {
-    return rootPath;
+    if (params == null)
+    {
+      params = new EObjectContainmentEList<MetaParam>(MetaParam.class, this, CfgPackage.META__PARAMS);
+    }
+    return params;
   }
 
   /**
@@ -131,12 +135,15 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRootPath(String newRootPath)
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    String oldRootPath = rootPath;
-    rootPath = newRootPath;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CfgPackage.ENTER__ROOT_PATH, oldRootPath, rootPath));
+    switch (featureID)
+    {
+      case CfgPackage.META__PARAMS:
+        return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -149,10 +156,10 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
   {
     switch (featureID)
     {
-      case CfgPackage.ENTER__PREFIX:
+      case CfgPackage.META__PREFIX:
         return getPrefix();
-      case CfgPackage.ENTER__ROOT_PATH:
-        return getRootPath();
+      case CfgPackage.META__PARAMS:
+        return getParams();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -162,16 +169,18 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case CfgPackage.ENTER__PREFIX:
+      case CfgPackage.META__PREFIX:
         setPrefix((String)newValue);
         return;
-      case CfgPackage.ENTER__ROOT_PATH:
-        setRootPath((String)newValue);
+      case CfgPackage.META__PARAMS:
+        getParams().clear();
+        getParams().addAll((Collection<? extends MetaParam>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -187,11 +196,11 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
   {
     switch (featureID)
     {
-      case CfgPackage.ENTER__PREFIX:
+      case CfgPackage.META__PREFIX:
         setPrefix(PREFIX_EDEFAULT);
         return;
-      case CfgPackage.ENTER__ROOT_PATH:
-        setRootPath(ROOT_PATH_EDEFAULT);
+      case CfgPackage.META__PARAMS:
+        getParams().clear();
         return;
     }
     super.eUnset(featureID);
@@ -207,10 +216,10 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
   {
     switch (featureID)
     {
-      case CfgPackage.ENTER__PREFIX:
+      case CfgPackage.META__PREFIX:
         return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
-      case CfgPackage.ENTER__ROOT_PATH:
-        return ROOT_PATH_EDEFAULT == null ? rootPath != null : !ROOT_PATH_EDEFAULT.equals(rootPath);
+      case CfgPackage.META__PARAMS:
+        return params != null && !params.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -228,10 +237,8 @@ public class EnterImpl extends MinimalEObjectImpl.Container implements Enter
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (prefix: ");
     result.append(prefix);
-    result.append(", rootPath: ");
-    result.append(rootPath);
     result.append(')');
     return result.toString();
   }
 
-} //EnterImpl
+} //MetaImpl

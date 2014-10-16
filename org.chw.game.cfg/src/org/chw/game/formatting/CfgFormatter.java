@@ -36,31 +36,25 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setLinewrap().before(grammarAccess.getFieldCommentRule());
 		c.setLinewrap().after(grammarAccess.getFieldCommentRule());
 
-		c.setLinewrap().before(grammarAccess.getListMetaRule());
-		c.setLinewrap().after(grammarAccess.getListMetaRule());
-
-		c.setLinewrap().before(grammarAccess.getSliceMetaRule());
-		c.setLinewrap().after(grammarAccess.getSliceMetaRule());
+		c.setLinewrap().before(grammarAccess.getMetaRule());
+		c.setLinewrap().after(grammarAccess.getMetaRule());
 
 		c.setLinewrap().before(grammarAccess.getOtherComentRule());
 		c.setLinewrap(2).after(grammarAccess.getOtherComentRule());
 
-		//type
+		// type
 		c.setLinewrap(2).after(grammarAccess.getTypeRule());
-		
-		//typeField
+
+		// typeField
 		c.setLinewrap().before(grammarAccess.getFieldRule());
 		c.setLinewrap(2).after(grammarAccess.getFieldRule());
 
-		//enum
+		// enum
 		c.setLinewrap(2).after(grammarAccess.getEnumRule());
-		
-		//enumField
+
+		// enumField
 		c.setLinewrap().before(grammarAccess.getEnumFieldRule());
 		c.setLinewrap(2).after(grammarAccess.getEnumFieldRule());
-
-		//Main Meta
-		c.setLinewrap().after(grammarAccess.getEnterRule());
 
 		c.setLinewrap().before(grammarAccess.getC_BRACE_LRule());
 		c.setLinewrap().before(grammarAccess.getC_BRACE_RRule());
@@ -72,10 +66,6 @@ public class CfgFormatter extends AbstractDeclarativeFormatter
 		c.setNoSpace().after(grammarAccess.getC_ANGLE_LRule());
 		c.setNoSpace().before(grammarAccess.getC_ANGLE_RRule());
 
-		c.setNoSpace().before(grammarAccess.getC_MAINRule());
-		c.setNoSpace().after(grammarAccess.getC_MAINRule());
-		// c.setNoSpace().before(grammarAccess.getC_LISTRule());
-		// c.setNoSpace().after(grammarAccess.getC_LISTRule());
 		c.setNoSpace().after(grammarAccess.getC_BRACKET_LRule());
 		c.setNoSpace().before(grammarAccess.getC_BRACKET_RRule());
 		c.setNoSpace().before(grammarAccess.getC_PAREN_LRule());
