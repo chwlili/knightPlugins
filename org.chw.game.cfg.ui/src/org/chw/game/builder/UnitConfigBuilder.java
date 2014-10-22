@@ -108,6 +108,11 @@ public class UnitConfigBuilder
 			fileName = fileName.substring(0, index);
 		}
 		fileName = fileName + ".cfg";
+		
+		if(fileName.startsWith("$World"))
+		{
+			System.out.println("..");
+		}
 
 		// Êä³ö
 		writedFiles = new ArrayList<IFile>();

@@ -419,8 +419,13 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t/**\n"));
 		sb.append(String.format("\t\t * 初始化所有列表范围\n"));
 		sb.append(String.format("\t\t */\n"));
-		sb.append(String.format("\t\tprivate function initRange():void\n"));
+		sb.append(String.format("\t\tprotected function initRange():void\n"));
 		sb.append(String.format("\t\t{\n"));
+		sb.append(String.format("\t\t\tif(_inited)\n"));
+		sb.append(String.format("\t\t\t{\n"));
+		sb.append(String.format("\t\t\t\treturn;\n"));
+		sb.append(String.format("\t\t\t}\n"));
+		sb.append(String.format("\t\t\t_inited=true;\n"));
 		sb.append(String.format("\t\t\tvar bytes:ByteStream=getBytes();\n"));
 		sb.append(String.format("\t\t\tif(bytes==null)\n"));
 		sb.append(String.format("\t\t\t{\n"));
@@ -557,7 +562,6 @@ public class UnitCodeBuilder
 		sb.append(String.format("\t\t\tif(!_inited)\n"));
 		sb.append(String.format("\t\t\t{\n"));
 		sb.append(String.format("\t\t\t\tinitRange();\n"));
-		sb.append(String.format("\t\t\t\t_inited=true;\n"));
 		sb.append(String.format("\t\t\t}\n"));
 		sb.append(String.format("\t\t\treturn _root;\n"));
 		sb.append(String.format("\t\t}\n"));
@@ -1144,7 +1148,8 @@ public class UnitCodeBuilder
 			sb.append(String.format("\t\t\tif(bytes==null)\n"));
 			sb.append(String.format("\t\t\t{\n"));
 			sb.append(String.format("\t\t\t\tbytes=getBytes();\n"));
-			sb.append(String.format("\t\t\t\tpool=this;\n"));
+			sb.append(String.format("\t\t\t\t__pool__=this;\n"));
+			sb.append(String.format("\t\t\t\treturn;\n"));
 			sb.append(String.format("\t\t\t}\n"));
 			sb.append(String.format("\t\t\t\n"));
 		}
