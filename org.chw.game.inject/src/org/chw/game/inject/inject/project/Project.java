@@ -1051,7 +1051,8 @@ public class Project
 		StringBuilder nlsSB = new StringBuilder();
 		nlsSB.append(String.format("package\n"));
 		nlsSB.append(String.format("{\n"));
-		nlsSB.append(String.format("\tpublic class NLS\n"));
+		nlsSB.append(String.format("\timport flash.display.Sprite;\n"));
+		nlsSB.append(String.format("\tpublic class NLS extends Sprite\n"));
 		nlsSB.append(String.format("\t{\n"));
 		int nlsID = 0;
 		HashSet<String> writed = new HashSet<String>();
@@ -1061,7 +1062,7 @@ public class Project
 			{
 				if (!writed.contains(nls))
 				{
-					nlsSB.append(String.format("\t\tpublic static const key%s:String=\"%s\";\n", nlsID + 1, nls));
+					nlsSB.append(String.format("\t\tpublic static const key%s:String=\"#%s\";\n", nlsID + 1, nls));
 					nlsID++;
 					writed.add(nls);
 				}
