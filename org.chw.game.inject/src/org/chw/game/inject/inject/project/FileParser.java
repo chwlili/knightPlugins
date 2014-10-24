@@ -17,10 +17,14 @@ import com.adobe.flash.compiler.tree.as.IASNode;
 import com.adobe.flash.compiler.tree.as.IAccessorNode;
 import com.adobe.flash.compiler.tree.as.IClassNode;
 import com.adobe.flash.compiler.tree.as.IDefinitionNode;
+import com.adobe.flash.compiler.tree.as.IExpressionNode;
 import com.adobe.flash.compiler.tree.as.IFileNode;
+import com.adobe.flash.compiler.tree.as.IFunctionCallNode;
 import com.adobe.flash.compiler.tree.as.IFunctionNode;
 import com.adobe.flash.compiler.tree.as.IGetterNode;
 import com.adobe.flash.compiler.tree.as.IInterfaceNode;
+import com.adobe.flash.compiler.tree.as.ILiteralNode;
+import com.adobe.flash.compiler.tree.as.ILiteralNode.LiteralType;
 import com.adobe.flash.compiler.tree.as.IPackageNode;
 import com.adobe.flash.compiler.tree.as.IScopedNode;
 import com.adobe.flash.compiler.tree.as.ISetterNode;
@@ -51,6 +55,7 @@ public class FileParser
 	private ArrayList<IVariableNode> variables = new ArrayList<IVariableNode>();
 	private ArrayList<IAccessorNode> accessors = new ArrayList<IAccessorNode>();
 	private ArrayList<IFunctionNode> functions = new ArrayList<IFunctionNode>();
+	private ArrayList<String> nlsList = new ArrayList<String>();
 
 	private Hashtable<String, ArrayList<IMetaTagNode>> allAccessorInject = new Hashtable<String, ArrayList<IMetaTagNode>>();
 	private Hashtable<String, ISetterNode> allSetterAccessor = new Hashtable<String, ISetterNode>();
@@ -128,6 +133,16 @@ public class FileParser
 	}
 
 	/**
+	 * 获取需要本地化的文本内容
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getNlsStrings()
+	{
+		return nlsList;
+	}
+
+	/**
 	 * 接收文件节点
 	 * 
 	 * @param fileNode
@@ -135,6 +150,8 @@ public class FileParser
 	public void parser(IResource file, IFileNode fileNode)
 	{
 		path = file.getProjectRelativePath().toString();
+
+		nlsList = new ArrayList<String>();
 
 		for (int i = 0; i < fileNode.getChildCount(); i++)
 		{
@@ -198,39 +215,45 @@ public class FileParser
 	{
 		if (node instanceof IFileNode || node instanceof IPackageNode || node instanceof IScopedNode)
 		{
-			return true;
+			// return true;
 		}
-		if (node instanceof IClassNode)
+		else if (node instanceof IClassNode)
 		{
 			visitClassNode((IClassNode) node);
-			return true;
+			// return true;
 		}
-		if (node instanceof IInterfaceNode)
+		else if (node instanceof IInterfaceNode)
 		{
 			visitClassNode((IInterfaceNode) node);
 			return false;
 		}
-		if (node instanceof IGetterNode)
+		else if (node instanceof IGetterNode)
 		{
 			visitGetterNode((IGetterNode) node);
-			return false;
+			// return false;
 		}
-		if (node instanceof ISetterNode)
+		else if (node instanceof ISetterNode)
 		{
 			visitSetterNode((ISetterNode) node);
-			return false;
+			// return false;
 		}
-		if (node instanceof IFunctionNode)
+		else if (node instanceof IFunctionNode)
 		{
 			visitFunctionNode((IFunctionNode) node);
-			return false;
+			// return false;
 		}
-		if (node instanceof IVariableNode)
+		else if (node instanceof IVariableNode)
 		{
 			visitVariableNode((IVariableNode) node);
 			return false;
 		}
-		return false;
+		else if (node instanceof IFunctionCallNode)
+		{
+			visitFunctionCallNode((IFunctionCallNode) node);
+			return false;
+		}
+		return true;
+		// return false;
 	}
 
 	/**
@@ -543,6 +566,24 @@ public class FileParser
 		if (metas.length > 0)
 		{
 			variables.add(node);
+		}
+	}
+
+	/**
+	 * 访问函数调用节点
+	 * 
+	 * @param node
+	 */
+	private void visitFunctionCallNode(IFunctionCallNode node)
+	{
+		IExpressionNode[] args = node.getArgumentNodes();
+		if (node.getFunctionName().equals("$") && args.length == 1 && args[0] instanceof ILiteralNode)
+		{
+			ILiteralNode text = (ILiteralNode) args[0];
+			if (text.getLiteralType().equals(LiteralType.STRING))
+			{
+				nlsList.add(text.getValue());
+			}
 		}
 	}
 

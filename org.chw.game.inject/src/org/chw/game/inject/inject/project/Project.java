@@ -57,6 +57,7 @@ public class Project
 	private Hashtable<String, NoticeType> notices = new Hashtable<String, NoticeType>();
 	private Hashtable<String, InterfaceType> interfaces = new Hashtable<String, InterfaceType>();
 	private Hashtable<String, EnumType> enums = new Hashtable<String, EnumType>();
+	private Hashtable<String, ArrayList<String>> nlsTexts = new Hashtable<String, ArrayList<String>>();
 
 	private ArrayList<Package> packages = new ArrayList<Package>();
 	private boolean packageChanged = true;
@@ -137,30 +138,14 @@ public class Project
 	private void rebuildTree()
 	{
 		/*
-		if (isInjectProject() == false || packageChanged == false)
-		{
-			return;
-		}
-
-		if (!opened)
-		{
-			if (fullBuildJob != null)
-			{
-				return;
-			}
-
-			if (readCache())
-			{
-				opened = true;
-			}
-			else
-			{
-				fullBuild();
-				return;
-			}
-		}
+		 * if (isInjectProject() == false || packageChanged == false) { return;
+		 * }
+		 * 
+		 * if (!opened) { if (fullBuildJob != null) { return; }
+		 * 
+		 * if (readCache()) { opened = true; } else { fullBuild(); return; } }
 		 */
-		
+
 		if (!opened)
 		{
 			if (readCache())
@@ -168,7 +153,7 @@ public class Project
 				opened = true;
 			}
 		}
-		
+
 		Hashtable<String, Package> oldPacks = new Hashtable<String, Package>();
 		Hashtable<String, Package> newPacks = new Hashtable<String, Package>();
 
@@ -554,15 +539,23 @@ public class Project
 
 			modules = new Hashtable<String, ModuleType>();
 			notices = new Hashtable<String, NoticeType>();
-			interfaces=new Hashtable<String, InterfaceType>();
-			enums=new Hashtable<String, EnumType>();
+			interfaces = new Hashtable<String, InterfaceType>();
+			enums = new Hashtable<String, EnumType>();
+			nlsTexts = new Hashtable<String, ArrayList<String>>();
 
 			String[] parts = text.split("\\n");
 			for (String part : parts)
 			{
+				part = part.trim();
+				if (part.isEmpty())
+				{
+					continue;
+				}
+
 				int index = part.indexOf(":");
 				String kind = part.substring(0, index);
 				String content = part.substring(index + 1);
+
 				if (content.length() > 2)
 				{
 					content = content.substring(1, content.length() - 1);
@@ -571,6 +564,7 @@ public class Project
 					String packName = null;
 					String typeName = null;
 					String namespace = null;
+					String nlsValue = null;
 					String path = null;
 
 					String[] props = content.split("\\,");
@@ -598,6 +592,10 @@ public class Project
 							{
 								namespace = value;
 							}
+							else if ("nlsValue".equals(name))
+							{
+								nlsValue = value;
+							}
 							else if ("path".equals(name))
 							{
 								path = value;
@@ -613,13 +611,21 @@ public class Project
 					{
 						notices.put(path, new NoticeType(theName, packName, typeName, path));
 					}
-					else if("Interface".equals(kind))
+					else if ("Interface".equals(kind))
 					{
 						interfaces.put(path, new InterfaceType(theName, packName, typeName, path));
 					}
-					else if("Enum".equals(kind))
+					else if ("Enum".equals(kind))
 					{
 						enums.put(path, new EnumType(theName, packName, typeName, path));
+					}
+					else if ("NLS".equals(kind))
+					{
+						if (!nlsTexts.containsKey(path))
+						{
+							nlsTexts.put(path, new ArrayList<String>());
+						}
+						nlsTexts.get(path).add(nlsValue);
 					}
 				}
 			}
@@ -840,7 +846,7 @@ public class Project
 
 		System.out.println(" change :" + path);
 	}
-	
+
 	/**
 	 * 更新文件
 	 * 
@@ -956,6 +962,8 @@ public class Project
 							packageChanged = true;
 						}
 					}
+
+					nlsTexts.put(filePath, parser.getNlsStrings());
 				}
 				catch (CoreException e)
 				{
@@ -986,6 +994,7 @@ public class Project
 		String[] noticePaths = notices.keySet().toArray(new String[notices.size()]);
 		String[] interfacePaths = interfaces.keySet().toArray(new String[interfaces.size()]);
 		String[] enumPaths = enums.keySet().toArray(new String[enums.size()]);
+		String[] nlsArrays = nlsTexts.keySet().toArray(new String[] {});
 
 		// 计算文件数量
 		int count = 3;
@@ -1006,6 +1015,7 @@ public class Project
 		Arrays.sort(noticePaths);
 		Arrays.sort(interfacePaths);
 		Arrays.sort(enumPaths);
+		Arrays.sort(nlsArrays);
 
 		// 输出内部模块
 		Hashtable<ModuleType, ModuleType> moduleAdapters = new Hashtable<ModuleType, ModuleType>();
@@ -1035,6 +1045,34 @@ public class Project
 				monitor.worked(1);
 			}
 		}
+
+		// 输出语言文本
+		monitor.setTaskName("输出工厂文件");
+		StringBuilder nlsSB = new StringBuilder();
+		nlsSB.append(String.format("package\n"));
+		nlsSB.append(String.format("{\n"));
+		nlsSB.append(String.format("\tpublic class NLS\n"));
+		nlsSB.append(String.format("\t{\n"));
+		int nlsID = 0;
+		HashSet<String> writed = new HashSet<String>();
+		for (String url : nlsArrays)
+		{
+			for (String nls : nlsTexts.get(url))
+			{
+				if (!writed.contains(nls))
+				{
+					nlsSB.append(String.format("\t\tpublic static const key%s:String=\"%s\";\n", nlsID + 1, nls));
+					nlsID++;
+					writed.add(nls);
+				}
+			}
+		}
+		nlsSB.append(String.format("\t}\n"));
+		nlsSB.append(String.format("}"));
+		String nlsPath = "NLS.as";
+		writeFile(nlsPath, nlsSB.toString());
+		outputedFiles.add(nlsPath);
+		monitor.worked(1);
 
 		// 输出模块工厂
 		monitor.setTaskName("输出工厂文件");
@@ -1108,6 +1146,14 @@ public class Project
 		{
 			EnumType type = enums.get(path);
 			cacheContent.append(String.format("Enum:{name=%s,packName=%s,typeName=%s,path=%s}\n", type.getName(), type.getPackName(), type.getTypeName(), path));
+		}
+		for (String path : nlsArrays)
+		{
+			ArrayList<String> nlsList = nlsTexts.get(path);
+			for (String nls : nlsList)
+			{
+				cacheContent.append(String.format("NLS:{nlsValue=%s,path=%s}\n", nls, path));
+			}
 		}
 
 		String cachePath = ".cache";

@@ -48,6 +48,10 @@ public class UnitInstanceBuilder
 	 */
 	private Instance exec(ClassTable classTable, InputStream stream) throws SAXException, IOException, ParserConfigurationException
 	{
+		if(classTable.getMainClass().name.equals(""))
+		{
+			System.out.println("$UIText");
+		}
 		this.classTable = classTable;
 
 		this.xpath = null;
