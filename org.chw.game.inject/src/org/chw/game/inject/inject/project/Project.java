@@ -1095,7 +1095,7 @@ public class Project
 		StringBuilder nlsSB = new StringBuilder();
 		nlsSB.append(String.format("package\n"));
 		nlsSB.append(String.format("{\n"));
-		nlsSB.append(String.format("\timport flash.display.Sprite;\n"));
+		nlsSB.append(String.format("\timport flash.display.Sprite;\n\n"));
 		nlsSB.append(String.format("\tpublic class NLS extends Sprite\n"));
 		nlsSB.append(String.format("\t{\n"));
 		int nlsID = 0;

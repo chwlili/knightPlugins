@@ -881,7 +881,7 @@ public class MyGenerator implements IGenerator
 		txt.append(String.format("\t\t\t\n"));
 		txt.append(String.format("\t\t\tif(_dic[id]!=null)\n"));
 		txt.append(String.format("\t\t\t{\n"));
-		txt.append(String.format("\t\t\t\treturn _dic[id].subString(1);\n"));
+		txt.append(String.format("\t\t\t\treturn _dic[id].substring(1);\n"));
 		txt.append(String.format("\t\t\t}\n"));
 		txt.append(String.format("\t\t\treturn _dic[id];\n"));
 		txt.append(String.format("\t\t}\n"));
