@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 
@@ -20,6 +21,7 @@ import org.chw.game.inject.inject.data.InterfaceType;
 import org.chw.game.inject.inject.data.ModuleType;
 import org.chw.game.inject.inject.data.NoticeType;
 import org.chw.game.inject.inject.data.Package;
+import org.chw.game.inject.inject.project.NLS.Position;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -57,7 +59,7 @@ public class Project
 	private Hashtable<String, NoticeType> notices = new Hashtable<String, NoticeType>();
 	private Hashtable<String, InterfaceType> interfaces = new Hashtable<String, InterfaceType>();
 	private Hashtable<String, EnumType> enums = new Hashtable<String, EnumType>();
-	private Hashtable<String, ArrayList<String>> nlsTexts = new Hashtable<String, ArrayList<String>>();
+	private Hashtable<String, Hashtable<String, NLS>> nlsTexts = new Hashtable<String, Hashtable<String, NLS>>();
 
 	private ArrayList<Package> packages = new ArrayList<Package>();
 	private boolean packageChanged = true;
@@ -541,7 +543,7 @@ public class Project
 			notices = new Hashtable<String, NoticeType>();
 			interfaces = new Hashtable<String, InterfaceType>();
 			enums = new Hashtable<String, EnumType>();
-			nlsTexts = new Hashtable<String, ArrayList<String>>();
+			nlsTexts = new Hashtable<String, Hashtable<String, NLS>>();
 
 			String[] parts = text.split("\\n");
 			for (String part : parts)
@@ -564,43 +566,65 @@ public class Project
 					String packName = null;
 					String typeName = null;
 					String namespace = null;
-					String nlsValue = null;
 					String path = null;
+					String txt = null;
+					String url = null;
+					int row = 0;
+					int col = 0;
 
-					String[] props = content.split("\\,");
-					for (String prop : props)
+					try
 					{
-						int pos = prop.indexOf("=");
-						if (pos != -1)
+						String[] props = content.split("\\,");
+						for (String prop : props)
 						{
-							String name = prop.substring(0, pos).trim();
-							String value = prop.substring(pos + 1).trim();
+							int pos = prop.indexOf("=");
+							if (pos != -1)
+							{
+								String name = prop.substring(0, pos).trim();
+								String value = prop.substring(pos + 1).trim();
 
-							if ("name".equals(name))
-							{
-								theName = value;
-							}
-							else if ("packName".equals(name))
-							{
-								packName = value;
-							}
-							else if ("typeName".equals(name))
-							{
-								typeName = value;
-							}
-							else if ("namespace".equals(name))
-							{
-								namespace = value;
-							}
-							else if ("nlsValue".equals(name))
-							{
-								nlsValue = value;
-							}
-							else if ("path".equals(name))
-							{
-								path = value;
+								if ("name".equals(name))
+								{
+									theName = value;
+								}
+								else if ("packName".equals(name))
+								{
+									packName = value;
+								}
+								else if ("typeName".equals(name))
+								{
+									typeName = value;
+								}
+								else if ("namespace".equals(name))
+								{
+									namespace = value;
+								}
+								else if ("path".equals("name"))
+								{
+									path = value;
+								}
+								else if ("txt".equals(name))
+								{
+									txt = value;
+								}
+								else if ("url".equals(name))
+								{
+									url = value;
+								}
+								else if ("row".equals(name))
+								{
+									row = Integer.parseInt(value);
+								}
+								else if ("col".equals("col"))
+								{
+									col = Integer.parseInt(value);
+								}
 							}
 						}
+					}
+					catch (Exception err)
+					{
+						return false;
 					}
 
 					if ("Module".equals(kind))
@@ -623,9 +647,13 @@ public class Project
 					{
 						if (!nlsTexts.containsKey(path))
 						{
-							nlsTexts.put(path, new ArrayList<String>());
+							nlsTexts.put(path, new Hashtable<String, NLS>());
 						}
-						nlsTexts.get(path).add(nlsValue);
+						if (!nlsTexts.get(path).containsKey(txt))
+						{
+							nlsTexts.get(path).put(txt, new NLS(txt));
+						}
+						nlsTexts.get(path).get(txt).positions.add(new NLS.Position(url, row, col));
 					}
 				}
 			}
@@ -963,7 +991,23 @@ public class Project
 						}
 					}
 
-					nlsTexts.put(filePath, parser.getNlsStrings());
+					nlsTexts.remove(filePath);
+					for (NLS nls : parser.getNlsStrings())
+					{
+						String txt = nls.text;
+						if (!nlsTexts.containsKey(filePath))
+						{
+							nlsTexts.put(filePath, new Hashtable<String, NLS>());
+						}
+						if (!nlsTexts.get(filePath).containsKey(txt))
+						{
+							nlsTexts.get(filePath).put(txt, new NLS(txt));
+						}
+						for (NLS.Position pos : nls.positions)
+						{
+							nlsTexts.get(filePath).get(txt).positions.add(pos);
+						}
+					}
 				}
 				catch (CoreException e)
 				{
@@ -1055,18 +1099,46 @@ public class Project
 		nlsSB.append(String.format("\tpublic class NLS extends Sprite\n"));
 		nlsSB.append(String.format("\t{\n"));
 		int nlsID = 0;
-		HashSet<String> writed = new HashSet<String>();
-		for (String url : nlsArrays)
+		HashMap<String, ArrayList<NLS.Position>> nlsSet = new HashMap<String, ArrayList<NLS.Position>>();
+		for (String path : nlsArrays)
 		{
-			for (String nls : nlsTexts.get(url))
+			Hashtable<String, NLS> data = nlsTexts.get(path);
+			for (NLS nls : data.values())
 			{
-				if (!writed.contains(nls))
+				if (!nlsSet.containsKey(nls.text))
 				{
-					nlsSB.append(String.format("\t\tpublic static const key%s:String=\"#%s\";\n", nlsID + 1, nls));
-					nlsID++;
-					writed.add(nls);
+					nlsSet.put(nls.text, new ArrayList<NLS.Position>());
+				}
+				for (NLS.Position pos : nls.positions)
+				{
+					nlsSet.get(nls.text).add(pos);
 				}
 			}
+		}
+		String[] txtList = nlsSet.keySet().toArray(new String[] {});
+		Arrays.sort(txtList);
+		for (String txt : txtList)
+		{
+			NLS.Position[] posList = nlsSet.get(txt).toArray(new NLS.Position[] {});
+			Arrays.sort(posList, new Comparator<NLS.Position>()
+			{
+				@Override
+				public int compare(Position o1, Position o2)
+				{
+					return o1.getString().compareTo(o2.getString());
+				}
+			});
+			if (posList.length > 0)
+			{
+				nlsSB.append("\t\t/**\n");
+				for (NLS.Position pos : posList)
+				{
+					nlsSB.append(String.format("\t\t * %s ( %s : %s )\n", pos.url, pos.row, pos.col));
+				}
+				nlsSB.append("\t\t */\n");
+			}
+			nlsSB.append(String.format("\t\tpublic static const key%s:String=\"%s\";\n\n", nlsID + 1, txt));
+			nlsID++;
 		}
 		nlsSB.append(String.format("\t}\n"));
 		nlsSB.append(String.format("}"));
@@ -1150,10 +1222,13 @@ public class Project
 		}
 		for (String path : nlsArrays)
 		{
-			ArrayList<String> nlsList = nlsTexts.get(path);
-			for (String nls : nlsList)
+			NLS[] nlsList = nlsTexts.get(path).values().toArray(new NLS[] {});
+			for (NLS nls : nlsList)
 			{
-				cacheContent.append(String.format("NLS:{nlsValue=%s,path=%s}\n", nls, path));
+				for (NLS.Position pos : nls.positions)
+				{
+					cacheContent.append(String.format("NLS:{txt=%s,url=%s,row=%s,col=%s,path=%s}\n", nls.text, pos.url, pos.row, pos.col, path));
+				}
 			}
 		}
 

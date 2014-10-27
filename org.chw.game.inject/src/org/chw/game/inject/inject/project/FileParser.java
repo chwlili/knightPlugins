@@ -2,6 +2,7 @@ package org.chw.game.inject.inject.project;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import org.chw.game.inject.inject.data.EnumType;
@@ -55,7 +56,7 @@ public class FileParser
 	private ArrayList<IVariableNode> variables = new ArrayList<IVariableNode>();
 	private ArrayList<IAccessorNode> accessors = new ArrayList<IAccessorNode>();
 	private ArrayList<IFunctionNode> functions = new ArrayList<IFunctionNode>();
-	private ArrayList<String> nlsList = new ArrayList<String>();
+	private HashMap<String, NLS> nlsList = new HashMap<String, NLS>();
 
 	private Hashtable<String, ArrayList<IMetaTagNode>> allAccessorInject = new Hashtable<String, ArrayList<IMetaTagNode>>();
 	private Hashtable<String, ISetterNode> allSetterAccessor = new Hashtable<String, ISetterNode>();
@@ -137,9 +138,9 @@ public class FileParser
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> getNlsStrings()
+	public NLS[] getNlsStrings()
 	{
-		return nlsList;
+		return nlsList.values().toArray(new NLS[] {});
 	}
 
 	/**
@@ -151,7 +152,7 @@ public class FileParser
 	{
 		path = file.getProjectRelativePath().toString();
 
-		nlsList = new ArrayList<String>();
+		nlsList = new HashMap<String, NLS>();
 
 		for (int i = 0; i < fileNode.getChildCount(); i++)
 		{
@@ -582,7 +583,15 @@ public class FileParser
 			ILiteralNode text = (ILiteralNode) args[0];
 			if (text.getLiteralType().equals(LiteralType.STRING))
 			{
-				nlsList.add(text.getValue());
+				String str = text.getValue().trim();
+				if (!str.isEmpty())
+				{
+					if (!nlsList.containsKey(str))
+					{
+						nlsList.put(str, new NLS(str));
+					}
+					nlsList.get(str).positions.add(new NLS.Position(text.getSourcePath(), text.getLine(), text.getColumn()));
+				}
 			}
 		}
 	}

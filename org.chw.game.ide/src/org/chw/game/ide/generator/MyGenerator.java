@@ -30,7 +30,7 @@ public class MyGenerator implements IGenerator
 	 */
 	public void doGenerate(Resource input, IFileSystemAccess fsa)
 	{
-		TreeIterator<EObject> iterator=input.getAllContents();
+		TreeIterator<EObject> iterator = input.getAllContents();
 		while (iterator.hasNext())
 		{
 			EObject obj = iterator.next();
@@ -323,19 +323,19 @@ public class MyGenerator implements IGenerator
 				{
 					stream.append(String.format("\t\t\t\t\t\titems_%s.addInt(readint32From(input));\n", field.index));
 				}
-				else if((field.nativeType.equals("fixed32")))
+				else if ((field.nativeType.equals("fixed32")))
 				{
 					stream.append(String.format("\t\t\t\t\t\titems_%s.addInt(readFixed32From(input));\n", field.index));
 				}
-				else if((field.nativeType.equals("fixed64")))
+				else if ((field.nativeType.equals("fixed64")))
 				{
 					stream.append(String.format("\t\t\t\t\t\titems_%s.addNumber(readFixed64From(input));\n", field.index));
 				}
-				else if((field.nativeType.equals("sfixed32")))
+				else if ((field.nativeType.equals("sfixed32")))
 				{
 					stream.append(String.format("\t\t\t\t\t\titems_%s.addInt(readSFixed32From(input));\n", field.index));
 				}
-				else if((field.nativeType.equals("sfixed64")))
+				else if ((field.nativeType.equals("sfixed64")))
 				{
 					stream.append(String.format("\t\t\t\t\t\titems_%s.addNumber(readSFixed64From(input));\n", field.index));
 				}
@@ -403,19 +403,19 @@ public class MyGenerator implements IGenerator
 				{
 					stream.append(String.format("\t\t\t\t\t\t_dic[%s]=readInt32From(input);\n", field.index));
 				}
-				else if((field.nativeType.equals("fixed32")))
+				else if ((field.nativeType.equals("fixed32")))
 				{
 					stream.append(String.format("\t\t\t\t\t\t_dic[%s]=readFixed32From(input);\n", field.index));
 				}
-				else if((field.nativeType.equals("fixed64")))
+				else if ((field.nativeType.equals("fixed64")))
 				{
 					stream.append(String.format("\t\t\t\t\t\t_dic[%s]=readFixed64From(input);\n", field.index));
 				}
-				else if((field.nativeType.equals("sfixed32")))
+				else if ((field.nativeType.equals("sfixed32")))
 				{
 					stream.append(String.format("\t\t\t\t\t\t_dic[%s]=readSFixed32From(input);\n", field.index));
 				}
-				else if((field.nativeType.equals("sfixed64")))
+				else if ((field.nativeType.equals("sfixed64")))
 				{
 					stream.append(String.format("\t\t\t\t\t\t_dic[%s]=readSFixed64From(input);\n", field.index));
 				}
@@ -555,7 +555,7 @@ public class MyGenerator implements IGenerator
 					stream.append(String.format("\t\t\t\t\twriteEnumTo(output,%s,%ss.getIntAt(i%s));\n", field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t}\n"));
 				}
-				else if(field.nativeType.equals("fixed32"))
+				else if (field.nativeType.equals("fixed32"))
 				{
 					stream.append(String.format("\t\t\t\tvar %ss:%s=_dic[%s];\n", field.name, field.actionType, field.index));
 					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numInts;i%s++)\n", field.index, field.index, field.name, field.index));
@@ -563,7 +563,7 @@ public class MyGenerator implements IGenerator
 					stream.append(String.format("\t\t\t\t\twriteFixed32To(output,%s,%ss.getIntAt(i%s));\n", field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t}\n"));
 				}
-				else if(field.nativeType.equals("fixed64"))
+				else if (field.nativeType.equals("fixed64"))
 				{
 					stream.append(String.format("\t\t\t\tvar %ss:%s=_dic[%s];\n", field.name, field.actionType, field.index));
 					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numNumbers;i%s++)\n", field.index, field.index, field.name, field.index));
@@ -571,7 +571,7 @@ public class MyGenerator implements IGenerator
 					stream.append(String.format("\t\t\t\t\twriteFixed64To(output,%s,%ss.getNumberAt(i%s));\n", field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t}\n"));
 				}
-				else if(field.nativeType.equals("sfixed32"))
+				else if (field.nativeType.equals("sfixed32"))
 				{
 					stream.append(String.format("\t\t\t\tvar %ss:%s=_dic[%s];\n", field.name, field.actionType, field.index));
 					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numInts;i%s++)\n", field.index, field.index, field.name, field.index));
@@ -579,7 +579,7 @@ public class MyGenerator implements IGenerator
 					stream.append(String.format("\t\t\t\t\twriteSFixed32To(output,%s,%ss.getIntAt(i%s));\n", field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t}\n"));
 				}
-				else if(field.nativeType.equals("sfixed64"))
+				else if (field.nativeType.equals("sfixed64"))
 				{
 					stream.append(String.format("\t\t\t\tvar %ss:%s=_dic[%s];\n", field.name, field.actionType, field.index));
 					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numNumbers;i%s++)\n", field.index, field.index, field.name, field.index));
@@ -646,19 +646,19 @@ public class MyGenerator implements IGenerator
 				{
 					stream.append(String.format("\t\t\t\twriteEnumTo(output,%s,_dic[%s]);\n", field.index, field.index));
 				}
-				else if(field.nativeType.equals("fixed32"))
+				else if (field.nativeType.equals("fixed32"))
 				{
 					stream.append(String.format("\t\t\t\twriteFixed32To(output,%s,_dic[%s]);\n", field.index, field.index));
 				}
-				else if(field.nativeType.equals("fixed64"))
+				else if (field.nativeType.equals("fixed64"))
 				{
 					stream.append(String.format("\t\t\t\twriteFixed64To(output,%s,_dic[%s]);\n", field.index, field.index));
 				}
-				else if(field.nativeType.equals("sfixed32"))
+				else if (field.nativeType.equals("sfixed32"))
 				{
 					stream.append(String.format("\t\t\t\twriteSFixed32To(output,%s,_dic[%s]);\n", field.index, field.index));
 				}
-				else if(field.nativeType.equals("sfixed64"))
+				else if (field.nativeType.equals("sfixed64"))
 				{
 					stream.append(String.format("\t\t\t\twriteSFixed64To(output,%s,_dic[%s]);\n", field.index, field.index));
 				}
@@ -865,7 +865,7 @@ public class MyGenerator implements IGenerator
 		txt.append(String.format("\t\t\t_dic=new Object();\n"));
 		for (Field field : fields)
 		{
-			txt.append(String.format("\t\t\t_dic[%s]=\"%s\";\n", field.index, field.comm==null ? "":field.comm.replaceAll("\\n", "")));
+			txt.append(String.format("\t\t\t_dic[%s]=\">%s\";\n", field.index, field.comm == null ? "" : field.comm.replaceAll("\\n", "")));
 		}
 		txt.append(String.format("\t\t}\n"));
 		txt.append(String.format("\t\t\n"));
@@ -879,6 +879,10 @@ public class MyGenerator implements IGenerator
 		txt.append(String.format("\t\t\t\tinit();\n"));
 		txt.append(String.format("\t\t\t}\n"));
 		txt.append(String.format("\t\t\t\n"));
+		txt.append(String.format("\t\t\tif(_dic[id]!=null)\n"));
+		txt.append(String.format("\t\t\t{\n"));
+		txt.append(String.format("\t\t\t\treturn _dic[id].subString(1);\n"));
+		txt.append(String.format("\t\t\t}\n"));
 		txt.append(String.format("\t\t\treturn _dic[id];\n"));
 		txt.append(String.format("\t\t}\n"));
 		txt.append(String.format("\t}\n"));
@@ -1052,19 +1056,19 @@ public class MyGenerator implements IGenerator
 		{
 			return "ByteArray";
 		}
-		if(type.equals("fixed32"))
+		if (type.equals("fixed32"))
 		{
 			return "int";
 		}
-		if(type.equals("fixed64"))
+		if (type.equals("fixed64"))
 		{
 			return "Number";
 		}
-		if(type.equals("sfixed32"))
+		if (type.equals("sfixed32"))
 		{
 			return "int";
 		}
-		if(type.equals("sfixed64"))
+		if (type.equals("sfixed64"))
 		{
 			return "Number";
 		}
