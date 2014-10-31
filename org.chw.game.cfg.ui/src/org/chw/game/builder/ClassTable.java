@@ -210,7 +210,19 @@ public class ClassTable
 			ArrayList<EnumField> fields = new ArrayList<EnumField>();
 			for (org.chw.game.cfg.EnumField field : type.getFields())
 			{
-				fields.add(new EnumField(field.getComment(), field.getFieldName(), field.getFieldValue(), field.getMeta() != null, fields.size() + 1));
+				boolean normal = false;
+				if (field.getMeta() != null)
+				{
+					for (Meta meta : field.getMeta())
+					{
+						if (meta.getPrefix().equals("Default"))
+						{
+							normal = true;
+							break;
+						}
+					}
+				}
+				fields.add(new EnumField(field.getComment(), field.getFieldName(), field.getFieldValue(), normal, fields.size() + 1));
 			}
 			enumFields = fields.toArray(new EnumField[] {});
 
