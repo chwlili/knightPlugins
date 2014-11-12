@@ -37,6 +37,7 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 	private Text auth_input;
 	private Composite radioBox;
 	private Text version_input;
+	private Text lang_input;
 	private Table version_table;
 	private Table log_table;
 	private Button debugRadio;
@@ -146,6 +147,12 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		version_input = new Text(verGroup, SWT.BORDER);
 		version_input.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
+		Label lang_label = new Label(verGroup, SWT.NONE);
+		lang_label.setText("”Ô—‘ª∑æ≥£∫");
+
+		lang_input = new Text(verGroup, SWT.BORDER);
+		lang_input.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
 		Label lblNewLabel_3 = new Label(verGroup, SWT.NONE);
 		lblNewLabel_3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblNewLabel_3.setText("\u4ED3\u5E93\u4FE1\u606F\uFF1A");
@@ -191,9 +198,10 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		logGroup = new Composite(getContainer(), SWT.NONE);
 		logGroup.setLayout(boxLayout);
 
-		//Label lblNewLabel_4 = new Label(logGroup, SWT.NONE);
-		//lblNewLabel_4.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		//lblNewLabel_4.setText("\u65E5\u5FD7\u5730\u5740\uFF1A");
+		// Label lblNewLabel_4 = new Label(logGroup, SWT.NONE);
+		// lblNewLabel_4.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
+		// false, 1, 1));
+		// lblNewLabel_4.setText("\u65E5\u5FD7\u5730\u5740\uFF1A");
 
 		log_viewer = CheckboxTableViewer.newCheckList(logGroup, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		log_table = log_viewer.getTable();
@@ -248,6 +256,20 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 			public void modifyText(ModifyEvent e)
 			{
 				clientXmlReader.version = version_input.getText();
+				setDirty(true);
+			}
+		});
+		lang_input.addModifyListener(new ModifyListener()
+		{
+			@Override
+			public void modifyText(ModifyEvent e)
+			{
+				String text = lang_input.getText();
+				if (text == null || text.isEmpty())
+				{
+					text = "zh";
+				}
+				clientXmlReader.lang = text;
 				setDirty(true);
 			}
 		});
@@ -364,6 +386,8 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 		test_input.setText(clientXmlReader.testName);
 		auth_viewer.setInput(clientXmlReader.nameList);
 
+		lang_input.setText(clientXmlReader.lang);
+
 		for (VerNode node : clientXmlReader.verList)
 		{
 			version_viewer.setChecked(node, node.select);
@@ -379,17 +403,17 @@ public class ClientEditor extends MultiPageEditorPart implements BaseEditor
 
 		version_viewer.refresh();
 		packColumns(version_viewer.getTable());
-		
+
 		log_viewer.refresh();
 		packColumns(log_viewer.getTable());
-		
+
 		auth_viewer.refresh();
 		packColumns(auth_viewer.getTable());
 	}
-	
+
 	private void packColumns(Table table)
 	{
-		for(int i=1;i<table.getColumnCount();i++)
+		for (int i = 1; i < table.getColumnCount(); i++)
 		{
 			table.getColumn(i).pack();
 		}

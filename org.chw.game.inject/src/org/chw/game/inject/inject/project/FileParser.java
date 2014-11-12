@@ -578,7 +578,7 @@ public class FileParser
 	private void visitFunctionCallNode(IFunctionCallNode node)
 	{
 		IExpressionNode[] args = node.getArgumentNodes();
-		if (node.getFunctionName().equals("$") && args.length == 1 && args[0] instanceof ILiteralNode)
+		if (node.getFunctionName().equals("$") && args.length > 0 && args[0] instanceof ILiteralNode)
 		{
 			ILiteralNode text = (ILiteralNode) args[0];
 			if (text.getLiteralType().equals(LiteralType.STRING))
