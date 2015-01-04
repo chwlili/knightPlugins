@@ -199,6 +199,7 @@
            id="org.chw.game.cfg.ui.Xml2Builder">
      </builder>
   </extension>
+  <!--
   <extension
         id="Xml2Builder"
         name="Xml2构建器"
@@ -214,6 +215,7 @@
         </run>
      </builder>
   </extension>
+  -->
   <extension
         point="org.eclipse.ui.perspectiveExtensions">
      <perspectiveExtension

@@ -347,6 +347,13 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.core.resources.variableResolvers">
+      <variableResolver
+            class="KnightProtoLocation"
+            variable="KNIGHT_PROTO_LOC">
+      </variableResolver>
+   </extension>
    
    
 </plugin>

@@ -130,8 +130,11 @@ public class ClassTable
 		{
 			return 5;
 		}
-
-		return getClass(name).order + 10;
+		if (getClass(name) != null)
+		{
+			return getClass(name).order + 10;
+		}
+		return 0;
 	}
 
 	/**

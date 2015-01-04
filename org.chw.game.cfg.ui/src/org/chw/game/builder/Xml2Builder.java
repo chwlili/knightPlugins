@@ -55,6 +55,10 @@ public class Xml2Builder extends IncrementalProjectBuilder
 	@Override
 	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException
 	{
+		if(kind!=-1111)
+		{
+			return null;
+		}
 		try
 		{
 			if (kind == IncrementalProjectBuilder.FULL_BUILD)

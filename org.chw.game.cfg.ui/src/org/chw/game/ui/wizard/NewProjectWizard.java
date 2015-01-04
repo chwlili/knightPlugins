@@ -55,7 +55,6 @@ public class NewProjectWizard extends Wizard implements INewWizard
 	{
 		final String name = page1.getProjectName();
 		final String path = page1.getProjectPath();
-		final String xml_dir = page1.getCfgXmlPath();
 		final String cfg_dir = page1.getCfgProtoPath();
 		final String src = page1.getAsSrcPth();
 		final String bin = page1.getAsBinPath();
@@ -75,13 +74,13 @@ public class NewProjectWizard extends Wizard implements INewWizard
 
 						desc.setNatureIds(new String[] { Xml2Nature.NATURE_ID, "com.adobe.flexbuilder.project.aslibnature", "com.adobe.flexbuilder.project.actionscriptnature" });
 
-						ICommand cmd = desc.newCommand();
-						cmd.setBuilderName(Xml2Nature.BUILD_ID);
+						//ICommand cmd = desc.newCommand();
+						//cmd.setBuilderName(Xml2Nature.BUILD_ID);
 
 						ICommand cmd1 = desc.newCommand();
 						cmd1.setBuilderName("com.adobe.flexbuilder.project.flexbuilder");
 
-						desc.setBuildSpec(new ICommand[] { cmd, cmd1 });
+						desc.setBuildSpec(new ICommand[] { /*cmd, */cmd1 });
 
 						if (path != null)
 						{
@@ -111,26 +110,6 @@ public class NewProjectWizard extends Wizard implements INewWizard
 							binDir.create(false, true, new SubProgressMonitor(monitor, 1000));
 						}
 
-						// cfg-xml
-						File cfg_xml_file = new File(xml_dir);
-						if (cfg_xml_file.exists() && cfg_xml_file.isDirectory())
-						{
-							IFolder folder = project.getFolder(/*
-																 * "[source path] "
-																 * +
-																 */cfg_xml_file.getName());
-							folder.createLink(new Path(cfg_xml_file.getPath()), IResource.REPLACE | IResource.BACKGROUND_REFRESH, null);
-						}
-						else
-						{
-							IFolder folder = project.getFolder(xml_dir);
-							folder.refreshLocal(IResource.DEPTH_ZERO, null);
-							if (!folder.exists())
-							{
-								folder.create(true, true, null);
-							}
-						}
-
 						// cfg-proto
 						File cfg_proto_file = new File(cfg_dir);
 						if (cfg_proto_file.exists() && cfg_proto_file.isDirectory())
@@ -153,12 +132,9 @@ public class NewProjectWizard extends Wizard implements INewWizard
 
 						project.setDefaultCharset("UTF-8", new SubProgressMonitor(monitor, 1000)); //$NON-NLS-1$
 						project.setPersistentProperty(Xml2Nature.CFG_DIR, cfg_proto_file.getName());
-						project.setPersistentProperty(Xml2Nature.XML_DIR, cfg_xml_file.getName());
 						project.setPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME, Xml2Nature.DEFAULT_TOP_PACK);
 						project.setPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME, Xml2Nature.DEFAULT_CORE_PACK);
 						project.setPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME, Xml2Nature.DEFAULT_CODE_PACK);
-						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME, Xml2Nature.DEFAULT_FILE_PACK);
-						project.setPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK, Xml2Nature.DEFAULT_FILE_CHECK ? "true" : "false");
 					}
 					catch (CoreException e)
 					{

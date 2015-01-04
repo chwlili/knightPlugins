@@ -9,7 +9,6 @@ public class CfgGenerator implements IGenerator
 	@Override
 	public void doGenerate(Resource input, IFileSystemAccess fsa)
 	{
-		System.out.println("..");
 	}
 
 }

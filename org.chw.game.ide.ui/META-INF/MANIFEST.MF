@@ -20,7 +20,7 @@ Require-Bundle: org.chw.game.ide;bundle-version="2.0.0";visibility:=reexport,
 Import-Package: org.apache.log4j,
  org.chw.game.ide.proto,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.chw.game.ide.ui.quickfix,
  org.chw.game.ide.ui.contentassist,
  org.chw.game.ide.ui.contentassist.antlr,

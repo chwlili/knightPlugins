@@ -21,19 +21,13 @@ public class Xml2Nature implements IProjectNature
 
 	public static final QualifiedName CODE_PACKAGE_NAME = new QualifiedName("org.chw.game.cfg.ui", "codePackName");
 
-	public static final QualifiedName FILE_PACKAGE_CHECK = new QualifiedName("org.chw.game.cfg.ui", "filePackCheck");
-
-	public static final QualifiedName FILE_PACKAGE_NAME = new QualifiedName("org.chw.game.cfg.ui", "filePackName");
+	public static final QualifiedName OUTPUT_AS_FLAG = new QualifiedName("org.chw.game.cfg.ui", "output_as_flag");
 
 	public static final String DEFAULT_TOP_PACK = "org.cfg.game";
 
 	public static final String DEFAULT_CORE_PACK = "base";
 
 	public static final String DEFAULT_CODE_PACK = "code";
-
-	public static final Boolean DEFAULT_FILE_CHECK = false;
-
-	public static final String DEFAULT_FILE_PACK = "files";
 
 	private IProject project;
 
@@ -55,4 +49,55 @@ public class Xml2Nature implements IProjectNature
 		this.project = project;
 	}
 
+	public static String getCodePackName(IProject project) throws CoreException
+	{
+		String topPackName = project.getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
+		String codePackName = project.getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
+
+		if (topPackName == null)
+		{
+			topPackName = Xml2Nature.DEFAULT_TOP_PACK;
+		}
+		if (codePackName == null)
+		{
+			codePackName = Xml2Nature.DEFAULT_CODE_PACK;
+		}
+
+		if (!topPackName.isEmpty() && !codePackName.isEmpty())
+		{
+			codePackName = topPackName + "." + codePackName;
+		}
+		else if (codePackName.isEmpty())
+		{
+			codePackName = topPackName;
+		}
+
+		return codePackName;
+	}
+
+	public static String getCorePackName(IProject project) throws CoreException
+	{
+		String topPackName = project.getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
+		String corePackName = project.getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
+
+		if (topPackName == null)
+		{
+			topPackName = Xml2Nature.DEFAULT_TOP_PACK;
+		}
+		if (corePackName == null)
+		{
+			corePackName = Xml2Nature.DEFAULT_CORE_PACK;
+		}
+
+		if (!topPackName.isEmpty() && !corePackName.isEmpty())
+		{
+			corePackName = topPackName + "." + corePackName;
+		}
+		else if (corePackName.isEmpty())
+		{
+			corePackName = topPackName;
+		}
+
+		return corePackName;
+	}
 }

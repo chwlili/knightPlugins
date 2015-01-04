@@ -9,6 +9,7 @@ import org.chw.game.ui.highlight.CfgHighlightCalculator;
 import org.chw.game.ui.hyperlink.CfgHyperLinkHelper;
 import org.chw.game.ui.hyperlink.CfgLoationInFileProvider;
 import org.chw.game.ui.textHover.CfgHoverProvider;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
@@ -24,8 +25,10 @@ public class CfgUiModule extends org.chw.game.ui.AbstractCfgUiModule
 	public CfgUiModule(AbstractUIPlugin plugin)
 	{
 		super(plugin);
+
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(ResourceObserver.instance);
 	}
-	
+
 	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration()
 	{
 		return CfgHighlight.class;
@@ -46,12 +49,12 @@ public class CfgUiModule extends org.chw.game.ui.AbstractCfgUiModule
 	{
 		return CfgLoationInFileProvider.class;
 	}
-	
+
 	public Class<? extends IFoldingRegionProvider> bindIFoldingRegionProvider()
 	{
 		return CfgFolder.class;
 	}
-	
+
 	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider()
 	{
 		return CfgHoverProvider.class;

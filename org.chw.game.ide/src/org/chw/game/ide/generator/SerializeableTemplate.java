@@ -429,22 +429,6 @@ public class SerializeableTemplate
 		stream.append("\t\t\treturn cache2.toString(16)+part1;\n");
 		stream.append("\t\t\t\n");
 
-		// old
-		/*
-		 * stream.append("//yyy\n");
-		 * stream.append("\t\t\tbyte = input.readByte();\n");
-		 * stream.append("\t\t\tcache2 |= (byte & 0x7F) << 24;\n");
-		 * stream.append("\t\t\tif(byte>=0)\n"); stream.append("\t\t\t{\n");
-		 * stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
-		 * stream.append("\t\t\t}\n"); stream.append("\t\t\t\n");
-		 * stream.append("\t\t\tbyte = input.readByte();\n");
-		 * stream.append("\t\t\tcache2 |= (byte & 0x7F) << 31;\n");
-		 * stream.append("\t\t\tif(byte>=0)\n"); stream.append("\t\t\t{\n");
-		 * stream.append("\t\t\t\treturn cache2.toString(16)+part1;\n");
-		 * stream.append("\t\t\t}\n"); stream.append("\t\t\t\n");
-		 * stream.append("\t\t\treturn \"\";\n");
-		 */
-
 		stream.append("\t\t}\n");
 
 		stream.append("\t\t/**\n");

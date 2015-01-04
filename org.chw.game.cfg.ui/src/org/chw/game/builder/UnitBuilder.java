@@ -77,46 +77,8 @@ public class UnitBuilder
 	 */
 	private void initPackNames() throws CoreException
 	{
-		String topPackName = project.getPersistentProperty(Xml2Nature.TOP_PACKAGE_NAME);
-		String corePackName = project.getPersistentProperty(Xml2Nature.CORE_PACKAGE_NAME);
-		String codePackName = project.getPersistentProperty(Xml2Nature.CODE_PACKAGE_NAME);
-		boolean filePackCheck = "true".equals(project.getPersistentProperty(Xml2Nature.FILE_PACKAGE_CHECK));
-		String filePackName = project.getPersistentProperty(Xml2Nature.FILE_PACKAGE_NAME);
-
-		if (topPackName == null)
-		{
-			topPackName = Xml2Nature.DEFAULT_TOP_PACK;
-		}
-		if (corePackName == null)
-		{
-			corePackName = Xml2Nature.DEFAULT_CORE_PACK;
-		}
-		if (codePackName == null)
-		{
-			codePackName = Xml2Nature.DEFAULT_CODE_PACK;
-		}
-		if (filePackName == null)
-		{
-			filePackName = Xml2Nature.DEFAULT_FILE_PACK;
-		}
-
-		if (!topPackName.isEmpty() && !corePackName.isEmpty())
-		{
-			corePackName = topPackName + "." + corePackName;
-		}
-		else if (corePackName.isEmpty())
-		{
-			corePackName = topPackName;
-		}
-
-		if (!topPackName.isEmpty() && !codePackName.isEmpty())
-		{
-			codePackName = topPackName + "." + codePackName;
-		}
-		else if (codePackName.isEmpty())
-		{
-			codePackName = topPackName;
-		}
+		String corePackName = Xml2Nature.getCorePackName(project);
+		String codePackName = Xml2Nature.getCodePackName(project);
 
 		String typePackName = classTable.getPackName();
 		if (typePackName == null)
@@ -134,8 +96,6 @@ public class UnitBuilder
 
 		this.corePack = corePackName;
 		this.currPack = codePackName;
-		this.filePackCheck = filePackCheck;
-		this.filePack = filePackName;
 	}
 
 	/**

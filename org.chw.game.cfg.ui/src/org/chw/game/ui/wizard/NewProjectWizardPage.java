@@ -32,9 +32,6 @@ public class NewProjectWizardPage extends WizardPage
 	private Text binInput;
 	private Composite composite;
 	private Composite composite_1;
-	private Text xmlInput;
-	private Button sourceSelector;
-	private Label sourceLabel;
 	private Label destLabel;
 	
 	private Label cfgLabel;
@@ -182,30 +179,6 @@ public class NewProjectWizardPage extends WizardPage
 			}
 		});
 		
-		
-		sourceLabel = new Label(group, SWT.NONE);
-		sourceLabel.setText("协议文件夹：");
-
-		xmlInput = new Text(group, SWT.BORDER);
-		xmlInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		xmlInput.setText("xml");
-
-		sourceSelector = new Button(group, SWT.NONE);
-		sourceSelector.setText("    浏览...    ");
-		sourceSelector.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e)
-			{
-				DirectoryDialog selectDialog = new DirectoryDialog(getShell());
-				String path = selectDialog.open();
-				if (path != null && !path.isEmpty())
-				{
-					xmlInput.setText(path);
-				}
-			}
-		});
-		
 		Group group2 = new Group(container, SWT.NONE);
 		group2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		group2.setText("ActionScript");
@@ -287,15 +260,6 @@ public class NewProjectWizardPage extends WizardPage
 			return null;
 		}
 		return pathInput.getText();
-	}
-
-	/**
-	 * 获取配置主源路径
-	 * @return
-	 */
-	public String getCfgXmlPath()
-	{
-		return xmlInput.getText();
 	}
 	
 	/**
