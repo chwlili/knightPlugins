@@ -281,7 +281,7 @@ public class MyGenerator implements IGenerator
 				}
 				else if (field.nativeType.equals("uint32"))
 				{
-					stream.append(String.format("\t\t\t\t\t\titems_%s.addInt(readUInt32From(input));\n", field.index));
+					stream.append(String.format("\t\t\t\t\t\titems_%s.addUint(readUInt32From(input));\n", field.index));
 				}
 				else if (field.nativeType.equals("sint32"))
 				{
@@ -470,9 +470,9 @@ public class MyGenerator implements IGenerator
 				else if (field.nativeType.equals("uint32"))
 				{
 					stream.append(String.format("\t\t\t\tvar %ss:%s=_dic[%s];\n", field.name, field.actionType, field.index));
-					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numInts;i%s++)\n", field.index, field.index, field.name, field.index));
+					stream.append(String.format("\t\t\t\tfor(var i%s:int=0;i%s<%ss.numUints;i%s++)\n", field.index, field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t{\n"));
-					stream.append(String.format("\t\t\t\t\twriteUInt32To(output,%s,%ss.getIntAt(i%s));\n", field.index, field.name, field.index));
+					stream.append(String.format("\t\t\t\t\twriteUInt32To(output,%s,%ss.getUintAt(i%s));\n", field.index, field.name, field.index));
 					stream.append(String.format("\t\t\t\t}\n"));
 				}
 				else if (field.nativeType.equals("sint32"))
@@ -1018,7 +1018,7 @@ public class MyGenerator implements IGenerator
 		}
 		if (type.equals("uint32"))
 		{
-			return "int";
+			return "uint";
 		}
 		if (type.equals("sint32"))
 		{
